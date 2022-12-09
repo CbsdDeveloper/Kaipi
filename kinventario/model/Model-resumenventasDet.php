@@ -1,0 +1,56 @@
+<?php
+session_start( );
+
+require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
+
+require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
+
+     
+    $obj     = 	new objects;
+    $bd	   =	new Db ;
+    
+    $ruc       =    $_SESSION['ruc_registro'];
+    $sesion 	 =  $_SESSION['email'];
+   
+ 
+    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    
+    $fecha     = $_GET['fecha'];
+    $cajero       = $_GET['cajero'];
+ 
+    
+    $tipo 		= $bd->retorna_tipo();
+ 
+    
+    $sql = 'SELECT  fecha ,
+                    producto,
+                    cantidad,
+                    precio,
+                    BaseImponible,
+                    iva ,
+                    TarifaCero ,  
+                    total
+      FROM view_factura_cajaDetalle
+      where fecha = '.$bd->sqlvalue_inyeccion($fecha ,true).' and
+            sesion = '.$bd->sqlvalue_inyeccion($cajero ,true)      ;
+ 
+    
+    ///--- desplaza la informacion de la gestion
+    $resultado  = $bd->ejecutar($sql);
+     
+    $cabecera =  "Fecha,Articulos,Cantidad,Precio,Base Imponible,IVA,Tarifa Cero,Total";
+   
+ 
+    $evento   = "";
+    
+    $obj->table->table_basic_js($resultado,$tipo,'','',$evento ,$cabecera);
+     
+    $DivDetalleMovimiento= ' ';
+
+    echo $DivDetalleMovimiento;
+ 
+ 
+
+?>
+ 
+  

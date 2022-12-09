@@ -1,0 +1,744 @@
+var oTable; 
+var oTableTramite;
+
+var formulario = 'comprasc_emapa'; 
+
+$(function(){
+	
+    $(document).bind("contextmenu",function(e){
+        return false;
+    });
+    
+    window.addEventListener("keypress", function(event){
+        if (event.keyCode == 13){
+            event.preventDefault();
+        }
+    }, false);
+	
+});
+
+//-------------------------------------------------------------------------
+$(document).ready(function(){
+    
+  
+        
+	
+		$("#MHeader").load('../view/View-HeaderModel.php');
+	
+		$("#FormPie").load('../view/View-pie.php');
+		
+		modulo();
+ 		
+	    FormView();
+	    
+	    FormFiltro();
+ 		
+	    oTable 			= $('#jsontable').dataTable(); 
+	        
+	    oTableTramite   = $('#jsontableTramite').dataTable(); 
+	        
+	        
+ 	   $('#load').on('click',function(){
+ 		   
+            BusquedaGrilla(oTable);
+  			
+		});
+ 	   
+ 	   
+ 	   
+ 
+ 	  
+ 	  
+ 	   
+ 		$('#loadSri').on('click',function(){
+  		   
+            openFile('../../upload/uploadxml?file=1',650,300)
+  			
+		});
+ 
+});  
+
+function AnularRetencion(  ) {
+	
+	var fechap = fecha_hoy();
+	
+    var  mensaje = 'Desea anular en el sistema este comprobante?... guarde la información para procesar la transaccion'
+    
+	alertify.confirm("<p>"+mensaje+"<br><br></p>", function (e) {
+		  if (e) {
+			 
+
+			 	 $('#autretencion1').val(''); 
+				 $('#fechaemiret1').val(''); 
+			//	 $('#fechap').val(fechap); 
+				 var id = $('#id_compras').val(); 
+				  
+				
+			 var parametros = {
+							'accion' : 'anula' ,
+		                    'id' : id 
+		 	  };
+			  $.ajax({
+							data:  parametros,
+							url:   '../model/Model-'+formulario,
+							type:  'GET' ,
+							cache: false,
+							beforeSend: function () { 
+		 							$("#result").html('Procesando');
+		  					},
+							success:  function (data) {
+									 $("#result").html(data);  // $("#cuenta").html(response);
+									
+									 
+		  					} 
+					}); 
+           
+		  }
+		 }); 
+	
+
+       
+}
+
+
+//-----------------------------------------------------------------
+function changeAction(tipo,action,mensaje){
+			
+			if (tipo =="confirmar"){			 
+			
+			  alertify.confirm("<p>"+mensaje+"<br><br></p>", function (e) {
+			  if (e) {
+				 
+					$("#result").html('<img src="../../kimages/z_add.png" align="absmiddle"/><b> AGREGAR NUEVO REGISTRO</b>');
+					 
+					
+			  		$("#action").val("add");
+					
+                    LimpiarPantalla();
+                    
+			  }
+			 }); 
+			}
+			if (tipo =="alerta"){			 
+			  alertify.alert("<b>"+mensaje+"<br><br></p>", function () {
+			  });
+			 }		  
+			return false	  
+		   }
+
+function accion(id,modo)
+{
+ 
+  
+			$("#action").val(modo);
+			
+			$("#id_compras").val(id);          
+
+			DetalleAsientoIR();
+
+}
+//-------------------------------------------------------------------------
+// ir a la opcion de editar
+function goToURL(accionDato,id) {
+
+	
+ 
+	
+	var parametros = {
+					'accion' : accionDato ,
+                    'id' : id 
+ 	  };
+	  $.ajax({
+					data:  parametros,
+					url:   '../model/Model-'+formulario,
+					type:  'GET' ,
+					cache: false,
+					beforeSend: function () { 
+ 							$("#result").html('Procesando');
+  					},
+					success:  function (data) {
+							 $("#result").html(data);  // $("#cuenta").html(response);
+							
+							 
+  					} 
+			}); 
+	  
+	  
+	  $("#data").html('');
+	  
+    }
+ 
+//-------------------------------------------------------------------------
+var formatNumber = {
+ separador: ".", // separador para los miles
+ sepDecimal: ',', // separador para los decimales
+ formatear:function (num){
+  num +='';
+  var splitStr = num.split('.');
+  var splitLeft = splitStr[0];
+  var splitRight = splitStr.length > 1 ? this.sepDecimal + splitStr[1] : '';
+  var regx = /(\d+)(\d{3})/;
+  while (regx.test(splitLeft)) {
+  splitLeft = splitLeft.replace(regx, '$1' + this.separador + '$2');
+  }
+  return this.simbol + splitLeft  +splitRight;
+ },
+ new:function(num, simbol){
+  this.simbol = simbol ||'';
+  return this.formatear(num);
+ }
+}
+//-------------------------------------------------------------------------
+// ir a la opcion de editar
+function LimpiarPantalla() {
+   
+	
+	var fecha = fecha_hoy();
+	
+	﻿$("#id_compras").val("");
+	$("#codsustento").val("01");
+	
+ 
+	$("#idprov").val("");
+	
+	$("#tipocomprobante").val("01");
+	$("#fecharegistro").val(fecha);
+	 
+	$("#serie").val("001001");
+	
+	$("#secuencial").val("");
+	$("#fechaemision").val(fecha);
+	$("#autorizacion").val("");
+
+	
+	$("#basenograiva").val(0);
+	$("#baseimponible").val(0);
+	$("#baseimpgrav").val(0);
+	$("#montoice").val(0);
+	$("#montoiva").val(0);
+	$("#valorretbienes").val(0);
+	$("#valorretservicios").val(0);
+	$("#valretserv100").val(0);
+	$
+	$("#porcentaje_iva").val(0);
+	$("#baseimpair").val(0);
+	
+	$("#pagolocext").val("01");
+	$("#paisefecpago").val("NA");
+	$("#faplicconvdobtrib").val("NA");
+	$("#fpagextsujretnorLeg").val("NA");
+	
+	$("#formadepago").val("01");
+	$("#fechaemiret1").val(fecha);
+	$("#serie1").val("001001");
+	$("#secretencion1").val("");
+	$("#autretencion1").val("");
+	
+	$("#docmodificado").val("");
+	$("#secmodificado").val("");
+	$("#estabmodificado").val("");
+	$("#autmodificado").val("");
+	$("#fpagextsujretnorleg").val("");   
+	
+    }
+   
+ 
+ //---------------------------
+ function fecha_hoy()
+{
+   
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+
+    var yyyy = today.getFullYear();
+    
+    if(dd < 10){
+        dd='0'+ dd
+    } 
+    if(mm < 10){
+        mm='0'+ mm
+    } 
+  
+    
+    var today = yyyy + '-' + mm + '-' + dd;
+    
+   return today;
+            
+} 
+ 
+  //------------------------------------------------------------------------- 
+  function BusquedaGrilla(oTable){        	 
+
+	 //  var oTable = $('#jsontable').dataTable();  //Initialize the datatable
+		var user = $(this).attr('id');
+		
+     	var anio = $("#canio").val();
+    	var mes = $("#cmes").val();
+    	var cestado = $("#cestado").val();
+    	
+    	
+    	
+          
+      var parametros = {
+				'anio' : anio  ,
+				'mes' : mes  ,
+				'cestado' : cestado
+      };
+
+		if(user != '') 
+		{ 
+		$.ajax({
+		 	data:  parametros,
+		    url: '../grilla/grilla_comprasc_emapa.php'  ,
+			dataType: 'json',
+			cache: false,
+			success: function(s){
+	 
+			oTable.fnClearTable();
+			if (s){ 
+					for(var i = 0; i < s.length; i++) {
+						 oTable.fnAddData([
+							s[i][0],
+							s[i][1],
+							s[i][2],
+							s[i][3],
+							s[i][4],
+							s[i][5],
+ 							'<button class="btn btn-xs" onClick="javascript:goToURL('+"'editar'"+','+ s[i][6] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;' + 
+							'<button class="btn btn-xs" onClick="javascript:goToURL('+"'del'"+','+ s[i][6] +')"><i class="glyphicon glyphicon-remove"></i></button>' 
+						]);										
+					} // End For
+			}				
+										
+			},
+			error: function(e){
+			   console.log(e.responseText);	
+			}
+			});
+		}
+ 
+		
+  }   
+  //------------------
+  function tramiteDato(oTableTramite){        	 
+
+	  
+	  
+	   
+			var user = $(this).attr('id');
+			
+	     	var anio = $("#canio").val();
+	    	var mes = $("#cmes").val();
+	    	
+	    	 
+	          
+	      var parametros = {
+					'anio' : anio  ,
+					'mes' : mes  
+	      };
+
+			 
+			$.ajax({
+			 	data:  parametros,
+			    url: '../grilla/grilla_comprasMysql.php',
+				dataType: 'json',
+				cache: false,
+				success: function(s){
+				//	console.log(s); 
+ 	 		 oTableTramite.fnClearTable();
+				if (s){ 
+						for(var i = 0; i < s.length; i++) {
+							oTableTramite.fnAddData([
+								s[i][0],
+								s[i][1],
+								s[i][2],
+								s[i][3],
+								s[i][4],
+ 								'<button class="btn btn-xs" onClick="javascript:goToURLTramite('+"'editar'"+','+ s[i][1] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;'  
+ 							]);										
+						} // End For
+				}				
+											
+				},
+				error: function(e){
+				   console.log(e.responseText);	
+				}
+				});
+		 
+	 
+			
+	  }   
+//--------------
+  //------------------------------------------------------------------------- 
+ 
+ 
+ 
+ function modulo()
+ {
+ 	 var modulo =  'ktributacion';
+ 	 
+ 	 var parametros = {
+			    'ViewModulo' : modulo 
+    };
+ 	$.ajax({
+			data:  parametros,
+			 url:   '../model/Model-moduloOpcion.php',
+			type:  'GET' ,
+			cache: false,
+			beforeSend: function () { 
+						$("#ViewModulo").html('Procesando');
+				},
+			success:  function (data) {
+					 $("#ViewModulo").html(data);  // $("#cuenta").html(response);
+				     
+				} 
+	});
+      
+
+ }
+//-----------------
+ function FormView()
+ {
+    
+
+	 $("#ViewForm").load('../controller/Controller-comprasc_emapa.php');
+      
+
+ }
+ 
+//----------------------
+ function FormFiltro()
+ {
+  
+	 $("#ViewFiltro").load('../controller/Controller-comprasc_filtro_emapa.php');
+	 
+
+ }
+ //------------------------
+ function monto_iva(valor_base){
+	 
+ 
+	  var flotante = parseFloat(valor_base)    * (12/100);
+	  
+	  if (valor_base > 0){
+		  
+		  $('#montoiva').val(flotante.toFixed(2));
+ 	  
+	  }else{
+ 		
+		  $('#montoiva').val(0); 
+ 	  
+	  }
+	
+	  var base12  	=  valor_base  ; 
+	  var base0		=  $('baseimponible').val()  ; 
+	  var baseNo	=  $('basenograiva').val() ; 
+	 
+	  var totalBase 	= parseFloat(base12).toFixed(2)  + parseFloat(base0).toFixed(2)  + parseFloat(baseNo).toFixed(2);
+	  
+	  
+	  flotante = parseFloat(totalBase).toFixed(2)  ;
+	  
+	  $('#baseimpair').val(flotante);
+ 
+}
+    
+//---------------
+ function NaN2Zero(n){
+	    return isNaN( n ) ? 0 : n; 
+	}
+//---------------
+ function monto_riva(tipo_retencion){
+	
+	  var monto_iva =  $('#montoiva').val(); 
+	  var base12  	=  NaN2Zero ( $('#baseimpgrav').val() ) ;   
+	  var iva = 0;
+	  var flotante = 0 ;
+	 
+	  if (tipo_retencion == 0){
+		  $('#valorretbienes').val(0);
+		  $('#valorretservicios').val(0);
+		  $('#valretserv100').val(0);
+ 		  }
+	 //-------------------
+	  if (tipo_retencion == 1){
+		  iva = monto_iva * (30/100);
+		  flotante = parseFloat(iva).toFixed(2)  ;
+		  $('#valorretbienes').val(flotante);
+		  $('#valorretservicios').val(0);
+		  $('#valretserv100').val(0);
+ 		  }
+	//-------------------
+	  if (tipo_retencion == 2){
+		  iva = monto_iva * (70/100);
+		  flotante = parseFloat(iva).toFixed(2)  ;
+		  $('#valorretbienes').val(0);
+		  $('#valorretservicios').val(flotante);
+		  $('#valretserv100').val(0);
+ 		  } 
+	//-------------------
+	  if (tipo_retencion == 3){
+		  iva = monto_iva * (100/100);
+		  flotante = parseFloat(iva).toFixed(2)  ;
+		  $('#valorretbienes').val(0);
+		  $('#valorretservicios').val(0);
+		  $('#valretserv100').val(flotante);
+ 		  }  
+	//-------------------
+	  if (tipo_retencion == 4){
+		  iva = monto_iva * (10/100);
+		  flotante = parseFloat(iva).toFixed(2)  ;
+		  $('#valorretbienes').val(flotante);
+		  $('#valorretservicios').val(0);
+		  $('#valretserv100').val(0);
+ 		  }  
+		//-------------------
+	  if (tipo_retencion == 5){
+		  iva = monto_iva * (70/100);
+		  flotante = parseFloat(iva).toFixed(2)  ;
+		  $('#valorretbienes').val(0);
+		  $('#valorretservicios').val(flotante);
+		  $('#valretserv100').val(0);
+ 		  } 	  
+}
+//-------------------
+//---------------
+function factura_codigo(n){
+	
+	 
+	 var secuencial =  parseFloat( $('#secuencial').val()  )
+	
+	var h =('00000000' + secuencial).slice (-9);
+	 
+	 $('#secuencial').val(h);
+	 
+	 
+	 
+	}
+//--------------------------------------------
+function ComprobanteElectronico( ) {
+	
+	  var id_compras  = $('#id_compras').val(); 
+	  var secuencial  = $('#secuencial').val(); 
+	  var idprov      = $('#idprov').val(); 
+	  
+	  
+	  var autretencion1      = $('#autretencion1').val(); 
+	  
+	  var longitud =  $("#autretencion1").val().length;
+ 
+	  
+	  
+ 	  var parametros = {
+			    'id_compras' : id_compras ,
+			    'secuencial': secuencial,
+			    'idprov': idprov
+   };
+	  
+ 	  
+ 	  if (longitud == 0){
+ 		  
+ 		 alertify.confirm("<p>Generar comprobante electronico</p>", function (e) {
+ 			 
+ 			  if (e) {
+ 			 	  
+ 					  	$.ajax({
+ 					 			data:  parametros,
+ 					 			 url:   '../model/Model-ComprobanteElectronico.php',
+ 					 			type:  'GET' ,
+ 					 			 async:true,    
+ 			                      cache:false,   
+ 					 			beforeSend: function () { 
+ 					 						$("#data").html('Procesando');
+ 					 				},
+ 					 			success:  function (data) {
+ 					 				
+ 					 					 $("#data").html(data);   
+ 					 					 
+ 					 				      
+ 					 				}  
+ 					 				 	
+ 					 	});
+ 		 
+ 			  }
+ 			 }); 
+ 	  }
+ 	  else {
+ 		  
+ 		 $.ajax({
+	 			data:  parametros,
+	 			 url:   '../model/Model-ComprobanteElectronico.php',
+	 			type:  'GET' ,
+	 			 async:true,    
+                cache:false,   
+	 			beforeSend: function () { 
+	 						$("#data").html('Procesando');
+	 				},
+	 			success:  function (data) {
+	 				
+	 					 $("#data").html(data);   
+	 					 
+	 				      
+	 				}  
+	 				 	
+	 	});
+ 	  }
+ 	  
+ 	  
+ 	  
+     
+	 
+}
+// ---------
+function VerNovedad(){
+	
+	var id_compras  = $('#id_compras').val(); 
+	  var secuencial  = $('#secuencial').val(); 
+	  var idprov      = $('#idprov').val(); 
+	
+ 	  
+	  var parametros = {
+			    'id_compras' : id_compras ,
+			    'secuencial': secuencial,
+			    'idprov': idprov
+ };
+	   
+		 	  
+				  	$.ajax({
+				 			data:  parametros,
+				 			 url:   '../model/Model-ElectronicoNovedad.php',
+				 			type:  'GET' ,
+				 			 async:true,    
+		                      cache:false,   
+				 			beforeSend: function () { 
+				 						$("#data").html('Procesando');
+				 				},
+				 			success:  function (data) {
+				 				
+				 					 $("#data").html(data);   
+				 					 
+				 				      
+				 				}  
+				 				 	
+				 	});
+	 
+		 
+	
+}
+//-----------------  
+function ComprobanteActualiza( retencion,autorizacion,fechap,serie) {
+	
+	 $('#secretencion1').val(retencion); 
+	 $('#autretencion1').val(autorizacion); 
+	 $('#fechaemiret1').val(fechap); 
+	 $('#serie1').val(serie); 
+	 
+      
+}
+
+//------------------------------------------------------------------------- .
+//-------------------
+function calculoFuente(codigoAux)
+{
+	 
+	var baseimpair =  $('#baseimpair').val();
+	 
+
+	 var parametros = {
+			    'codigoAux' : codigoAux ,
+			    'baseimpair': baseimpair
+  };
+	 
+	 if (baseimpair){
+	 
+		$.ajax({
+				data:  parametros,
+				 url:   '../model/ajax_FuenteCalculo.php',
+				type:  'GET' ,
+				cache: false,
+				beforeSend: function () { 
+							$("#retencion_fuente").html('Procesando');
+					},
+				success:  function (data) {
+						 $("#retencion_fuente").html(data);  // $("#cuenta").html(response);
+					     
+					} 
+		});
+	 }
+}
+//------------------------------------------------------------------------- 
+function DetalleAsientoIR()
+{
+	  
+
+	  var id_compras = $('#id_compras').val(); 
+	  
+	  var parametros = {
+			    'id_compras' : id_compras 
+   };
+	  
+	$.ajax({
+			data:  parametros,
+			 url:   '../model/ajax_DetAsientoIR.php',
+			type:  'GET' ,
+			cache: false,
+			beforeSend: function () { 
+						$("#retencion_fuente").html('Procesando');
+				},
+			success:  function (data) {
+					 $("#retencion_fuente").html(data);   
+				     
+				} 
+	});
+
+}
+//-----------
+//------------------------------------
+function openFile(url,ancho,alto) {
+    
+	  var posicion_x; 
+  var posicion_y; 
+  var enlace; 
+  
+  posicion_x=(screen.width/2)-(ancho/2); 
+  posicion_y=(screen.height/2)-(alto/2); 
+  
+ 
+  
+  enlace = url  ;
+
+  window.open(enlace, '#','width='+ancho+',height='+alto+',toolbar=0,scrollbars=no,resizable=no,left='+posicion_x+',top='+posicion_y+'');
+}
+
+//------
+function goToURLTramite(valor,codigo) {
+    
+	
+	   alert(codigo);
+	   
+	   var parametros = {
+		 			    'id_tramite' : codigo  
+		     };
+			  
+		  	$.ajax({
+		 			data:  parametros,
+		 			 url:   '../model/Model-comprascMysql.php',
+		 			type:  'GET' ,
+		 			cache: false,
+		 			beforeSend: function () { 
+		 						$("#ViewEnlace").html('Procesando');
+		 				},
+		 			success:  function (data) {
+		 					    $("#ViewEnlace").html(data);   
+		 				     
+		 				} 
+		 	});
+  
+		 	
+		 	$("#myModal").modal('hide');//ocultamos el modal
+		 	
+		 	BusquedaGrilla(oTable);
+
+ }
+ 

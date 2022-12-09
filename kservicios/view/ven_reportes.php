@@ -1,0 +1,311 @@
+<?php
+	session_start( );
+
+?>	
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+	<meta charset="utf-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    
+    <title>Plataforma de Gestión Empresarial</title>
+	
+    <?php  require('Head.php')  ?> 
+   	
+	<script src="../js/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
+
+  	
+	<script type="text/javascript" src="../js/ven_reportes.js"></script> 
+    
+</head>
+<body>
+<div id="main">
+	
+   <!-- ------------------------------------------------------ -->  
+	<div class="col-md-12" role="banner">
+		
+ 	   <div id="MHeader"></div>
+		
+ 	</div> 
+ 	
+	<div id="mySidenav" class="sidenav">
+		
+		<div class="panel panel-primary">
+		  <div class="panel-heading"><b>OPCIONES DEL MODULO</b></div>
+				<div class="panel-body">
+					<div id="ViewModulo"></div>
+				</div>
+		</div>
+		
+   </div>
+	
+       <!-- Content Here -->
+    <div class="col-md-12"> 
+		
+       <!-- Content Here -->
+		
+	    <div class="row">
+			
+ 		 	     <div class="col-md-12">
+						   <!-- Nav tabs     <ul id="mytabs" class="nav nav-tabs" role="tablist">-->      
+					 
+                    <ul id="mytabs" class="nav nav-tabs">  
+						
+                   		<li class="active"><a href="#tab1" data-toggle="tab"></span>
+                   		 <span class="glyphicon glyphicon-th-list"></span> <b>DETALLE DE EMISION POR PERIODO</b>  </a>
+                   		</li>
+                  		<li><a href="#tab2" data-toggle="tab">
+                  			<span class="glyphicon glyphicon-link"></span> INFORME MENSUAL</a>
+                  		</li>
+					 
+                   </ul>
+		
+                     <!-- ------------------------------------------------------ -->
+                     <!-- Tab panes -->
+                     <!-- ------------------------------------------------------ -->
+		
+                   <div class="tab-content">
+                   <!-- Tab 1 -->
+					   
+                   		<div class="tab-pane fade in active" id="tab1" style="padding-top: 3px">
+							
+							  <div class="panel panel-default">
+
+								  <div class="panel-body" > 
+
+												       <div class="col-md-12" style="background-color:#EFEFEF;padding: 10px" >
+
+																	<div id="ViewFiltro"></div> 
+
+																<div style="padding-top: 5px;" class="col-md-3">
+																				<button type="button" class="btn btn-sm btn-primary" id="load">  <i class="icon-white icon-search"></i> Buscar</button>	
+																</div>
+
+
+															</div>
+
+									   
+
+													 <div class="col-md-12">
+ 																 <table id="jsontable" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+																							<thead>
+																								<tr>
+ 																								<th width="5%">Codigo</th>	
+																								<th width="7%">Fecha</th>
+																								<th width="8%">Identificacion</th>
+																								<th width="35%">Contribuyente</th>
+																								<th width="30%" bgcolor=#C0AFCC>Detalle</th>
+																							     <th width="10%">Estado</th>
+																								<th width="5%" bgcolor="#FC1E21">Monto</th> 
+																								</tr>
+																							</thead>
+																  </table>
+													  </div>  
+
+								</div>  
+
+							 </div> 
+							
+                		</div>
+                 
+					    <!-- Tab 2 -->
+                 
+					   <div class="tab-pane fade in" id="tab2"  style="padding-top: 3px">
+						   
+								  <div class="panel panel-default">
+
+									  <div class="panel-body"> 
+
+												 
+
+												<div class="col-md-12" style="padding-bottom: 10px;padding-top: 10px">
+
+														<div class="btn-group btn-group-sm">
+															
+															
+															<div class="btn-group">
+  																
+																		  <div class="btn-group">
+																			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+																			Emision por Usuario <span class="caret"></span></button>
+																			<ul class="dropdown-menu" role="menu">
+																			  <li><a   onClick="goToURL(1)" href="#">Periodo Por Usuario</a></li>
+																			  <li><a  onClick="goToURL(4)"href="#">Rubro Por Usuario</a></li>
+																			</ul>
+																		  </div>
+																
+																
+																  		<div class="btn-group">
+																			<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+																			Emision <span class="caret"></span></button>
+																			<ul class="dropdown-menu" role="menu">
+																			  <li><a onClick="goToURL(2)"  href="#">Resumen por Rubro</a></li>
+																			  <li><a onClick="goToURL(3)" href="#">Resumen por Estados</a></li>
+																			</ul>
+																		  </div>
+																
+																		<div class="btn-group">
+																			<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+																			Recaudación <span class="caret"></span></button>
+																			<ul class="dropdown-menu" role="menu">
+																			  <li><a onClick="goToURL(7)"  href="#">Detalle Diario</a></li>
+																			  <li><a onClick="goToURL(81)" href="#">Resumen por Rubro</a></li>
+																			  <li><a onClick="goToURL(82)" href="#">Resumen por Año</a></li>
+																			</ul>
+																		  </div>
+																
+																
+																	 	<button type="button" onClick="goToURL(8)"  class="btn btn-warning">Facturas Electronicas</button>
+																
+																
+																		<div class="btn-group">
+																			<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+																			Resumen Financiero <span class="caret"></span></button>
+																			<ul class="dropdown-menu" role="menu">
+																			  <li><a onClick="goToURL(5)"  href="#">Resumen Emision Financiero</a></li>
+																			  <li><a onClick="goToURL(6)" href="#">Resumen Presupuestario</a></li>
+																			</ul>
+																		  </div>
+																
+																			<button  id="printButton" type="button" class="btn btn-default">Impresion</button>
+
+																		    <button  id="ExcelButton" type="button" class="btn btn-default">Excel</button>
+																
+															 </div>
+															
+
+ 															 
+
+													   </div>
+											   </div>
+
+											 
+										<div class="col-md-12" style="padding-bottom: 10px;padding-top: 10px">
+
+											 <div style="overflow-y:scroll; overflow-x:hidden; height:650px; padding: 5px"> 
+ 												  
+												 
+												  <div id="ViewForm"> </div>
+
+ 												 
+											  </div>
+										  
+										   </div> 
+									  </div>
+
+								  </div>
+            		   </div>
+		 
+					   
+					   <!-- Tab 3 -->
+              
+			   </div>	  
+		
+ 				</div>
+      </div>
+   
+  	<!-- Page Footer-->
+    <div id="FormPie"></div>  
+	
+	
+ </div>   
+ 	
+	 <!-- Modal -->
+  <div class="modal fade" id="myModalEspecie" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Registro de Especies</h4>
+        </div>
+		  
+        
+		  <div class="modal-body">
+											 <div class="form-group" style="padding-bottom: 5px">
+													 <div class="panel panel-default">
+
+														 <div class="panel-body">
+
+															 <div id="ViewFormEspecie"> var</div> 
+															 
+															 
+															 <div id="MensajeParametro"> </div> 
+
+														 </div>
+
+													 </div>   
+											 </div>
+								  </div>
+		  
+		  
+        <div class="modal-footer">
+
+			<button type="button" class="btn btn-danger" onClick="AgregarEspecie();" data-dismiss="modal">Guardar Informacion</button>
+			
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			
+			
+        </div>
+      </div>
+      
+    </div>
+  </div>
+	
+	
+	
+	 <!-- Modal -->
+  <div class="modal fade" id="myModalTramite" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Enlace Tramites</h4>
+        </div>
+		  
+        
+		  <div class="modal-body">
+											 <div class="form-group" style="padding-bottom: 5px">
+													 <div class="panel panel-default">
+
+														 <div class="panel-body">
+																<label style="padding-top: 15px;text-align: right;" class="col-md-2">
+																		Nro.Tramite
+															 	</label>
+															 
+															 <div style="padding-top: 5px;" class="col-md-6">
+																 <input type="number" name="id_tramite" id="id_tramite" autocomplete="off" class="form-control" style="background-color:#c6dcff" placeholder="Ingrese Tramite Descuento" value="0">
+															 </div>
+															 
+															 
+															 <div id="MensajeParametro1"> </div> 
+
+														 </div>
+
+													 </div>   
+											 </div>
+								  </div>
+		  
+		  
+        <div class="modal-footer">
+
+			<button type="button" class="btn btn-danger" onClick="AgregarTramite();" data-dismiss="modal">Guardar Informacion</button>
+			
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			
+			
+        </div>
+      </div>
+      
+    </div>
+  </div>
+	
+ </body>
+
+</html>
+ 

@@ -1,0 +1,85 @@
+@page { margin: 200px 50px 150px 50px; }
+
+body {
+  position: relative;
+  width: 18cm;  
+  margin: 0 auto; 
+  color: #001028;
+  background: #FFFFFF; 
+  font-family: Arial, sans-serif; 
+  font-size: 12px; 
+}
+
+.padding {
+  padding: 30px 0;
+}
+
+
+h1 {
+  color: #5D6975;
+  font-size: 2.4em;
+  line-height: 1.4em;
+  font-weight: normal;
+  text-align:center;
+}
+
+
+    
+	#header { position: fixed; left: 0px; top: -110px; right: 0px; height: 110px; background-color:#FFFFFF; text-align: center; }
+	
+    #footer { position: fixed; left: 0px; bottom: -125px; right: 0px; height: 50px; background-color:#FFFFFF; }
+	
+    #footer .page:after { 
+	/*	content: counter(page, upper-roman); */
+		counter-increment: section;
+        content: "Pag " counter(section) " ";
+	
+	}
+
+	.round3 {
+    border: 1px solid #767676;
+    border-radius: 5px;
+    }
+	
+.tabla {
+ 	 border: #767676 1px solid;
+	 margin: 3px;	
+	 padding: 3px;
+  	}
+	.tablaTotal {
+ 	 margin: 3px;	
+	 padding: 3px;
+  	}
+
+   .cabecera_font {
+ 	 font-size: 10px;
+	 font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+	 color: #939393;
+  	}
+	
+	
+	.tablaPie {
+ 	 border: #767676 1px solid;
+	 margin: 25px;	
+	 padding: 25px;
+  	}
+	.tablaPie1 {
+ 	 border: #767676 1px solid;
+	 margin: 3px;	
+	 padding: 3px;
+  	}
+
+.tablap {
+ 	 border: #767676 1px solid;
+	 margin: 3px;	
+	 padding: 3px;
+	 border-collapse: collapse;
+  	}
+
+ 
+	.lado {
+ 	 border: #767676 1px solid;
+	 margin: 1px;	
+	 padding: 3px;
+	 border-collapse: collapse;
+  	}

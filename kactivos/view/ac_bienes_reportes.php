@@ -1,0 +1,375 @@
+<?php
+session_start( );
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); 
+header("Cache-Control: no-store, no-cache, must-revalidate"); 
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+if (empty($_SESSION['usuario']))  {
+	    header('Location: ../../kadmin/view/login');
+	}
+
+?>	
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    
+    <title>Plataforma de Gestión Empresarial</title>
+	
+    <?php  require('Head.php')  ?> 
+ 
+ 	 <script type="text/javascript" src="../js/ac_bienes_reportes.js"></script> 
+ 	 
+	<script src="../js/jquery.PrintArea.js" type="text/JavaScript" language="javascript">
+	
+	</script>
+	
+	 <style type="text/css">
+		 
+	 #mdialTamanio{
+  					width: 75% !important;
+		}
+ 
+		#mdialTamanio1{
+      			width: 85% !important;
+   			 }
+		
+		#mdialTamanio2{
+      			width: 65% !important;
+   			 }
+	 
+	 .highlight {
+ 			 background-color: #FF9;
+	   }
+	  .de {
+  			 background-color:#A8FD9E;
+	  }
+	  .ye {
+  			 background-color:#93ADFF;
+	  }
+	 .di {
+  			 background-color:#F5C0C1;
+	  }
+</style>	
+	
+</head>
+<body>
+
+	<div class="col-md-12" role="banner">
+		
+ 	   <div id="MHeader"></div>
+		
+ 	</div> 
+ 	
+	<div id="mySidenav" class="sidenav">
+		<div class="panel panel-primary">
+		  <div class="panel-heading"><b>OPCIONES DEL MODULO</b></div>
+				<div class="panel-body">
+					<div id="ViewModulo"></div>
+				</div>
+		</div>
+   </div>
+	
+       <!-- Content Here -->
+    <div class="col-md-12"> 
+        		 <!-- Content Here -->
+		
+	        <ul id="mytabs" class="nav nav-tabs">       
+ 				 
+                   		<li class="active"><a href="#tab1" data-toggle="tab"></span>
+                   			<span class="glyphicon glyphicon-th-list"></span> <b>DETALLE DE BIENES</b></a>
+                   		</li>
+                  		<li><a href="#tab2" data-toggle="tab">
+                  			<span class="glyphicon glyphicon-link"></span> RESUMEN DE BIENES</a>
+                  		</li>
+           </ul>
+                    
+           <!-- ------------------------------------------------------ -->
+           <!-- Tab panes -->
+           <!-- ------------------------------------------------------ -->
+           <div class="tab-content">
+            
+           <!-- ------------------------------------------------------ -->
+           <!-- Tab 1 -->
+           <!-- ------------------------------------------------------ -->
+			   
+ 
+			   
+            <div class="tab-pane fade in active" id="tab1" style="padding-top: 3px">
+ 			  <div class="panel panel-default">
+					<div class="panel-body" > 
+											  
+  					  <div class="col-md-12" style="background-color:#ededed;padding-bottom: 20px;padding-top: 20px">
+													    
+ 														    <div id="ViewFiltro"></div> 
+														   
+ 															<div class="col-md-3" style="padding-top: 8px">
+																	<button type="button" class="btn btn-sm btn-primary" id="load">  
+																	<i class="icon-white icon-search"></i> Buscar</button>	
+																
+																   <button title="Exportar a excel bienes filtro"  type="button" class="btn btn-sm btn-default" id="saveAsExcel">  
+																	<i class="icon-white icon-download-alt"></i></button>	
+																
+																 <button title="Exportar a excel bienes"  type="button" class="btn btn-sm btn-info" id="saveAsExcelResumen">  
+																	<i class="icon-white icon-download-alt"></i></button>	
+																
+																 <button title="Impresion por grupo contable" type="button" class="btn btn-sm btn-warning" id="saveAsReporte">  
+																	<i class="icon-white icon-print"></i></button>	
+																
+																
+																 <button title="Impresion por Unidades" type="button" class="btn btn-sm btn-success" id="saveAsReporteUnidad">  
+																	<i class="icon-white icon-bar-chart"></i></button>	
+																
+															</div>
+													 
+						  
+ 
+					 </div>
+						
+						
+						
+					  <div class="col-md-12"   id="jsontable_div" >
+						  
+ 												        <h5>Transacciones por periódo</h5>
+													   <table id="jsontable" class="display table table-condensed table-hover datatable" cellspacing="0" width="100%">
+																					<thead>
+																						<tr>
+																					    <th width="5%">Activo</th>
+																						<th width="15%">Unidad</th>
+																						<th width="20%">Custodio</th>
+																						<th width="40%">Detalle</th>
+																						<th width="10%">Fecha</th>
+																						<th width="5%">Acta Generada</th>						
+																						<th width="5%">Costo</th>
+ 																						</tr>
+																					</thead>
+														  </table>
+						 
+						 </div>  
+ 					
+				  </div>
+				  </div>
+                 </div>
+           
+             <!-- ------------------------------------------------------ -->
+             <!-- Tab 2 -->
+             <!-- ------------------------------------------------------ -->
+			   
+                  <div class="tab-pane fade in" id="tab2"  style="padding-top: 3px" >
+  					
+					   <div class="col-md-12" style="padding: 20px" >
+					 	 <button type="button" class="btn btn-sm btn-default" id="loadprint" title="Imprimir Presupuesto de ingreso">  
+																	<i class="icon-white icon-print"></i> Resumen de Bienes</button>
+					       
+						    <button type="button" class="btn btn-sm btn-default" id="loadprintdatos" title="Imprimir Presupuesto de ingreso">  
+																	<i class="icon-white icon-print"></i> Resumen de Financiero Bienes</button>
+			   
+					  
+					  <div id="impresion_resumen">
+					  
+					    <div class="col-md-12">
+					  
+								 <div id="ViewForm"> </div>
+							  
+					   </div>
+					  
+					    <div class="col-md-12">
+						  
+							  <div class="col-md-6">
+								 <div class="panel panel-default">
+									 <div class="panel-heading">Bienes de Larga Duración -  Ubicacion</div>
+									  <div class="panel-body">
+											  <div class="widget box">
+														<div class="widget-content">
+
+														 <div id="ViewSede"></div>
+
+														</div>
+											   </div> <!-- /.col-md-6 -->
+									  </div>
+								  </div>
+							 </div>
+			 		 
+					  
+							  <div class="col-md-6">
+								 <div class="panel panel-default">
+									 <div class="panel-heading">Bienes de Larga Duración -  Grupo</div>
+									  <div class="panel-body">
+											  <div class="widget box">
+														<div class="widget-content">
+
+														 <div id="ViewGrupo"></div>
+
+														</div>
+											   </div> <!-- /.col-md-6 -->
+									  </div>
+								  </div>
+					</div>			  
+								  
+				 </div>
+					  
+					  
+					    <div class="col-md-12">
+						  
+							  <div class="col-md-6">
+								 <div class="panel panel-default">
+									 <div class="panel-heading">Bienes de Larga Duración -  Periodo Adquisicion</div>
+									  <div class="panel-body">
+											  <div class="widget box">
+														<div class="widget-content">
+
+														 <div id="ViewSedePeriodo"></div>
+
+														</div>
+											   </div> <!-- /.col-md-6 -->
+									  </div>
+								  </div>
+							 </div>
+							
+							
+							 <script src="https://code.highcharts.com/highcharts.js"></script>
+							 <script src="https://code.highcharts.com/modules/exporting.js"></script>
+							 <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+							 <script type="text/javascript" src="../js/gestion_grafico.js"></script> 
+
+				
+							  <div class="col-md-6">
+								 <div class="panel panel-default">
+									 <div class="panel-heading">Unidades Bienes de Larga Duración -  Unidades</div>
+									  <div class="panel-body">
+
+
+													<div id="ViewUnidad" style="height: 450px"> </div>
+
+
+
+										</div><!--/.row-->
+									</div>
+								</div>
+					   </div>
+						  
+					   </div>	  
+					  
+              	  </div>
+			   
+          	 </div>
+		   
+ 		</div>
+
+
+	 <input type="hidden" id="cuenta_tmp" name="cuenta_tmp">
+
+   	<div id="FormPie"></div>  
+	
+ 
+
+	<div class="modal fade" id="myModalDocVisor" role="dialog">
+	  <div class="modal-dialog" id="mdialTamanio">
+
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">Visor de Documento</h4>
+			</div>
+			<div class="modal-body">
+ 
+				<embed src=""   width="100%"  height="450px" id="DocVisor" name ="DocVisor" />
+			 
+ 
+			</div>
+			  
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		  </div>
+
+		</div>
+	  </div>
+
+	<div class="modal fade" id="myModalTramite" role="dialog">
+
+			  <div class="modal-dialog" id="mdialTamanio1">
+
+				<!-- Modal content-->
+				 <div class="modal-content">
+				 <div class="modal-header">
+				  <button type="button" class="close"  data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">Tramites Disponibles</h4>
+				 </div>
+				 <div class="modal-body">
+					 <div class='row'>
+							<div class="col-md-12" style="padding-top: 5px;">
+											<div id='VisorTramite'></div>
+
+							 </div>	
+					  </div>	 
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			  </div>
+			</div>
+	  </div>
+
+
+	<div class="modal fade" id="myModalLote" role="dialog">
+
+			  <div class="modal-dialog">
+
+				<!-- Modal content-->
+				 <div class="modal-content">
+				 <div class="modal-header">
+				  <button type="button" class="close"  data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">Generar lote de informacion</h4>
+				 </div>
+				 <div class="modal-body">
+					 <div class='row'>
+							<div class="col-md-12" style="padding-top: 5px;">
+								
+								 <div class="form-group">
+									<label>Detalle Bien Matriz</label>
+							     	<input type="text" id="nombre_bien" name="nombre_bien" readonly class="form-control">
+								  </div>
+								
+								 <div class="form-group">
+									<label>Tipo Matriz</label>
+							     	<input type="text" id="forma_bien" name="forma_bien" readonly class="form-control">
+								  </div>
+								
+								<div class="form-group">
+									<label>Nro.Tramite</label>
+							     	<input type="text" id="tramite_bien" name="tramite_bien" readonly class="form-control">
+								  </div>
+								
+								<div class="form-group">
+									<label>Proveedor</label>
+							     	<input type="text" id="proveedor_bien" name="proveedor_bien" readonly class="form-control">
+								  </div>
+								
+								 
+								<div class="form-group">
+									<label>Nro. Registros a generar</label>
+							     	 <input type="text" id="lote_bien" name="lote_bien" class="form-control" value="0" placeholder="Registre el numero de lotes">
+								  </div>
+ 
+							 </div>	
+					  </div>	 
+				</div>
+				<div class="modal-footer">
+					
+					<button type="button" class="btn btn-danger" onClick="GeneraLotes_bien();" >Procesar informacion</button>
+					
+				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			  </div>
+			</div>
+	  </div>
+
+  </body>
+ 
+</html>

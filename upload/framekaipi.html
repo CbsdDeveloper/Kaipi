@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script language="javascript" src="jquery-1.3.min.js"></script>
+
+<script language="javascript">
+$(document).ready(function() {
+    $().ajaxStart(function() {
+        $('#loading').show();
+        $('#result').hide();
+    }).ajaxStop(function() {
+        $('#loading').hide();
+        $('#result').fadeIn('slow');
+    });
+    $('#form, #fat, #fo3').submit(function() {
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function(data) {
+                $('#result').html(data);
+
+            }
+        })
+        
+        return false;
+    }); 
+})  
+</script>
+<title>GeneradorCodigo</title>
+</head>
+
+<body>
+ 
+<div class="col-md-6">
+
+  <h2>Generador de codigo</h2>
+  <p><strong> </strong></p>
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Sentencia Select - tabla de datos</a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse in">
+        <div class="panel-body"> 
+        <form method="post" action="framekaipi.php" id="fo3" name="fo3" >
+      <h4>Herramienta de ApoyoKaipi</h4>
+   
+      <p><select name="tipo" id="tipo" class="form-control">
+        <option value="CA">Consulta SQL arrayObject</option>
+        <option value="CC">Consulta SQL cursor</option>
+        <option value="AA">Agregar</option>
+        <option value="EE">Editar</option>
+        <option value="EL">Eliminar</option>
+        <option value="LI">Limpiar</option>
+     </select></p>
+     <p>SentenciaSQL:</p>
+     <p>
+       <textarea name="textoedicion" class="form-control" cols="110" rows="10" id="textoedicion"></textarea>
+     </p>
+
+     <p> <input class="btn btn-success" type="submit" name="submit" id="submit" value="Enviar"></p>
+ 
+</form>
+</div>
+      </div>
+    </div>
+  </div> 
+</div>
+
+  <div class="col-md-6">
+ 		 <div class="well">Codigo generado</div>
+    	 <div id="result"></div>
+ </div>
+ 
+ 
+</body>
+</html>
