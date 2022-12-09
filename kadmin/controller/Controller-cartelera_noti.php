@@ -155,17 +155,36 @@
                 $this->set->div_label(12,'DESTINATARIOS ');	 
 
 
-                $resultado =  $this->combo_lista("nom_departamento");
-                $this->obj->list->listadb($resultado,$tipo,'Unidades','unidades',$datos,'required','','div-2-10');
+             
 
 
                 
-                $resultado =  $this->combo_lista("nom_regimen");
-                $this->obj->list->listadb($resultado,$tipo,'Regimen','regimen',$datos,'required','','div-2-10');
-                
+                $MATRIZ_P = array(
+                    '0'    => 'Normal',
+                    '6'    => 'Responsable Planificacion Unidad'
+                 );
+        
+
+                 $this->obj->list->lista('Rol',$MATRIZ_P,'rol',$datos,'required','','div-2-10');
 
               
+                 
+                $MATRIZ_SINO = array(
+                    'N'    => 'NO',
+                    'S'    => 'SI'
+                );
+
+              
+
+                 $this->obj->list->lista('Directores',$MATRIZ_SINO,'director',$datos,'required','','div-2-10');
                 
+             
+
+                 $resultado =  $this->combo_lista("nom_departamento");
+                 $this->obj->list->listadb($resultado,$tipo,'Unidades','unidades',$datos,'required','','div-2-10');
+
+
+
 
 
                 echo ' <div class="col-md-12" style="padding: 25px" > 
@@ -198,7 +217,7 @@
            
            $resultado =  $this->bd->ejecutarLista("id_plantilla,titulo",
                $tabla,
-               "tipo = ".$this->bd->sqlvalue_inyeccion( '3' ,true),
+               "tipo in ('3','4','5')",
                "order by 2");
                
        }

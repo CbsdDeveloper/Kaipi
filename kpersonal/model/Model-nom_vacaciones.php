@@ -333,8 +333,21 @@
         );
 
         $result = $this->div_resultado('novalido',$id,-1,'');
- 
+
+
+        $bandera = 0;
+
         if ( trim($x['estado']) == '4') {
+             $bandera = 1;
+        }
+        if ( trim($x['estado']) == '1') {
+             $bandera = 1;
+        }
+
+
+
+ 
+        if (   $bandera == 1 ) {
 
 
             $sql = "update nom_vacaciones
@@ -359,7 +372,7 @@
 
             $this->bd->ejecutar($sql);
                     
-            $result = $this->div_resultado('aprobado',$id,4,'');
+            $result = $this->div_resultado('aprobado',$id,4,$idprov);
          
         }
         echo $result;
@@ -462,14 +475,24 @@
             $id        = $_GET['id'];
             
             if ( $accion == 'aprobar'){
+
                 $gestion->aprobar_tramite($id);
+
             } else {
+
                 if ( $accion == 'anular'){
                     $tipo    = trim($_GET['tipo']);
                     $gestion->anular_tramite($id,$tipo );
                  } else {
-                    $gestion->consultaId($accion,$id);
+                   if ( $accion == 'saldos'){
+                       
+                      echo 'saldos';
+                      
+                 } else {
+                      $gestion->consultaId($accion,$id);
+                     }
                  }
+
             } 
            
      }  

@@ -4,6 +4,7 @@ require '../../kconfig/Db.class.php';
 require '../../kconfig/Obj.conf.php';
 include('phpqrcode/qrlib.php');
 
+
 class ReportePdf{
 
 	public $obj ;
@@ -13,6 +14,7 @@ class ReportePdf{
 	private $anio;
 	
 	//Constructor de la clase
+	
 	function ReportePdf(){
 		//inicializamos la clase para conectarnos a la bd
 		$this->obj       = 	new objects;
@@ -23,6 +25,7 @@ class ReportePdf{
 		
 	}
 	//------------------------------------
+	
 	function CabCaja($asiento){
 	    
 	    //--- beneficiario
@@ -38,6 +41,46 @@ class ReportePdf{
 	    return $datos;
 	}
 	
+	//----------------
+	
+	function Tramite_variables_formulario($tramite,$id_rubro){
+	    
+	    
+	    
+	    
+	    $sql_det1 = 'SELECT etiqueta
+                    FROM rentas.view_ren_tramite_var
+                    where id_rubro = '.$this->bd->sqlvalue_inyeccion($id_rubro,true). ' and
+						  id_ren_tramite = '.$this->bd->sqlvalue_inyeccion($tramite,true).'  
+                    group by etiqueta ORDER BY etiqueta ASC' ;
+	    
+	    
+	    
+	    $stmt1 = $this->bd->ejecutar($sql_det1);
+	    
+	    
+	    
+	    
+	    while ($xx=$this->bd->obtener_fila($stmt1)){
+	        
+	        
+	        $etiqueta  = trim($xx['etiqueta']) ;
+	        
+	        echo '<div class="col-md-12">';
+	        
+	        echo '<span style="font-size: 11px"><b>'. strtoupper($etiqueta) .'</b></span>';
+	        
+	        $this->crea_formulario_formato( $etiqueta, $id_rubro ,$tramite);
+	        
+	        
+	        echo '</div>';
+	        
+	        
+	    }
+	    
+	    
+	    
+	}
 	/*
 
 	*/
@@ -80,13 +123,77 @@ class ReportePdf{
 	
 
 	}
+	
+	/*
+	 */
+	function crea_formulario_formato(  $etiqueta, $id_rubro ,$id ){
+	    
+	    
+	    
+	    $sql_det2 = 'SELECT valor_variable,  nombre_variable,    id_catalogo,   etiqueta, columna
+						FROM rentas.view_ren_tramite_var
+						where id_rubro = '.$this->bd->sqlvalue_inyeccion($id_rubro,true).' and
+					      	  id_ren_tramite = '.$this->bd->sqlvalue_inyeccion($id,true).' and
+							  etiqueta = '.$this->bd->sqlvalue_inyeccion($etiqueta,true).'   
+					     ORDER BY id_rubro_var' ;
+	    
+	    $stmt2 = $this->bd->ejecutar($sql_det2);
+	    
+	    
+	    echo '  <table border="0" width="100%" cellspacing="0" cellpadding="0" >';
+	    
+	    
+	    $i = 0;
+	    
+	    while ($x=$this->bd->obtener_fila($stmt2)){
+	        
+	        
+	        $nombre_variable  = trim($x['nombre_variable']) ;
+	        
+	        $valor_variable  = trim($x['valor_variable']) ;
+	        
+	        $catalogo = trim($x['id_catalogo']);
+	        
+	        $long = strlen($catalogo);
+	        
+	        if ( $long  > 1 ) {
+	            
+	            $xy = $this->bd->query_array('par_catalogo',
+	                'nombre',
+	                'idcatalogo='.$this->bd->sqlvalue_inyeccion(trim($valor_variable) ,true)
+	                );
+	            
+	            $valor_variable = trim($xy['nombre'] );
+	            
+	        }
+	        
+	        if ($i%2==0){
+	            echo '<tr>';
+	            echo '<td width="20%" style="font-size: 10px;padding: 2px; border-collapse: collapse; border: 1px solid #AAAAAA;">'.$nombre_variable.'</td>';
+	            echo '<td width="30%" style="font-size: 10px;padding: 2px; border-collapse: collapse; border: 1px solid #AAAAAA;"><strong>&nbsp;</strong></td>';
+	        }else{
+	            echo '<td width="20%" style="font-size: 10px;padding: 2px; border-collapse: collapse; border: 1px solid #AAAAAA;">'.$nombre_variable.'</td>';
+	            echo '<td width="30%" style="font-size: 10px;padding: 2px; border-collapse: collapse; border: 1px solid #AAAAAA;"><strong>&nbsp;</strong></td>';
+	            echo '</tr>';
+	        }
+	        
+	        
+	        
+	        $i ++ ;
+	        
+	    }
+	    
+	    echo '</tr>';
+	    
+	    echo '  </table>';
+	    
+	}   
 	/*
 	*/
 	function crea_formulario(  $etiqueta, $id_rubro ,$id ){
        
 
-		$tipo = $this->bd->retorna_tipo();
-				
+ 				
 			$sql_det2 = 'SELECT valor_variable,  nombre_variable,    id_catalogo,   etiqueta, columna 
 						FROM rentas.view_ren_tramite_var
 						where id_rubro = '.$this->bd->sqlvalue_inyeccion($id_rubro,true).' and 
@@ -143,8 +250,7 @@ class ReportePdf{
 				echo '</tr>';
 
 				echo '  </table>';
-		//  echo '</div>';
-		
+ 		
 	   }   
 	//---------------------
 	function ResumenCajaEnlace( $id,$f1){
@@ -255,6 +361,7 @@ class ReportePdf{
 	//---------------------------
 	function GrillaCajaDetBancos($grupo,$parte,$anio){
 	    
+	    
  	    
  	    
 	    $sql = "SELECT  a.cuenta || ' ' as cuenta,
@@ -303,6 +410,7 @@ class ReportePdf{
 	    
 	}
 	//--------------------
+
 	function  Impresion_sesion(){
 	    
 	    $sql = $_SESSION['sql_activo']   ;
@@ -318,6 +426,7 @@ class ReportePdf{
  
 	}
 	//-----------------------------
+	
 	function  Tramite_req($asiento){
 		
 	    $sqlB = "SELECT *
@@ -668,7 +777,8 @@ class ReportePdf{
 	 
 	
 	//------------------------------------------
-	//---
+
+	
 	function EmpresaCab( ){
 		
 		$sql = "SELECT ruc_registro, razon, contacto, correo, web, direccion, telefono, email, ciudad, estado, url, mision, vision
@@ -681,12 +791,15 @@ class ReportePdf{
 
 		return $this->Registro['razon'];
 	}
+	
 	//-----------------
 	function _Cab( $dato ){
 	      
 	    return $this->Registro[$dato];
 	}
-//------------
+
+
+    //------------
 	function QR_DocumentoDoc($codigo ){
 	    
 	    
@@ -712,7 +825,7 @@ class ReportePdf{
 	    $codeContents .= 'INSTITUCION :'.$name."\n";
 	    $codeContents .= '2.4.0'."\n";
 	    
-	    $tempDir = EXAMPLE_TMP_SERVERPATH;
+	    //$tempDir = EXAMPLE_TMP_SERVERPATH;
 	    
 	    QRcode::png($codeContents,  'logo_qr.png', QR_ECLEVEL_L, 3);
 	}
@@ -730,11 +843,10 @@ class ReportePdf{
 	    
 	    echo 'Documento Digital '.$_SESSION['login'].'- '. $sesion_elabora ;
 	    
-	}
-	
+ 
 }
 
-function  Especie_datos($asiento){
+    function  Especie_datos($asiento){
 		
 	    
 	$datos = $this->bd->query_array('rentas.ren_movimiento',   // TABLA
@@ -748,16 +860,17 @@ function  Especie_datos($asiento){
 	;
 
 
-$datos["idprov"] = $xx["idprov"];
-$datos["razon"] = $xx["razon"];
-$datos["direccion"] = $xx["direccion"];
+    $datos["idprov"] = $xx["idprov"];
+    $datos["razon"] = $xx["razon"];
+    $datos["direccion"] = $xx["direccion"];
+    
+    
+    
+    return $datos;
 
-
-
-return $datos;
 }
 
-function QR_DocumentoDocPermiso($codigo,$actividad,$solicita,$anio ){
+    function QR_DocumentoDocPermiso($codigo,$actividad,$solicita,$anio ){
 	    
 	    
 	$name       = trim($_SESSION['razon']) ;
@@ -769,7 +882,7 @@ function QR_DocumentoDocPermiso($codigo,$actividad,$solicita,$anio ){
 		);
 	
 	$nombre     =  trim($datos['completo']);
-	$year       =  date('Y');
+	//$year       =  date('Y');
 	
 	
 	$hoy = date("Y-m-d H:i:s");
@@ -786,6 +899,9 @@ function QR_DocumentoDocPermiso($codigo,$actividad,$solicita,$anio ){
 	$tempDir = EXAMPLE_TMP_SERVERPATH;
 	
 	QRcode::png($codeContents,  'logo_qr.png', QR_ECLEVEL_L, 3);
+}
+
+
 }
 
 ?>

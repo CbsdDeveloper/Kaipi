@@ -7,7 +7,7 @@
     require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
   
   
-    class proceso{
+    class grilla_ren_especies{
  
     
  
@@ -21,7 +21,7 @@
       //-----------------------------------------------------------------------------------------------------------
       //Constructor de la clase
       //-----------------------------------------------------------------------------------------------------------
-      function proceso( ){
+      function grilla_ren_especies( ){
             //inicializamos la clase para conectarnos a la bd
  
                 $this->obj     = 	new objects;
@@ -76,8 +76,7 @@
       	
  
       	
-      	$sql = 'SELECT *
-                from rentas.view_ren_especies   where '. $where;
+      	$sql = 'SELECT *   from rentas.view_ren_especies   where '. $where;
  
  
       	
@@ -99,20 +98,28 @@
            if (  trim($fetch['autorizacion']) =='-'){
             $autorizacion = '';
           }
+          
+          
+          $imagen = '  <img src="../../kimages/m_rojo.png" align="absmiddle"/>		';
+          
+          if (  trim($fetch['estado']) =='P'){
+              $autorizacion = '';
+              
+              $imagen = '  <img src="../../kimages/m_verde.png" align="absmiddle"/>		';
+          }
+          
 
       	    
-      	        $razon = '<b>≡ '. trim($fetch['contribuyente']).' '.$autorizacion.'</b>';
-      	 
-
-              
+          $razon = $imagen. '<b> '. trim($fetch['contribuyente']).' '.$autorizacion.'</b>';
+      	     
       	    
  	          $output[] = array (
       				    $fetch['id_ren_movimiento'],
- 				          		$fetch['fecha'],
-                         $fetch['idprov'],
-  	                     $razon,
-                          $fetch['comprobante'],
-         	              $fetch['total'] 
+ 				        $fetch['fecha'],
+                        $fetch['idprov'],
+  	                    $razon,
+                        $fetch['comprobante'],
+         	            $fetch['total'] 
         		);	 
       		
       	}
@@ -120,7 +127,7 @@
  
       	pg_free_result($resultado);
       	
-       echo json_encode($output);
+        echo json_encode($output);
       	
       	
       	}
@@ -134,7 +141,7 @@
  
 ///------------------------------------------------------------------------ 
  
-    		$gestion   = 	new proceso;
+    		$gestion   = 	new grilla_ren_especies;
         
             //------ consulta grilla de informacion
             if (isset($_GET))	{

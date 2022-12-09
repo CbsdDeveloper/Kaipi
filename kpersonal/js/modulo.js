@@ -33,7 +33,7 @@ $(document).ready(function(){
 	//---
 	$("#FormEmpresa").load('../model/Model-modulo.php');
 	
-	$("#NavMod").load('../view/View-HeaderInicio.php');
+	$("#NavMod").load('../view/View-HeaderMedico.php');
 	
 	$("#div_gasto").load('../view/parametroPersonal.svg');
 	

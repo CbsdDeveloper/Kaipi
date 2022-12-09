@@ -55,12 +55,15 @@
 									  
 									 <div class="col-md-12" style="padding-top: 10px;padding-bottom: 10px">
 										 
+										 <div id="div_articulos" style="width:100%; height:580px;">
+											 
+												  <div id="viewform"></div>
 										 
-										  <div id="viewform"></div>
-										 
-										 
+										 </div>
  
- 									</div><!--/.row-->
+ 									</div>
+										 
+										 <!--/.row-->
 								
 								   <div style="padding: 15px" align="center" id="resultado"></div>
  							</div>
@@ -71,7 +74,12 @@
 							 <div class="panel-heading">BIENES SUJETO A CONTROL</div>
 							  <div class="panel-body">
 								 
-								   <div id="viewforme"></div>
+								  <div id="div_articulos" style="width:100%; height:580px;">
+											 
+												 <div id="viewforme"></div>
+										 
+										 </div>
+								   
 								  
 								  
 							  </div>

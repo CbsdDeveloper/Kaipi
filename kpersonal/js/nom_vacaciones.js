@@ -81,7 +81,9 @@ function imagenfoto(urlimagen)
 ///---------------
 function openFile(url) {
     
-	  var id = $('#id_vacacion').val();
+	  var id 	= $('#id_vacacion').val();
+	  var tipo  = $('#tipo').val();
+	   
 
 	  
 	  var ancho= 650;
@@ -96,7 +98,7 @@ function openFile(url) {
 
 	  posicion_y=(screen.height/2)-(alto/2); 
 	 
-	  enlace = url+'?id='+id  ;
+	  enlace = url+'?id='+id +'&tipoo=' +tipo;
 	 
 	  if ( id) {
 		  	window.open(enlace, '#','width='+ancho+',height='+alto+',toolbar=0,scrollbars=no,resizable=no,left='+posicion_x+',top='+posicion_y+'');
@@ -563,9 +565,8 @@ function fecha_hoy()
 		   document.getElementById("idprov").value = 'NO_VALIDO';
 
 	   }
-
  
-
+ 
 	 }
 /*
 APRUEBA LA TRANSACCION DE LAS VACACIONES
@@ -599,6 +600,34 @@ alertify.confirm("<p>DESEA AUTORIZAR LA SOLICITUD DE LOS PERMISOS<br></p>", func
 
 			}); 
 }
+
+function saldos_permiso() {
+
+
+var id_vacacion = 	$('#id_vacacion').val();
+
+ 
+		 
+
+					var parametros = {
+						'accion' : 'saldos' ,
+						'id'     : id_vacacion
+		 		   };
+	
+					$.ajax({
+									data:  parametros,
+									url:   '../model/Model-nom_vacaciones.php',
+									type:  'GET' ,
+									beforeSend: function () { 
+											$("#result").html('Procesando');
+									},
+									success:  function (data) {
+											$("#result").html(data);  
+ 									} 
+							}); 
+				 
+}
+
 
 /*
 APRUEBA LA TRANSACCION DE LAS VACACIONES

@@ -1,10 +1,7 @@
 <?php 
-     session_start( );   
-  
-    require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
- 	
- 	
-    require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
+session_start();   
+require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
+require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
   
   
     class proceso{
@@ -96,27 +93,28 @@
       function consultaId($id,$regimen ){
           
  	
-     $qcabecera = array(
-         array(etiqueta => 'Id',campo => 'id_config_reg',ancho => '10%', filtro => 'N', valor => '-', indice => 'S', visor => 'S'),
-         array(etiqueta => 'id_regimen',campo => 'id_regimen',ancho => '0%', filtro => 'N', valor => '-', indice => 'N', visor => 'N'),
-         array(etiqueta => 'id_config',campo => 'id_config',ancho => '0%', filtro => 'S', valor => $id, indice => 'N', visor => 'N'),
-         array(etiqueta => 'Programa',campo => 'programa',ancho => '10%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
-         array(etiqueta => 'Regimen',campo => 'regimen',ancho => '15%', filtro => 'S', valor => $regimen, indice => 'N', visor => 'S'),
-         array(etiqueta => 'Concepto',campo => 'nombre',ancho => '15%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
-         array(etiqueta => 'tipo',campo => 'tipo',ancho => '10%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
-         array(etiqueta => 'Clasificador',campo => 'clasificador',ancho => '10%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
-         array(etiqueta => 'Cuenta Debe',campo => 'cuenta_debe',ancho => '10%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
-         array(etiqueta => 'Cuenta Haber',campo => 'cuenta_haber',ancho => '10%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
-         array(etiqueta => 'tipo_config',campo => 'tipo_config',ancho => '0%', filtro => 'N', valor => '-', indice => 'N', visor => 'N'),
-         array(etiqueta => 'variable',campo => 'variable',ancho => '0%', filtro => 'N', valor => '-', indice => 'N', visor => 'N'),
-         array(etiqueta => 'tipoformula',campo => 'tipoformula',ancho => '0%', filtro => 'N', valor => '-', indice => 'N', visor => 'N'),
-         array(etiqueta => 'estructura',campo => 'estructura',ancho => '0%', filtro => 'N', valor => '-', indice => 'N', visor => 'N')
-     );
+        $qcabecera = array(
+            array(etiqueta => 'Id',            campo => 'id_config_reg',ancho => '5%', filtro => 'N', valor => '-', indice => 'S', visor => 'S'),
+            array(etiqueta => 'Programa Rol',  campo => 'programa',    ancho => '10%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
+            array(etiqueta => 'Regimen',       campo => 'regimen',     ancho => '20%', filtro => 'S', valor => $regimen, indice => 'N', visor => 'S'),
+            array(etiqueta => 'Concepto',      campo => 'nombre',      ancho => '15%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
+            array(etiqueta => 'Clasificador',  campo => 'clasificador',ancho => '10%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
+            array(etiqueta => 'Cuenta Debe',   campo => 'cuenta_debe', ancho => '10%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
+            array(etiqueta => 'Cuenta Haber',  campo => 'cuenta_haber',ancho => '10%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
+            array(etiqueta => 'Programa Pago', campo => 'programa_p',  ancho => '10%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
+            array(etiqueta => 'id_regimen',    campo => 'id_regimen',  ancho => '0%', filtro => 'N', valor => '-', indice => 'N', visor => 'N'),
+            array(etiqueta => 'id_config',     campo => 'id_config',   ancho => '0%', filtro => 'S', valor => $id, indice => 'N', visor => 'N'),
+            array(etiqueta => 'tipo_config',   campo => 'tipo_config', ancho => '0%', filtro => 'N', valor => '-', indice => 'N', visor => 'N'),
+            array(etiqueta => 'variable',      campo => 'variable',    ancho => '0%', filtro => 'N', valor => '-', indice => 'N', visor => 'N'),
+            array(etiqueta => 'tipoformula',   campo => 'tipoformula', ancho => '0%', filtro => 'N', valor => '-', indice => 'N', visor => 'N'),
+            array(etiqueta => 'estructura',    campo => 'estructura',  ancho => '0%', filtro => 'N', valor => '-', indice => 'N', visor => 'N')
+        );
  
-     $acciones = "'',eliminar,visor";
+     $acciones = "editar,eliminar,visor";
      $funcion  = 'goToURLParametro';
      
      $this->bd->_order_by('regimen,programa');
+     
      $this->bd->JqueryArrayTable('view_nomina_rol_reg',$qcabecera,$acciones,$funcion,'tabla_config' );
      
  
@@ -236,6 +234,7 @@
  
                 $regimen        = $_GET['regimen'];
                 
+                 
                 $gestion->consultaId($id,$regimen);
                 
             }
@@ -253,6 +252,3 @@
      }  
  
  ?>
-
- 
-  

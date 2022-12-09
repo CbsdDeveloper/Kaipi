@@ -32,6 +32,7 @@ $total_iva = round($total_consumo * (12/100),2);
 
 $total     = round($total_consumo,4) + $total_iva;
 
+
 echo json_encode( 
             array("a"=>trim($dataProv['id_combus']), 
                   "b"=> trim($dataProv['estado']) ,
@@ -45,6 +46,8 @@ echo json_encode(
                   "j"=> $total_iva ,
                   "k"=> $total  ,
                   "l"=>  $dataProv['cantidad_ca'] ,
+                  "m"=>  $dataProv['idprov'] ,
+                  "n"=>  $dataProv['operador'] ,
          )  
        );
 

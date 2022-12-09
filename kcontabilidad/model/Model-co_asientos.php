@@ -131,10 +131,7 @@ class proceso{
 		
 		
  		$datos = $this->bd->JqueryArrayVisor('view_asientos',$qquery );
-
- 		
-		
-	 
+ 
  
 	 	$result =  $this->div_resultado($accion,$id,0,$datos['estado']);
 		
@@ -368,6 +365,20 @@ class proceso{
 	 	$x              = explode('-',$fecha_registro);
 	 	$mes  			= $x[1];
 	 	$anio  			= $x[0];
+
+
+		//-------- cuenta por pagar ----------------------
+		$modulo_s = $this->bd->query_array('co_asientod','sum(haber) - sum(debe) as saldo',
+		'id_asiento ='.$this->bd->sqlvalue_inyeccion($id ,true).' and
+		cuenta like'.$this->bd->sqlvalue_inyeccion('213%' ,true) 
+      );
+
+	    $modulo = 'contabilidad';
+
+	    if ( $modulo_s['saldo'] > 0 ){
+			$modulo = 'cxpagar';
+		}	
+
 	 	
 	 	//------------ seleccion de periodo
 	 	$periodo_s = $this->bd->query_array('co_periodo','id_periodo,mes,anio',
@@ -402,7 +413,7 @@ class proceso{
 	 	if ( $bandera == 0 ){
 	 	
         		if (trim($estado) == 'digitado'){
-        		    
+					
  
         		 			$sql = " UPDATE co_asiento
         							              SET 	detalle      =".$this->bd->sqlvalue_inyeccion(trim($_POST["detalle"]), true).",
@@ -410,6 +421,7 @@ class proceso{
                                                         id_tramite  =".$this->bd->sqlvalue_inyeccion($_POST["id_tramite"], true).",
                                                         id_periodo   =".$this->bd->sqlvalue_inyeccion($id_periodo, true).",
                                                         sesionm      =".$this->bd->sqlvalue_inyeccion($this->sesion , true).",
+														modulo		 =".$this->bd->sqlvalue_inyeccion($modulo, true).",
                                                         fecha        =".$fecha.",
                                                         modificacion =". $hoy.",
         												tipo         =".$this->bd->sqlvalue_inyeccion(trim($_POST["tipo"]), true).",
@@ -418,6 +430,11 @@ class proceso{
         					
         					$this->bd->ejecutar($sql);
         			
+        					$sql1 = " UPDATE co_asiento_aux
+        						SET 	pago	     =".$this->bd->sqlvalue_inyeccion('N', true)."
+        					 WHERE id_asiento    =".$this->bd->sqlvalue_inyeccion($id, true);
+
+
         					if  ( !empty(trim($cuenta))) {
         						$this->agregarDetalle( $id,trim($cuenta));
         					}
@@ -427,6 +444,7 @@ class proceso{
         		    $sql = " UPDATE co_asiento
         							              SET 	detalle      =".$this->bd->sqlvalue_inyeccion(trim(@$_POST["detalle"]), true).",
                                                          fecha       =".$fecha.",
+														 modulo		 =".$this->bd->sqlvalue_inyeccion($modulo, true).",
         												documento    =".$this->bd->sqlvalue_inyeccion(trim(@$_POST["documento"]), true)."
         							      WHERE id_asiento           =".$this->bd->sqlvalue_inyeccion($id, true);
         		    

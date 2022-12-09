@@ -385,6 +385,44 @@ function visor_tramites(tramite,rubro)
 	 
  
 }	
+
+//--------------------- 
+function recalcula_pre_emision(tramite,rubro,emision,estado,fecha )
+{
+	
+	var parametros = {
+		'tramite' : tramite,
+		'rubro' : rubro,
+		'emision' : emision,
+		'estado' : estado,
+		'fecha' : fecha,
+		'accion':'calculo'
+};
+
+	 
+	  
+
+	 alertify.confirm("<p>Desea verificar la transacción<br><br></p>", function (e) {
+		if (e) {
+ 	
+					$.ajax({
+						data:  parametros,
+							url:   '../model/ajax_ren_visor_tramite.php',
+						type:  'GET' ,
+							success:  function (data) {
+									$("#ViewFormHistorial").html(data);   
+									
+							} 
+				});
+					
+  
+		}
+	   }); 
+ 
+	  
+
+ 
+}	
 //--------------------- 
 function Elimina_pre_emision(tramite,rubro,emision,estado,fecha )
 {
@@ -394,7 +432,8 @@ function Elimina_pre_emision(tramite,rubro,emision,estado,fecha )
 		'rubro' : rubro,
 		'emision' : emision,
 		'estado' : estado,
-		'fecha' : fecha
+		'fecha' : fecha,
+		'accion':'del'
 };
 
 	 

@@ -101,14 +101,14 @@
                         
                                  $this->obj->text->text('Codigo',"number",'id_asigna_dis',20,15,$datos,'required','readonly','div-2-4') ; 
 
-                                 $this->obj->text->text('Estado',"texto",'estado',20,15,$datos,'required','readonly','div-2-4') ; 
+                                 $this->obj->text->text('Estado',"texto",'estado',20,15,$datos,'required','readonly','div-0-6') ; 
 
 
                                  $this->obj->text->text_yellow('Fecha',"date",'fecha_solicitud',20,15,$datos,'required','','div-2-4') ; 
 
-                                 $this->obj->text->text_blue('Documento',"texto",'doccumento',50,50,$datos,'required','readonly','div-2-4') ; 
+                                 $this->obj->text->text_blue('Documento',"texto",'doccumento',50,50,$datos,'required','','div-0-6') ; 
       
-                                 $this->obj->text->editor('Novedad','detalle',3,350,350,$datos,'required','readonly','div-2-10') ;
+                                 $this->obj->text->editor('Comentario','detalle',5,350,350,$datos,'required','','div-2-10') ;
     
  
                 $this->set->div_panel6('fin');
@@ -123,15 +123,15 @@
 
                                  $this->obj->list->listadb($resultado1,$tipo,'SUBJEFE DE BOMBEROS','autoriza',$datos,'required','','div-3-9');
 
- 
+                                 $this->set->div_label(12,'Seleccionar Unidad/Estacion');
 
 
-                                 $this->obj->text->text('Elaborado',"texto",'sesion',20,15,$datos,'required','readonly','div-3-9') ; 
-
-                                 $this->obj->text->text('Autorizado',"texto",'sesiona',20,15,$datos,'required','readonly','div-3-9') ; 
                                 
 
-                                
+                                 echo '<div class="col-md-3" style="padding-top:7px;padding-bottom: 10px"> 
+                                        <button type="button" onClick="VerUnidad()" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-search"></span> Generar Información para distribución</button>   
+                                     </div>';
+
 
                 $this->set->div_panel6('fin');
 
@@ -139,17 +139,17 @@
 
 
 
-                $this->set->div_panel6('<h6> PASO 2.- LISTA DE ESTACIONES ASIGANADAS<h6>');
+                $this->set->div_panel12('<h6> PASO 3.- LISTA DE ESTACIONES ASIGANADAS<h6>');
 
                         echo '<div id="listafun"> </div>';
 
-                $this->set->div_panel6('fin');
+                $this->set->div_panel12('fin');
 
-                $this->set->div_panel6('<h6> PASO 2.- LISTA DE PERSONAL X ESTACION<h6>');
+                $this->set->div_panel12('<h6> PASO 4.- LISTA DE PERSONAL X ESTACION<h6>');
 
                          echo '<div id="listafuncionarios"> </div>';
 
-                $this->set->div_panel6('fin');
+                $this->set->div_panel12('fin');
  
  
          $this->obj->text->texto_oculto("action",$datos); 
@@ -174,7 +174,8 @@
    $evento1 = "Autorizardistribucion()";
    
     $ToolArray = array( 
-                 array( boton => 'Guardar Registros', evento =>'', grafico => 'glyphicon glyphicon-floppy-saved' ,  type=>"submit") ,
+                array( boton => 'Nuevo Regitros',    evento =>'', grafico => 'icon-white icon-plus' ,  type=>"add"),
+                array( boton => 'Guardar Registros', evento =>'', grafico => 'glyphicon glyphicon-floppy-saved' ,  type=>"submit") ,
                 array( boton => 'Autorizar cambio',  evento =>$evento1,  grafico => 'glyphicon glyphicon-ok' ,  type=>"button_danger"),
                 array( boton => 'Imprimir Informe', evento =>$eventoi,  grafico => 'glyphicon glyphicon-print' ,  type=>"button")
                 );

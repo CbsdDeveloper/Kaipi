@@ -1,22 +1,6 @@
-$(function(){
-
-    $(document).bind("contextmenu",function(e){
-
-        return false;
-
-    });
-
-    window.addEventListener("keypress", function(event){
-
-        if (event.keyCode == 13){
-
-            event.preventDefault();
-
-        }
-
-    }, false);
-
-});
+ var oTable;
+var modulo_sistema     =  'kpersonal';
+ 
 
 //-------------------------------------------------------------------------
 $(document).ready(function(){
@@ -28,13 +12,43 @@ $(document).ready(function(){
 
 		FormView()
 
+       oTable 	= $('#jsontable').dataTable( {      
+           searching: true,
+           paging: true, 
+           info: true,         
+           lengthChange:true ,
+           aoColumnDefs: [
+  		      { "sClass": "highlight", "aTargets": [ 0 ] },
+ 		      { "sClass": "ye", "aTargets": [ 1 ] },
+ 		      { "sClass": "de", "aTargets": [ 4 ] } 
+ 		    ] 
+      } );
+       
+       
 		$("#FormPie").load('../view/View-pie.php');
 
-		$('#load').on('click',function(){
-
-	 				goToURL( );
-
-	    });
+		$.ajax({
+ 			 url: "../model/ajax_unidad_lista.php",
+			 type: "GET",
+	       success: function(response)
+	       {
+	           $('#qunidad').html(response);
+	       }
+		 });
+	    
+	    $.ajax({
+			 url: "../model/ajax_regimen_lista.php",
+			 type: "GET",
+	       success: function(response)
+	       {
+	           $('#qregimen').html(response);
+	       }
+		 });
+	    
+	    
+	    $('#load').on('click',function(){
+ 		   			BusquedaGrilla(oTable);
+		});
 
  
 		 var j = jQuery.noConflict();
@@ -55,6 +69,52 @@ $(document).ready(function(){
 });  
 
 //-----------------------------------------------------------------
+function BusquedaGrilla(oTable){        	 
+
+  		var user     = $(this).attr('id');
+     	var qestado  = $("#qestado").val();
+     	var qunidad  = $("#qunidad").val();
+     	var qregimen = $("#qregimen").val();
+
+     
+       var parametros = {
+				'qestado' : qestado  ,
+				'qunidad' : qunidad,
+				'qregimen' : qregimen
+
+      };
+
+ 
+		if(user != '')  { 
+
+		$.ajax({
+ 		 	data:  parametros,
+		    url: '../grilla/grilla_nom_ingreso.php',
+			dataType: 'json',
+			success: function(s){
+			oTable.fnClearTable();
+			if (s){ 
+					for(var i = 0; i < s.length; i++) {
+						oTable.fnAddData([
+ 							s[i][0],
+ 							s[i][1],
+ 							s[i][2],
+  	                        s[i][3],
+                            s[i][4],
+                            s[i][5],
+                            s[i][6],
+                           	'<button class="btn btn-xs btn-warning" title="EDITAR REGISTRO SELECCIONADO"   onClick="goToURL('+"'editar'"+','+"'"+ s[i][0]+"'" +')"><i class="glyphicon glyphicon-edit"></i></button> ' 
+ 						]);										
+ 					}  
+ 			    }						
+ 			},
+ 			error: function(e){
+ 			   console.log(e.responseText);	
+ 			}
+ 			});
+ 		}
+
+  }   
 //-------------------------------------------------------------------------
 
 // ir a la opcion de editar
@@ -86,233 +146,136 @@ function PonerDatos( ) {
 }
 //------------------------------------------------------------------------- 
 
-  function goToURL( ){   
+function accion(id, action)
+  {
+  	$('#action').val(action);
+  	 
+} 
+//------------
+  function goToURL( accion,id){   
 
-	  
-	     var id_rol1 			= 	$('#id_rol1').val();
-	     var id_config1     	= 	$('#id_config1').val();
-	     var id_departamento1   = 	$('#unidad').val();
-	     var regimen    		= 	$('#regimen').val();
-	     var programa  			= 	$('#programa').val();
+	   var parametros = {
+ 					'accion' : accion ,
+                     'id' : id 
+  	  };
 
-	     var parametros = {
-	                     'id_rol' 		  : id_rol1, 
-	                     'id_config' 	  : id_config1, 
-	                     'id_departamento': id_departamento1,
-	                     'regimen' 		  : regimen, 
-	                     'programa'   	  : programa,
-	                     'accion'		  : 'add'
-	      };
+	var bandera = 0;	
+
+ 	
+	 	  
+
+			if ( accion == 'editar'){
+				bandera = 1;	
+			}	
 
 
-	     
-		  $.ajax({
-						data:  parametros,
-						url:   '../model/Model-nom_rol_grilla.php',
-						type:  'GET' ,
-	 					beforeSend: function () { 
-	 							$("#ViewProceso").html('Procesando');
-	  					},
-						success:  function (data) {
-								 $("#ViewProceso").html(data);  
-								 
-								 goToURLResumen( );
-								 
-	  					} 
+			if ( bandera == 1 ) {
 
-				}); 
+				  $.ajax({
+								data:  parametros,
+								url:   '../model/Model-nom_ingreso_datos.php',
+								type:  'GET' ,
+			 					beforeSend: function () { 
+			 							$("#result").html('Procesando');
+			  					},
+								success:  function (data) {
+												if ( accion == 'del'){
+														alert(data);
+												} else	{
+														$("#result").html(data);   
+														 
+
+													 
+												}
+ 			  				
+				 				}	
+				}); 	
+			} 	 
 		  
  
 }   
-//--------------------------------------------
-  function BuscaPrograma( codigo,tipo) {
-	   
-		
-		if ( tipo == 1 ) {
-			
-			var regimen   = $("#regimen").val();
-			var programa  = codigo;
-		}
-	 
-		if ( tipo == 0 ) {
-			
-			var programa = '';
-			var regimen  = codigo
-		}
-
-		
-		 var parametros = {
-					 'regimen'  : regimen ,
-					 'programa' : programa,
-					 'tipo' :tipo
-		  };
-			 
-			
-		   $.ajax({
-				 data:  parametros,
-				 url: "../model/ajax_busca_prog.php",
-				 type: "GET",
-		       success: function(response)
-		       {
-	 
-		    	   if ( tipo == 0 ) {
-		    		   $('#programa').html(response);
-		    	   }else{
-		    		   $('#unidad').html(response);
-		    	   }
-	 	 	        
- 		       }
-			 });
-	 
-			 
-		}
-//----------------
- function goToURLResumen( ){   
+//----------- 
+function goToDeta1( accion, nombre){   
 
  
-	     var id_rol1 			= 	$('#id_rol1').val();
-	     var id_departamento1   = 	$('#unidad').val();
-	     var regimen    		= 	$('#regimen').val();
-	     var programa  			= 	$('#programa').val();
+	     var banio 			= 	$('#banio').val();
+	     var idprov  	    = 	$('#idprov').val();
+	   
 
 	     var parametros = {
-	                     'id_rol' 		  : id_rol1, 
-	                     'id_departamento': id_departamento1,
-	                     'regimen' 		  : regimen, 
-	                     'accion'		  : 'visor'
+	                     'banio' 		  : banio, 
+	                     'idprov': idprov ,
+	                     'accion' :accion,
+	                     'tipo': 1,
+	                     'nombre' : nombre
 	      };
 
-
+ 	 
+	      
 		  $.ajax({
 						data:  parametros,
-						url:   '../model/Model-nom_roles_resumen.php',
+						url:   '../model/ajax_personal_rol02.php',
 						type:  'GET' ,
 	 					beforeSend: function () { 
-	 							$("#ViewResumen").html('Procesando');
+	 							$("#ViewFormRolPersona").html('Procesando');
 	  					},
 						success:  function (data) {
-								 $("#ViewResumen").html(data); 
+								 $("#ViewFormRolPersona").html(data); 
 
 	  					} 
 
 				}); 
+ 
+ 
+ $('#myModal').modal('show');
 
 } 
-//-------------
-function actualiza_dato(tipo, monto,id_rol1 ){   
-	
-	 var parametros = {
-		                     'id_rol' 			  : id_rol1,
-		                     'tipo' 			  : tipo,
-							 'monto'			  : monto
-	 	      };
-
-			  $.ajax({
-							data:  parametros,
-							url:   '../model/ajax_actualiza_rol_personal.php',
-							type:  'GET' ,
-		 					beforeSend: function () { 
-		 							$("#ViewMensaje").html('Procesando');
-		  					},
-							success:  function (data) {
-									 $("#ViewMensaje").html(data);  // $("#cuenta").html(response);
-
-		  					} 
-
-					}); 
-			
-		 
-} 
-//---------------ver_parametro_rol
-function ver_parametro_rol(id_rol1,id ){   
-	
-	 var parametros = {
-		                     'id_rol' 			  : id_rol1,
-		                     'idprov' 			  : id
-	 	      };
-
-			  $.ajax({
-							data:  parametros,
-							url:   '../model/Model-nom_fichar_actualiza.php',
-							type:  'GET' ,
-		 					beforeSend: function () { 
-		 							$("#ViewFormRoldatos").html('Procesando');
-		  					},
-							success:  function (data) {
-									 $("#ViewFormRoldatos").html(data);  // $("#cuenta").html(response);
-
-		  					} 
-
-					}); 
-					
-} 	
-//---------
-function go_actualiza1(id ){   
-
-	 var id_rol1 			= 	$('#id_rol1').val();
-
-	 
-
-		     var parametros = {
-		                     'id_rol' 			  : id_rol1,
-		                     'idprov' 			  : id
-	 	      };
-
-			  $.ajax({
-							data:  parametros,
-							url:   '../model/Model-nom_fichar_rol.php',
-							type:  'GET' ,
-		 					beforeSend: function () { 
-		 							$("#ViewFormRolPersona").html('Procesando');
-		  					},
-							success:  function (data) {
-									 $("#ViewFormRolPersona").html(data);  // $("#cuenta").html(response);
-
-		  					} 
-
-					}); 
-
-		 
-
-}	
-//--------------
-function go_actualiza(accion,id ){   
-
-	 var id_rol1 			= 	$('#id_rol1').val();
-
-	if (accion == 'visor') { 
-
-		     var parametros = {
-		                     'id_rol' 			  : id_rol1,
-		                     'idprov' 			  : id
-	 	      };
-
-			  $.ajax({
-							data:  parametros,
-							url:   '../model/Model-nom_fichar_rol.php',
-							type:  'GET' ,
-		 					beforeSend: function () { 
-		 							$("#ViewFormRolPersona").html('Procesando');
-		  					},
-							success:  function (data) {
-									 $("#ViewFormRolPersona").html(data);  // $("#cuenta").html(response);
-
-		  					} 
-
-					}); 
-
-		 $('#myModal').modal('show');  
-
-}	
+function goToDeta2( accion, nombre){   
 
  
-	if (accion == 'pdf') { 
+	     var banio 			= 	$('#banio').val();
+	     var idprov  	    = 	$('#idprov').val();
+	   
 
-		  var url = '../../reportes/view_rol_nomina.php'
+	     var parametros = {
+	                     'banio' 		  : banio, 
+	                     'idprov': idprov ,
+	                     'tipo': 2,
+	                     'accion' :accion,
+	                     'nombre' : nombre
+	      };
+
+ 	 
+	      
+		  $.ajax({
+						data:  parametros,
+						url:   '../model/ajax_personal_rol02.php',
+						type:  'GET' ,
+	 					beforeSend: function () { 
+	 							$("#ViewFormRolPersona").html('Procesando');
+	  					},
+						success:  function (data) {
+								 $("#ViewFormRolPersona").html(data); 
+
+	  					} 
+
+				}); 
+ 
+ 
+ $('#myModal').modal('show');
+
+} 
+//--------------------------------------------
+function goToRol(accion, id_rol1)
+  {
+  	 
+  	 var id =  	$('#idprov').val();
+  	 
+  	   var url = '../../reportes/view_rol_nomina.php'
 
 	       var posicion_x; 
 	       var posicion_y; 
-	       var enlace = url + '?codigo='+id +'&id_rol=' + id_rol1;
+	       var enlace = url + '?codigo='+id +'&id_rol=' + id_rol1+ '&accion='+accion;
 
 	       var ancho = 1000;
 
@@ -322,275 +285,64 @@ function go_actualiza(accion,id ){
 	       posicion_y=(screen.height/2)-(alto/2); 
 
 	       window.open(enlace,'#','width='+ancho+',height='+alto+',left='+posicion_x+',top='+posicion_y+'');
-
-	}
-
-	//--------------------
-	if (accion == 'eliminar') { 
-		
-		 alertify.confirm("Desea Eliminar el registro de la nomina? " + id, function (e) {
-
-			  if (e) {
- 				 
-				  var parametros1 = {
-		                     'id_rol' 			  : id_rol1,
-		                     'idprov' 			  : id
-	 	      };
-
-			  $.ajax({
-							data:  parametros1,
-							url:   '../model/Model_nom_rol_del.php',
-							type:  'GET' ,
-		 					beforeSend: function () { 
-		 							$("#ViewSave").html('Procesando');
-		  					},
-							success:  function (data) {
-									 $("#ViewSave").html(data);   
-									 
-									 goToURL();
-
-		  					} 
-
-					}); 
-
-			  }
-
-			 }); 
-		  
-		}
-	
-
-}
-
-//--------------
-
-function goToURLEmailLote() {   
-
-	 alert('Notificar por medio electronica');
-		 
-		 var i = 0 ;
-		 
-		 $('#jsontable tr').each(function() { 
-			    
-			 
-			   var customerId = $(this).find("td").eq(1).html();  
-			
-			   if (  i >   0  ) { 
-				   
-				 envia_correo(customerId);
-				        
-
-			
-				   
-			   }
-			   
-			   i = i + 1;
-			  
-	     }); 
-
-}
-//---------
-
-function envia_correo(id){   
-
-	  var id_rol1 			= 	$('#id_rol1').val();
-	
-
-	   var parametros = {
-                  'id' 	  : id, 
-                 'id_rol1'   : id_rol1 
- 	   	};
- 
-
-	   $.ajax({
-
-				data:  parametros,
-
-				url:   '../model/EnvioPersonalCorreo.php',
-
-				type:  'GET' ,
-
-				success:  function (data) {
-
-						 $("#ViewSave").html(data);  // $("#cuenta").html(response);
-
-					     
-
-				} 
-
-		}); 
-
-	
-
-}
-//-------
-function go_actualiza_dato(id,valor ){   
-
-	  
-
-	var accion = 'edit';
-
-	
-
-	   var parametros = {
-
-                'id' 	  : id, 
-
-                'valor'   : valor,
-
-                'accion'  : accion
-
-	   	};
-
-
-
-	   $.ajax({
-
-				data:  parametros,
-
-				url:   '../model/Model_nom_descuento_save.php',
-
-				type:  'GET' ,
-
-				success:  function (data) {
-
-						 $("#ViewSave").html(data);  // $("#cuenta").html(response);
-
-					     
-
-				} 
-
-		}); 
-
-	
-
-}
-
-///---------------- 
-function AnulaCertificacion(  ) {
-	
-    var id_rol1 			= 	$('#id_rol1').val();
-    var regimen    			= 	$('#regimen').val();
-    var certificado    			= 	$('#certificado').val();
-    
+  	 
+} 
   
+//----------------
+ function ProcesoInformacion( ){   
+
  
-    var parametros = {
-                    'id_rol' 		  : id_rol1, 
-                    'regimen' 		  : regimen, 
-                    'certificado'   : certificado,
-                    'accion'          : 'anula'
-     };
+	     var banio 			= 	$('#banio').val();
+	     var idprov   = 	$('#idprov').val();
+	   
 
-    
-    if ( certificado  > 0 ) {
-   
-    	
-	 	  alertify.confirm("Desea anular certificacion presupuestaria " + id_rol1, function (e) {
-	
-			  if (e) {
-				  
-					 
-					$.ajax({
-						    type:  'GET' ,
-							data:  parametros,
-							url:   '../model/ajax_busca_tramite.php',
-							dataType: "json",
-							success:  function (response) {
+	     var parametros = {
+	                     'banio' 		  : banio, 
+	                     'idprov': idprov 
+	      };
 
-				 					 $("#certificado").val( response.a );  
-									 
-				 					 alert(response.b);
-							} 
-					});
-
-				   
-	
-				  }
-	
-			 }); 
- 	  
-    }
-}
-//------------------------------------------------------------------------- 
-function EmiteCertificacion(  ) {
-	
-    var id_rol1 			= 	$('#id_rol1').val();
-    var regimen    			= 	$('#regimen').val();
-    var programa  			= 	$('#programa').val();
-    
-    var sesion_asigna  			= 	$('#sesion_asigna').val();
-
-    
-    
-    var parametros = {
-                    'id_rol' 		  : id_rol1, 
-                    'regimen' 		  : regimen, 
-                    'programa'   	  : programa,
-                    'accion'		  : 'certificacion',
-                    'sesion_asigna'   : sesion_asigna
-     };
-
-    
-    if (sesion_asigna == '-') {
-    	
-    	alert('Seleccione el usuario para el envio de la solicitud');
-    	
-    }
-    else 	 {
-    	
-	 	  alertify.confirm("Desea generar certificacion presupuestaria " + id_rol1, function (e) {
-	
-			  if (e) {
-				  
-				  $.ajax({
+ 		var parametros1 = {
+	                     'banio' 		  : banio, 
+	                     'idprov': idprov 
+	      };
+	      
+		  $.ajax({
 						data:  parametros,
-						url:   '../model/Model-nom_enlace_pres.php',
+						url:   '../model/ajax_personal_rol00.php',
 						type:  'GET' ,
-						beforeSend: function () { 
-								$("#VisorEnlacePresupuesto").html('Procesando');
-						},
+	 					beforeSend: function () { 
+	 							$("#Viewrol").html('Procesando');
+	  					},
 						success:  function (data) {
-								 $("#VisorEnlacePresupuesto").html(data);  
-								 codigo_certificado(id_rol1,regimen);
-						} 
-	
+								 $("#Viewrol").html(data); 
+
+	  					} 
+
 				}); 
-			  		 
-	
-				  }
-	
-			 }); 
- 	  
-    }
-}
-//---------------------
-function codigo_certificado( id_rol1,regimen ){   
+				
+				
+			
+			 $.ajax({
+						data:  parametros1,
+						url:   '../model/ajax_personal_rol01.php',
+						type:  'GET' ,
+	 					beforeSend: function () { 
+	 							$("#ViewResumen").html('Procesando');
+	  					},
+						success:  function (data) {
+								 $("#ViewResumen").html(data); 
 
+	  					} 
 
-    var parametros = {
-                    'id_rol' 		  : id_rol1, 
-                    'regimen' 		  : regimen, 
-                    'accion'          : 'visor'
-     };
-
- 	 
-	$.ajax({
-		    type:  'GET' ,
-			data:  parametros,
-			url:   '../model/ajax_busca_tramite.php',
-			dataType: "json",
-			success:  function (response) {
-
- 					 $("#certificado").val( response.a );  
-					 
- 					 alert(response.b);
- 					  
-			} 
-	});
+				}); 	
+				
+				
 
 } 
+   
 
+ 
+ 
 //---------------------------
 function ImprimirActa( id_certifica ) {
 
@@ -629,115 +381,7 @@ function ImprimirActa( id_certifica ) {
 	
 	
 	}
-//-----------------
-function irCompromiso( id_certifica ) {
-
-	if ( id_certifica > 0 )   {
-		
-	   var url = '../../kpresupuesto/view/compromiso_rol'
  
-				  
-			 
-		    var posicion_x; 
-		    var posicion_y; 
-		    
-		    var enlace = url   ;
-		    
-		    var ancho = 1224;
-		    
-		    var alto = 560;
-		    
-		    posicion_x=(screen.width/2)-(ancho/2); 
-		    
-		    posicion_y=(screen.height/2)-(alto/2); 
-		    
-		    window.open(enlace,'#','width='+ancho+',height='+alto+',left='+posicion_x+',top='+posicion_y+'');
-	
-	   }
-	}
-//-----------------
-function ResumenRolFinal(  )
- {
-
-	var id_rol1 			= 	$('#id_rol1').val();
-	var regimen 			= 	$('#regimen').val();
-	var programa 			= 	$('#programa').val();
-	var depa 				= 	$('#depa').val();
-	var url_dato 			=   '';
- 	
-	if (depa== '-') {
-		url_dato =  '../model/Model-nom_rol_lista.php';
-	}else {
-		url_dato =  '../model/Model-nom_rol_lista_ambito.php';
-	}
-	
-   var parametros = {
-                     'id_rol' 			  : id_rol1, 
-                     'regimen'			  :regimen,
-	                 'programa'   : programa,
-	                 'depa' : depa
-      };
-
-	  $.ajax({
-					data:  parametros,
-					url:   url_dato,
-					type:  'GET' ,
- 					beforeSend: function () { 
- 							$("#ViewResumenRol").html('Procesando');
-  					},
-					success:  function (data) {
-						     $("#ViewResumenRol").html(data);  // $("#cuenta").html(response);
-  					} 
-			}); 
-} 
-//-----------------
-function ResumenRolFinalPago(  )
- {
-
-	var id_rol1 			= 	$('#id_rol1').val();
-	var regimen 			= 	$('#regimen').val();
-  
-    var parametros = {
-                     'id_rol' 			  : id_rol1, 
-                     'regimen'			  :regimen
-      };
-
-	  $.ajax({
-					data:  parametros,
-					url:   '../model/Model-nom_rol_lista_pago.php',
-					type:  'GET' ,
- 					beforeSend: function () { 
- 							$("#ViewResumenRol").html('Procesando');
-  					},
-					success:  function (data) {
-						     $("#ViewResumenRol").html(data);  // $("#cuenta").html(response);
-  					} 
-			}); 
-} 
-//----------------------------------
-function ResumenRolFinalBancos(  )
- {
-
-	var id_rol1 			= 	$('#id_rol1').val();
-	var regimen 			= 	$('#regimen').val();
-  
-    var parametros = {
-                     'id_rol' 			  : id_rol1, 
-                     'regimen'			  :regimen
-      };
-
-	  $.ajax({
-					data:  parametros,
-					url:   '../model/Model-nom_rol_lista_banco.php',
-					type:  'GET' ,
- 					beforeSend: function () { 
- 							$("#ViewResumenRol").html('Procesando');
-  					},
-					success:  function (data) {
-						     $("#ViewResumenRol").html(data);  // $("#cuenta").html(response);
-  					} 
-			}); 
-} 
 function modulo()
 {
 
@@ -773,8 +417,8 @@ function modulo()
   function FormView()
 {
 
-	 $("#ViewFiltro").load('../controller/Controller-nom_rol_filtro.php');
+	  
 
-	 
+	  $("#ViewForm").load('../controller/Controller-nom_ingreso_datos.php');
 
 }

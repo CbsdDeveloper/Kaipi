@@ -15,6 +15,7 @@ class ReportePdf{
 	public $Registro;
 
 	private $anio;
+	public $sesion; 
 	
 	
 	//Constructor de la clase
@@ -29,6 +30,7 @@ class ReportePdf{
 		
 		$this->anio       =  $_SESSION['anio'];
 		
+		$this->sesion 	 =  trim($_SESSION['email']);
 	}
  
 	//------------------------------------
@@ -429,9 +431,7 @@ function GrillaEnlaces($id_asiento){
 	    $datos["c10"] = $a14["carpeta"];
 	    $datos["c11"] = $a14["carpetasub"];
 	    
-	    $usuarios = $this->bd->__user($this->sesion);
-	    
-	    $datos['elaborado'] = ucwords(strtolower($usuarios['completo']));
+	 
 	    
 	    
 	    return $datos;
@@ -456,7 +456,7 @@ function GrillaEnlaces($id_asiento){
 	        $tipo_mov = 'COMPROBANTE DE INGRESO';
 	    }
 	    else{
-	        $tipo_mov = 'COMPROBANTE DE PAGO ';
+	        $tipo_mov = 'COMPROBANTE DE EGRESO ';
 	    }
 	    
 	    
@@ -541,20 +541,20 @@ function GrillaEnlaces($id_asiento){
 	    
 	    
 	    
-	    $usuarios = $this->bd->__user($this->sesion);
-	    
-	    $datos['elaborado'] = ucwords(strtolower($usuarios['completo']));
-	    
+ 
+
 	    
 	    $a14 = $this->bd->query_array('wk_config','carpeta, carpetasub', 'tipo='.$this->bd->sqlvalue_inyeccion(14,true));
 	    
 	    $datos["c10"] = $a14["carpeta"];
 	    $datos["c11"] = $a14["carpetasub"];
 	    
-	    $usuarios = $this->bd->__user($this->sesion);
-	    
-	    $datos['elaborado'] = ucwords(strtolower($usuarios['completo']));
-	    
+ 	    
+		 $usuarios = $this->bd->__user($this->sesion);
+		
+		$datos['elaborado'] =  $usuarios['completo'] ;  
+		
+ 	    
 	    
 	    return $datos;
 	}

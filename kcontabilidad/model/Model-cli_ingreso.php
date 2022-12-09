@@ -246,9 +246,9 @@ if (isset($_GET['accion']))	{
 //------ grud de datos insercion
 if (isset($_POST["action"]))	{
 	
-	$action = @$_POST["action"];
+	$action = $_POST["action"];
 	
-	$id =     @$_POST["idprov"];
+	$id =     $_POST["idprov"];
 	
 	$gestion->xcrud(trim($action),trim($id) );
 	

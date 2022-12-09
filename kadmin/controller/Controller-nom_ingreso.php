@@ -40,7 +40,6 @@
     
     class componente{
  
-      //creamos la variable donde se instanciar? la clase "mysql"
  
       private $obj;
       private $bd;
@@ -103,11 +102,11 @@
                 
                 
                 
-                
+               /*  
                 $this->set->div_label(12,   '</h5>BUSCAR INFORMACION PERSONAL</h5>');
                 
                 $this->obj->text->text_yellow('Ingresar Identificacion ',"texto",'cedulaa',40,45,$datos,'','','div-2-4');
-                
+                */
                 
                 $this->set->div_label(12,   '</h5>REGISTRO DE  INFORMACION PERSONAL</h5>');
               
@@ -150,9 +149,9 @@
                 $this->obj->list->lista('Estado',$MATRIZ,'estado',$datos,'required','','div-2-4');
                 
                 
-                $this->obj->text->text('Teléfono',"texto",'telefono',40,45,$datos,'required','','div-2-4');
+                $this->obj->text->text('Telefono',"texto",'telefono',40,45,$datos,'required','','div-2-4');
                 
-                $this->obj->text->text('Móvil',"texto",'movil',40,45,$datos,'required','','div-2-4');
+                $this->obj->text->text('Movil',"texto",'movil',40,45,$datos,'required','','div-2-4');
                 
                 $this->set->div_label(12,'<h5><b> DATOS ADICIONALES </b></h5>');
                 
@@ -181,10 +180,8 @@
                 
                 
                 
-                $MATRIZ =  $this->obj->array->catalogo_regimen_laboral();
-                
-                $this->obj->list->lista('Regimen laboral?',$MATRIZ,'regimen',$datos,'required','','div-2-4');
-                
+                 
+                 
                 
                 $this->obj->text->text('Fecha ingreso',"date",'fecha',15,15,$datos,'required','','div-2-4');
                 
@@ -193,13 +190,11 @@
                 $this->obj->text->texto_oculto("contrato",$datos); 
                 $datos['sueldo']='0';
                 $this->obj->text->texto_oculto("sueldo",$datos); 
-                /*
-                $this->obj->text->text('Nro.Contrato',"texto",'contrato',30,30,$datos,'required','','div-2-4');
                 
-                
-                $this->obj->text->text('Sueldo',"number",'sueldo',40,45,$datos,'required','','div-2-4') ;
-                
-              */
+                $datos['regimen']='NOMBRAMIENTO';
+                $this->obj->text->texto_oculto("regimen",$datos); 
+
+           
                       
          $this->obj->text->texto_oculto("action",$datos); 
          

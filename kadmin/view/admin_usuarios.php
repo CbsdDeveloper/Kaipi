@@ -101,12 +101,54 @@
 						 
  									  <div class="alert alert-info">
  									  	<div class="row">
+											
+											
 											  <div class="col-md-2"  style="padding-top: 5px;">
-												<select name="qestado"  id="qestado" class="form-control required">
-															 <option value="S">Activo</option>
-															 <option value="N">Desactivo</option>
-												</select>
+												  
+													<select name="qestado"  id="qestado" class="form-control required">
+																 <option value="S">Activo</option>
+																 <option value="N">Desactivo</option>
+													</select>
+												  
 											   </div> 
+											
+											
+											 <div class="col-md-2"  style="padding-top: 5px;">
+												  
+													<select name="qrol"  id="qrol" class="form-control required">
+																 <option value="-1">-- Ver Todos --</option>
+																 <option value="0">Normal</option>
+																 <option value="2">Financiero Empresa Publica</option>
+														 		 <option value="3">Usuario Operativo</option>
+																 <option value="5">Responsable Causas</option>
+														 		 <option value="6">Responsable Planificacion Unidad</option>
+																 <option value="9">Caja - Servicios</option>
+														
+													</select>
+												  
+											   </div> 
+											
+		 		
+										
+											 <div class="col-md-2"  style="padding-top: 5px;">
+												  
+													<select name="qdirector"  id="qdirector" class="form-control required">
+														         <option value="-">-- Ver Todos --</option>
+																 <option value="N">Operativo/Normal</option>
+																 <option value="S">Director Area/Unidad</option>
+													</select>
+												  
+											   </div> 
+											
+											
+											
+											
+											
+											
+											
+			
+											
+											
 											   <div class="col-md-2"  style="padding-top: 5px;"> 
 													<button type="button" class="btn btn-sm btn-primary" id="load"><i class="icon-white icon-search"></i> Búsqueda</button>
 									   			</div> 

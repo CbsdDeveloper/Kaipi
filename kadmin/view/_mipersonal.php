@@ -73,16 +73,30 @@
 							 <div class="panel-heading">Informacion Complementaria</div>
 							 
 							  <div class="panel-body">
-								 
-								  
-  									 
-									  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Simple collapsible</button>
+   									 
+									  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Declaración Juramentada</button>
 									  <div id="demo" class="collapse">
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-										sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-										quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+										 .
 									  </div>
   								  
+								  
+								    <button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#demo1">Cargas Familiares</button>
+									  <div id="demo1" class="collapse">
+									 .
+									  </div>
+								  
+								  
+								   <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo2">Cursos Realizados</button>
+									  <div id="demo2" class="collapse">
+									 .
+									  </div>
+								  
+								    <button type="button" class="btn btn-danger" data-toggle="collapse" data-target="#demo3">Experiencia Laboral</button>
+									  <div id="demo3" class="collapse">
+									 .
+									  </div>
+								  
+								  
 							  </div>
 						  </div>
 				 </div> 	

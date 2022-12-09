@@ -507,6 +507,69 @@ function goAsiento_lado_cta( oTableAsientoDev,item) {
 		
 		 
 } 
+//---------------
+function Grupoc( oTableGastoConta) {
+
+		 
+	  var ffecha1 =  $("#ffecha1").val();
+	  var ffecha2 =  $("#ffecha2").val();
+	  var tipo = $("#v1").val();
+	  var item = $("#v2").val();
+ 
+	  var parametros = {
+				'ffecha1' : ffecha1  ,
+				'ffecha2' : ffecha2  ,
+				'fitem' : item  ,
+				'tipo' : tipo 
+      };
+	  
+		 var suma = 0;
+		 var total1=0;
+
+		 var suma2 = 0;
+		 var total2=0;
+
+		$.ajax({
+		 	data:  parametros,
+		    url: '../grilla/grilla_co_validacion_gastoc_g.php',
+			dataType: 'json',
+			cache: false,
+			success: function(s){
+				oTableGastoConta.fnClearTable();
+					if(s){
+						for(var i = 0; i < s.length; i++) {
+							oTableGastoConta.fnAddData([
+										'<b> <a href="#" onClick="goAsiento_lado( oTableAsientoDev,'+  "'" + s[i][0] +"'"  +')">' +s[i][0] + '</a></b>',
+										'<b> <a href="#" onClick="goAsiento_lado_cta( oTableAsientoDev,'+  "'" + s[i][1] +"'"  +')">' +s[i][1] + '</a></b>',
+										s[i][2],
+										s[i][3],
+										s[i][4]
+  		                 ]);	
+							
+							suma    =  s[i][2] ;
+							suma2    =  s[i][3] ;
+
+ 						    total1 += parseFloat(suma) ;
+							total2 += parseFloat(suma2) ;
+ 						    
+							var titulo  = total1.toFixed(2); 
+							var titulo2  = total2.toFixed(2); 
+
+
+						    $("#devengo2").html(' $ '+ formatNumber(titulo) );
+							$("#devengo3").html(' $ '+ formatNumber(titulo2) );
+						    
+						} // End For
+					}				
+			},
+			error: function(e){
+			   console.log(e.responseText);	
+			}
+		});
+		
+		
+		 
+} 
 //------------------------------------------------------------------------- 
 
  function modulo()
@@ -669,6 +732,59 @@ function formatNumber(num) {
         num = num.substring(0, num.length - (4 * i + 3)) + '.' + num.substring(num.length - (4 * i + 3));
     return (((sign) ? '' : '-') + num + ',' + cents);
 }
+
+//----Grupob
+function Grupob( oTableGasto) {
+
+	 
+	  var ffecha1 =  $("#ffecha1").val();
+	  var ffecha2 =  $("#ffecha2").val();
+	  var tipo = $("#v1").val();
+	  var item = $("#v2").val();
+	  
+ 
+ 
+	  var parametros = {
+				'ffecha1' : ffecha1  ,
+				'ffecha2' : ffecha2  ,
+				'fitem' : item  ,
+				'tipo' : tipo 
+      };
+
+
+ 
+		 var suma = 0;
+		 var total1=0;
+
+		$.ajax({
+		 	data:  parametros,
+		    url: '../grilla/grilla_co_validacion_gasto_g.php',
+			dataType: 'json',
+			cache: false,
+			success: function(s){
+				oTableGasto.fnClearTable();
+					if(s){
+						for(var i = 0; i < s.length; i++) {
+							oTableGasto.fnAddData([
+										s[i][0],
+										'<b> <a href="#" onClick="goAsiento( oTableAsiento,'+  "'" + s[i][1] +"'"  +')">' +s[i][1] + '</a></b>',
+										s[i][2]
+  		                 ]);	
+							suma        =  s[i][2] ;
+ 						    total1     += parseFloat(suma) ;
+							var titulo  = total1.toFixed(2); 
+						    $("#devengo1").html(' $ '+ formatNumber(titulo) );
+						} // End For
+					}				
+			},
+			error: function(e){
+			   console.log(e.responseText);	
+			}
+		});
+		
+ 
+		 
+}
 //-------------- devenado
 
  function goGrupo( oTableGasto,tipo,item) {
@@ -686,6 +802,9 @@ function formatNumber(num) {
 				'tipo_cta':tipo_cta
       };
 
+
+$("#v1").val(tipo);
+$("#v2").val(item);
 		 
 		 var suma = 0;
 		 var total1=0;
@@ -716,10 +835,7 @@ function formatNumber(num) {
 			}
 		});
 		
-		
-		
-		
-		
+	 	
 		goGrupoConta(oTableGastoConta,tipo,item);
 		
 		$('#mytabs a[href="#tab2"]').tab('show');

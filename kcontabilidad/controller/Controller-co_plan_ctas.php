@@ -183,9 +183,10 @@
 
                 
 
-
-
                $this->obj->list->listadbe($resultado,$tipo,'Contra Cuenta','cuenta_ing',$datos,'','',$evento,'div-2-4');
+               
+               
+               $this->obj->text->text_blue('% Retencion',"number",'valor',0,10,$datos,'','','div-2-4') ;
 
 
          $this->obj->text->texto_oculto("action",$datos); 

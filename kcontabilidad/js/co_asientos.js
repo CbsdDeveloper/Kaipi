@@ -8,6 +8,7 @@ var oTableIngreso;
 
 var oTableGastoDev;
 
+
  
 //-------------------------------------------------------------------------
 $(document).ready(function(){
@@ -1329,12 +1330,13 @@ function accion(id,modo,estado)
 		    }
 }
 
+
 //-------------------
 function accion_pago(id,modo,comprobante)
 {
 
 	if (modo == 'procesado'){
-			$("#action_pago").val('aprobado');
+			$("#action_pago").val('OK');
  			$("#pago").val('S');     
  			$("#comprobantePago").val(comprobante);     
 	 }else{
@@ -1351,6 +1353,7 @@ function aprobacion_pago( ){
      var estado = $("#estado").val();     
  
      if (estado == 'aprobado'){
+	
     	 	$("#action_pago").val( 'aprobacion');
 		    
     	 	if (pagado == 'N'){
@@ -1358,6 +1361,7 @@ function aprobacion_pago( ){
 		 			 $("#asiento").val(id_asiento );
 		 			alert('Generacion de Comprobante');
 		     }
+		     
      }else{
     	 $("#action_pago").val( 'no');
     	 alert('No se puede generar comprobante de pago');

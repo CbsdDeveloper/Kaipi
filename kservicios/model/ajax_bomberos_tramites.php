@@ -40,14 +40,20 @@ $bd->conectar_sesion_externo($servidor, $base_datos, $usuario, $password) ;
         
         
         while ($fetch=$bd->obtener_fila($resultado)){
-                
+          
+
+            $nnombre        = reemplazar($fetch['orden_cliente_nombre']);
+
+            $orden_concepto = reemplazar($fetch['orden_concepto']);
+
+             
             
             $output[] = array (
                 trim($fetch['orden_id']),
                 trim($fetch['orden_codigo']),
                 trim($fetch['orden_doc_identidad']),
-                trim($fetch['orden_cliente_nombre']),
-                trim($fetch['orden_concepto']),
+                $nnombre,
+                $orden_concepto,
                 $fetch['orden_total'] ,
                 trim($fetch['orden_email']),
                 trim($fetch['orden_direccion'])
@@ -59,7 +65,23 @@ $bd->conectar_sesion_externo($servidor, $base_datos, $usuario, $password) ;
         pg_free_result($resultado);
 
         echo json_encode($output);
-        
+
+//------------------------------------------
+function reemplazar($nombre){
+
+    $nombre = trim($nombre);
+
+         
+    $resultado = str_replace('"','',  $nombre);
+
+    $resultado = str_replace('/','',  $resultado);
+
+    $resultado = str_replace('/','',  $resultado);
+      
+    
+    return $resultado;
+    
+}        
 
 ?>
  

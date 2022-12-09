@@ -434,7 +434,34 @@ function goToURLpartida(  codigo ) {
 	  }
 		
 }
+//------------------
+function BusquedaPlanificacion() {
+	
+	
+	$('#mytabs a[href="#home"]').tab('show');
+	
+		 $("#nombre_actual").html('<b> 0. Solicitud Planificacion </b>');
+   
+      	 $("#etiqueta_estado").html('<b> 0. Solicitud Planificacion </b>');
+   
+   
+	 
+	$.ajax({
+ 		 url:   '../../kplanificacion/model/Model_seg_proceso_fin.php',
+		type:  'GET' ,
+			beforeSend: function () { 
+					$("#BandejaDatos").html('Procesando');
+			},
+		success:  function (data) {
+				 $("#BandejaDatos").html(data);   
+			     
+			} 
+    });
 
+
+	
+	
+}
 //----------------------------------------
 function VerAvance(idtramite) {
 
@@ -676,8 +703,7 @@ function VerHistorial( id_tramite, nombre,solicitado )
      $("#mensaje_proceso").html(' ');
  	 $("#nombre_actual").html('<img src="../../kimages/mano.png" align="absmiddle"/> <b>[ '+id_tramite+ '-' + nombre +' - ' + solicitado +' ] </b>');
 	
- 	VerMemo(id_tramite);
- 		
+  		
  	BusquedaProd(oTable,id_tramite) ;
  
     VerAvance(id_tramite);
@@ -765,8 +791,7 @@ function VerHistorialUni( id_tramite, nombre,solicitado,estado )
      $("#mensaje_proceso").html(' ');
  	 $("#nombre_actual").html('<img src="../../kimages/mano.png" align="absmiddle"/> <b>[ '+id_tramite+ '-' + nombre +' - ' + solicitado +' ] </b>');
 	
- 	VerMemo(id_tramite);
- 		
+  		
  	BusquedaProd(oTable,id_tramite) ;
  
     VerAvance(id_tramite);
@@ -827,35 +852,7 @@ function LimpiaDatosPartida() {
  	 
     }
 //----------------------------------------------
-//---------------------------------------------
-function VerMemo(id_tramite) {
-
-	  
-		var parametros = {
-				 'id_certifica' : id_tramite ,
-                 'accion' 		: 'visor'
-        };
-
-		$.ajax({
-		    type:  'GET' ,
-			data:  parametros,
-			url:   '../model/Model-certifica_memo_add.php',
-			dataType: "json",
-			success:  function (response) {
-
-			    	 tinyMCE.get('editor6').setContent(htmlEntities(response.a));
-
-			    	 $("#nro_memo").val( response.b );   
-			    	 $("#fcertifica").val( response.c);   
-			    	 $("#comprobante").val( response.d);   
-					  
-			} 
-	   });
-		
-		 
  
- 
-}
 //----------------------------------------------
 function limpiaPartida() {
    
@@ -1032,6 +1029,214 @@ function LimpiaOrden() {
 	
 }   
 //------------
+
+function AbrirDocInicio (tarea, idtarea_seg)
+{
+	
+	$("#tareaf").val(tarea);
+	
+	$("#idtarea_segf").val(idtarea_seg);
+	
+	
+	var parametros = {
+								'idcodigo' : tarea  ,
+								'idcaso'   : idtarea_seg  ,
+								'accion' : 'archivos',
+								'visor' : '2'
+				   };
+			
+				  $.ajax({
+								 data:  parametros,
+								 url:   '../../kplanificacion/model/Model_nov__doc_tra01.php',
+								 type:  'GET' ,
+								 success:  function (data) {
+										  $("#Seguimiento_archivo").html(data);   
+			  
+								 } 
+			
+						}); 
+ 
+	
+ }	
+ 
+//--------------------------- 
+function SiguienteProceso( )
+{
+	
+// filtro para poner los objetivos de la unidad	
+var idtarea1 			= $("#idtarea1").val(  );
+var idtarea_seg 		= $("#idtarea_seg").val(  );
+var idtarea_segcom 		= $("#idtarea_segcom").val(  );
+
+var secuencia_next			= $("#secuencia_next").val(  );
+var idtarea_segcom_next		= $("#idtarea_segcom_next").val(  );
+var comentario_dato         = $("#comentario_dato").val(  );
+
+var fecha_cer         = $("#fecha_cer").val(  );
+var cur_cer         = $("#cur_cer").val(  );
+  
+          
+
+var proceso = $("#proceso_nombre").val();
+ 
+	 
+	  var parametros = {
+			    'idtarea1' : idtarea1,
+			    'idtarea_seg':idtarea_seg,
+			    'idtarea_segcom':idtarea_segcom,
+			    'secuencia_next':secuencia_next,
+			    'idtarea_segcom_next':idtarea_segcom_next,
+			    'comentario_dato':comentario_dato,
+			    'fecha_cer':fecha_cer,
+			    'cur_cer':cur_cer 
+    };
+ 
+ 
+ if(confirm("Desea guardar y enviar el proceso seleccionado?"))
+	{
+	              	$.ajax({
+										data:  parametros,
+										 url:   '../../kplanificacion/model/ajax_tarea_ejecuta_cer.php',
+										type:  'POST' ,
+											beforeSend: function () { 
+													$("#guardarDatosCom").html('Procesando');
+											},
+										success:  function (data) {
+												    $("#guardarDatosCom").html(data); 
+												    
+												     BusquedaPlanificacion();
+						 					} 
+								});
+	}
+	else
+	{
+	   return false;
+	}
+ 
+}
+//----------
+
+function SiguientePaso( idtarea1 ,idtarea_seg,idtarea_segcom)
+{
+	
+// filtro para poner los objetivos de la unidad	
+
+$("#idtarea1").val( idtarea1 );
+$("#idtarea_seg").val( idtarea_seg );
+$("#idtarea_segcom").val( idtarea_segcom );
+	 
+	  var parametros = {
+			    'idtarea1' : idtarea1,
+			    'idtarea_seg':idtarea_seg,
+			    'idtarea_segcom':idtarea_segcom
+    };
+ 
+	$.ajax({
+				data:  parametros,
+				 url:   '../../kplanificacion/controller/Controller_ver_tarea_cer.php',
+				type:  'GET' ,
+					beforeSend: function () { 
+							$("#ViewFormComentario").html('Procesando');
+					},
+				success:  function (data) {
+						 $("#ViewFormComentario").html(data); 
+					     
+					} 
+		});
+ 
+	 
+}
+//------------------------------
+//---------------------
+function AdjuntarDoc ()
+{
+	
+	var ancho = 650 ;
+	var alto = 360;
+ 
+ var tarea		 =	$("#tareaf").val();
+ var idtarea_seg =	$("#idtarea_segf").val();
+	
+  	   
+	var posicion_x; 
+
+	var posicion_y; 
+
+	var enlace = '../../upload/uploadDoc_pla_seg?id='+ tarea + '&seg=' + idtarea_seg; 
+   
+	posicion_x=(screen.width/2)-(ancho/2); 
+
+	posicion_y=(screen.height/2)-(alto/2); 
+ 
+	if ( tarea > 0 ) {
+
+			window.open(enlace, '#','width='+ancho+',height='+alto+',toolbar=0,scrollbars=no,resizable=no,left='+posicion_x+',top='+posicion_y+'');
+
+	  }
+
+} 
+//----------------------------
+ function VerAvance ( seg_tarea1 ,seg_tarease1    )
+{
+ 
+ 
+ 	$("#tareaf").val(seg_tarea1);
+	
+	$("#idtarea_segf").val(seg_tarease1);
+	
+ 
+		 var parametros1 = {
+					'idtarea'  : seg_tarea1  ,
+					'seg_tarease1': seg_tarease1
+				}
+		 
+		$.ajax({
+			data:  parametros1,
+			 url:   '../../kplanificacion/model/ajax_tarea_avance_p.php',
+			type:  'GET' ,
+				beforeSend: function () { 
+						$("#ViewFormRecorrido").html('Procesando');
+				},
+			success:  function (data) {
+					 $("#ViewFormRecorrido").html(data);   
+					 
+				} 
+	  });
+ 
+   
+	  
+
+
+}
+//-----------------------------
+function AbrirDocInicio (tarea, idtarea_seg)
+{
+	
+	$("#tareaf").val(tarea);
+	
+	$("#idtarea_segf").val(idtarea_seg);
+	
+	
+	var parametros = {
+								'idcodigo' : tarea  ,
+								'idcaso'   : idtarea_seg  ,
+								'accion' : 'archivos',
+								'visor' : '2'
+				   };
+			
+				  $.ajax({
+								 data:  parametros,
+								 url:   '../../kplanificacion/model/Model_nov__doc_tra01.php',
+								 type:  'GET' ,
+								 success:  function (data) {
+										  $("#Seguimiento_archivo").html(data);   
+			  
+								 } 
+			
+						}); 
+ 
+	
+ }	
 //----------------------------
   function BusquedaProd(oTable,idseg){        
 	  
@@ -1316,19 +1521,31 @@ function Limpiar_producto( ){
 
 
     }
- 
- function EnviarWhatsapp()
- {
     
-	   var tfono =   $.trim( $("#tfono").val()   )  ;
-	 	var tasunto = $.trim( $("#tmensajee").val() );
+ // filtro para poner los objetivos de la unidad	
+function VerTarea( idtarea )
+{
+	 	 
 	 
-	 if (tasunto)	 {
-		   
- 	 	window.open('https://api.whatsapp.com/send?phone='+tfono+'&text='+tasunto,'_blank');
-      
-	 }
- }
+	var parametros = {
+				 'idtarea'  : idtarea 
+	  };
+	 
+	 $.ajax({
+		 data:  parametros,
+		 url: "../../kplanificacion/controller/Controller_ver_tarea_pac.php",
+		 type: "GET",
+       success: function(response)
+       {
+           $('#ViewFormTarea').html(response);
+       }
+	 });
+	 
+	   $('#guardarPac').html('');
+	 
+	 
+	 
+}
  //--------------------------------------------
  function CerrarFactura(  ) {
 		

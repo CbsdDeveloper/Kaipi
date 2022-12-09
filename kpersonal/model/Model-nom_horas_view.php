@@ -8,8 +8,7 @@ require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos
 
 class proceso{
     
-    //creamos la variable donde se instanciar la clase "mysql"
-    
+     
     private $obj;
     private $bd;
     
@@ -52,6 +51,8 @@ class proceso{
     function Vigencia( $id ){
         
         
+
+
         $sqlUser = 'SELECT id_rol, id_periodo, mes, anio, registro, estado, fecha, novedad, sesion
                       FROM public.nom_rol_pago   
                      WHERE id_rol = '.$this->bd->sqlvalue_inyeccion($id,true).' AND
@@ -88,12 +89,13 @@ class proceso{
     			 <tr>
     				<th align="center" width="10%">Identificacion</th>
     				<th align="center" width="20%">Nombre</th>
-    				<th align="center" width="10%">Cargo</th>
+    				<th align="center" width="15%">Cargo</th>
     				<th align="center" width="10%">Sueldo</th>
-                    <th align="center" width="10%">Dias Trabajados</th>
-                    <th align="center" width="10%">Horas Suplementarias</th>
-                    <th align="center" width="10%">Horas ExtraOrdinaria </th>
-                    <th align="center" width="10%">Atrasos(Min)</th>
+                    <th align="center" width="7%">Dias Trabajados</th>
+                    <th align="center" width="7%">Horas Suplementarias($)</th>
+                    <th align="center" width="7%">Horas ExtraOrdinaria ($)</th>
+                    <th align="center" width="7%">Alimentacion($)</th>
+                    <th align="center" width="7%">Atrasos($)</th>
                     <th width="10%"> </th>
     				</tr>
     			</thead>';
@@ -104,7 +106,7 @@ class proceso{
         while ($y=$this->bd->obtener_fila($stmt1)){
             
             $User = $this->bd->query_array('nom_rol_horas',
-                'id_rolhora, dias, horasextras, horassuple, atrasos',
+                'id_rolhora, dias, horasextras, horassuple, atrasos,alimentacion',
                 'idprov='.$this->bd->sqlvalue_inyeccion(trim($y['idprov']),true).' and
                  id_periodo='.$this->bd->sqlvalue_inyeccion($id_periodo,true).' and
                  id_rol='.$this->bd->sqlvalue_inyeccion($id_rol,true).' and
@@ -128,12 +130,14 @@ class proceso{
  
                  echo ' <tr>
 				<td>'.$y['idprov'].'</td>
-				<td>'.$y['razon'].'</td>
+				<td><b>'.$y['razon'].'</b></td>
  				<td>'.$y['cargo'].'</td>
 				<td align="right">'.$y['sueldo'].'</td>
                 <td align="right">'.' <input type="number" min="0" max="30" step="1"  value="'.$User['dias'].'" style="text-align:right; border:rgba(193,193,193,1.00)" id="d'.trim($y['idprov']).'" name="d">'.'</td>
                 <td align="right">'.' <input type="number" min="0" max="30" step="1"  value="'.$User['horassuple'].'" style="text-align:right; border:rgba(193,193,193,1.00)" id="s'.trim($y['idprov']).'" name="h">'.'</td>
                 <td align="right">'.' <input type="number" min="0" max="30" step="1"  value="'.$User['horasextras'].'" style="text-align:right; border:rgba(193,193,193,1.00)" id="e'.trim($y['idprov']).'" name="s">'.'</td>
+
+                 <td align="right">'.' <input type="number" min="0" max="30" step="1"  value="'.$User['alientacion'].'" style="text-align:right; border:rgba(193,193,193,1.00)" id="v'.trim($y['idprov']).'" name="v">'.'</td>
                 <td align="right">'.' <input type="number" min="0" max="30" step="1"  value="'.$User['atrasos'].'" style="text-align:right; border:rgba(193,193,193,1.00)" id="a'.trim($y['idprov']).'" name="a">'.'</td>
                 <td>'.$boton.$boton1.$variable.'</td>
                  </tr>';
@@ -172,13 +176,20 @@ if (isset($_GET['periodo']))	{
         $gestion->Vigencia($_GET['periodo']);
         
     }
- 
-  
+   
 }
 ?>
 <script>
-    $(document).ready(function() {
-        $('#jsontable').DataTable();
+
+   jQuery.noConflict(); 
+
+   jQuery(document).ready(function() {
+
+       jQuery('#jsontable').DataTable( {
+                "paging":   true,
+                "ordering": false,
+                "info":     true
+            } );
+        
     } ); 
-</script>
-  
+</script>  

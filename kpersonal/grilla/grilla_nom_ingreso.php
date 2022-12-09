@@ -7,7 +7,7 @@
     require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
   
   
-    class proceso{
+    class grilla_nom_ingreso{
  
       //creamos la variable donde se instanciar la clase "mysql"
  
@@ -21,7 +21,7 @@
       //-----------------------------------------------------------------------------------------------------------
       //Constructor de la clase
       //-----------------------------------------------------------------------------------------------------------
-      function proceso( ){
+      function grilla_nom_ingreso( ){
             //inicializamos la clase para conectarnos a la bd
  
                 $this->obj     = 	new objects;
@@ -103,7 +103,7 @@
 ///------------------------------------------------------------------------
 ///------------------------------------------------------------------------ 
  
-    		$gestion   = 	new proceso;
+    		$gestion   = 	new grilla_nom_ingreso;
  
     		 
     		

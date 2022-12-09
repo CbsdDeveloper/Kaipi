@@ -601,6 +601,7 @@ function cabecera_general($tipo){
                   group by a.cuenta_inv, b.detalle  ";
 	    }
 	    
+	  
 	    
 	    $stmt_lista = $this->bd->ejecutar($sql);
 	    

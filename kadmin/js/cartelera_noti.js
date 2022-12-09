@@ -165,17 +165,22 @@ function EnviarNotificacion( ) {
 	
      var plantilla    = $('#plantilla').val();
      var id_cartelera = $('#id_cartelera').val();
-     var regimen      = $('#regimen').val();
 
-	 var unidades      = $('#unidades').val();
+	    
+
+     var unidades      = $('#unidades').val();
+	 var director      = $('#director').val();
+	 var rol      = $('#rol').val();
 	 
      var parametros = {
 				'plantilla' : plantilla ,
                 'id_cartelera' : id_cartelera ,
-                'regimen' : regimen,
-				'unidades' : unidades
+                'director' : director,
+				'rol' : rol,
+				'unidades':unidades
       };
              
+	  
 	  alertify.confirm("Enviar Notificacion electronica", function (e) {
  		  if (e) {
 

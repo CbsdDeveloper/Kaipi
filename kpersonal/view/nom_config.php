@@ -63,7 +63,7 @@
    </div>
  	
   <!-- ------------------------------------------------------ -->  
- <div class="col-md-12"> 
+ <div class="col-md-12" > 
       
        		 <!-- Content Here -->
 	 
@@ -85,13 +85,7 @@
                   			<span class="glyphicon glyphicon-link"></span> Presupuesto Talento Humano</a>
                   		</li>
 	 
-	  					<li><a href="#tab5" data-toggle="tab">
-                  			<span class="glyphicon glyphicon-link"></span> Impuesto a la Renta/Salario</a>
-                  		</li>
-	 
-					    <li><a href="#tab6" data-toggle="tab">
-                  			<span class="glyphicon glyphicon-bed"></span> Gastos Personales Importar</a>
-                  		</li>
+	  					 
 	 
 	 
            </ul>
@@ -167,18 +161,15 @@
 								
 								 <div class="col-md-10" style="padding-bottom: 10px;padding-top: 15px">  
 									
+									
+									 
 								     <button type="button" id="LimpiarParametro" class="btn btn-default btn-sm">Nuevo Parametros</button>
 									 
 									  <button type="button" id="GuardaParametro" class="btn btn-info btn-sm">Guardar Parametros</button> 
 								
 							     </div>	 
 								
-								<div class="col-md-2" align="right" style="padding-bottom: 10px;padding-top: 15px">  
-									 
-									  <button type="button" id="BuscarParametro" class="btn btn-warning btn-sm">Buscar Parametros</button> 
-								 
-							
-								 </div>	 
+ 							 		 
  								
 								 <div id="detalle_datos"> 
 								
@@ -195,13 +186,16 @@
 			   
 			   
 			       <div class="tab-pane fade in" id="tab3"  style="padding-top: 3px">
+					   
                       <div class="panel panel-default">
 						
 					        <div class="panel-body" > 
  
+									 <div class="col-md-9" style="padding-bottom: 10px;padding-top: 15px">  
 								
-								 <div id="detalle_datos_regimen"> </div>
-						   
+								 			<div id="detalle_datos_regimen"> </div>
+										 
+						    		 </div>
                		       </div>
                 	  </div>
              	 </div>
@@ -230,55 +224,7 @@
              	 </div>
 			   
 			   
-			 	  <div class="tab-pane fade in" id="tab5"  style="padding-top: 3px">
-					   
-                      <div class="panel panel-default">
-						
-					        <div class="panel-body" > 
  
-								   
-								<div class="col-md-7"> 
-								
-								  <table id="jsontable_renta" class="display table table-condensed table-hover datatable" cellspacing="0" width="100%">
-																								<thead>
-																									<tr>
- 																										<th width="10%">Anio</th>
-																										<th width="25%">Fraccion Basica</th>
-																										<th width="25%">Excedente Hasta</th>
-																										<th width="20%">Impuesto Basico</th>
-																										<th width="20%">Impuesto Excedente</th>
-  																									</tr>
-																								</thead>
-								</table>
-						   
-									<h5>Importe la informacion de la tabla de impuesto a la renta</h5>
-									1. Prepare la informacion del archivo de acuerdo a la estructura tabla que se encuentra en pantalla</br>
-								    2. El archivo debe ser extension cvs (separado por ;)</br>
-						  			3. <a href="#" class="btn btn-info" role="button">Importar archivo cvs</a>
-									 </div>
-								
-               		       </div>
-                	  </div>
-             	 </div>
-	
-			   	   <div class="tab-pane fade in" id="tab6"  style="padding-top: 3px">
-					   
-                      <div class="panel panel-default">
-						
-					        <div class="panel-body" > 
- 
-								   
-								   <iframe width="100%" id="archivocsv" name = "archivocsv" height="160" src="../model/ajax_gasto_excel.php" border="0" scrolling="no" allowTransparency="true" frameborder="0">
-							 	    </iframe>
-								
-								<h5>Importe la informacion de gastos personales</h5>
-									1. Prepare la informacion del archivo de acuerdo a la estructura</br>
-								    2. El archivo debe ser extension cvs (separado por ;)</br>
-						  			3. <b>CEDULA; VIVIENDA; EDUCACION; SALUD; VESTIMENTA; ALIMENTACION; TURISMO </b>
-									 </div>
-						   
-               		       </div>
-                	  </div>
              	 </div>
 	
 	
@@ -296,5 +242,42 @@
   <!-- Page Footer-->
     <div id="FormPie"></div>  
  </div>   
+
+	<div class="modal fade" id="myModalPrograma" role="dialog">
+
+	  <div class="modal-dialog" id="mdialTamanio">
+
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">Historial</h4>
+			</div>
+			<div class="modal-body">
+			  
+				
+				<div class="panel panel-info">
+												  <div class="panel-heading">SELECCION DE PROGRAMA A REALIZAR EL PAGO DE NOMINA</div>
+													<div class="panel-body"> 
+															 <div id="ViewFormPrograma"> </div>
+													</div>
+												  </div>
+				
+			
+				
+			  
+			</div>
+			<div class="modal-footer">
+
+				 <button type="button" class="btn btn-success" onClick="GenerarPrograma()" data-dismiss="modal">Procesar Informacion</button>
+
+			  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		  
+		  </div>
+
+		</div>
+  </div>
+
  </body>
 </html>

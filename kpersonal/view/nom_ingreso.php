@@ -1,3 +1,11 @@
+<?php
+session_start();
+require '../controller/perfil_pantalla.php';
+$usuario = ver_perfil($_SESSION['usuario'],45);
+	if ($usuario== 0)  {
+		header('Location: inicio');
+    } 
+?>	
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,6 +82,7 @@
 		  		  	         <div class="col-md-12"> 
                                 
   									  <div class="alert alert-info">
+										   
  									    	<div class="row">
 												
 												<div class="col-md-3"  style="padding-top: 5px;">
@@ -99,6 +108,7 @@
 												   
 									   			</div> 
 									   		</div> 
+										  
 									   	 </div> 		
   								 
  				  		     </div> 

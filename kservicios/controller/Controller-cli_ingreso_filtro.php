@@ -68,9 +68,9 @@
        	
         $this->obj->list->listae('',$MATRIZ,'bestado',$datos,'required','',$evento,'div-0-12');  // lista estatica que dibuja una lista de valores con evento
        	 
-      	$this->obj->text->text_blue('',"texto",'crazon',15,15,$datos,'required','','div-0-12','Busqueda Nombre'); // casillero de texto 
+      	$this->obj->text->text_blue('Buscar Nombre',"texto",'crazon',15,15,$datos,'required','','div-0-12','Busqueda Nombre'); // casillero de texto 
 
-        $this->obj->text->text_blue('',"texto",'cidprov',15,15,$datos,'required','','div-0-12','Busqueda Identificacion'); // casillero de texto 
+        $this->obj->text->text_blue('Buscar Identificación',"texto",'cidprov',15,15,$datos,'required','','div-0-12','Busqueda Identificacion'); // casillero de texto 
       
       
       }

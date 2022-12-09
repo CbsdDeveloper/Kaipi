@@ -266,6 +266,7 @@
 											   <h4> Comprobantes electronicos emitidos por tramite </h4>
 											   
 											   
+											   
 											     <div class="col-md-12" style="padding: 10px" > 
  
 																	 <button type="button" onClick="AbrirTributacion()" class="btn btn-sm btn-success"><i class="icon-white icon-ambulance"></i> Generar Retención</button>
@@ -298,7 +299,8 @@
 																			  </table>
 														  </div>	
 														
-														 <div class="col-md-12" style="padding: 10px" id="sumair"  name="sumair"> 
+														 
+															 
  														 </div>		
 														
  													 </div>
@@ -432,10 +434,13 @@
  				         <div class="panel-body">
  					  		 <div id="ViewAsientoGasto"> var</div> 
  					  		 <div id="guardarGasto"></div> 
+							 
+							   <div class="col-md-12" style="padding: 10px" id="sumair"  name="sumair"> 
 					     </div>
 					     </div>   
   					 </div>
 					  
+					
 				  </div>
 				
 			  <div class="modal-footer">

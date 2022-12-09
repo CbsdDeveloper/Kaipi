@@ -114,7 +114,7 @@ class proceso{
     	    FROM presupuesto.pre_gestion_periodo
     	    where tipo = '.$this->bd->sqlvalue_inyeccion( $tipo ,true).'  and anio = '.$this->bd->sqlvalue_inyeccion($this->anio ,true).'
     	    group by grupo
-    	    order by grupO';
+    	    order by grupo';
  	    
 	    
 	    $stmt = $this->bd->ejecutar($sql);

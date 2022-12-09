@@ -96,7 +96,7 @@
       		                $fetch['saldo_anterior'],
       		                $fetch['dias_derecho'],            
       		                $diferencia,
-                              $pendiente,  
+                            round($pendiente,2),  
                             trim($fetch['idprov']),
                             $fetch['ajuste'],  
        		);

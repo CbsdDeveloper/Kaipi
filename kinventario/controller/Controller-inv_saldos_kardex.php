@@ -60,11 +60,19 @@
          $total_saldo    = 0;
          $total_cantidad = 0;
          $tota_promedio  = 0;
+         
+         $datos = $this->bd->query_array('view_producto','*', 'referencia='.$this->bd->sqlvalue_inyeccion($id,true));
+         
+         $producto = trim($datos['producto']);
+         $categoria = trim($datos['categoria']).'<br>'. trim($datos['cuenta_inv']).' '.trim($datos['detalle']);
+         
+         echo '	<div class="col-md-12" id="impresionk" name="impresionk" style="padding: 25px">
+                <h4><b>RESUMEN KARDEX POR PRODUCTO </b><br>';
+         echo '<b>'.$producto.'</h4>'.$categoria.' </b><br><br> ';
  
          
-         echo '	<table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tbody>
-    <tr>  
+         echo '	<table class="class="display table table-condensed table-hover datatable dataTable" width="100%" border="0" cellspacing="0" cellpadding="0">
+     <tr>  
       <td class="filasupe" width="5%" rowspan="2" style="text-align: center;padding: 3px">FECHA</td>
       <td class="filasupe" width="5%" rowspan="2" style="text-align: center;padding: 3px">TRANSACCION</td>
       <td class="filasupe" width="5%" rowspan="2" style="text-align: center;padding: 3px">DOCUMENTO</td>
@@ -88,9 +96,9 @@
          
          
          while ($y=$this->bd->obtener_fila($stmt21)){
-             $costo    = $y['costo'];
+             $costo    = round($y['costo'],4);
              $tipo     = $y['tipo'];
-             $cantidad = $y['cantidad'];
+             $cantidad = round($y['cantidad'],2);
              
              // $total    = $y['total_variable']; //  SIN IVA
              $total    = $y['total']; // CON IVA
@@ -118,7 +126,7 @@
                      
                      $total_cantidad = $total_cantidad + $cantidad;
                      $total_saldo    = round($total_saldo + $total,2);
-                     $tota_promedio  = round($total_saldo / $total_cantidad,4);
+                     $tota_promedio  = round($total_saldo / $total_cantidad,2);
                      $tota_lifo      = $costo;
                      $costo_ingreso  = $costo;
                      $total_ingreso  = $costo *$cantidad ;
@@ -137,7 +145,7 @@
                      if ( $total_cantidad == 0 ){
                          $tota_promedio = $tota_promedio;
                      }else{
-                         $tota_promedio  = round($total_saldo / $total_cantidad,4);
+                         $tota_promedio  = round($total_saldo / $total_cantidad,2);
                      }
                      
                      $costo_ingreso  = '0.00';
@@ -154,33 +162,29 @@
                       <td class="filasupe" style="padding: 3px">'. $y['razon'].'</td>
                       <td class="filasupe" style="padding: 3px">'. $y['detalle'].'</td>
                       <td class="filasupe" align="right" valign="middle" style="padding: 3px">'. $ingreso.'</td>
-                      <td class="filasupe" align="right" valign="middle" style="padding: 3px">'. round($costo_ingreso,4).'</td>
+                      <td class="filasupe" align="right" valign="middle" style="padding: 3px">'. round($costo_ingreso,2).'</td>
                       <td class="filasupe" align="right" valign="middle" style="padding: 3px">'. round($total_ingreso,2).'</td>
                       <td class="filasupe" align="right" valign="middle" style="padding: 3px">'. $egreso.'</td>
-                      <td class="filasupe" align="right" valign="middle" style="padding: 3px">'. round($costo_egreso,4).'</td>
+                      <td class="filasupe" align="right" valign="middle" style="padding: 3px">'. round($costo_egreso,2).'</td>
                       <td class="filasupe" align="right" valign="middle" style="padding: 3px">'. round($total_egreso,2).'</td>
                       <td class="filasupe" align="right" valign="middle" style="padding: 3px">'. $total_cantidad.'</td>
-                      <td class="filasupe" align="right" valign="middle" style="padding: 3px">'. round($tota_promedio,4).'</td>
+                      <td class="filasupe" align="right" valign="middle" style="padding: 3px">'. round($tota_promedio,2).'</td>
                        <td class="filasupe" align="right" valign="middle" style="padding: 3px">'. round($total_saldo,2).'</td>
                     </tr>';
              
              $i ++;
          }
          
-    echo '</tbody> </table>';
+    echo ' </table>';
      
+    echo '	<div class="col-md-12" style="padding: 25px"><H4><b>RESUMEN</b><br>';
+    echo 'Saldo Unidades   :'.round($total_cantidad,2).' <br>';
+    echo 'Costo promedio : $. '.round($tota_promedio,2).'<br> ';
+    echo 'Costo Lifo   :$. '.round($tota_lifo,2).'<br> ';
+    echo 'Costo Total  :$. '.round($total_saldo,2).' </H4>';
+    echo '</div></div>';
     
-    
-    echo '	<div class="col-md-12" style="padding: 25px"><h4><b>RESUMEN PRODUCTO </b></h4>';
-    
-    echo '<h4>'.$producto.' </h4>';
-    echo '<h4>COSTO   :'.round($tota_promedio,2).' </h4>';
-    echo '<h4>UNIDADES   :'.round($total_cantidad,2).' </h4>';
-    echo '<h4>SALDO   :'.round($total_saldo,2).' </h4>';
-    echo '<h4>LIFO    :'.round($tota_lifo,2).' </h4>';
-    
-   
-    echo '</div>';
+
 		 
 		 
    }

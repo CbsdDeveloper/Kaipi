@@ -846,6 +846,41 @@ function Reciprocas( tipo)
 
  
  }
+ //
+ function CopiarReciproco( )
+ {
+
+ 
+    var	id_reciproco=	$("#id_reciproco").val();
+ 
+	 
+	 var parametros = {
+ 		'id_reciproco':id_reciproco 
+	 };
+	
+
+	 alertify.confirm("<p> Desea Copiar registro<br></p>", function (e) {
+
+		if (e) {
+
+			$.ajax({
+				data:  parametros,
+				   url: "../model/ajax_reciprocas_copiar.php",
+				   type: "POST",
+				   success: function(response)
+				   {
+						   $('#DatosReciprocas').html(response);
+	   
+				   }
+				   });
+ 	   
+				   Reciprocas(1);
+		 }
+
+	 }); 
+
+ 
+ }
  /*
  elimina fila del archivo
  */

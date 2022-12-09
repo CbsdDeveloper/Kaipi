@@ -54,9 +54,10 @@
       	$filtro2  = 'N';
       	
       	if ( $lon >  3 ){
-      	    $filtro2= 'S';
-			$filtro21= 'N';
+      	    $filtro2  = 'S';
+			$filtro21 = 'N';
 			$sfiltro1 = 'N';
+			$sfiltro  = 'N';
       	    $dato = 'LIKE.'. strtoupper($crazon).'%';   // PALABRA RESERVADA PARA BUSCAR COICIDENCIAS CON LA VARIABLE LIKE
       	}
 
@@ -64,27 +65,24 @@
        	$filtro21  = 'N';
       	
       	if ( $lon1 >  5 ){
-      	    $filtro21= 'S';
+      	    $filtro21 = 'S';
 			$sfiltro1 = 'N';
-			$filtro2= 'N';
+			$filtro2  = 'N';
+			$sfiltro  = 'N';
       	    $dato1 = 'LIKE.'. strtoupper($cidprov).'%';   // PALABRA RESERVADA PARA BUSCAR COICIDENCIAS CON LA VARIABLE LIKE
       	}
       	
 		 
-		  $filtro2= 'S';
-		  $filtro21= 'N';
-		  $sfiltro1 = 'N';
-			$dato = 'LIKE.'. strtoupper($crazon).'%';   // PALABRA RESERVADA PARA BUSCAR COICIDENCIAS CON LA VARIABLE LIKE
-			
+	 
 
       	$qquery = array(
       			array( campo => 'idprov',       valor => $dato1,      filtro =>  $filtro21,         visor => 'S'),
-      	        array( campo => 'razon',        valor => $dato,    filtro => $filtro2,    visor => 'S'),
-      			array( campo => 'correo',       valor => '-',      filtro => 'N',         visor => 'S'),
-      			array( campo => 'direccion',    valor => '-',      filtro => 'N',         visor => 'S'),
-      			array( campo => 'telefono',     valor => '-',      filtro => 'N',         visor => 'S'),
-      			array( campo => 'estado',       valor =>$bestado,  filtro => 'S',         visor => 'N'),
-      	        array( campo => 'idciudad',     valor =>$ciudad,   filtro => $sfiltro1,   visor => 'N'),
+      	        array( campo => 'razon',        valor => $dato,       filtro => $filtro2,    visor => 'S'),
+      			array( campo => 'correo',       valor => '-',         filtro => 'N',         visor => 'S'),
+      			array( campo => 'direccion',    valor => '-',         filtro => 'N',         visor => 'S'),
+      			array( campo => 'telefono',     valor => '-',         filtro => 'N',         visor => 'S'),
+      			array( campo => 'estado',       valor =>$bestado,     filtro => 'S',         visor => 'N'),
+      	        array( campo => 'idciudad',     valor =>$ciudad,      filtro => $sfiltro1,   visor => 'N'),
       			array( campo => 'naturaleza',   valor =>$naturaleza,  filtro => $sfiltro, visor => 'N'),
       			array( campo => 'modulo',       valor =>"C",          filtro => 'S',      visor => 'N')
       	);

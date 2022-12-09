@@ -427,7 +427,10 @@ function _n_decimo_tercero( $id_periodo, $id_rol,$idprov ,$anio,$mes,$simula="N"
    
          
             
-            $salaria =  $x['sueldo']  ;
+          $salaria =  $x['sueldo']  +  $User['suma']  ;
+            
+           
+            
             $parcial = $salaria/12;
             $dia_valor =  $parcial /30;
 
@@ -489,13 +492,13 @@ function _n_decimo_tercero( $id_periodo, $id_rol,$idprov ,$anio,$mes,$simula="N"
     
     $fecha         = explode('-', $xxx['fecha']);
 
-    $anio_regitro  =  $fecha[0] ;
+   // $anio_regitro  =  $fecha[0] ;
     
     $mes_regitro  =  $fecha[1] ;
 
     $dia_regitro  =  $fecha[2] ;
 
-    $anio_anterior =  $anio - 1 ;
+  //  $anio_anterior =  $anio - 1 ;
     
     $valor_hora     =    0;
     $salaria        =    425;
@@ -504,19 +507,19 @@ function _n_decimo_tercero( $id_periodo, $id_rol,$idprov ,$anio,$mes,$simula="N"
    
     $dias_valor     =     $parcial/ $udia ;
      
-    $region = 'C';
+    $region = 'S';
     
     if ($region=='C')
     {
-        $fecha_inicia =  $anio_anterior .'-03-01';
+    //    $fecha_inicia =  $anio_anterior .'-03-01';
         $fecha_final  =  $anio  .'-02-28';
-        $fecha_base   =  $anio  .'-01-01';
-        $fecha_tope   =  $anio_anterior  .'-12-31';
+  //     $fecha_base   =  $anio  .'-01-01';
+  //      $fecha_tope   =  $anio_anterior  .'-12-31';
      }else  {
-        $fecha_inicia =  $anio_anterior .'-07-01';
+      //  $fecha_inicia =  $anio_anterior .'-07-01';
         $fecha_final  =  $anio  .'-07-30';
-        $fecha_base   =  $anio  .'-01-01';
-        $fecha_tope   =  $anio_anterior  .'-12-30';
+    //    $fecha_base   =  $anio  .'-01-01';
+    //    $fecha_tope   =  $anio_anterior  .'-12-30';
      }
      // (Salario b�sico x Dias Laborados/Total d�as)
 
@@ -525,20 +528,22 @@ function _n_decimo_tercero( $id_periodo, $id_rol,$idprov ,$anio,$mes,$simula="N"
 
      $meses01        =    $this->meses($xxx['fecha'],$fecha_final);
  
-
-
-
-     
+ 
 
     if ( $dias01 > 360  ){
         $parcial        = $salaria;
 
    }else{
-        $dias01 =   $meses01  * 30 ;
-        $parcial_dia = 31 - intval( $dia_regitro );
-        $dias01      = $dias01 + $parcial_dia;
-
-         $parcial        =    $dias_valor  * $dias01   ;
+        $dias01      =   $meses01  * 30 ;
+        
+        if ( $meses01 == 0 ){
+            $parcial = 0;
+        }else {
+            $parcial_dia =   31 - intval( $dia_regitro );
+            $dias01      =   $dias01 + $parcial_dia;
+            $parcial     =    $dias_valor  * $dias01   ;
+        }
+        
     }   
 
 
@@ -996,13 +1001,13 @@ meses
       function meses($fech_ini,$fech_fin) {
  
      
-        $fIni_yr=substr($fech_ini,0,4);
+         $fIni_yr=substr($fech_ini,0,4);
          $fIni_mon=substr($fech_ini,5,2);
          $fIni_day=substr($fech_ini,8,2);
      
         //SEPARO LOS VALORES DEL ANIO, MES Y DIA PARA LA FECHA FINAL EN DIFERENTES
         //VARIABLES PARASU MEJOR MANEJO
-        $fFin_yr=substr($fech_fin,0,4);
+         $fFin_yr=substr($fech_fin,0,4);
          $fFin_mon=substr($fech_fin,5,2);
          $fFin_day=substr($fech_fin,8,2);
      
@@ -1011,8 +1016,8 @@ meses
         //LA FUNCION strtotime NOS PERMITE COMPARAR CORRECTAMENTE LAS FECHAS
         //TAMBIEN ES UTIL CON LA FUNCION date
         if(strtotime($fech_ini) > strtotime($fech_fin)){
-           echo 'ERROR -> la fecha inicial es mayor a la fecha final <br>';
-           exit();
+           // echo 'ADVERTENCIA -> la fecha inicial es mayor a la fecha final <br>'.$fech_ini.' '.$fech_fin;
+            return 0;
         }
         else{
             if($yr_dif == 1){
@@ -1037,8 +1042,8 @@ meses
                     //echo utf8_encode("la diferencia de meses con mas de un año de diferencia es -> ".$meses."<br>");
                  }
                  else
-                    echo "ERROR -> la fecha inicial es mayor a la fecha final <br>";
-                    exit();
+                    // echo "ADVERTENCIA -> la fecha inicial es mayor a la fecha final <br>";
+                    return 0;
               }
            }
         }

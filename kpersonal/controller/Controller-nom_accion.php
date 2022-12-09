@@ -65,7 +65,7 @@
             'Otros'    => 'Otros',
         );
 
-        $MATRIZ_M =    $this->obj->array->catalogo_accion();	// lista de valores
+     //   $MATRIZ_M =    $this->obj->array->catalogo_accion();	// lista de valores
         
         $MATRIZ_S = array(
              'N'    => 'Digitado',
@@ -96,7 +96,7 @@
                             $this->obj->text->text('Identificacion','texto','idprov',10,10,$datos ,'','readonly','div-2-10') ;
         
  
-                            $this->obj->text->text_blue('Referencia',"texto" ,'referencia' ,150,150, $datos ,'required','','div-2-4') ;
+                            $this->obj->text->text_blue('Referencia',"texto" ,'referencia' ,250,250, $datos ,'required','','div-2-4') ;
               
                             $this->obj->list->lista('Tipo',$MATRIZ,'tipo',$datos,'required','','div-2-4');
                             
@@ -107,7 +107,7 @@
         
                             $this->obj->list->lista('Estado',$MATRIZ_S,'estado',$datos,'required','disabled','div-2-4');
                             
-                            $this->obj->list->lista('Finalizado',$MATRIZ1,'finalizado',$datos,'required','disabled','div-2-4');
+                            $this->obj->list->lista('Finalizado',$MATRIZ1,'finalizado',$datos,'required','readonly','div-2-4');
 
 
 
@@ -118,10 +118,10 @@
  
                             $this->obj->text->text('Rige',"date" ,'fecha_rige' ,80,80, $datos ,'required','','div-2-4') ;
                             
-                            $this->obj->text->text('Hasta',"date" ,'ffinalizacion' ,80,80, $datos ,'','readonly','div-2-4') ;
+                            $this->obj->text->text('Hasta',"date" ,'ffinalizacion' ,80,80, $datos ,'','','div-2-4') ;
                         
                             
-                            $this->obj->text->editor('Explicación','novedad',6,175,500,$datos,'required','','div-2-10') ;
+                            $this->obj->text->editor('Explicación','novedad',6,175,730,$datos,'required','','div-2-10') ;
                             
          
         $this->set->div_panel6('fin');

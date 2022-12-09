@@ -101,6 +101,9 @@
   .sidenav a {font-size: 11px;}
 }
 	 
+	  #mdialTamanio1 {
+  					width: 75% !important;
+		}
 	 
 	  #mdialTamanio{
   					width: 75% !important;

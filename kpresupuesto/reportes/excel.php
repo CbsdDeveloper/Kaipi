@@ -21,33 +21,7 @@ $tipo 		      = $bd->retorna_tipo();
 
 
 $sql = $_SESSION['sql_activo'];
-
-/*
-
-if ( $tipo_presupuesto == 'G'){
-    $p = "' G-'";
-    
-    $sql ="SELECT ".$p."  || partida  as Partida ,funcion as programa,clasificador,
-              detalle,
-             inicial,  codificado, certificado, compromiso, devengado, pagado, disponible
-FROM presupuesto.pre_gestion
-where tipo = ".$bd->sqlvalue_inyeccion($tipo_presupuesto, true)." and
-       anio = ".$bd->sqlvalue_inyeccion($fanio, true)."
-order by partida" ;
-    
-}else{
-    $p = "' I-'";
-    $sql ="SELECT ".$p."  || partida   as Partida , clasificador,
-              detalle,
-             inicial,  codificado, certificado, compromiso, devengado, pagado, disponible
-FROM presupuesto.pre_gestion
-where tipo = ".$bd->sqlvalue_inyeccion($tipo_presupuesto, true)." and
-       anio = ".$bd->sqlvalue_inyeccion($fanio, true)."
-order by partida" ;
-}
-*/
-
-
+ 
 
 
 

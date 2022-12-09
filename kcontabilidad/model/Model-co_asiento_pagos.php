@@ -6,6 +6,7 @@ require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
 require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
 
 
+
 class proceso{
 	
  
@@ -59,7 +60,7 @@ class proceso{
 		
 			
 			if ($accion == 'procesado'){
-			    $resultado = '<img src="../../kimages/kedit.png" align="absmiddle" />&nbsp;<b>EDITAR REGISTRO TRANSACCION ?</b>';
+			    $resultado = '<img src="../../kimages/kedit.png" align="absmiddle" />&nbsp;<b>ACTUALIZACION REGISTRO TRANSACCION </b>';
 			}
 				
 		    if ($accion == 'del'){
@@ -225,7 +226,8 @@ class proceso{
 	    echo  $result_pago;
 	}
 	//--------------------------------------------------------------------------------------
-	//aprobación de asientos
+	//aprobaciï¿½n de asientos
+
 	function aprobacion($action,$id  ,$idasiento){
  
 	    
@@ -236,24 +238,34 @@ class proceso{
 	        'id_asiento='.$this->bd->sqlvalue_inyeccion($idasiento,true)
 	        );
 	    
+	    $val_comprobante = $this->bd->query_array('co_asiento_aux',
+	        'comprobante',
+	        'id_asiento_aux='.$this->bd->sqlvalue_inyeccion($id,true)
+	        );
+	    
+	    $ya_comprobante = strlen(trim($val_comprobante['comprobante']) );
 	 	    
-	   // $idbancos      =   trim($_POST["idbancos"]);
+
 	    $anio           =  $this->bd->_anio($estadoa['fecha']);
  	    $fecha			=  $this->bd->fecha($estadoa['fecha']);
-  	
-  		//$cheque			= $_POST["cheque"];
- 		$tipo			= $_POST["tipo_pago"];
+  		$tipo			=  $_POST["tipo_pago"];
+ 		$tipo_pago      =  trim($_POST["enlace_pago"]);
+
+
+      if (    $ya_comprobante  > 5  ) {
  		
- 		$tipo_pago    =  trim($_POST["enlace_pago"]);
- 		
- 		if ( $tipo_pago == 'G'){
- 		    $comprobante          = $this->bd->_secuencias($anio, 'CE',8);
-  		}else{
-  		    $comprobante          = $this->bd->_secuencias($anio, 'CI',8);
- 		}
- 		
+ 		  $comprobante    = trim($val_comprobante['comprobante']);
+
+ 	   }else  {
+
+		 		if ( trim($tipo_pago) == 'G'){
+		 		    $comprobante          = $this->bd->_secuencias($anio, 'CE',8);
+		  		}else{
+		  		    $comprobante          = $this->bd->_secuencias($anio, 'CI',8);
+		 		} 
  
-         
+        }
+
          	 	    $sql = "UPDATE co_asiento
         						SET 	estado_pago  =".$this->bd->sqlvalue_inyeccion('S', true)."
         					 WHERE id_asiento        =".$this->bd->sqlvalue_inyeccion($idasiento, true);
@@ -271,7 +283,7 @@ class proceso{
         			
         		 	$this->bd->ejecutar($sql1);
          			 	
-        		 	$result_pago =  $this->div_resultado('procesado',$id,$comprobante).'-'.$id;
+        		 	$result_pago =  $this->div_resultado('procesado',$id,$comprobante).' Nro. '.$id;
         			
  
 		 
@@ -306,16 +318,7 @@ class proceso{
 	//--------------------------------------------------------------------------------
 	//--- eliminar de registros
 	//--------------------------------------------------------------------------------
-	function _Comprobante_pago($idbancos,$cheque,$anio){
-	    
-	    
-	    $input          = $this->bd->_secuencias($anio, 'CE',8);
-	    
- 	    
-	    
-	    
-	    return $input ;
-	}
+ 
 	//--------------------------------------------------------------------------
 	 
 	/////////////// llena para consultar

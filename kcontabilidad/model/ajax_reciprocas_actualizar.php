@@ -13,8 +13,92 @@
 
     $tipo = trim($_POST['tipo']);
 
+    
+    $ruc = $_SESSION['ruc_registro'];
+    
+    
+    
     if ( $tipo == '1') {
-
+        
+                
+        $sql = "update co_reciprocas
+                   set ruc1='9999999999996',
+                       nombre='Ministerio de Finanzas'
+                where cuenta_1= '113' and nivel_11 = '28' and ruc1=".$bd->sqlvalue_inyeccion($ruc,true);
+        
+        $bd->ejecutar($sql);
+        //--------------
+        
+        $sql = "update co_reciprocas
+                   set ruc1='1760013210001',
+                       nombre='SERVICIO DE RENTAS INTERNAS'
+                where cuenta_1= '212'  and ruc1=".$bd->sqlvalue_inyeccion($ruc,true);
+        
+        $bd->ejecutar($sql);
+        //--------------
+        
+        $sql = "update co_reciprocas
+                   set ruc1='1760013210001',
+                       nombre='SERVICIO DE RENTAS INTERNAS'
+                where cuenta_1= '213'  and ruc1=".$bd->sqlvalue_inyeccion($ruc,true);
+        
+        $bd->ejecutar($sql);
+        
+        //------------
+        
+        $sql = "update co_reciprocas
+                   set grupo = '00',
+                       subgrupo='00',
+                       item='00',
+                       cuenta_2 = '111' ,
+                       nivel_21= '03',
+                       deudor_2 =".$bd->sqlvalue_inyeccion(0,true).",
+                       acreedor_2 = deudor_1
+                where cuenta_1= '213' and deudor_1  <> 0 and cuenta_2 is null";
+        
+        $bd->ejecutar($sql);
+        //--------------------
+        
+        $sql = "update co_reciprocas
+                   set grupo = '00',
+                       subgrupo='00',
+                       item='00',
+                       cuenta_2 = '111' , 
+                       nivel_21= '03',
+                       deudor_2 =".$bd->sqlvalue_inyeccion(0,true).", 
+                       acreedor_2 = deudor_1
+                where cuenta_1= '212' and deudor_1  <> 0 and cuenta_2 is null";
+        
+        $bd->ejecutar($sql);
+        
+        
+        //-----------------------------------
+        
+        $sql = "update co_reciprocas
+                   set grupo = '00',
+                       subgrupo='00',
+                       item='00',
+                       cuenta_2 = '111' ,
+                       nivel_21= '03',
+                       deudor_2 =".$bd->sqlvalue_inyeccion(0,true).",
+                       acreedor_2 = deudor_1
+                where cuenta_1= '213' and deudor_1  <> 0 and cuenta_2 = '000'";
+        
+        $bd->ejecutar($sql);
+        
+        //-----------------------------------------
+      
+        $sql = "update co_reciprocas
+                   set grupo = '00',
+                       subgrupo='00',
+                       item='00',
+                       cuenta_2 = '111' ,
+                       nivel_21= '03', nivel_22= '00'
+                where cuenta_1= '212' and cuenta_2= '213'";
+        
+        $bd->ejecutar($sql);
+        
+        //------------------------------------------
         $sql = "update co_reciprocas 
                    set grupo = '00',
                        subgrupo='00',
@@ -23,6 +107,7 @@
                 
         $bd->ejecutar($sql);
 
+        //------------------------------------------
 
         $sql = "update co_reciprocas 
                    set grupo = '00',

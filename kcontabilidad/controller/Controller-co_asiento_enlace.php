@@ -49,7 +49,15 @@ session_start( );
           $lon                =  $this->tipo_cuenta( $cuenta );
           
   
-       
+		if (empty(trim($id_tramite)))	{
+			
+			$datos = $this->bd->query_array('co_asiento',
+                                       '*', 
+                                       'id_asiento='.$this->bd->sqlvalue_inyeccion($id_asiento,true)
+           );
+		   
+			$id_tramite = $datos['id_tramite' ] ;
+	      }
           
           $this->set->div_panel12('<b> Seleccione el enlace correspondiente </b>');
           
@@ -63,7 +71,7 @@ session_start( );
                        $aux_dato = $this->tipo_asiento($id_asiento );
                        
                   
-                       
+                      
                               
                            $resultado = $this->sql_cuenta_cxc( $grupo );
                            
@@ -96,7 +104,7 @@ session_start( );
                       
                   }
                   
-                  
+                    
                   
                   if ($lon == 2){
                       
@@ -105,6 +113,8 @@ session_start( );
                       $grupo = $this->grupo_cuenta($cuenta );
                       
                       $valida = substr($cuenta ,0,3);
+					  
+					
                       
                       if ( $valida == '213'){
                         $resultado = $this->sql_cuenta_gasto( $grupo ,$id_asiento);
@@ -256,7 +266,9 @@ session_start( );
     function sql_cuenta_gasto_prov($grupo,$id_tramite ){
         
         $anio = $this->anio;
-  
+		
+ 
+		 
         
         if ( $id_tramite > 0 ){
             
@@ -266,6 +278,8 @@ session_start( );
                                     where a.anio = ".$this->bd->sqlvalue_inyeccion($anio, true)." and
                                     	  a.id_tramite =  ".$this->bd->sqlvalue_inyeccion($id_tramite, true)."
                                      order by 1";
+									 
+								
          }else {
                  
             $sql = "SELECT '-' as codigo, ' [ Seleccione partida ] ' as nombre union
@@ -277,6 +291,7 @@ session_start( );
                                     group by a.partida ,b.detalle
                                      order by 1" ;
                    
+				   	   
         }
         
     

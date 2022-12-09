@@ -208,8 +208,11 @@
 							  <div class="panel panel-default">
 								  <div class="panel-body" > 
 										 <a href="javascript:void(0);" class="btn-success" id="printButton">&nbsp;Impresión&nbsp;</a> 
-									   <div id="ViewForm"> </div>
-									  <div id="ViewFormres"> </div>
+									  
+									  <div id="ViewFicha">
+											    <div id="ViewForm"> </div>
+									   			<div id="ViewFormres"> </div>
+									  </div>	  
 								  </div>
 							  </div>
 						   </div>
@@ -230,6 +233,7 @@
  									</div>
 									<div class="col-md-6" style="padding: 15px">
   											  <button type="button" class="btn btn-sm btn-primary" id="loadKardex">  <i class="icon-white icon-search"></i> Buscar</button>
+											  <button type="button" class="btn btn-sm btn-info" id="printButton1">  <i class="icon-white icon-print"></i> Impresion</button>
    									</div>
 									 
 									

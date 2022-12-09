@@ -229,25 +229,27 @@ function PonerDatos( ) {
 
 /*
 pone informacion de la accion
+
+veraccion('seleccion','1204448086',0)
+
 */
-function veraccion( accion,idprov,col ){   
+function veraccion( accion,codigo,col ){   
 
 	var periodo      = 	$('#q_periodo').val();
  	var id_rol1     = 	$('#id_rol1').val();
  
 	var parametros = {
 					 'periodo' : periodo,
+					 'accion': accion,
  					 'id_rol' : id_rol1,
-					 'regimen' : regimen,
-					 'accion' : accion,
-					 'idprov' : idprov,
-					 'col' : col 
+					 'codigo' : codigo ,
+					 'col': col
  	   };
 
  
 	
 	$.ajax({
-				   url:   '../model/ajax_ver_accion.php',
+				   url:   '../model/ajax_rol_novedad.php',
 				   data:  parametros,
 				  type:  'GET' ,
 				   beforeSend: function () { 
@@ -438,7 +440,8 @@ function FormView()
 //----------------------------------------
 function BuscaPrograma( codigo,tipo) {
 	   
-	
+	 
+
 	if ( tipo == 1 ) {
 		
 		var regimen   = $("#regimen").val();
@@ -483,7 +486,7 @@ function BuscaPrograma( codigo,tipo) {
 	       }
 		 });
  
-		 
+		  
 	}
 //------------------------------------------------------------------
 function BuscaRubro( codigo,programa) {

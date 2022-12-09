@@ -52,9 +52,9 @@ class proceso{
 				array( campo => 'tipo_cuenta',   tipo => 'VARCHAR2',   id => '7',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
 				array( campo => 'estado',   tipo => 'VARCHAR2',   id => '8',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
 				array( campo => 'registro',   tipo => 'VARCHAR2',   id => '9',  add => 'S',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
-				array( campo => 'debe',   tipo => 'numeric',   id => '10',  add => 'N',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
-				array( campo => 'haber',   tipo => 'numeric',   id => '11',  add => 'N',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
-				array( campo => 'saldo',   tipo => 'numeric',   id => '12',  add => 'N',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
+				array( campo => 'debe',   tipo => 'NUMBER',   id => '10',  add => 'N',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
+				array( campo => 'haber',   tipo => 'NUMBER',   id => '11',  add => 'N',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
+				array( campo => 'saldo',   tipo => 'NUMBER',   id => '12',  add => 'N',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
 				array( campo => 'impresion',   tipo => 'NUMBER',   id => '13',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
 				array( campo => 'documento',   tipo => 'NUMBER',   id => '14',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
 				array( campo => 'comprobante',   tipo => 'NUMBER',   id => '15',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
@@ -65,9 +65,10 @@ class proceso{
 		        array( campo => 'deudor_acreedor',   tipo => 'VARCHAR2',   id => '20',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
 		        array( campo => 'anio',   tipo => 'VARCHAR2',   id => '21',  add => 'S',   edit => 'N',   valor => $this->anio   ,   filtro => 'N',   key => 'N'),
 				array( campo => 'cuenta_ing',   tipo => 'VARCHAR2',   id => '22',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
+		        array( campo => 'valor',   tipo => 'NUMBER',   id => '23',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
   		);
 		
-		  
+		
 
 		$this->tabla 	  		    = 'co_plan_ctas';
 		
@@ -158,6 +159,7 @@ class proceso{
 				array( campo => 'tipo_cuenta',   valor => '-',  filtro => 'N',   visor => 'S'),
 				array( campo => 'cuenta_ing',   valor => '-',  filtro => 'N',   visor => 'S'),
 				array( campo => 'estado',   valor => '-',  filtro => 'N',   visor => 'S'),
+		        array( campo => 'valor',   valor => '-',  filtro => 'N',   visor => 'S'),
 				array( campo => 'registro',   valor => 	$this->ruc  ,  filtro => 'S',   visor => 'N')
 		);
 		

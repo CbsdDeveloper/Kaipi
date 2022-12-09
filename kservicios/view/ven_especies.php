@@ -81,10 +81,7 @@
 
 	 <div id="main"  >
 	
-   <!-- ------------------------------------------------------ -->  
- 
-			 
-	
+ 	
 	<div class="col-md-12" role="banner">
 		
  	   <div id="MHeader"></div>
@@ -137,6 +134,7 @@
 							  <div class="tab-pane fade in active" id="tab1" style="padding-top: 3px">
 
 									  <div class="panel panel-default">
+										  
 										  <div class="panel-body" > 
 
 												<div class="col-md-3">
@@ -200,6 +198,9 @@
 																<button type="button" onClick="LimpiaPermiso()" class="btn btn-primary">Buscar AutoPermiso</button>
 																<button type="button" onClick="BuscarHistorial()" class="btn btn-success">Buscar Historial</button>
 															
+														  	   <button type="button" onClick="VeDatos()" class="btn btn-default">Secuencia</button>
+															
+															
  												 		  </div>
 
 
@@ -207,8 +208,8 @@
 									  </div>
 								 </div>
 
-
-							 <!-- ------------------------------------------------------ -->
+							   
+						   	  <!-- ------------------------------------------------------ -->
 							 <!-- Tab 3 -->
 							 <!-- ------------------------------------------------------ -->
 
@@ -240,14 +241,7 @@
 
 														</div>	
 
-														 
-														
-															 
-
-													
-
-
-
+		 
 										   </div>
 									  </div>
 
@@ -256,12 +250,15 @@
 
 
 			   
-          		 </div>
+          				 </div>
  
- 	 <!-- Page Footer-->
-     <div id="FormPie"></div>  
+ 
 	
  </div>   
+	
+	
+		 <!-- Page Footer-->
+     <div id="FormPie"></div>  
 
 
 <div class="container"> 
@@ -488,7 +485,7 @@
   </div>
 	
 	
-	<div class="modal fade" id="myModalExterno" role="dialog">
+		<div class="modal fade" id="myModalExterno" role="dialog">
                              <div class="modal-dialog" id="mdialTamanio2">
                                  <!-- Modal content-->
 										 <div class="modal-content">
@@ -563,7 +560,43 @@
          </div>
 	
 	
+	
+<div class="modal fade" id="myModalSecuencia" role="dialog">
+		
+  <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h4 class="modal-title">Novedades </h4>
+        </div>
+        <div class="modal-body">
+            <div class="row"> 
+		 			<div class="col-md-12"> 
+															
+						 <div align="center" id="view_cambio"> </div>	
+
+ 					 </div>
+		  </div>
+        </div>
+        <div class="modal-footer">
+			
+			 <button type="button" onClick="ActualizaEspecie(1)" class="btn btn-success">Actualiza Transaccion</button>
+			
+			 <button type="button" onClick="ActualizaEspecie(2)" class="btn btn-danger">Actualiza Secuencia</button>
+			
+			
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+	
      </div>
+
+
 
  </body>
 </html>

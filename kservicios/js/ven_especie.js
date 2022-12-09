@@ -986,6 +986,94 @@ function VerSeg( idproducto_ser )
 		
 } 	
 
+function VeDatos(   )
+{
+	
+	   
+    var fecha_aprobacion    = $('#fecha_aprobacion').val();
+	var comprobante         = $('#comprobante').val();
+	var id_ren_movimiento   = $('#id_ren_movimiento').val();
+ 	var idproducto_ser 		=  $("#id_rubro").val();
+
+               
+	 var parametros = {
+			     'fecha_aprobacion' : fecha_aprobacion,
+			     'comprobante' : comprobante,
+			     'id_ren_movimiento' : id_ren_movimiento,
+			     'idproducto_ser':idproducto_ser,
+ 			     'accion' : 'visor'
+	 };
+	  
+	 
+ 
+		 
+		  $.ajax({
+				data: parametros,
+                url: "../controller/Controller_espe_actual.php",
+				type: "GET",
+				beforeSend: function () { 
+					
+					$("#view_cambio").html('Procesando');
+
+					},
+					success:  function (data) {
+							$("#view_cambio").html(data);  
+					} 
+			});
+ 
+ 
+ 		$('#myModalSecuencia').modal('show');
+		
+} 
+//--------
+function ActualizaEspecie( tipo )
+{
+	
+	var idproducto_ser 			=  $("#id_rubro").val();
+	var secuencia_a 			=  $("#secuencia_a").val();
+	var cantidad_a 				=  $("#cantidad_a").val();
+	var hasta_a 				=  $("#hasta_a").val();
+	var comprobante_a 			=  $("#comprobante_a").val();
+	var fecha_a 				=  $("#fecha_a").val();
+	var id_ren_movimiento_a 	=  $("#id_ren_movimiento_a").val(); 
+	
+	var estado 				=  $("#estado").val();
+	
+	var parametros = {
+			    'tipo' : tipo,
+ 			     'idproducto_ser' : idproducto_ser,
+				 'secuencia_a' : secuencia_a,
+				 'cantidad_a' : cantidad_a,
+				 'hasta_a' : hasta_a,
+				 'comprobante_a' : comprobante_a,
+				 'fecha_a' : fecha_a,
+				  'id_ren_movimiento_a' : id_ren_movimiento_a
+	 };
+	  
+	 
+ 
+  if ( estado == 'P')		 
+		  {
+		       
+				   
+				  $.ajax({
+						data: parametros,
+		                url: "../model/ajax_ren_espe_actualiza.php",
+						type: "POST",
+						beforeSend: function () { 
+							$("#result").html('Procesando');
+		
+							},
+							success:  function (data) {
+									$("#result").html(data);  
+									alert(data);
+							} 
+					});
+		 }else{
+			alert('ESTADO NO VALIDO... DEBE ESTAR CON REGISTRO DE PAGO');
+		}
+		
+} 
 //-------------
 function Enlace_Bomb_permiso(  )
 {

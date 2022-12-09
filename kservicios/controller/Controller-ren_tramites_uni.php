@@ -129,10 +129,12 @@
 
                             $this->obj->text->text('Fecha Pago',"date" ,'fecha_pago' ,80,80, $datos ,'','readonly','div-2-4') ;
 
-                           
-                           echo '<div class="col-md-6" style="padding-bottom: 5px;padding-top: 5px;padding-left:120px;padding-right: 10px">
-                                <button type="button" title= "GUARDE LA INFORMACION PREVIO A LA SIMULACION DE LOS VALORES A PAGAR!!!" onclick="SimularEmision()" class="btn btn-danger">Simulación   Apagar</button>
+                            $this->set->div_label(12,'SIMULACION DE ORDEN DE COBRO');	 
+                            
+                           echo '<div class="col-md-12"> 
+                                    <a href="#" onclick="SimularEmision()" class="btn btn-info" role="button">Simulación</a>
                                 </div>';
+ 
  
                 $this->set->div_panel6('fin');
 
@@ -170,8 +172,10 @@
  
    
    $formulario_reporte   = '../reportes/requerimiento';
-   
    $eventoi              = "imprimir_informe('".$formulario_reporte."')";
+      
+   $formulario_reporte   = '../reportes/formulario';
+   $eventop2             = "imprimir_informe('".$formulario_reporte."')";
     
    $eventop              = "enviar_informacion()";
 
@@ -190,6 +194,7 @@
     $ToolArray = array( 
                 array( boton => 'Nuevo Regitros',    evento =>'', grafico => 'icon-white icon-plus' ,  type=>"add"),
                 array( boton => 'Guardar Registros', evento =>'', grafico => 'glyphicon glyphicon-floppy-saved' ,  type=>"submit") ,
+                array( boton => 'Imprimir Formulario ', evento =>$eventop2,  grafico => 'glyphicon glyphicon-list-alt' ,  type=>"button_success"),
                 array( boton => 'Imprimir Informe', evento =>$eventoi,  grafico => 'glyphicon glyphicon-print' ,  type=>"button"),
                 array( boton => 'Descargar Informe', evento =>$eventop1,  grafico => 'glyphicon glyphicon-download-alt' ,  type=>"button_info"),
                 array( boton => 'Contibuyentes', evento =>$eventoc,  grafico => 'glyphicon glyphicon-user' ,  type=>"button_default") ,

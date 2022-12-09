@@ -109,8 +109,11 @@ session_start( );
               
                       $resultado = $this->sql_iva_retencion($grupo );
                       
-                      $evento ='';
-                      $this->obj->list->listadbe($resultado,$tipo,'Cuenta','riva',$datos,'required','',$evento,'div-2-10');
+                      $datos['base_iva'] = $iva;
+                      $this->obj->text->text_blue('Base Retencion',"number",'base_iva',0,10,$datos,'required','','div-2-10') ;
+                      
+                      $evento1 =  'onChange="FuenteIVA(this.value)" ';
+                      $this->obj->list->listadbe($resultado,$tipo,'Cuenta','riva',$datos,'required','',$evento1,'div-2-10');
                       
                       $MATRIZ = $this->obj->array->iva_compras_total();
                       $evento =  'onChange="monto_riva(this.value,'.$iva.','.trim("'#montoriva'").')" ';
@@ -118,7 +121,7 @@ session_start( );
                       
                       $this->obj->text->text('Monto',"number",'montoriva',0,10,$datos,'required','','div-2-10') ;
               
-              $this->set->div_panel6('fin');
+                      $this->set->div_panel6('fin'); 
           }else {
                       $this->obj->text->texto_oculto("riva",$datos);
                       $this->obj->text->texto_oculto("porcentaje_iva",$datos);
@@ -131,11 +134,11 @@ session_start( );
           
                       $resultado = $this->sql_fuente_retencion($grupo );
 
-                      $evento =  '';
+                      $evento1 =  'onChange="Fuente(this.value)" ';
 
                       $this->obj->text->text_blue('Base Retencion',"number",'base',0,10,$datos,'required','','div-2-10') ;
 
-                      $this->obj->list->listadbe($resultado,$tipo,'Cuenta','rfuente',$datos,'required','',$evento,'div-2-10');
+                      $this->obj->list->listadbe($resultado,$tipo,'Cuenta','rfuente',$datos,'required','',$evento1,'div-2-10');
                       
                       $MATRIZ = array(
                           '0'    => '-',
@@ -146,6 +149,8 @@ session_start( );
                           '8'    => '8%',
                           '10'    => '10%'
                       );
+                    
+                      
                       $evento =  'onChange="calculoFuente(this.value,'.$base_renta.','.trim("'#montofuente'").')" ';
                       $this->obj->list->listae('Retencion',$MATRIZ,'porcentaje_fuente',$datos,'required','',$evento,'div-2-10');
                       

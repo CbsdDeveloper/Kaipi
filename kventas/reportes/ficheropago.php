@@ -4,6 +4,7 @@ require('kreportes.php');
 $gestion   		= 	new ReportePdf; 		 
 $idasiento 		=   $_GET['a'];
 $datos 			=	$gestion->CabAsiento($idasiento);
+
 $gestion->QR_DocumentoDoc($idasiento);
 $forma_detalle = ' Forma de pago: '.$datos['tipo_pago'].' Nro.Documento: '.$datos['cheque'] ;
 /*
@@ -114,7 +115,7 @@ $datos['cheque'] = $datosB['cheque'];
   			  </tr>
 				<tr>
 				  <td class="solid"   style="font-size: 9px">Elaborador por</td>
-				  <td class="solid"  style="font-size: 9px"><?php echo $datos['sesion'] ?></td>
+				  <td class="solid"  style="font-size: 9px"><?php echo $datos['elaborado'] ?></td>
 				  <td class="solid"   style="font-size: 9px">Estado</td>
 				  <td class="solid"   style="font-size: 9px"><?php echo $datos['estado'] ?></td>
     </tr>

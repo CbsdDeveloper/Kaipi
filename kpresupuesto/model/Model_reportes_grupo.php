@@ -1805,7 +1805,6 @@ class proceso{
                      REPORTE</td>
                 </tr>
  	   </table>';
-        
  
         
     }

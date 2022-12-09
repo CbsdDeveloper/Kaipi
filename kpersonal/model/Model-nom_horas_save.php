@@ -58,7 +58,8 @@ class proceso{
             array( campo => 'dias',tipo => 'NUMBER',id => '12',add => 'S', edit => 'S', valor => '-', key => 'N'),
             array( campo => 'horasextras',tipo => 'NUMBER',id => '13',add => 'S', edit => 'S', valor => '-', key => 'N'),
             array( campo => 'horassuple',tipo => 'NUMBER',id => '14',add => 'S', edit => 'S', valor => '-', key => 'N'),
-            array( campo => 'atrasos',tipo => 'NUMBER',id => '15',add => 'S', edit => 'S', valor => '-', key => 'N')
+            array( campo => 'atrasos',tipo => 'NUMBER',id => '15',add => 'S', edit => 'S', valor => '-', key => 'N'),
+            array( campo => 'alimentacion',tipo => 'NUMBER',id => '16',add => 'S', edit => 'S', valor => '-', key => 'N')
         );
         
         
@@ -74,6 +75,7 @@ class proceso{
                 FROM doc.view_empresa'  ;
         
         
+
         
         echo ' <table id="table_tipo" class="table table-bordered" cellspacing="0" width="100%" style="font-size: 11px"  >
 			<thead>
@@ -109,7 +111,7 @@ class proceso{
     //-----------------------------------------------------------------------------------------------------------
     //Constructor de la clase
     //-----------------------------------------------------------------------------------------------------------
-    function editar($idhora,$dia,$extra,$suple,$atraso){
+    function editar($idhora,$dia,$extra,$suple,$atraso,$alimentacion){
         //inicializamos la clase para conectarnos a la bd
         
         $User = $this->bd->query_array('view_nomina_rol',
@@ -131,8 +133,8 @@ class proceso{
         $this->ATabla[13][valor] =  $extra	 ;
         $this->ATabla[14][valor] =  $suple	 ;
         $this->ATabla[15][valor] =  $atraso	 ;
-    
-            
+        $this->ATabla[15][valor] =  $alimentacion     ;
+  
         
         $this->bd->_UpdateSQL($this->tabla,$this->ATabla,$idhora);
         
@@ -145,7 +147,7 @@ class proceso{
     
   
     //-------------------------------------
-    function agregar( $id_periodo,$id_rol,$anio,$mes,$idprov,$dia,$extra,$suple,$atraso ){
+    function agregar( $id_periodo,$id_rol,$anio,$mes,$idprov,$dia,$extra,$suple,$atraso ,$alimentacion ){
         
  
         $User = $this->bd->query_array('view_nomina_rol',
@@ -167,9 +169,8 @@ class proceso{
        $this->ATabla[13][valor] =  $extra	 ;
        $this->ATabla[14][valor] =  $suple	 ;
        $this->ATabla[15][valor] =  $atraso	 ;
+       $this->ATabla[16][valor] =  $alimentacion  ;
     
-     
-           
       
         $id = $this->bd->_InsertSQL($this->tabla,$this->ATabla,$this->secuencia);
         
@@ -203,32 +204,32 @@ if (isset($_POST['accion']))	{
     $accion = $_POST['accion'];
     
     $id_periodo = $_POST['id_periodo'];
-    $id_rol = $_POST['id_rol'];
-    $anio = $_POST['anio'];
-    $mes = $_POST['mes'];
-    $idprov = $_POST['idprov'];
-    $dia = $_POST['dia'];
-    $extra = $_POST['extra'];
-    $suple = $_POST['suple'];
-    $atraso = $_POST['atraso'];
-    $idhora= $_POST['idhora'];
-    
+    $id_rol     = $_POST['id_rol'];
+    $anio       = $_POST['anio'];
+    $mes        = $_POST['mes'];
+    $idprov     = $_POST['idprov'];
+    $dia        = $_POST['dia'];
+    $extra      = $_POST['extra'];
+    $suple      = $_POST['suple'];
+    $atraso     = $_POST['atraso'];
+    $idhora     = $_POST['idhora'];
+    $alimentacion = $_POST['alimentacion'];
    
-    if ( $accion == 'edit'){
+    if ( trim($accion) == 'edit'){
         if ( $dia > 0 ) {
             if ($idhora > 0){
-                $gestion->editar($idhora,$dia,$extra,$suple,$atraso);
+                $gestion->editar($idhora,$dia,$extra,$suple,$atraso, $alimentacion );
             }else{
-                $gestion->agregar($id_periodo,$id_rol,$anio,$mes,$idprov,$dia,$extra,$suple,$atraso);
+                $gestion->agregar($id_periodo,$id_rol,$anio,$mes,$idprov,$dia,$extra,$suple,$atraso, $alimentacion );
             }
            
         }
-       
-        
-    }
+     }
+
+     if ( trim($accion) == 'proceso_ali'){
+         echo 'xxx ';
+       } 
     
- 
-  
 }
 
 

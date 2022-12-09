@@ -101,7 +101,6 @@ class proceso{
     public function SimularTramites(   $tramite ,  $rubro   ){
         
         
-        
         $qquery = array(
             array( campo => 'idproducto_ser',    valor => '-',  filtro => 'N',   visor => 'S'),
             array( campo => 'costo',valor => '-',filtro => 'N', visor => 'S'),
@@ -117,7 +116,6 @@ class proceso{
         );
         
         
-        
         $resultado = $this->bd->JqueryCursorVisor('rentas.ren_temp',$qquery );
         
          
@@ -126,7 +124,7 @@ class proceso{
         
         while ($fetch=$this->bd->obtener_fila($resultado)){
             
-            $idproducto =  $fetch['idproducto_ser'] ;
+          //  $idproducto =  $fetch['idproducto_ser'] ;
  
             $total = $total + $fetch['total'];
              
@@ -226,9 +224,9 @@ class proceso{
         "id_ren_tramite=".$this->bd->sqlvalue_inyeccion($tramite,true)
         );
 
-        $fecha_inicio = $TRAMITE['fecha_inicio'];
+        $fecha_inicio =     $TRAMITE['fecha_inicio'];
 
-        $DISCAPACIDAD =   intval($ADISCAPACIDAD['valor_variable']);
+        $DISCAPACIDAD =     intval($ADISCAPACIDAD['valor_variable']);
  
 
 
@@ -244,7 +242,8 @@ class proceso{
             
             $formula      = trim($fetch['formula']);
             $tipo_formula = trim($fetch['tipo_formula']);
-            $costo        = trim($fetch['costo']);
+            $variable     = trim($fetch['variable']);
+            //$costo        = trim($fetch['costo']);
  
             $data = 0;
             
@@ -264,48 +263,55 @@ class proceso{
             } 
             
             $this->calculo_servicio['costo'] = $data;
-              
-        
-           
-
-            if ( trim($fetch['recargo']) == 'S'){
-
-                $bandera = 1;
+         
+            if (   $DISCAPACIDAD > 0  ) {
                 
+                $data = $data * ($DISCAPACIDAD/100);
+                $this->calculo_servicio['costo'] = $data;
+                
+            }  
+            
+           
+            if ( trim($fetch['recargo']) == 'S'){
+                
+                $bandera = 1;
                 $fecha_valido =  $anio_actual .'-04-01';
                 
-                if ( $anio <= $anio_actual  ){
-                    $bandera = 0;
-                }     
-               
-                if (   $fecha_inicio  >  $fecha_valido){
-                    
-                    $bandera = 0;
-                    
-                } else{
-                      
-                             $bandera = 1;
-                    
-                }  
-                
-                echo '% Discapacidad: '.$DISCAPACIDAD.'<br>';
-
-                if ( $bandera == 1 ){
-                    
-                     $data_recargo = $this->bd->ejecutar_formula_recargo( $tramite,  $data,  $anio_actual, $anio,$fechae ); // funcion que llama a la formula de calculo
-                   
-                     if (   $DISCAPACIDAD > 0  ) {
-                       $this->calculo_servicio['recargo'] = 0;
-                     } else{
-                        $this->calculo_servicio['recargo'] = $data_recargo;
+                 
+                if ( $anio < $anio_actual  ){
+                    $bandera = 1;
+                }  else {
+                    if (   $fecha_inicio  >  $fecha_valido){
+                        $bandera = 0;
+                    }else{
+                        $bandera = 1;
                     }
-                } 
-
-                if (  $accion == 'NO') {
-                    echo 'Aplica Recargo: '.$data_recargo.'<br>';
-                   } 
+                }
                    
-            }     
+                 if ( $bandera == 1 ){
+                     
+                        $data_recargo = $this->bd->ejecutar_formula_recargo( $tramite,  $data,  $anio_actual, $anio,$fechae ); 
+ 
+                         $this->calculo_servicio['recargo'] = $data_recargo;
+                         
+                         if ( $accion == 'NO'){
+                             echo 'Aplica Recargo: '.$data_recargo.'<br>';
+                         }
+                        
+                     //}
+                 } 
+                
+            }
+
+           
+            if ( $accion == 'NO'){
+                echo '% Discapacidad: '.$DISCAPACIDAD.'<br>';
+             }
+            
+           
+      
+            
+            //---------------------------------------------------------------------------
 
             if ( trim($fetch['descuento']) == 'S'){
 
@@ -330,6 +336,8 @@ class proceso{
             }     
 
 
+            
+            
             if (  $this->calculo_servicio['costo'] > 0 ){
                 
                 $this->_tributo(  $fetch,    $this->calculo_servicio['costo'] );
@@ -428,14 +436,14 @@ if (isset($_GET["tramite"]))	{
      
     if (   $accion == 'simula') {
 
-         $gestion->Emision_titulos(   $tramite ,  $rubro , $anio	,  $fechae,  $accion	  );
+         $gestion->Emision_titulos(   $tramite ,  $rubro , $anio	,  $fechae, 'SI'	  );
     
          $gestion->SimularTramites(   $tramite ,  $rubro   );
 
     }
     else
     {
-        $gestion->Emision_titulos(   $tramite ,  $rubro , $anio	,  $fechae	  );
+        $gestion->Emision_titulos(   $tramite ,  $rubro , $anio	,  $fechae	,  'NO'	   );
     
         $gestion->VisorTramites(   $tramite ,  $rubro   );
     }

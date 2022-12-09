@@ -73,7 +73,13 @@
           $cadena1 = '  tipoformula = '.$this->bd->sqlvalue_inyeccion(('DT'),true) ;
       }
       
+	    if ( $xx['tipo'] == '3' ){
+          $cadena1 = '  tipoformula = '.$this->bd->sqlvalue_inyeccion(('CC'),true) ;
+      }
  
+    if ( $xx['tipo'] == '4' ){
+          $cadena1 = '  tipoformula = '.$this->bd->sqlvalue_inyeccion(('RS'),true) ;
+      }
       
       $where = $cadena0.$cadena1;
       

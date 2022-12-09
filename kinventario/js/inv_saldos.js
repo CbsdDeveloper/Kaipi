@@ -52,7 +52,22 @@ $(document).ready(function(){
 			  
 	});
 
-		
+		$('#printButton1').on('click',function(){
+ 
+			var printContents = document.getElementById('impresionk').innerHTML;
+			
+				    var estilo = '<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:15px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;}</style>';
+			
+					w = window.open();
+					w.document.write(estilo + printContents);
+					w.document.close(); // necessary for IE >= 10
+					w.focus(); // necessary for IE >= 10
+					w.print();
+					w.close();
+        
+		});
+	
+ 
 	 
 	    var j = jQuery.noConflict();
  
@@ -64,9 +79,12 @@ $(document).ready(function(){
 
 				var options = { mode : mode, popClose : close};
 
-			  j("#ImprimeK").printArea( options );
+			  j("#ViewFicha").printArea( options );
 
 			});
+	
+	
+	   
 	
 		  
 		   $('#loadxls').on('click',function(){

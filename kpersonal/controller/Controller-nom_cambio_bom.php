@@ -108,11 +108,14 @@ jQuery.noConflict();
                                 
 
                               $MATRIZ = array(
-                                'GRUPO 1'    => 'GRUPO 1',
-                                'GRUPO 2'    => 'GRUPO 2', 
-                                'GRUPO 3'    => 'GRUPO 3' 
+                                '-'          => 'No Aplica',
+                                 'ESTACION'    => 'RESPONSABLE DE ESTACION',
+                                 'GRUPO 1'    => 'GRUPO 1',
+                                 'GRUPO 2'    => 'GRUPO 2', 
+                                 'GRUPO 3'    => 'GRUPO 3' ,
+                                 'ESCUELA DE FORMACION Y ESPECIALIZACION' => 'ESCUELA DE FORMACION Y ESPECIALIZACION' 
                             );
-                      
+                         
                             
                           $this->obj->list->listae('Pertenece a ',$MATRIZ,'grupo_a',$datos,'required','',$evento,'div-4-8');
 
@@ -120,16 +123,17 @@ jQuery.noConflict();
                           $MATRIZ = array(
                             'Encargado de Estacion'    => 'Encargado de Estacion',
                             'Responsable de Grupo'    => 'Responsable de Grupo' ,
+                            'ECU-911 Consola de Despacho'    => 'ECU-911 Consola de Despacho' ,
+                            'Encargado de Escuela Formacion Seguridad'    => 'Encargado de Escuela Formacion Seguridad',
                             'Operador'    => 'Operador' ,
                             'Apoyo de Emergencia'    => 'Apoyo de Emergencia' ,
                             'Apoyo de Encargado Estacion'    => 'Apoyo de Encargado Estacion' ,
                             'Apoyo Unidad de Operaciones'    => 'Apoyo Unidad de Operaciones' ,
                             'Apoyo a Subjefatura'    => 'Apoyo a Subjefatura' ,
-                            'ECU-911 Consola de Despacho'    => 'ECU-911 Consola de Despacho' ,
-                            'Encargado de Escuela Formacion Seguridad'    => 'Encargado de Escuela Formacion Seguridad',
-                            'Apoyo de Escuela Formacion Seguridad'    => 'Apoyo de Escuela Formacion Seguridad' 
+                            'Apoyo de Escuela Formacion Seguridad'    => 'Apoyo de Escuela Formacion Seguridad' ,
+                            'Apoyo Delegado Prevencion'  => 'Apoyo Delegado Prevencion' 
                            );
-                        
+                          
                              
                             $this->obj->list->listae('Funcion Estación',$MATRIZ,'funcion_a',$datos,'required','',$evento,'div-4-8');
 
@@ -138,12 +142,23 @@ jQuery.noConflict();
                               'N'    => 'NO',
                               'S'    => 'SI' 
                              );
-                          
+                            
                                
                               $this->obj->list->listae('Responsable Estación',$MATRIZ,'responsable_a',$datos,'required','',$evento,'div-4-8');
  
+
+                              $this->set->div_label(12,'Unidades de Apoyo');	 
  
-             $this->set->div_panel12('fin');
+                              $sql = "select 0 as codigo, ' -- 0. No aplica -- ' as nombre union
+                                      select id_departamento as codigo ,nombre
+                                        from nom_departamento where orden like 'G%' and nivel <=2
+                              order by 2";
+                              $resultado1 = $this->bd->ejecutar($sql);
+
+                              $this->obj->list->listadb($resultado1,$tipo,'Unidad Apoyo','unidad_apoyo',$datos,'required','','div-4-8');
+
+                            
+                 $this->set->div_panel12('fin');
 
 
  

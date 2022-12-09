@@ -18,7 +18,7 @@
 	<style>
 		
     	#mdialTamanio{
-      			width: 55% !important;
+      			width: 65% !important;
    			 }
 		
 		 

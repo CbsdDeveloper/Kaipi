@@ -962,7 +962,7 @@ function aprobacion(){
 	var categoria 	  = $("#categoria").val();
 	
 
-			if ( estado == '4')  {
+		 
 		
 				alertify.confirm("<p>"+mensaje+' '+estado+"<br></p>", function (e) {
 		
@@ -999,6 +999,6 @@ function aprobacion(){
 			
 					 }
 				}); 
-		}
+		 
 
 }

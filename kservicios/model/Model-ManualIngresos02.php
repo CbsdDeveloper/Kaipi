@@ -15,8 +15,6 @@ $obj   = 	new objects;
 $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
 
  
-$anio          = $_SESSION['anio'] ;
- 
 $fecha_caja = $_GET["fecha_caja"];
 
 $id         = $_GET["id"];
@@ -25,8 +23,7 @@ $id         = $_GET["id"];
 $periodo = explode('-',$fecha_caja);
 
 $mes = $periodo[1];
-
-$mesc = intval($mes );
+ 
 
 if ( $id ==  10 ){
 
@@ -64,7 +61,7 @@ if ( $id ==  10 ){
 
 if ( $id ==  12 ){
         
-        echo '<h4>Detalle Diario de Contable de Especies</h4>';
+        echo '<h4><b>Detalle Diario de Contable de Especies</b></h4>';
 
         $cabecera =  '<table class="table  table-hover table-bordered" cellspacing="0" width="100%" style="font-size: 11px"  >
                     <thead>
@@ -92,9 +89,12 @@ if ( $id ==  12 ){
 
             while ($y=$bd->obtener_fila($resultado)){
 
-                $cuenta         = trim($y['id_asiento']).' '. trim($y['asiento_detalle']);
+                $cuenta         = '  <a href="#" title="IMPRIMIR COMPROBANTE DIARIO DE TRANSACCION..." onClick="impresion('.$y['id_asiento'].')">Nro. Asiento: '.trim($y['id_asiento']).'</a> <img src="../../kimages/m_verde.png" align="absmiddle" />  Detalle: '. trim($y['asiento_detalle']);
+                
+                 
+                 
 
-                echo  '<li class="list-group-item">'.  $cuenta.' </li>';
+                echo  '<li class="list-group-item"><b>'.  $cuenta.' </b></li>';
 
                 
                         $sql1 = "SELECT  cuenta, partida,debe,haber

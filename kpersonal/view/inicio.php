@@ -223,8 +223,7 @@ margin: 3px;
 </head>
 	
 <body>
-
-<div id="main">
+ 
 	
 	<div class="col-md-12" role="banner">
  	   <div id="NavMod"></div>
@@ -262,6 +261,12 @@ margin: 3px;
 													  <a href="https://sut.trabajo.gob.ec/mrl/loginMenuSut.xhtml" title="INGRESO AL SISTEMA SUT (Sistema Unico Trabajo)" target="_blank">
 													   <img src="../../kimages/n_salario.png" width="58" height="58" title="INGRESO AL SISTEMA SUT (Sistema Unico Trabajo)"/> 
 													  </a>
+													  
+													  <a href="medico" title="INGRESO AL SISTEMA MEDICO" >
+													   <img src="../../kimages/medico.png" width="63" height="63" title="INGRESO AL SISTEMA MEDICO"/> 
+													  </a>
+													  
+													  
 													 </div>
 
 												</div> <!-- /.col-md-6 -->
@@ -322,8 +327,10 @@ margin: 3px;
 		</div>
     </div>
 
-	
+	 
+ 
 	<div class="col-md-12" style="padding: 8px">
+		
 		   <div class="col-md-3">
 				<select id='ganio' name='ganio' class='form-control'>  </select>
 			</div>	
@@ -332,6 +339,8 @@ margin: 3px;
 			    <button type="button" onClick="PeriodoAnio()" class="btn btn-info btn-sm">Seleccionar Periodo</button>
 		   </div>							   
 	</div>
+
+ 
 	
 	
 	<!-- Page Footer-->
@@ -341,6 +350,6 @@ margin: 3px;
      <!-- actividdes-->
         <div id="Notas_actividades"></div>    
       
-    </div>   
+     
 </body>
 </html>

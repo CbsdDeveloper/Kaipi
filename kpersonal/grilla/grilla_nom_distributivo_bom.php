@@ -73,11 +73,12 @@
       	while ($fetch=$this->bd->obtener_fila($resultado)){
       		 
       		$output[] = array (
-      							$fetch['id_asigna_dis'],
+      						                    	$fetch['id_asigna_dis'],
                                         $fetch['fecha_solicitud'],
-                                        $fetch['doccumento'],
-      		                         $fetch['detalle'] , 
-                                        $fetch['acompleto'] 
+                                        trim($fetch['doccumento']),
+      		                              trim($fetch['detalle'] ), 
+                                        trim($fetch['acompleto']) ,
+                                        trim($fetch['sesion'] )
        					);
       	}	
       

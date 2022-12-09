@@ -9,8 +9,7 @@
   
     class proceso{
  
-      //creamos la variable donde se instanciar la clase "mysql"
- 
+  
       private $obj;
       private $bd;
       
@@ -51,7 +50,7 @@
        	        array( campo => 'fecha',   valor => '-',  filtro => 'N',   visor => 'S'),
        			array( campo => 'sueldo',   valor => '-',  filtro => 'N',   visor => 'S'),
        			array( campo => 'estado',   valor => $PK_codigo ,  filtro => 'S',   visor => 'N'),
-      	        array( campo => 'registro',   valor =>$this->ruc  ,  filtro => 'S',   visor => 'N')
+      	        array( campo => 'registro',   valor =>$this->ruc  ,  filtro => 'N',   visor => 'N')
       	);
       
       	

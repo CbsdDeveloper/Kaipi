@@ -8,9 +8,7 @@ var formulario = 'compromiso';
 $(document).ready(function(){
     
  
-	   
- 
-  
+	    
 	     
 	        oTable 	= $('#jsontable_partida').dataTable( {      
 	            searching: true,

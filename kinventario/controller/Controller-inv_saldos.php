@@ -115,19 +115,19 @@
                          </div>
                         <div class="col-md-5">
                               <h5>  <b>Nombre Producto   : '.$Aproducto['producto'].' </b></h5>
-                              <h6>  Tipo de Medida    : '.$Aproducto['unidad'].'  </h6>
-                              <h6>  <b>Costo producto : '.$Aproducto['costo'].'  </b></h6>
-                              <h6>  <b>Saldo Actual   : '.$Aproducto['saldo'].'  </b></h6>
-                              <h6>  Costo Promedio    : '.$Aproducto['promedio'].'  </h6>
-                              <h6>  Costo Lifo        : '.$Aproducto['lifo'].'  </h6>
+                              <h6>  Tipo de Medida    : '.$Aproducto['unidad'].'  <br> 
+                                 <b>Saldo Actual   : '.round($Aproducto['saldo'],2).'  </b><br><br>
+                                 <b>Costo producto : '.round($Aproducto['costo'],4).'  </b><br>
+                                 Costo Promedio    : '.round($Aproducto['promedio'],4).'  <br>
+                                 Costo Lifo        : '.round($Aproducto['lifo'],4).'  </h6>
                          </div>
                         <div class="col-md-5">
                              <h5>  <b>Ultimas Transacciones</b></h5>
-                              <h6> Compra </h6>
-                              <h6>  Proveedor    : '.$y['razon'].'  </h6>
-                              <h6> Egreso </h6>
-                              <h6>  Unidad: '.$yy['unidad'].'  </h6>
-                              <h6>  Solicitante : '.$yy['razon'].'  </h6>
+                              <h6> Compra <br> 
+                                Proveedor    : '.$y['razon'].'  <br><br>
+                                Egreso <br>
+                                Unidad: '.$yy['unidad'].'  <br>
+                               Solicitante : '.$yy['razon'].'  </h6>
                           </div> 
                     </div>';
          

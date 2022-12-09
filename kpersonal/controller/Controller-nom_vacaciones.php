@@ -99,6 +99,7 @@
                 $datos['hora_in']  =  $DateAndTime ;
  
                 
+
                
                 
                 $this->set->div_panel7('<h6> Informacion Documento<h6>');
@@ -118,7 +119,7 @@
                                     $this->obj->list->lista('Tipo',$MATRIZ,'tipo',$datos,'required','','div-2-10');
                                     
                                     
-                                    $MATRIZ =  $this->obj->array->catalogo_motivoPermiso();
+                                    $MATRIZ =  $this->obj->array->catalogo_motivoPermiso_std();
                                     $this->obj->list->lista('Motivo',$MATRIZ,'motivo',$datos,'required','','div-2-10');
                                     
                         
@@ -131,12 +132,12 @@
                                     $this->set->div_panel5('<h6> Informacion Periodo a solicitar<h6>');
                                 
                                     
-                                    $this->obj->text->text_yellow('Fecha Salida',"date" ,'fecha_out' ,80,80, $datos ,'required','readonly','div-3-9') ;
-                                    $this->obj->text->text_yellow('Fecha Entrada',"date" ,'fecha_in' ,80,80, $datos ,'required','readonly','div-3-9') ;
+                                    $this->obj->text->text_yellow('Fecha Salida',"date" ,'fecha_out' ,80,80, $datos ,'required','','div-3-9') ;
+                                    $this->obj->text->text_yellow('Fecha Entrada',"date" ,'fecha_in' ,80,80, $datos ,'required','','div-3-9') ;
                                    
                                  
-                                    $this->obj->text->text_yellow('Hora Salida',"time" ,'hora_out' ,80,80, $datos ,'','readonly','div-3-9') ;
-                                    $this->obj->text->text_yellow('Hora Entrada',"time" ,'hora_in' ,80,80, $datos ,'','readonly','div-3-9') ;
+                                    $this->obj->text->text_yellow('Hora Salida',"time" ,'hora_out' ,80,80, $datos ,'','','div-3-9') ;
+                                    $this->obj->text->text_yellow('Hora Entrada',"time" ,'hora_in' ,80,80, $datos ,'','','div-3-9') ;
 
                                 
                                     $this->obj->text->text_blue('Nro.dia(s)',"number" ,'dia_tomados' ,80,80, $datos ,'required','','div-3-9') ;
@@ -148,6 +149,7 @@
                 $this->set->div_panel5('fin');
                 
                 $this->set->div_panel7('<b>Parametro de validacion</b>');
+      
       
                  
                 $this->obj->text->text_yellow('Nro.Dias Tomados',"number" ,'dia_acumula' ,80,80, $datos ,'required','readonly','div-3-9') ;

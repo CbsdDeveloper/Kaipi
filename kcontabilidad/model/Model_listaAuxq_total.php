@@ -31,14 +31,15 @@ class proceso{
 		$this->set     = 	new ItemsController;
 		
 		$this->ruc       =  $_SESSION['ruc_registro'];
-		$this->sesion 	 =  $_SESSION['email'];
-		$this->hoy 	     =  $this->bd->hoy();
+		$this->sesion    =  trim($_SESSION['email']);
+		$this->hoy 	   =  $this->bd->hoy();
 		
 		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
 		
 	}
    
 	//--- calcula libro diario
+	
 	function GrillaMaestro(  $anio,$cuenta,$bandera){
 		
 	    $idprov ='';

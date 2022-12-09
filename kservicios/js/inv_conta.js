@@ -77,6 +77,24 @@ $(document).ready(function(){
    
 });  
 
+
+
+function impresion(id_asiento)
+
+	{
+
+  	 
+  	 var enlace= '../../kcontabilidad/reportes/ficherocomprobante?a=';
+  	 
+	  enlace = enlace +id_asiento;
+
+											   
+   window.open(enlace,'#','width=750,height=480,left=30,top=20');
+
+ 	 
+
+	}	
+
  
 function diario_contabilizacion()
 {

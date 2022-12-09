@@ -56,10 +56,13 @@ $(document).ready(function(){
         oTableNota = $('#jsontableNota').dataTable(); 
         
         
-		BusquedaGrilla(oTable);
+		 
 		
         $('#load').on('click',function(){
  	 		 
+
+		   genera_externo();
+
            BusquedaGrilla(oTable);
            
  		});
@@ -270,7 +273,7 @@ function goToURLElectronicoLotexml( id,i ) {
 	  
 					 	$.ajax({
 					 			data:  parametros,
-					 			 url:   '../model/genera_xml_factura.php',
+					 			url:   '../../facturae/_crearXMLFactura01.php',
 					 			type:  'GET' ,
 					 			beforeSend: function () { 
 					 				
@@ -588,7 +591,7 @@ function firma_electronica(  id,i ) {
 		
    $.ajax({
 				data:  parametrosf,
-				url:   '../../facturae/autoriza_factura.php',
+				url:   '../../facturae/_autoriza_factura01.php',
 				type:  'GET' ,
 				beforeSend: function () { 
 	 				
@@ -966,7 +969,31 @@ function open_gasto(url,ovar,ancho,alto) {
     window.open(enlace,'#','width='+ancho+',height='+alto+',left='+posicion_x+',top='+posicion_y+'');
 
 }	
+//-------------
+function genera_externo()
+{
 
+	var fecha    	  = $('#fecha1').val();
+
+	var parametros = {
+		'fecha' : fecha 
+};
+
+	$.ajax({
+		data:  parametros,
+		 url:   '../enlace/enlace_agua.php',
+		type:  'GET' ,
+			beforeSend: function () { 
+					$("#FacturaElectronica").html('Procesando');
+			},
+		success:  function (data) {
+				 $("#FacturaElectronica").html(data);  
+				 
+			} 
+	});
+
+}	
+//----------------------
 function modulo()
 {
  

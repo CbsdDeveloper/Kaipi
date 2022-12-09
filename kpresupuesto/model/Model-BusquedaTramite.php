@@ -15,8 +15,7 @@ $estado        =  $_GET['estado'];
 $pagina        =  $_GET['pagina'];
 
 $ruc            =  $_SESSION['ruc_registro'];
-$sesion         =  trim($_SESSION['email']);
-
+ 
 $anio_ejecuta   = $_SESSION['anio'];
 
 
@@ -25,26 +24,11 @@ if ($pagina < 0 ){
 }
 
           
-
-$Responsable = $bd->query_array('par_usuario',
-    'responsable,completo,tipo,id_departamento', 'email='.$bd->sqlvalue_inyeccion($sesion,true)
-    );
-
-
-if (trim($Responsable['tipo']) == 'admin'){
-    
+ 
+ 
     $usuario_where =    ' ';
     
-}
-else {
-    
-    if (trim($Responsable['tipo']) == 'financiero'){
-        $usuario_where =    ' ';
-    }    else {
-        $usuario_where =    ' and  id_departamento ='.$bd->sqlvalue_inyeccion( $Responsable['id_departamento'] , true) ;
-    }
-}
-
+ 
 
  
     $sql1 = 'SELECT id_tramite, fecha,anio, mes, detalle, 

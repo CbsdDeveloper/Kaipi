@@ -76,17 +76,15 @@ class Model_listaAuxq_total{
  	    
  
 	        
-	        $sql = "select 
-                            idprov as identificacion,
-                            funcionario, 
-                            plazo ,
-                            monto_solicitado as solicitado,
-                            pagado,
-                            (monto_solicitado - pagado) as saldo
-             from view_anticipo
-             where  anio = ". $this->bd->sqlvalue_inyeccion( $anio , true).' and
-                    estado_pago = '. $this->bd->sqlvalue_inyeccion('N' , true).' 
-              order by funcionario';
+	        $sql = 'SELECT idprov as identificacion,
+	        			   funcionario,
+						  round(plazo/anticipo,0) as plazo, 
+				      round(monto_solicitado/anticipo,2) solicitado, 
+							round(pagado /anticipo,2) as pagado,
+							round((monto_solicitado - pagado)/anticipo,2) as saldo 
+					FROM view_anticipo_ciu
+             where   (monto_solicitado - pagado) >0 and
+             		 anio = '. $this->bd->sqlvalue_inyeccion( $anio , true).'   order by funcionario';
  
 	            
 	      $formulario = 'idprov';
@@ -115,7 +113,7 @@ class Model_listaAuxq_total{
 	    
 	    echo '<table width="100%" border="0" cellpadding="0" cellspacing="0">
               <tr>
-                  <td width="20%" rowspan="2">'.$imagen.'</td>
+                  <td width ="20%" rowspan="2">'.$imagen.'</td>
                   <td  width="60%" rowspan="2" style="text-align: center"><b>'.$_SESSION['razon'].'</b><br>
                         <b>'.$_SESSION['ruc_registro'].'</b><br><br>
                         <b>CONTROL DE ANTICIPOS ( PERIODO '.$anio.' ) </b><br>
@@ -144,7 +142,7 @@ $gestion   = 	new Model_listaAuxq_total;
 
  
  
-//------ grud de datos insercion
+
 if (isset($_GET["anio"]))	{
  
     
@@ -159,5 +157,3 @@ if (isset($_GET["anio"]))	{
  
 
 ?>
- 
-  

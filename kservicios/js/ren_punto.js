@@ -13,8 +13,7 @@ $(function(){
             event.preventDefault();
         }
     }, false);
-    
-    
+      
     
 });
 

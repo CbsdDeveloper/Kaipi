@@ -35,6 +35,8 @@
 		</div>
 		
    </div>
+	 
+
  	
   <!-- ------------------------------------------------------ -->  
 		 <div class="col-md-12"> 
@@ -45,16 +47,17 @@
 	       <ul id="mytabs" class="nav nav-tabs"  >          
                   		          
                    		<li class="active"><a href="#tab1" data-toggle="tab"></span>
-                   			<span class="glyphicon glyphicon-th-list"></span> LISTA DE CAMBIO Y DISTRIBUCION DE ESTACIONES</a>
+                   			<span class="glyphicon glyphicon-th-list"></span><b> LISTA DE CAMBIO Y DISTRIBUCION DE ESTACIONES</b></a>
                    		</li>
                   		<li><a href="#tab2" data-toggle="tab">
-                  			<span class="glyphicon glyphicon-link"></span> DETALLE DE PERSONAL</a>
+                  			<span class="glyphicon glyphicon-link"></span> DETALLE DE PERSONAL Y DISTRIBUCION DE PERSONAL</a>
                   		</li>
            </ul>
                     
            <!-- ------------------------------------------------------ -->
            <!-- Tab panes -->
            <!-- ------------------------------------------------------ -->
+	
            <div class="tab-content">
             
 				   <!-- ------------------------------------------------------ -->
@@ -68,7 +71,8 @@
 									   <div class="col-md-12"> 
 										   	<div class="col-md-3"> 
 												<select class="form-control" id="vestado" name="vestado">
- 												  <option value="aprobado">Aprobado/Unidad</option>
+												  <option value="digitado">Digitado/Elaborado</option>
+												  <option value="aprobado">Aprobado</option>
 												  <option value="autorizado">Autorizado TTHH</option>	
 												  <option value="anulado">Anulado</option>
 												</select>
@@ -88,8 +92,9 @@
 													<th width="10%">Id</th>
 													<th width="10%">Fecha</th>
 													<th width="15%">Documento</th>
-													<th width="35%">Motivo</th>
-													<th width="20%">Responsable</th>
+													<th width="30%">Comentario</th>
+													<th width="15%">Responsable</th>
+												    <th width="15%">Elaborado</th>
 													<th width="10%">Acciones</th>
 											   </tr>
 											</thead>

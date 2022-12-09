@@ -42,7 +42,7 @@ class proceso{
             array( campo => 'anio',tipo => 'VARCHAR2',id => '3',add => 'S', edit => 'N', valor => '-', key => 'N'),
             array( campo => 'registro',tipo => 'VARCHAR2',id => '4',add => 'S', edit => 'N', valor =>  $this->ruc , key => 'N'),
             array( campo => 'estado',tipo => 'VARCHAR2',id => '5',add => 'S', edit => 'S', valor => '-', key => 'N'),
-            array( campo => 'fecha',tipo => 'DATE',id => '6',add => 'S', edit => 'S', valor => $this->hoy, key => 'N'),
+            array( campo => 'fecha',tipo => 'DATE',id => '6',add => 'S', edit => 'S', valor => '-', key => 'N'),
             array( campo => 'novedad',tipo => 'VARCHAR2',id => '7',add => 'S', edit => 'S', valor => '-', key => 'N'),
             array( campo => 'sesion',tipo => 'VARCHAR2',id => '8',add => 'S', edit => 'S', valor =>  $this->sesion, key => 'N')  ,
             array( campo => 'tipo',tipo => 'NUMBER',id => '9',add => 'S', edit => 'S', valor =>  '-', key => 'N')  

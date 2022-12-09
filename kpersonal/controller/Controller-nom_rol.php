@@ -136,6 +136,8 @@
                     '0'    => 'Normal',
                     '1'    => 'Decimo14',
                     '2'    => 'Decimo13',
+                    '3'    => 'Extra Compensacion',
+                    '4'    => 'Extra Rol',
                 );
                 
                 $this->obj->list->lista('Tipo',$MATRIZ,'tipo',$datos,'required','','div-2-4');

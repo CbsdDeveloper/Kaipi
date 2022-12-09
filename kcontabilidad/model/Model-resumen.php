@@ -53,8 +53,7 @@ class proceso{
 		group by a.titulo,b.detalle order by 1';
 		
 		 
-		echo $sql ;
-		
+		 
 		
 		$resultado  = $this->bd->ejecutar($sql);
 		

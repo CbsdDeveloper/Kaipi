@@ -93,7 +93,7 @@
 																								<th width="10%">Identificacion</th>
 																								<th width="20%">Contribuyente</th>
 																								<th width="40%" bgcolor=#C0AFCC>Detalle</th>
-																							     <th width="10%">Estado</th>
+																							     <th width="10%">Estado Pago</th>
 																								<th width="5%" bgcolor="#FC1E21">Monto</th> 
 																								</tr>
 																							</thead>

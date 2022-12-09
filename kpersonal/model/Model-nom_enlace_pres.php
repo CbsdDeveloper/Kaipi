@@ -119,12 +119,13 @@
  
           
           $sql = $sql1. 'SELECT programa  ,clasificador,sum(ingreso) as monto
-                  FROM view_rol
+                  FROM view_rol_cer
                   where id_rol='.$this->bd->sqlvalue_inyeccion($id_rol1, true)." and
                         tipo = 'Ingresos' and 
                         regimen =".$this->bd->sqlvalue_inyeccion($regimen, true)."
                 group by programa,clasificador,nombre";
           
+           
           $stmt = $this->bd->ejecutar($sql);
            
         
@@ -255,7 +256,7 @@
                       regimen = ".$this->bd->sqlvalue_inyeccion($regimen, true).' union ';
          
          $sql = $sql1.'SELECT programa  ,clasificador,sum(ingreso) as monto
-                  FROM view_rol
+                  FROM view_rol_cer
                   where id_rol='.$this->bd->sqlvalue_inyeccion($id_rol1, true)." and
                         tipo = 'Ingresos' and regimen =".$this->bd->sqlvalue_inyeccion($regimen, true)."
                 group by programa,clasificador,nombre";

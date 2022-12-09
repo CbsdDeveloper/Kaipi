@@ -223,15 +223,18 @@
 													  <div class="col-md-12" style="padding-left:50px;padding-top: 10px;padding-bottom: 10px"> 
 														  
 																     <div class="col-md-2"> 
+																		 FECHA EMISION
 																		  <input type="date" class="form-control input-lg" id="fechae">
 																	  </div>
 
 																	<div class="col-md-3"> 
+																		PERIODO
 																		 <select class="form-control input-lg" id="anio">
 																		    
 																		 </select>
 																	  </div>
 																	<div class="col-md-3"> 
+																		 MES
 																		 <select class="form-control input-lg" id="mes">
 																			   <option value="1">Enero</option>
 																			   <option value="2">Febrero</option>
@@ -249,6 +252,7 @@
 																	  </div>
 														  
 														 			 <div class="col-md-2"> 
+																		 FECHA OBLIGACION DE PAGO
 																		  <input title="Fecha Obligacion de pago" type="date" class="form-control input-lg" id="fechao">
 																	  </div>
 														  

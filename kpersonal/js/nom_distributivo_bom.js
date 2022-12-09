@@ -96,7 +96,7 @@ function Autorizardistribucion( ) {
 
 
 	var parametros = {
-				   'accion' : 'autorizado' ,
+				   'accion' : 'aprobar' ,
 				   'estado': estado,
 				   'id' : id_asigna_dis 
 
@@ -229,7 +229,9 @@ function LimpiarPantalla() {
 									s[i][2],
 									s[i][3],
 									s[i][4],
-									'<button class="btn btn-xs btn-warning" onClick="goToURL('+"'editar'"+','+"'"+ s[i][0]+"'" +')"><i class="glyphicon glyphicon-search"></i></button> '  
+									s[i][5],
+									'<button title="EDITAR REGISTRO SELECCIONADO..." class="btn btn-xs btn-warning" onClick="goToURL('+"'editar'"+','+"'"+ s[i][0]+"'" +')"><i class="glyphicon glyphicon-edit"></i></button> ' + 
+									'<button title="ANULAR TRANSACCION SELECCIONADO.."class="btn btn-xs btn-danger" onClick="goToURL('+"'del'"+','+ "'"+ s[i][0]+"'" +')"><i class="glyphicon glyphicon-remove"></i></button>' 
 								]);										
 							}  
 					}						
@@ -263,6 +265,47 @@ function LimpiarPantalla() {
 
   } 
 
+  /*
+  */
+
+
+  function VerUnidadBuscar()
+
+ {
+ 
+	var id_asigna_dis   = 	$('#id_asigna_dis').val();
+
+	 var parametros = {
+		 		'accion':  'lista',
+			    'id_asigna_dis' : id_asigna_dis
+    };
+	  
+	var estado   = 	 $('#estado').val();
+
+
+	if ( estado == 'autorizado') {
+	}
+	else 	 {
+ 
+				if (id_asigna_dis)   {
+
+						$.ajax({
+								data:  parametros,
+								url:   '../model/ajax_bom_lista.php',
+								type:  'GET' ,
+									beforeSend: function () { 
+											$("#listafun").html('Procesando');
+									},
+								success:  function (data) {
+										$("#listafun").html(data);  // $("#cuenta").html(response);
+
+									} 
+
+						});
+					}
+	 }
+ }
+
  /*
  */
 
@@ -277,23 +320,30 @@ function LimpiarPantalla() {
 			    'id_asigna_dis' : id_asigna_dis
     };
 	  
-	if (id_asigna_dis)   {
+	var estado   = 	 $('#estado').val();
 
-			$.ajax({
-					data:  parametros,
-					url:   '../model/ajax_bom_lista.php',
-					type:  'GET' ,
-						beforeSend: function () { 
-								$("#listafun").html('Procesando');
-						},
-					success:  function (data) {
-							$("#listafun").html(data);  // $("#cuenta").html(response);
 
-						} 
+	if ( estado == 'autorizado') {
+	}
+	else 	 {
+ 
+				if (id_asigna_dis)   {
 
-			});
-		}
+						$.ajax({
+								data:  parametros,
+								url:   '../model/ajax_bom_lista.php',
+								type:  'GET' ,
+									beforeSend: function () { 
+											$("#listafun").html('Procesando');
+									},
+								success:  function (data) {
+										$("#listafun").html(data);  // $("#cuenta").html(response);
 
+									} 
+
+						});
+					}
+	 }
  }
  
 
@@ -419,21 +469,76 @@ function verifica(aacion,id_asigna_bom,fila)
 
  {
  
-	id1 = document.getElementById('idfuncion').tBodies[0].rows[fila].cells[3].innerHTML;
-	
-	$('#myModal').modal('show');
 
-	$('#id_asigna_bom').val(id_asigna_bom);
-	
-	$('#nombress').html(id1);
-	
-	$('#responsable_a').val('N');
+	var estado   = 	 $('#estado').val();
 
-	$('#grupo_a').val('');
+	var unidad  = $('#unidad').val();
 
-	$('#funcion_a').val('');
+
+	if ( estado == 'autorizado') {
+	}
+	else 	 {
+
+
+		if (aacion == 'del'){
+
+			var parametros = {
+				'accion':  aacion,
+			   'id_asigna_bom' : id_asigna_bom 
+   			};
+
+			alertify.confirm("<p>Eliminar Distribuir personal...</p>", function (e) {
+
+				if (e) {
+
+								$.ajax({
+									data:  parametros,
+									url:   '../model/ajax_bom_lista.php',
+									type:  'GET' ,
+									success:  function (data) {
+										$("#result").html(data);   
+ 										  
+										asigna('seleccion',unidad);
+
+										VerUnidadBuscar();
+
+										} 
+
+							});
+
+				}
+
+			}); 
+
+		}
+		else {
+			 		
+					$('#myModal').modal('show');
+					$('#id_asigna_bom').val(id_asigna_bom);
+					$('#responsable_a').val('N');
+					$('#cambiar_a').val(unidad);
+					$('#grupo_a').val('');
+
+					var parametros = {
+						'accion':  'actualiza',
+					   'id_asigna_bom' : id_asigna_bom 
+					   };
+
+					   $.ajax({
+						data:  parametros,
+						url:   '../model/ajax_bom_lista.php',
+						type:  'GET' ,
+						success:  function (data) {
+							$("#result").html(data);   
+  
+							} 
+
+				});
+
+
+		}
 	
-	
+		}
 
  }
  /*
@@ -448,10 +553,13 @@ function verifica(aacion,id_asigna_bom,fila)
 	 var cambiar_a       = 	 $('#cambiar_a').val();
 	 var responsable_a   = 	 $('#responsable_a').val();
 	 var unidad          = 	 $('#unidad').val();
-
-	 var grupo_a       = 	 $('#grupo_a').val();
-
+	 var grupo_a         = 	 $('#grupo_a').val();
 	 var funcion_a       = 	 $('#funcion_a').val();
+	 var estado   		 = 	 $('#estado').val();
+
+	 var unidad_apoyo   = 	 $('#unidad_apoyo').val();
+	 
+
 
 	 var parametros = {
 		 		'accion':  'cambio',
@@ -460,35 +568,41 @@ function verifica(aacion,id_asigna_bom,fila)
 				'cambiar_a'     : cambiar_a,
 				'responsable_a' : responsable_a,
 				'grupo_a':grupo_a,
-				'funcion_a' : funcion_a
+				'funcion_a' : funcion_a,
+				'unidad_apoyo': unidad_apoyo
     };
 
-	if ( grupo_a ) {
-
-		if ( funcion_a ) {
-
-			alertify.confirm("<p>Distribuir personal...</p>", function (e) {
-
-				if (e) {
-
-								$.ajax({
-									data:  parametros,
-									url:   '../model/ajax_bom_lista.php',
-									type:  'GET' ,
-									success:  function (data) {
-										alert(data);
-										VerUnidad();
-										asigna('seleccion',unidad);
-										} 
-
-							});
-
-				}
-
-			}); 
-		}	
+	
+	if ( estado == 'autorizado') {
 	}
+	else 	 {
 
+				if ( grupo_a ) {
+
+					if ( funcion_a ) {
+
+						alertify.confirm("<p>Distribuir personal...</p>", function (e) {
+
+							if (e) {
+
+											$.ajax({
+												data:  parametros,
+												url:   '../model/ajax_bom_lista.php',
+												type:  'GET' ,
+												success:  function (data) {
+													$("#result").html(data);   
+ 													VerUnidad();
+													asigna('seleccion',unidad);
+													} 
+
+										});
+
+							}
+
+						}); 
+					}	
+				}
+			}
 }
 /*
 imprimir

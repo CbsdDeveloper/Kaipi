@@ -146,6 +146,24 @@ session_start();
 	 .di {
   			 background-color:#F5C0C1;
 	  }
+	 
+	 	.div_s {
+	position: relative;
+    min-height: 2px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11px;
+    font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+	width:21%;
+	float: left;
+	border:solid 1px darkgoldenrod;
+    box-shadow: 0px 20px 15px -15px #818181;	
+margin: 3px;
+	}	
 </style>
 
     <link href="../../app/css/elegant-icons-style.css" rel="stylesheet" media="all"/>

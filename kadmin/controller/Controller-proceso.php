@@ -65,7 +65,11 @@ session_start( );
                   '09'      => '09',
                   '10'        => '10',
                   '11'        => '11',
-                  '12'        => '12'
+                  '12'        => '12',
+					'13'        => '13',
+					'14'        => '14',
+					'15'        => '15',
+					'16'        => '16',
                 );
 
                 $MATRIZA = array(
@@ -123,7 +127,7 @@ session_start( );
                 $this->obj->list->listae('Secuencia',$MATRIZ_B ,'secuencia',$datos,'required','',$evento,'div-2-4') ;
 
             
-                $this->obj->text->text_yellow('% Evaluacion',"number" ,'valor' ,80,80, $datos ,'required','','div-2-10') ;
+                $this->obj->text->text_yellow('% Evaluacion',"number" ,'valor' ,80,80, $datos ,'required','','div-2-4') ;
                    
 
             $this->set->div_panel8('fin');

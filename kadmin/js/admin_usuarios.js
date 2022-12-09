@@ -220,11 +220,19 @@ function LimpiarPantalla() {
  	  
 		var user = $(this).attr('id');
       
-     	var GrillaCodigo = $("#qestado").val();
+     	var GrillaCodigo 	= $("#qestado").val();
+     	var qrol 			= $("#qrol").val();
+     	var qdirector 		= $("#qdirector").val();
     
           
+
+          	 
+
+
       var parametros = {
-				'GrillaCodigo' : GrillaCodigo  
+				'GrillaCodigo' : GrillaCodigo,
+				'qrol' : qrol,
+				'qdirector':qdirector	
       };
 
 		if(user != '') 
@@ -246,9 +254,9 @@ function LimpiarPantalla() {
  	                        s[i][4],
                             s[i][5],
                             s[i][6],
-                        	'<button class="btn btn-xs" title= "Editar transaccion" onClick="javascript:goToURL('+"'editar'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp; ' + 
-							'<button class="btn btn-xs" title= "Eliminar transaccion" onClick="javascript:goToURL('+"'del'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-remove"></i></button>&nbsp;&nbsp;'  +
-							'<button class="btn btn-xs" title= "Notificar acceso a usuario" onClick="javascript:goToURL('+"'email'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-wrench"></i></button>' 
+                        	'<button class="btn btn-xs btn-warning" title= "Editar transaccion" onClick="goToURL('+"'editar'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp; ' + 
+							'<button class="btn btn-xs btn-danger" title= "Eliminar transaccion" onClick="goToURL('+"'del'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-remove"></i></button>&nbsp;&nbsp;'  +
+							'<button class="btn btn-xs btn-info" title= "Notificar acceso a usuario" onClick="goToURL('+"'email'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-wrench"></i></button>' 
 						]);										
 					} // End For
 										

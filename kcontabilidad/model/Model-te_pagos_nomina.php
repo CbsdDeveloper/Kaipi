@@ -210,32 +210,12 @@ class proceso{
 	//--------------------------------------------------------------------------
 	function _Comprobante_pago($idbancos,$cheque,$anio){
 		
-	
-	    $Acomprobante = $this->bd->query_array('co_plan_ctas',
-	                                          'documento', 
-	        'cuenta='.$this->bd->sqlvalue_inyeccion(trim($idbancos),true).' and 
-             anio = '.$this->bd->sqlvalue_inyeccion($anio,true).' and
-             registro='.$this->bd->sqlvalue_inyeccion(trim($this->ruc),true)
-	        );
-	   
-  
+	 
+		 
+
+		$input          = $this->bd->_secuencias($anio, 'CE',8);
 		
-		$comp = $Acomprobante['documento'] ;
-		
-		$input= str_pad($comp, 8, "0", STR_PAD_LEFT).'-'.$anio;
-		
-		$contador = $comp + 1;
-		
-	  // actualiza cheque
-		$sql = 'UPDATE co_plan_ctas
-		 		       SET  documento ='.$this->bd->sqlvalue_inyeccion($contador, true)."
-				   where tipo_cuenta  = 'B' AND
-						    registro  = ".$this->bd->sqlvalue_inyeccion(trim($this->ruc),true). " AND
-                            anio      = ".$this->bd->sqlvalue_inyeccion($this->anio,true)." and
-							cuenta    = ".$this->bd->sqlvalue_inyeccion($idbancos,true);
-		
-		$this->bd->ejecutar($sql);
-		
+ 
  
 		
 		return $input ;

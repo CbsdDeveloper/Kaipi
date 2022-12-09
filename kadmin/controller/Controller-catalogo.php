@@ -122,7 +122,7 @@
                             
                             $this->obj->list->listadb($resultado,$tipo,'<b>CATALOGO</b>','tipo',$datos,'required','','div-2-4');	
                             
-                            $this->obj->text->text_yellow('Catalogo',"texto",'nombre',50,50,$datos,'required','','div-2-10') ;  
+                            $this->obj->text->text_yellow('Catalogo',"texto",'nombre',450,450,$datos,'required','','div-2-10') ;  
                             
                             $this->obj->text->text_blue('Referencial',"texto",'codigo',50,50,$datos,'required','','div-2-4') ;   
                             

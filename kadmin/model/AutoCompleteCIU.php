@@ -17,7 +17,7 @@ session_start( );
     
     	
 		    $sql = "SELECT  razon 
-					  FROM  view_nomina_rol
+					  FROM  par_ciu
 					  WHERE estado = 'S' AND upper(razon) like ".$query." order by razon";
 					    
 		 

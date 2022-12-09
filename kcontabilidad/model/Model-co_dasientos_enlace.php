@@ -140,7 +140,7 @@ class proceso{
 	    $this->bd->ejecutar($sql1);
  
   
-	        $longitud = strlen(trim($cuenta));
+	        $longitud = strlen(trim($partidad));
  
 	        $anio = $this->anio;
 	        
@@ -158,8 +158,7 @@ class proceso{
                                        set partida = ".$this->bd->sqlvalue_inyeccion($partidad , true).',
                                            item='.$this->bd->sqlvalue_inyeccion($item , true).
     								" where id_asiento=".$this->bd->sqlvalue_inyeccion($id , true).' and
-                                           id_asientod='.$this->bd->sqlvalue_inyeccion($xid_asientod , true).' and
-                                           cuenta='.$this->bd->sqlvalue_inyeccion($cuenta , true);
+                                           id_asientod='.$this->bd->sqlvalue_inyeccion($xid_asientod , true);
     								
     								
     								$this->bd->ejecutar($sql);

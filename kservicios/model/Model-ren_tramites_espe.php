@@ -49,7 +49,7 @@ class proceso{
         
           
         
-        $usuario = $this->bd->__user(  $this->sesion);
+       // $usuario = $this->bd->__user(  $this->sesion);
 
         $this->ATabla = array(
             array( campo => 'id_ren_movimiento',tipo => 'NUMBER',id => '0',add => 'N', edit => 'N', valor => '-', key => 'S'),
@@ -82,7 +82,7 @@ class proceso{
             array( campo => 'multa',tipo => 'NUMBER',id => '27',add => 'S', edit => 'N', valor => '0.00', key => 'N'),
             array( campo => 'fechap',tipo => 'DATE',id => '28',add => 'N', edit => 'S', valor =>$this->hoy, key => 'N'),
             array( campo => 'sesion_baja',tipo => 'VARCHAR2',id => '29',add => 'S', edit => 'S', valor => '-', key => 'N'),
-            array( campo => 'id_par_ciu',tipo => 'NUMBER',id => '30',add => 'S', edit => 'N', valor => '-', key => 'N'),
+            array( campo => 'id_par_ciu',tipo => 'NUMBER',id => '30',add => 'S', edit => 'S', valor => '-', key => 'N'),
             array( campo => 'id_rubro',tipo => 'NUMBER',id => '31',add => 'S', edit => 'N', valor => '-1', key => 'N'),
             array( campo => 'fecha_obligacion',tipo => 'DATE',id => '32',add => 'S', edit => 'N', valor => '-', key => 'N'),
             array( campo => 'subtotal',tipo => 'NUMBER',id => '33',add => 'S', edit => 'N', valor => '-', key => 'N'),
@@ -264,7 +264,9 @@ class proceso{
         
         $idprov           = trim($_POST["idprov"]);
         $id_par_ciu       = $_POST["id_par_ciu"];
-        $documento        = trim($_POST["documento"]);
+        
+        //$documento        = trim($_POST["documento"]);
+        
         $cantidad         = trim($_POST["cantidad"]);
         $costo            = trim($_POST["costo"]);
         $base             = trim($_POST["base"]);
@@ -373,13 +375,20 @@ class proceso{
     //--------------------------------------------------------------------------------
 function edicion( $id_ren_tramite ){
  
-    $idprov           = trim($_POST["idprov"]);
-    $id_par_ciu       = $_POST["id_par_ciu"];
-    $documento        = trim($_POST["documento"]);
+    //$idprov           = trim($_POST["idprov"]);
+    //$id_par_ciu       = $_POST["id_par_ciu"];
+    //$documento        = trim($_POST["documento"]);
+    
     $cantidad         = trim($_POST["cantidad"]);
     $costo            = trim($_POST["costo"]);
     $base             = trim($_POST["base"]);
         
+    $todayh =  getdate();
+    $m = $todayh[mon];
+    $y = $todayh[year];
+    
+    $mes  =   $m  ;
+    $anio =   $y ;
 
     $estado           = trim($_POST["estado"]);
 
@@ -508,11 +517,11 @@ function edicion( $id_ren_tramite ){
          
             $variable = $cantidad - 1;
 
-            $variable1 = $cantidad  ;
+           // $variable1 = $cantidad  ;
 
             $suma    = $comprobante  +    $variable;
 
-            $compron =  $comprobante.'-'.   $suma ;
+            // $compron =  $comprobante.'-'.   $suma ;
 
             $xxx = $this->bd->query_array('rentas.ren_movimiento',   // TABLA
                 '*',                        // CAMPOS
@@ -539,7 +548,7 @@ function edicion( $id_ren_tramite ){
                                                     $comprobante =  $comprobante  + 1;
 
                                                     $sql = "UPDATE  rentas.ren_serie_espe
-                                                    set actual = ".$this->bd->sqlvalue_inyeccion($comprobante ,true) ."
+                                                              set actual = ".$this->bd->sqlvalue_inyeccion($comprobante ,true) ."
                                                     where estado= 'S' and idproducto_ser = ".$this->bd->sqlvalue_inyeccion( $idproducto_ser ,true)  ;
 
                                                     $this->bd->ejecutar($sql);
@@ -549,7 +558,8 @@ function edicion( $id_ren_tramite ){
 
                                                 $sql = " UPDATE rentas.ren_movimiento
                                                 SET 	estado=".$this->bd->sqlvalue_inyeccion('P', true).", 
-                                                        comprobante = ".$this->bd->sqlvalue_inyeccion(  $compron   ,true).",
+                                                        comprobante = ".$this->bd->sqlvalue_inyeccion(  $comprobante   ,true).",
+                                                        secuencial = ".$this->bd->sqlvalue_inyeccion(  $suma   ,true).",
                                                         fechap=".$this->bd->sqlvalue_inyeccion( $this->hoy , true)."
                                                     WHERE id_ren_movimiento=".$this->bd->sqlvalue_inyeccion($id, true);
 
@@ -696,9 +706,9 @@ $gestion   = 	new proceso;
                 
                 $idproducto_ser        = $_GET['idproducto_ser'];
 
-                $cantidad        = $_GET['cantidad'];
+                $cantidad              = $_GET['cantidad'];
                 
-                $comprobante = $_GET['comprobante'];
+                $comprobante           = $_GET['comprobante'];
 
                 $gestion->envio($id,$idproducto_ser, $cantidad,$comprobante );
                 

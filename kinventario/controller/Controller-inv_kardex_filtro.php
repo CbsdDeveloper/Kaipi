@@ -9,8 +9,7 @@
   
     class componente{
  
-      //creamos la variable donde se instanciar? la clase "mysql"
- 
+  
       private $obj;
       private $bd;
       private $set;
@@ -50,27 +49,31 @@
       
        $tipo = $this->bd->retorna_tipo();
           
-          
-       $anio = date("Y"); 
-       
+        
+       $anio       =  $_SESSION['anio'];
+     
        $datos= array();
  
+       
+       $evento = '';
       	
-      	$resultado =$this->bd->ejecutar("select idcategoria as codigo, nombre
-            			                     from view_res_inv_CATE
-                                            WHERE TIPO = 'I' and ANIO = ".$anio."  order by nombre ");
+      	$resultado =$this->bd->ejecutar("SELECT cuenta_inv as codigo ,cuenta_inv || ' ' || ncuenta_inv as nombre
+                                            FROM  view_inv_movimiento_conta
+                                            where anio = ".$this->bd->sqlvalue_inyeccion($anio,true)." 
+                                            group by cuenta_inv ,ncuenta_inv 
+                                            order by cuenta_inv");
       	
       	
-      	$evento = 'Onchange="Categoria(this.value);"';
       	
-      	$this->obj->list->listadbe($resultado,$tipo,'Categoria','idcategoria',$datos,'required','',$evento,'div-2-4');
+      	
+       	
+      	$this->obj->list->listadbe($resultado,$tipo,'Cuenta','idcategoria',$datos,'required','',$evento,'div-2-4');
       	
       
+      	$this->obj->text->text_blue('Producto/Articulo','texto','idproducto',90,90, $datos ,'required','','div-2-4') ;
       	
-      	$resultado =$this->bd->ejecutar("select 0 as codigo, ' [ 0. Todas las productos ]' as  nombre");
-      	
-      	$this->obj->list->listadb($resultado,$tipo,'Producto','idproducto',$datos,'required','','div-2-4');
- 
+       	
+  
  
       }
 ///------------------------------------------------------------------------

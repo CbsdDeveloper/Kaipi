@@ -81,10 +81,8 @@ box-shadow: 5px 20px 21px -24px rgba(10,10,10,1);">
 													<option value="0">Seleccionar Plantilla</option>
 													 <option value="6">Documentos</option>
 												  <option value="1">Publicidad</option>
-												  <option value="2">Promocion</option>
-												  <option value="3">Evento</option>
-												  <option value="4">Oferta</option>
-												  <option value="5">Noticia</option>
+ 												  <option value="3">Evento</option>
+ 												  <option value="5">Noticia</option>
 															 
 														 
 												</select>

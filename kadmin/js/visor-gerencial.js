@@ -14,26 +14,22 @@ $(document).ready(function(){
 		$("#FormPie").load('../view/View-pie.php');
    		
  
-          
+
 });   
 //-------------------------------------------------------------------------
 // ir a la opcion de editar
-function goToURL(accion,id) {
+function goToURL(id,div) {
  
  
      var parametros = {
-					'accion' : accion ,
-                    'id' : id 
+                    'tipo' : id 
  	  };
 	  $.ajax({
 					data:  parametros,
-					url:   '../model/Model-admin_usuarios.php',
+					url:   '../grilla/grilla_cli_editor_doc.php',
 					type:  'GET' ,
- 					beforeSend: function () { 
- 							$("#result").html('Procesando');
-  					},
-					success:  function (data) {
-							 $("#result").html(data);  // $("#cuenta").html(response);
+ 					success:  function (data) {
+							 $(div).html(data);   
 						     
   					} 
 			}); 

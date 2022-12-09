@@ -107,9 +107,7 @@
                     $MATRIZ = array(
                          '6'    => 'Documento',
                          '1'    => 'Publicidad',
-                         '2'    => 'Promocion',
                          '3'    => 'Evento',
-                         '4'    => 'Oferta',
                          '5'    => 'Noticia'
                     );
                       

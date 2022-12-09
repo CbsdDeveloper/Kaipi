@@ -58,6 +58,7 @@ $(document).ready(function(){
 
 //-----------------------------------------------------------------
 
+
 function changeAction(tipo,action,mensaje){
 
 			
@@ -612,6 +613,7 @@ function LimpiarNota(){
 {
 
 var	id_concilia     =  $("#id_concilia").val( );
+var fecha =  $("#fecha").val( );
 
 var saldo_total = 0;
 
@@ -620,7 +622,8 @@ var saldo_total = 0;
 	 if (id_concilia ){
 
 		 	var parametros = {
-						    'id_concilia' : id_concilia 
+						    'id_concilia' : id_concilia ,
+						    'fecha': fecha
  			    };
 
  			 $.ajax({

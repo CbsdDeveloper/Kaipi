@@ -7,10 +7,9 @@
     require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
   
   
-    class proceso{
+    class grilla_inv_kardex{
  
-      //creamos la variable donde se instanciar la clase "mysql"
- 
+  
       private $obj;
       private $bd;
       
@@ -21,7 +20,7 @@
       //-----------------------------------------------------------------------------------------------------------
       //Constructor de la clase
       //-----------------------------------------------------------------------------------------------------------
-      function proceso( ){
+      function grilla_inv_kardex( ){
             //inicializamos la clase para conectarnos a la bd
  
                 $this->obj     = 	new objects;
@@ -41,29 +40,35 @@
       public function BusquedaGrilla(  $idcategoria,$idproducto ){
       
  
+          $filtro   = 'S';
+          $longitud = strlen($idproducto);
           
-          if ( $idproducto  == '0')  {
-              $carga = 'N' ;
+          if ( $longitud  > 5)  {
+              $carga      = 'S' ;
+              $idproducto = strtoupper(trim($idproducto)).'%';
+              $filtro = 'N';
           }else{
-              $carga = 'S' ;
+              $carga = 'N' ;
+              $filtro = 'S';
           }
  
           
       	$qquery = 
       			array( 
-      			array( campo => 'producto',   valor => '-',  filtro => 'N',   visor => 'S'),
-      			array( campo => 'cuenta_inv',   valor => '-',  filtro => 'N',   visor => 'S'),
+      			array( campo => 'producto',   valor => 'LIKE.'.$idproducto,  filtro =>$carga,   visor => 'S'),
+      			array( campo => 'cuenta_inv',   valor => $idcategoria,  filtro => $filtro,   visor => 'S'),
       			array( campo => 'ingreso',   valor => '-',  filtro => 'N',   visor => 'S'),
       			array( campo => 'egreso',   valor => '-',  filtro => 'N',   visor => 'S'),
       			array( campo => 'saldo',   valor => '-',  filtro => 'N',   visor => 'S'),
        			array( campo => 'minimo',   valor => '-',  filtro => 'N',   visor => 'S'),
+      		    array( campo => 'unidad',   valor => '-',  filtro => 'N',   visor => 'S'),
       			array( campo => 'promedio',   valor => '-',  filtro => 'N',   visor => 'S'),
       			    array( campo => 'lifo',   valor => '-',  filtro => 'N',   visor => 'S'),
       			    array( campo => 'tipo',   valor => 'B',  filtro => 'S',   visor => 'S'),
-      			    array( campo => 'idcategoria',   valor => $idcategoria,  filtro => 'S',   visor => 'N') ,
+      			    array( campo => 'idcategoria',   valor => '-',  filtro => 'N',   visor => 'N') ,
       			    array( campo => 'estado',   valor => 'S',  filtro => 'S',   visor => 'N') ,
       			    array( campo => 'registro',   valor => $this->ruc,  filtro => 'S',   visor => 'N') ,
-      			    array( campo => 'idproducto',   valor =>$idproducto,  filtro => $carga,   visor => 'S') 
+      			    array( campo => 'idproducto',   valor =>'N',  filtro => 'N',   visor => 'S') 
         			);
  
       			
@@ -89,14 +94,12 @@
       		$output[] = array (
       							$fetch['idproducto'],
       		                    $fetch['producto'],
-      		                    $fetch['minimo'],
       		                    $fetch['cuenta_inv'],
-      		                    $fetch['ingreso'],
-      		                    $fetch['egreso'],
-      		                    $fetch['saldo'],
-      		                    $fetch['promedio'], 
-      		                    $fetch['lifo'],
-      		                    $y['razon']
+      		                    round($fetch['ingreso'],2),
+      		                    round($fetch['egreso'],2),
+      		                    round($fetch['saldo'],4),
+      		                    round($fetch['promedio'],4), 
+        		                $y['razon']
        					);
       	}	
       
@@ -115,7 +118,7 @@
 ///------------------------------------------------------------------------
 ///------------------------------------------------------------------------ 
  
-    		$gestion   = 	new proceso;
+    		$gestion   = 	new grilla_inv_kardex;
      
    
    			 //------ consulta grilla de informacion

@@ -53,12 +53,25 @@
      
      $resultado = $bd->ejecutar($sql);
      $datos     = $bd->obtener_array( $resultado);
+     
      //-------------------------------------------------------------------------
-     $sql = 'SELECT sum(ingreso) as ingreso,sum(descuento) as egreso
+     
+     if (  trim($datos['sifondo']) == 'N') {
+         $sql = 'SELECT sum(ingreso) as ingreso,sum(descuento) as egreso
            				   FROM view_rol_personal
         		   		  where idprov = '.$bd->sqlvalue_inyeccion($idprov ,true)." and
         		   			    id_rol = ".$bd->sqlvalue_inyeccion($id_rol,true)." and
-        						id_periodo =".$bd->sqlvalue_inyeccion($id_periodo ,true);
+        						id_periodo =".$bd->sqlvalue_inyeccion($id_periodo ,true) ;
+     }else{
+         $sql = 'SELECT sum(ingreso) as ingreso,sum(descuento) as egreso
+           				   FROM view_rol_personal
+        		   		  where idprov = '.$bd->sqlvalue_inyeccion($idprov ,true)." and
+        		   			    id_rol = ".$bd->sqlvalue_inyeccion($id_rol,true)." and
+        						id_periodo =".$bd->sqlvalue_inyeccion($id_periodo ,true)." and
+                               id_config_matriz not in ( '2','11')" ;
+     }
+   
+     
      
      $resultado = $bd->ejecutar($sql);
      $datos1    = $bd->obtener_array( $resultado);
@@ -83,7 +96,7 @@
      $content =  str_replace ( '#empresa' , trim($razon_social) ,  $content);
  
      
-     $pagina_web ='https://g-kaipi.cloud/EP-online.cbsd/';
+     $pagina_web ='https://g-kaipi.cloud/BSigsig/';
     
  
      

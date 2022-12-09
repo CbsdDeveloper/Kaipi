@@ -49,13 +49,13 @@ class componente{
     function FiltroFormulario(){
          
         
-        
+     /*   
         $unidad = $this->bd->__user($this->sesion) ;
         
         
         $iddepartamento  = $unidad['id_departamento'];
         
-         
+         */
          
         
         

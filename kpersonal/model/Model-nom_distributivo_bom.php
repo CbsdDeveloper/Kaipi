@@ -114,8 +114,6 @@ session_start( );
          array( campo => 'fecha_solicitud',   valor => '-',  filtro => 'N',   visor => 'S'),
          array( campo => 'doccumento',   valor => '-',  filtro => 'N',   visor => 'S'),
          array( campo => 'estado',   valor => '-',  filtro => 'N',   visor => 'S'),
-         array( campo => 'sesion',   valor => '-',  filtro => 'N',   visor => 'S'),
-         array( campo => 'sesiona',   valor => '-',  filtro => 'N',   visor => 'S'),
          array( campo => 'detalle',   valor => '-',  filtro => 'N',   visor => 'S'),
          array( campo => 'autoriza',   valor => '-',  filtro => 'N',   visor => 'S'),
          array( campo => 'operaciones',   valor => '-',  filtro => 'N',   visor => 'S')
@@ -212,13 +210,11 @@ session_start( );
 
     $result = '<img src="../../kimages/kdel.png" align="absmiddle" />&nbsp;<b>PROCESO YA GENERADO....</b>';
      	 
-    if ( $estado == 'aprobado'){
+    
+    if ( $estado == 'digitado'){
 
         $sql1 = "update bomberos.asignacion_dis
-                 set estado = 'autorizado', 
-                     activo = 'S',
-                     sesiona=".$this->bd->sqlvalue_inyeccion( $this->sesion , true).",
-                     fechaa=".$this->bd->sqlvalue_inyeccion( $this->hoy , true)."
+                 set estado = 'aprobado', activo = 'S'
                 where id_asigna_dis =". $this->bd->sqlvalue_inyeccion($id,true) ;
             
                 $this->bd->ejecutar($sql1);
@@ -232,8 +228,9 @@ session_start( );
                      $stmt1 = $this->bd->ejecutar($sql);
 
                     while ($fila=$this->bd->obtener_fila($stmt1)){
+                        
 
-                              $sql = "UPDATE nom_personal
+                                $sql = "UPDATE nom_personal
                                     SET id_departamento=".$this->bd->sqlvalue_inyeccion($fila['id_departamento'], true).",
                                         responsable=".$this->bd->sqlvalue_inyeccion(trim($fila['responsable']), true)."
                                 WHERE idprov=".$this->bd->sqlvalue_inyeccion(trim($fila['idprov']), true);
@@ -248,22 +245,24 @@ session_start( );
          
                                 $this->bd->ejecutar($sql);
           
-                   
+                    
 
                     }
                    
                     $sql1 = "update bomberos.asignacion_dis
                     set  activo = 'N'
-                   where estado = 'autorizado' and  
+                   where estado = 'aprobado' and  
                          id_asigna_dis <> ". $this->bd->sqlvalue_inyeccion($id,true) ;
 
-                     $this->bd->ejecutar($sql1);
+
+               
+                   // $this->bd->ejecutar($sql1);
 
 
                     $result = '<img src="../../kimages/kdel.png" align="absmiddle" />&nbsp;<b>PROCESO GENERADO CON EXITO....</b>';
 
                     echo '<script type="text/javascript">';
-                    echo  "$('#estado').val('autorizado')";               
+                    echo  "$('#estado').val('aprobado')";               
                     echo '</script>';
 
     }
@@ -293,7 +292,7 @@ session_start( );
             $accion    = trim($_GET['accion']);
             $id        = $_GET['id'];
             
-            if (  $accion  == 'autorizado'){
+            if (  $accion  == 'aprobar'){
 
                 $estado = trim($_GET['estado']);
                 $gestion->autorizar_aprobar($id,$estado);

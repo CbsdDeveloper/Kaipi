@@ -841,12 +841,16 @@ function goToURLAsiento( id_asientod,monto,iva,item,partida) {
 
 } 
 //------------------
- function monto_riva(tipo_retencion,monto_iva,montoriva){
+ function monto_riva(tipo_retencion,monto_iva1,montoriva){
 
 	  var iva = 0;
 	  var flotante = 0 ;
 
-
+	monto_iva1 = $("#base_iva").val();
+	
+	var monto_iva = parseFloat(monto_iva1).toFixed(2)  ;
+	
+	
 	  if (tipo_retencion == 0){
 		  $(montoriva).val(0);
        }
@@ -895,15 +899,71 @@ function goToURLAsiento( id_asientod,monto,iva,item,partida) {
 		  $(montoriva).val(flotante);
 	  } 	
 
- }
+ }  
+   function FuenteIVA(cuenta){
+	
+	 		  var base = $("#base_iva").val();
+	  
+	      		var parametros = {
+											"cuenta" : cuenta ,
+											"base":base
+									};
+									 
+    									$.ajax({
+    										    type:  'GET' ,
+    											data:  parametros,
+    											url:   '../model/ajax_calcula_iva.php',
+    											dataType: "json",
+     											success:  function (response) {
+    
+     	 											   
+    													 $("#porcentaje_iva").val( response.a );  
+    													 
+    													 $("#montoriva").val( response.b );  
+
+    												 
+    											} 
+    									});
+    									
+	  
+	 }
+ //---------------
+  function Fuente(cuenta){
+	
+	 		  var base = $("#base").val();
+	  
+	      		var parametros = {
+											"cuenta" : cuenta ,
+											"base":base
+									};
+									 
+    									$.ajax({
+    										    type:  'GET' ,
+    											data:  parametros,
+    											url:   '../model/ajax_calcula_renta.php',
+    											dataType: "json",
+     											success:  function (response) {
+    
+     	 											   
+    													 $("#porcentaje_fuente").val( response.a );  
+    													 
+    													 $("#montofuente").val( response.b );  
+
+    												 
+    											} 
+    									});
+    									
+	  
+	 }
 //------------------
  function calculoFuente(tipo_retencion,monto_iva,montoriva){
 
 	  var iva = 0;
 	  var flotante = 0 ;
 
-	  var norma = $("#base").val();
-
+	
+  	var norma = $("#base").val();
+  
 	  monto_iva =  parseFloat(norma).toFixed(2)  ;
 
 	  if (tipo_retencion == 0){

@@ -40,7 +40,7 @@ class proceso{
         
         $this->ATabla = array(
             array( campo => 'id_accion',   tipo => 'NUMBER',   id => '0',  add => 'N',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'S'),
-            array( campo => 'idprov',tipo => 'VARCHAR2',id => '1',add => 'S', edit => 'N', valor => '-', key => 'N'),
+            array( campo => 'idprov',tipo => 'VARCHAR2',id => '1',add => 'S', edit => 'S', valor => '-', key => 'N'),
             array( campo => 'anio',tipo => 'VARCHAR2',id => '2',add => 'S', edit => 'N', valor => $this->anio, key => 'N'),
             array( campo => 'comprobante',tipo => 'VARCHAR2',id => '3',add => 'N', edit => 'S', valor => '-', key => 'N'),
             array( campo => 'fecha',tipo => 'DATE',id => '4',add => 'S', edit => 'S', valor => '-', key => 'N'),
@@ -321,7 +321,7 @@ class proceso{
 
         $sql = "SELECT max(comprobante::int) as secuencia
 			      FROM nom_accion
-			      where estado =".$this->bd->sqlvalue_inyeccion('S' ,true);
+			      where modulo = 'S' and estado =".$this->bd->sqlvalue_inyeccion('S' ,true);
         
         $parametros 			= $this->bd->ejecutar($sql);
         $secuencia 				= $this->bd->obtener_array($parametros);

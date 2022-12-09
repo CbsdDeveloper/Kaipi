@@ -82,6 +82,7 @@
   <!-- ------------------------------------------------------ -->  
 	
 	<div class="col-md-12" role="banner">
+		
  	   <div id="MHeader"></div>
  	</div> 
  	
@@ -108,6 +109,7 @@
 															<li class="active"><a href="#tab1" data-toggle="tab"></span>
 																<span class="glyphicon glyphicon-th-list"></span> <b>ASIENTOS CONTABLES</b>  </a>
 															</li>
+		
 															<li><a href="#tab2" data-toggle="tab">
 																<span class="glyphicon glyphicon-link"></span> Registro Asientos Contables</a>
 															</li>

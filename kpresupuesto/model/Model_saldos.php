@@ -1396,7 +1396,7 @@ class saldo_presupuesto{
                                 0 as certificado, 0 as compromiso, 0 as devengado, 0 as pagado, 
                                 anio, proyecto, competencia, partida, detalle, fuente
                             FROM presupuesto.pre_gestion
-                            where (inicial + codificado  )  >  0  and anio = ".$this->bd->sqlvalue_inyeccion( $anio , true);
+                            where ( coalesce(inicial,0) + coalesce(codificado,0) +coalesce(devengado,0) + coalesce(compromiso,0)  )  >  0  and anio = ".$this->bd->sqlvalue_inyeccion( $anio , true);
 
             $this->bd->ejecutar($sql_saldos);
         

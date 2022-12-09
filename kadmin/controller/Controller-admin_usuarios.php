@@ -38,6 +38,7 @@
     class componente{
  
       
+      
  
       private $obj;
       private $bd;
@@ -93,8 +94,7 @@
 
         $MATRIZP   =  $this->obj->array->catalogo_perfil();
 
-        $MATRIZ_SN =  $this->obj->array->catalogo_sino();
-
+ 
         $MATRIZ_C = array(
             '1'    => '1',
             '5'    => '5',
@@ -107,6 +107,8 @@
             '0'    => 'Normal',
             '2'    => 'Financiero Empresa Publica',
             '3'    => 'Usuario Operativo',
+            '5'    => 'Responsable Causas',
+            '6'    => 'Responsable Planificacion Unidad',
             '9'    => 'Caja - Servicios',
          );
 
@@ -133,8 +135,12 @@
        
                 $this->set->div_panel12('<b> DATOS DE USUARIO </b>');
                 
+                 $this->set->div_label(12,'Buscar funcionario de nomina para creacion de usuario de sistema');  
                 
-                            $this->obj->text->textautocomplete('<b> Busqueda Nomina</b>',"texto",'brazon',40,45,$datos,'','','div-2-10');
+                            $this->obj->text->textautocomplete('<b>Nombre Funcionario</b>',"texto",'brazon',40,45,$datos,'','','div-2-10');
+
+
+                 $this->set->div_label(12,'Informacion Personal ');                              
                 
                             $this->obj->text->text('Id',"number",'idusuario',0,10,$datos,'','readonly','div-2-4') ; 
                     

@@ -37,9 +37,22 @@
       //-----------------------------------------------------------------------------------------------------------
       //--- busqueda de grilla primer tab
       //-----------------------------------------------------------------------------------------------------------
-      public function BusquedaGrilla($PK_codigo){
+      public function BusquedaGrilla($PK_codigo, $qrol , $qdirector ){
       
       	// Soporte Tecnico
+
+
+        if ( $qrol == '-1'){
+                $filtro = 'N';
+          }else   {
+                $filtro = 'S';
+          }  
+
+           if ( $qdirector == '-'){
+                $filtro1 = 'N';
+          }else   {
+                $filtro1 = 'S';
+          }  
       
       	$qquery = array(
       			array( campo => 'nombre',   valor => '-',  filtro => 'N',   visor => 'S'),
@@ -47,6 +60,8 @@
       			array( campo => 'login',   valor => '-',  filtro => 'N',   visor => 'S'),
       			array( campo => 'email',   valor => '-',  filtro => 'N',   visor => 'S'),
       			array( campo => 'estado',   valor => '-',  filtro => 'N',   visor => 'S'),
+                array( campo => 'director',   valor => $qdirector,  filtro =>  $filtro1,   visor => 'S'),
+                array( campo => 'rol',   valor =>  $qrol,  filtro => $filtro ,   visor => 'S'),
       			array( campo => 'tipo',   valor => '-',  filtro => 'N',   visor => 'S'),
       			array( campo => 'idusuario',   valor => '-',  filtro => 'N',   visor => 'S'),
       			array( campo => 'estado',   valor => $PK_codigo ,  filtro => 'S',   visor => 'N')
@@ -86,15 +101,27 @@
     		$gestion   = 	new proceso;
  
    
-          
+    		$qrol       = '-1';
+    		$qdirector  = '-';
+    		
             //------ consulta grilla de informacion
-            if (isset($_GET['GrillaCodigo']))	{
-            
-            	$PKcodigo  = $_GET['GrillaCodigo'];
-             	 
-            	$gestion->BusquedaGrilla($PKcodigo );
-            	 
+            if (isset($_GET['qrol']))	{
+                $qrol       = $_GET['qrol'];
             }
+            
+            if (isset($_GET['qdirector']))	{
+                $qdirector  = $_GET['qdirector'];
+            }
+            
+            	$PKcodigo   = $_GET['GrillaCodigo'];
+               
+             
+
+ 
+             	 
+            	$gestion->BusquedaGrilla($PKcodigo,  $qrol, $qdirector );
+            	 
+            
   
   
    

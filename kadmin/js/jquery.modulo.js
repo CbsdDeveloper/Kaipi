@@ -20,7 +20,7 @@ $(document).ready(function(){
    		}
    	  });
 
-
+ 
 	   $("#perfilUser").load('../controller/Controller-perfil_usuarios.php');
 	 
        $("#kaipiMain").load('../view/View-moduloPanel.php');
@@ -76,7 +76,7 @@ function AccesoFinanciero( ){
 
 }
 
-
+//--------------------------------------
 
 function PeriodoAnio( ){
 	 

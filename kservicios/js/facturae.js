@@ -16,6 +16,7 @@ function _Generar_factura( ) {
 	'id' : id 
 	};
 
+	
 	   
 	if ( id_renpago  > 0 ) {
 				if ( id > 0 ) {

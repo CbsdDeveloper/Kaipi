@@ -337,8 +337,19 @@ function K_consulta($bd,$obj,$id_rol,$datos_arreglo,$idprov,$tipo,$numero_campos
             $pie_contenido = str_replace('#CARGO_TALENTOHUMANO',trim($a10['carpetasub']), $pie_contenido);
 
             $a10 = $bd->query_array('wk_config','carpeta , carpetasub', 'tipo='.$bd->sqlvalue_inyeccion(18,true));
-            $pie_contenido = str_replace('#ANALISTA1_TTHH',trim($a10['carpeta']), $pie_contenido);
-            $pie_contenido = str_replace('#CARGO_ANALISTA1_TTHH',trim($a10['carpetasub']), $pie_contenido);
+
+
+            $sesion =   trim($_SESSION['email']);
+
+            $usuarios = $bd->__user($sesion);
+
+            $datos['elaborado'] =   ($usuarios['completo']);  
+     
+            $pie_contenido = str_replace('#ANALISTA1_TTHH',$datos['elaborado'], $pie_contenido);
+            $pie_contenido = str_replace('#CARGO_ANALISTA1_TTHH',$usuarios['cargo'], $pie_contenido);
+
+            //$pie_contenido = str_replace('#ANALISTA1_TTHH',trim($a10['carpeta']), $pie_contenido);
+            //$pie_contenido = str_replace('#CARGO_ANALISTA1_TTHH',trim($a10['carpetasub']), $pie_contenido);
 
         
        

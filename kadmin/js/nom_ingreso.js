@@ -222,8 +222,8 @@ function TraerDato()
  	                        s[i][3],
                           s[i][4],
                           s[i][5],
-                          	'<button class="btn btn-xs" onClick="javascript:goToURL('+"'editar'"+','+"'"+ s[i][0]+"'" +')"><i class="glyphicon glyphicon-edit"></i></button> ' + 
-							'<button class="btn btn-xs" onClick="javascript:goToURL('+"'del'"+','+ "'"+ s[i][0]+"'" +')"><i class="glyphicon glyphicon-remove"></i></button>' 
+                          	'<button class="btn btn-xs btn-warning" onClick="goToURL('+"'editar'"+','+"'"+ s[i][0]+"'" +')"><i class="glyphicon glyphicon-edit"></i></button> ' + 
+							'<button class="btn btn-xs btn-danger" onClick="goToURL('+"'del'"+','+ "'"+ s[i][0]+"'" +')"><i class="glyphicon glyphicon-remove"></i></button>' 
 						]);										
 					}  
 			    }						

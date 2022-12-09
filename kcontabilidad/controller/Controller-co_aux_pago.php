@@ -73,7 +73,7 @@
 		   	$sql = "select b.cuenta as codigo, b.cuenta || ' ' || b.detalle as nombre
 				       from  co_plan_ctas b
                       where  b.anio =  ".$this->bd->sqlvalue_inyeccion($this->anio  , true)." and 
-                                     b.tipo_cuenta = 'B' and
+                                     b.tipo_cuenta = 'B' and b.univel = 'S' and b.estado = 'S' and 
                                      b.registro = ".$this->bd->sqlvalue_inyeccion($this->ruc, true).'
                       group by b.cuenta, b.detalle
                       order by 1';

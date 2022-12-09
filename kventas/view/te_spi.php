@@ -282,9 +282,26 @@
 													<select name="nanio" id="nanio" class="form-control">
 													</select>
 												 </div>
+										   
+										   <div class="col-md-2"> 
+													<select name="nmes" id="nmes"  class="form-control">
+													  <option value="1">Enero</option>
+													  <option value="2">Febrero</option>
+														<option value="3">Marzo</option>
+														<option value="4">Abril</option>
+														<option value="5">Mayo</option>
+														<option value="6">Junio</option>
+														<option value="7">Julio</option>
+														<option value="8">Agosto</option>
+														<option value="9">Septiembre</option>
+														<option value="10">Octubre</option>
+														<option value="11">Noviembre</option>
+														<option value="12">Diciembre</option>
+													</select>
+												 </div>
 
 										  	   <div class="col-md-2"> 
-													<select name="nmes" id="nmes"  class="form-control">
+													<select name="nmes1" id="nmes1"  class="form-control">
 													  <option value="1">Enero</option>
 													  <option value="2">Febrero</option>
 														<option value="3">Marzo</option>

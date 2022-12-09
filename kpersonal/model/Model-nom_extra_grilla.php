@@ -103,6 +103,7 @@ class proceso{
             );
         
         $estructura_sistema    =  trim($variable_formula["estructura"] );
+        $monto_sistema         =  $variable_formula["monto"];
 
         $tipoformula           =  trim($variable_formula["tipoformula"] );       
 
@@ -117,6 +118,7 @@ class proceso{
             'id_periodo, mes, anio, registro,tipo',
             'id_rol='.$this->bd->sqlvalue_inyeccion($id_rol,true));
         //---------------------------------------------------------------------------
+
         $anio = $rol["anio"];
 
         $mes  = $rol["mes"];
@@ -251,6 +253,12 @@ class proceso{
                 }
                     
                 
+                
+
+                if ( $estructura_sistema == 'Constante'  ){
+                    $ingreso =   $monto_sistema  ;
+                   }
+
                 if ( $id_config > 0 ) {
               
                     $sql = "INSERT INTO nom_rol_pagod(

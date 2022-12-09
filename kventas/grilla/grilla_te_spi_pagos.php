@@ -4,7 +4,7 @@ session_start( );
 require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
 require '../../kconfig/Obj.conf.php';   /*Incluimos el fichero de la clase objetos*/
   
-class proceso{
+class grilla_te_spi_pagos{
  
     
  
@@ -18,7 +18,7 @@ class proceso{
       //-----------------------------------------------------------------------------------------------------------
       //Constructor de la clase
       //-----------------------------------------------------------------------------------------------------------
-      function proceso( ){
+      function grilla_te_spi_pagos( ){
             //inicializamos la clase para conectarnos a la bd
  
                 $this->obj     = 	new objects;
@@ -34,7 +34,7 @@ class proceso{
       //-----------------------------------------------------------------------------------------------------------
       //--- busqueda de grilla primer tab
       //-----------------------------------------------------------------------------------------------------------
-      public function BusquedaGrilla($nanio,$ntipo,$nmes,$cuenta ){
+      public function BusquedaGrilla($nanio,$ntipo,$nmes,$cuenta ,$nmes1){
       
       	
 
@@ -47,7 +47,7 @@ class proceso{
         
         $cadena5 = '( cuenta ='.$this->bd->sqlvalue_inyeccion(trim($cuenta),true).") and ";
         
-        $cadena3 = '( mes ='.$this->bd->sqlvalue_inyeccion($nmes,true).") and ";
+        $cadena3 = '( mes  between  '.$this->bd->sqlvalue_inyeccion($nmes,true).' and '. $this->bd->sqlvalue_inyeccion($nmes1,true).") and ";
       
         $cadena4 = '( modulo ='.$this->bd->sqlvalue_inyeccion($ntipo,true).")   ";
       	
@@ -99,7 +99,7 @@ class proceso{
  
 ///------------------------------------------------------------------------ 
  
-    		$gestion   = 	new proceso;
+    		$gestion   = 	new grilla_te_spi_pagos;
         
             //------ consulta grilla de informacion
             if (isset($_GET['nanio']))	{
@@ -107,13 +107,14 @@ class proceso{
                 $nanio= $_GET['nanio'];
                 $ntipo= $_GET['ntipo'];
                 $nmes= $_GET['nmes'];
+                $nmes1= $_GET['nmes1'];
                 $cuenta= $_GET['ncuenta'];
                 
  
                 
  
              	 
-                $gestion->BusquedaGrilla($nanio,$ntipo,$nmes ,$cuenta);
+                $gestion->BusquedaGrilla($nanio,$ntipo,$nmes ,$cuenta,$nmes1);
             	 
             }
   

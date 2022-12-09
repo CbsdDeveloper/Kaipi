@@ -359,7 +359,7 @@ class proceso{
                        item_valida = ".$this->bd->sqlvalue_inyeccion($partida ,true). "  and
                        partida_enlace = '-' and 
                        fecha between ".$this->bd->sqlvalue_inyeccion($ffecha1 ,true). "  and
-                       ".$this->bd->sqlvalue_inyeccion($ffecha2 ,true). "   order by haber desc, fecha desc" ;
+                       ".$this->bd->sqlvalue_inyeccion($ffecha2 ,true). "   order by fecha desc" ;
         
                 $resultado2  = $this->bd->ejecutar($sql2);
         

@@ -173,13 +173,11 @@
  
  											   </div>
 
-												 
-
-
-											<div class="col-md-12" style="padding-bottom: 10px;padding-top: 10px">
+										  
+<div class="col-md-12" style="padding-bottom: 10px;padding-top: 10px">
 												
 												
-												    <div class="col-md-7">
+				      <div class="col-md-7">
  															 <div id="ContabilizadoVentas"> </div>
  													 </div>
 												 

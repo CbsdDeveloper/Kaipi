@@ -63,6 +63,16 @@ class componente{
         $this->obj->list->listadb($this->ListaDB('cajero'),$tipo,'Usuario','cajero',$datos,'required','','div-2-4');
         
  
+        $MATRIZ = array(
+            'enviado'    => 'Enviado - Seguimiento',
+            'aprobado'    => 'Aprobado - Emitido',
+            'cierre'    => 'Cierre - Bloqueado',
+            'digitado'    => 'Digitado - Solicitado'
+        );
+ 
+        
+        $this->obj->list->lista('Estado',$MATRIZ,'estado1',$datos,'','','div-2-4');
+        
         
     }
     //---------------------------------------------
@@ -74,7 +84,8 @@ class componente{
             );
         
  
-            $resultado = $this->bd->ejecutar("select email as codigo, completo as nombre
+            $resultado = $this->bd->ejecutar("select '-' as codigo, ' -- 0. Todos los Usuarios -- ' as nombre union
+                            select email as codigo, completo as nombre
 			                     from par_usuario
 								where estado = 'S' and 
                                       id_departamento = ".$this->bd->sqlvalue_inyeccion($unidad['id_departamento'],true)."

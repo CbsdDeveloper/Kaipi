@@ -11,6 +11,7 @@
     
 	
  <style type="text/css">
+	 
   	#mdialTamanio{
   					width: 75% !important;
 		}
@@ -196,6 +197,9 @@
 											   
 											   <div class="col-md-12">
 														  <div class="col-md-6">
+															     <button type="button"   onClick="Grupob(oTableGasto)" class="btn btn-primary btn-sm">Grupo</button>
+
+															  
 																	<table id="jsontable_grupo_dev" class="display table table-condensed table-hover datatable" cellspacing="0" width="100%" style="font-size: 13px">
 																								<thead>
 																									<tr>
@@ -210,8 +214,14 @@
 																	 </div>
 
 															  </div>
+												   
+												   <input type="hidden" name='v1' id='v1'>
+												   <input type="hidden" name='v2' id='v2'>
 											   
 															  <div class="col-md-6">
+																  
+																   <button type="button" onClick="Grupoc(oTableGastoConta)" class="btn btn-info btn-sm">Grupo</button>
+																  
 																 <table id="jsontable_grupo_conta" class="display table table-condensed table-hover datatable" cellspacing="0" width="100%" style="font-size: 13px">
 																								<thead>
 																									<tr>

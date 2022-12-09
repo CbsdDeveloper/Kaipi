@@ -933,6 +933,7 @@ function PoneEnlace(id_asientod,cuenta,grupo)
 	 };
 	  
 	  
+	  
 	  if ( idbancos ) {
 	  
 		  if ( tipo_pago )  {

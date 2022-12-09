@@ -34,22 +34,65 @@ class proceso{
     //-----------------------------------------------------------------------------------------------------------
     //--- busqueda de grilla primer tab
     //-----------------------------------------------------------------------------------------------------------
-    public function BusquedaGrilla($fecha1,$fecha2,$cajero){
+    public function BusquedaGrilla($fecha1,$fecha2,$cajero, $estado1){
         
  
         
         $output = array();
         
-        $sql = 'SELECT  id_ren_tramite, fecha_inicio ,  idprov, razon,  nombre_rubro,
-                        estado_proceso ,
-                        coalesce(total,0 ) as pago,id_par_ciu
-        FROM  rentas.view_tramite_estados
-        where  fecha_inicio between '.$this->bd->sqlvalue_inyeccion( $fecha1,true).' and '.$this->bd->sqlvalue_inyeccion($fecha2,true).' and 
-               sesion = '.$this->bd->sqlvalue_inyeccion( $cajero,true).'
-        order by id_ren_tramite desc ';
+        
+        if ( $estado1 == 'cierre'){
+            
+            if ( trim($cajero) == '-'){
+                
+                $sql = 'SELECT  id_ren_tramite, fecha_cierre as fecha_inicio ,  idprov, razon,  nombre_rubro,
+                                estado_proceso ,
+                                coalesce(total,0 ) as pago,id_par_ciu
+                FROM  rentas.view_tramite_estados
+                where  fecha_cierre between '.$this->bd->sqlvalue_inyeccion( $fecha1,true).' and '.$this->bd->sqlvalue_inyeccion($fecha2,true).'  
+                order by id_ren_tramite desc ';
+                
+            }else {
+                
+                $sql = 'SELECT  id_ren_tramite, fecha_cierre as fecha_inicio,  idprov, razon,  nombre_rubro,
+                                estado_proceso ,
+                                coalesce(total,0 ) as pago,id_par_ciu
+                FROM  rentas.view_tramite_estados
+                where  fecha_cierre between '.$this->bd->sqlvalue_inyeccion( $fecha1,true).' and '.$this->bd->sqlvalue_inyeccion($fecha2,true).' and
+                       sesion = '.$this->bd->sqlvalue_inyeccion( $cajero,true).'
+                order by id_ren_tramite desc ';
+            }
+ 
+                    
+        }else{
+            
+            
+            if ( trim($cajero) == '-'){
+                
+                $sql = 'SELECT  id_ren_tramite, fecha_inicio ,  idprov, razon,  nombre_rubro,
+                                estado_proceso ,
+                                coalesce(total,0 ) as pago,id_par_ciu
+                FROM  rentas.view_tramite_estados
+                where  fecha_inicio between '.$this->bd->sqlvalue_inyeccion( $fecha1,true).' and 
+                       sesion = '.$this->bd->sqlvalue_inyeccion( $cajero,true).'
+                order by id_ren_tramite desc ';
+                
+            }else {
+            
+                    $sql = 'SELECT  id_ren_tramite, fecha_inicio ,  idprov, razon,  nombre_rubro,
+                                estado_proceso ,
+                                coalesce(total,0 ) as pago,id_par_ciu
+                FROM  rentas.view_tramite_estados
+                where  fecha_inicio between '.$this->bd->sqlvalue_inyeccion( $fecha1,true).' and '.$this->bd->sqlvalue_inyeccion($fecha2,true).' and
+                       sesion = '.$this->bd->sqlvalue_inyeccion( $cajero,true).'
+                order by id_ren_tramite desc ';
+            }
+        }
+        
+      
         
  
-            
+        
         
         $resultado  = $this->bd->ejecutar($sql);
         
@@ -103,7 +146,11 @@ if (isset($_GET['fecha1']))	{
     
     $cajero = $_GET['cajero'];
     
-    $gestion->BusquedaGrilla( $fecha1,$fecha2,$cajero);
+    $estado1 = $_GET['estado1'];
+    
+    
+    
+    $gestion->BusquedaGrilla( $fecha1,$fecha2,$cajero, $estado1);
     
 }
 

@@ -1,162 +1,1 @@
-var oTable;
-  
-$(function(){
-    $(document).bind("contextmenu",function(e){        return false;    });
-    window.addEventListener("keypress", function(event){        if (event.keyCode == 13){            	event.preventDefault();        }    }, false);});
-//-------------------------------------------------------------------------$(document).ready(function(){
-	   window.addEventListener("keypress", function(event){	        if (event.keyCode == 13){	            event.preventDefault();	        }	    }, false);
-
-		 $.ajax({ 			 url: "../model/Model_nom_horas_lista.php",			 type: "GET",	        success: function(response)	        {	            $('#q_periodo').html(response);	        }		 });
-		  $.ajax({	 			 url: "../model/ajax_unidad_lista.php",				 type: "GET",		       success: function(response)		       {		           $('#qunidad').html(response);		       }			 });		    		    $.ajax({				 url: "../model/ajax_regimen_lista.php",				 type: "GET",		       success: function(response)		       {		           $('#qregimen').html(response);		       }			 }); 
-		$("#MHeader").load('../view/View-HeaderModel.php');		modulo();		$("#FormPie").load('../view/View-pie.php');
-});  
-//-----------------------------------------------------------------
-function changeAction(tipo,action,mensaje){
-			
-			if (tipo =="confirmar"){			 
-			
-			  alertify.confirm("<p>"+mensaje+"<br><br></p>", function (e) {
-			  if (e) {
-				 
-			  		$('#mytabs a[href="#tab2"]').tab('show');
-                	
-                    LimpiarPantalla();
-                    
-					$("#action").val("add");
-					
-					$('#result').html("<b>CREAR UN NUEVO REGISTRO...</b>");
-					 
-			  }
-			 }); 
-			}
-			if (tipo =="alerta"){			 
-			  alertify.alert("<b>"+mensaje+"<br><br></p>", function () {
-			  });
-			 }		  
-			return false	  
-		   }
-//-------------------------------------------------------------------------
-// ir a la opcion de editar
-function PonerDatos( ) {
- 
-    var periodo = 	$('#q_periodo').val();
-	
- 
-     var parametros = {
-                     'periodo' : periodo
- 	  };
-	  $.ajax({
-					data:  parametros,
-					url:   '../model/Model-nom_horas_view.php',
-					type:  'GET' ,
- 					beforeSend: function () { 
- 							$("#ViewProceso").html('Procesando');
-  					},
-					success:  function (data) {
-							 $("#ViewProceso").html(data);  // $("#cuenta").html(response);
-						     
-  					} 
-			}); 
-
-    }
-  
-  //------------------------------------------------------------------------- 
-  function goToURL(accion, funcionario,idhora){   
-	  
-	     var id_periodo = 	$('#id_periodo').val();
-	     var id_rol     = 	$('#id_rol').val();
-	     var anio       = 	$('#anio').val();
-	     var mes        = 	$('#mes').val();
-		
-	     var dia 		= 	$('#d' +funcionario).val();
-	     var extra      = 	$('#e' +funcionario).val();
-	     var suple      = 	$('#s' +funcionario).val();
-	     var atraso     = 	$('#a' +funcionario).val();
- 
-	     
-	     var parametros = {
-	                     'id_periodo' : id_periodo, 
-	                     'id_rol' : id_rol, 
-	                     'anio'   : anio, 
-	                     'mes' : mes, 
-	                     'idprov' : funcionario, 
-	                     'dia' : dia, 
-	                     'extra' : extra, 
-	                     'suple' : suple,
-	                     'atraso':atraso,
-	                     'accion':accion,
-	                     'idhora':idhora
-	 	  };
-	     
-		  $.ajax({
-						data:  parametros,
-						url:   '../model/Model-nom_horas_save.php',
-						type:  'POST' ,
-	 					beforeSend: function () { 
-	 							$("#ViewHora").html('Procesando');
-	  					},
-						success:  function (data) {
-								 $("#ViewHora").html(data);  // $("#cuenta").html(response);
-							     
-	  					} 
-				}); 
-		  
-		  
- 
- 
-  }   
-//--------------
-//------------------------------------------------------------------------- 
-//-----------------
-  function accion(id, action)
-  {
-   
-  	$('#action').val(action);
-  	
-  	
-	$('#id_config').val(id);
-   
-  	
- 
-  	
-  } 
- 
- 
- function modulo()
- {
-  
-   
-
-	 var modulo1 =  'kpersonal';
-		 
-	 var parametros = {
-			    'ViewModulo' : modulo1
-    };
-	  
-	  
-	$.ajax({
-			data:  parametros,
-			 url:   '../model/Model-moduloOpcion.php',
-			type:  'GET' ,
-				beforeSend: function () { 
-						$("#ViewModulo").html('Procesando');
-				},
-			success:  function (data) {
-					 $("#ViewModulo").html(data);  // $("#cuenta").html(response);
-				     
-				} 
-	});
-      
-
- }
-//-----------------
- function FormView()
- {
-    
-
-	 $("#ViewForm").load('../controller/Controller-nom_config.php');
-      
-
- }
-    
-  
+var oTable;  $(function(){    $(document).bind("contextmenu",function(e){        return false;    });    window.addEventListener("keypress", function(event){        if (event.keyCode == 13){            	event.preventDefault();        }    }, false);});//-------------------------------------------------------------------------$(document).ready(function(){	   window.addEventListener("keypress", function(event){	        if (event.keyCode == 13){	            event.preventDefault();	        }	    }, false);		 $.ajax({ 			 url: "../model/Model_nom_horas_lista.php",			 type: "GET",	        success: function(response)	        {	            $('#q_periodo').html(response);	        }		 });		  $.ajax({	 			 url: "../model/ajax_unidad_lista.php",				 type: "GET",		       success: function(response)		       {		           $('#qunidad').html(response);		       }			 });		    		    $.ajax({				 url: "../model/ajax_regimen_lista.php",				 type: "GET",		       success: function(response)		       {		           $('#qregimen').html(response);		       }			 }); 		FormView();		$("#FormPie").load('../view/View-pie.php');		$("#MHeader").load('../view/View-HeaderModel.php');		modulo();		});  //-----------------------------------------------------------------function changeAction(tipo,action,mensaje){						if (tipo =="confirmar"){			 						  alertify.confirm("<p>"+mensaje+"<br><br></p>", function (e) {			  if (e) {				 			  		$('#mytabs a[href="#tab2"]').tab('show');                	                    LimpiarPantalla();                    					$("#action").val("add");										$('#result').html("<b>CREAR UN NUEVO REGISTRO...</b>");					 			  }			 }); 			}			if (tipo =="alerta"){			 			  alertify.alert("<b>"+mensaje+"<br><br></p>", function () {			  });			 }		  			return false	  		   }//-------------------------------------------------------------------------// ir a la opcion de editarfunction PonerDatos( ) {     var periodo = 	$('#q_periodo').val();      var parametros = {                      'periodo' : periodo 	  };	  $.ajax({					data:  parametros,					url:   '../model/Model-nom_horas_view.php',					type:  'GET' , 					beforeSend: function () {  							$("#ViewProceso").html('Procesando');  					},					success:  function (data) {							 $("#ViewProceso").html(data);    					} 			});     }    //-------------------------------------------------------------------------   function goToURL(accion, funcionario,idhora){   	  	     var id_periodo = 	$('#id_periodo').val();	     var id_rol     = 	$('#id_rol').val();	     var anio       = 	$('#anio').val();	     var mes        = 	$('#mes').val();			     var dia 			  = 	$('#d' +funcionario).val();	     var extra      	  = 	$('#e' +funcionario).val();	     var suple      	  = 	$('#s' +funcionario).val();	     var atraso     	  = 	$('#a' +funcionario).val();	     var alimentacion     = 	$('#v' +funcionario).val(); 	     	     var parametros = {	                     'id_periodo' : id_periodo, 	                     'id_rol' : id_rol, 	                     'anio'   : anio, 	                     'mes' : mes, 	                     'idprov' : funcionario, 	                     'dia' : dia, 	                     'extra' : extra, 	                     'suple' : suple,	                     'atraso':atraso,	                     'alimentacion':alimentacion,	                     'accion':accion,	                     'idhora':idhora	 	  };	     		  $.ajax({						data:  parametros,						url:   '../model/Model-nom_horas_save.php',						type:  'POST' ,	 					beforeSend: function () { 	 							$("#ViewHora").html('Procesando');	  					},						success:  function (data) {								 $("#ViewHora").html(data);   							     	  					} 				}); 		     }    //-------------------------------------------------------------------------    function accion(id, action)  {     	$('#action').val(action);   	$('#id_config').val(id);   } //-----------  function goToURL_marca(accion,codigo_prov) {	   $('#codigo_iden').val(codigo_prov);	 var accion =  'visor'; 	 var parametros = { 			    'accion' : accion, 			    'idprov':  codigo_prov      };	  	  	$.ajax({			data:  parametros, 			 url:   '../model/ajax_busca_marcacion01.php', 			type:  'GET' ,				beforeSend: function () { 						$("#ViewHoras").html('Procesando');				},			success:  function (data) {					 $("#ViewHoras").html(data);   				} 	}); $("#myModal").modal('show');  } //-----------------  function goToURL_marca1(accion,fecha) {     var codigo_prov =  $('#codigo_iden').val();   	 var accion      =  'visor_hora'; 	 var parametros = { 			    'accion' : accion, 			    'idprov':  codigo_prov , 			    'fecha':fecha     };  	$.ajax({			data:  parametros, 			 url:   '../model/ajax_busca_marcacion01.php', 			type:  'GET' ,				beforeSend: function () { 						$("#ViewHoras").html('Procesando');				},			success:  function (data) {					 $("#ViewHoras").html(data);   				} 	}); $("#myModal").modal('show');  } //------------------- function goToURL_marca2(accion,id_temp_marcacion) {    var codigo_prov =    $('#codigo_iden').val();	 var accion =  'visor_del'; 	 var parametros = { 			    'accion' : accion, 			    'idprov':  codigo_prov , 			    'id_temp_marcacion':id_temp_marcacion     };	  	  	$.ajax({			data:  parametros, 			 url:   '../model/ajax_busca_marcacion01.php', 			type:  'GET' ,				beforeSend: function () { 						$("#ViewHoras").html('Procesando');				},			success:  function (data) {					 $("#ViewHoras").html(data);   				} 	});   } //------------------------- //------------------- function GenerarAlimentacion( ) { 	 	 var id_rol     = 	$('#id_rol').val();	     var anio       = 	$('#anio').val();	     var mes        = 	$('#mes').val(); 	 var accion =  'proceso_ali'; 	 var parametros = { 			    'accion' : accion, 			    'idrol':  id_rol , 			    'anio':anio, 			    'mes':mes      };if (id_rol >  0 ){	  	    alertify.confirm("<p>DESEA GENERAR EL PROCESO DE CARGA DE INFORMACION</p>", function (e) {			  if (e) {				 						$.ajax({								data:  parametros,					 			 url:   '../model/Model-nom_horas_save.php',					 			type:  'POST' ,									beforeSend: function () { 											$("#ViewHora").html('Procesando');									},								success:  function (data) {										 $("#ViewHora").html(data);   										 alert('Datos Procesados');									} 					 	});					 			  }			 }); 	   }else{ 		alert('Defina el periodo') }   } //----------- function VisualizarDatos() {   	 var accion =  'visor'; 	 var parametros = { 			    'accion' : accion     };	  	  	$.ajax({			data:  parametros, 			 url:   '../model/ajax_busca_marcacion.php', 			type:  'GET' ,				beforeSend: function () { 						$("#ViewProcesoResultados").html('Procesando');				},			success:  function (data) {					 $("#ViewProcesoResultados").html(data);   				} 	});  } //------------------------------------------------------------ function modulo() {   	 var modulo1 =  'kpersonal';	 var parametros = {			    'ViewModulo' : modulo1    };	  	$.ajax({			data:  parametros,			 url:   '../model/Model-moduloOpcion.php',			type:  'GET' ,				beforeSend: function () { 						$("#ViewModulo").html('Procesando');				},			success:  function (data) {					 $("#ViewModulo").html(data);  // $("#cuenta").html(response);				} 	});       }//----------------- function FormView() { 	            $("#ViewHorasForm").load('../controller/Controller_marca.php'); }      

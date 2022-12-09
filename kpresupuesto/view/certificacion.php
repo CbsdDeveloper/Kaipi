@@ -34,6 +34,18 @@
         width: 75% !important;
        }
 		
+	  #mdialTamanior{
+        width: 85% !important;
+       }
+		
+	 #mdialTamanio_sig{
+        width: 85% !important;
+       }
+			
+		
+		
+		
+		
    .btn-group-justified1 {
      width: 100%;
     table-layout: fixed;
@@ -82,13 +94,17 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 	
 <div id="main">
 
-	<div class="col-md-12" role="banner">
+		<div class="col-md-12" role="banner">
+		
  	   <div id="MHeader"></div>
+		
  	</div> 
  	
-	<div id="mySidenav" class="sidenav">
+	
+		<div id="mySidenav" class="sidenav">
 		
-		<div class="panel panel-primary">
+				<div class="panel panel-primary">
+			
 		  <div class="panel-heading"><b>OPCIONES DEL MODULO</b></div>
 				<div class="panel-body">
 					<div id="ViewModulo"></div>
@@ -99,13 +115,14 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 	
   <!-- ------------------------------------------------------ -->  
 	
-    <div class="col-md-12"> 
+   
+		<div class="col-md-12"> 
 		
- 		<div class="row">
+ 				<div class="row">
 
 			 <div class="col-sm-3 col-md-2"> </div>
 
-			 <div class="col-md-9">
+						 <div class="col-md-9">
 
 				<!-- Split button -->
  				 <button type="button" class="btn btn-default" data-toggle="tooltip" title="Refresh" onClick="location.reload()">
@@ -133,10 +150,11 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 			
 		</div>
 		
-		<hr>
+				<hr>
  			<!--   -->
 			<!-- estado de bandeja de entrada -->
 			<!--   -->
+		
 		<div class="row">
 			
                   <div class="col-md-2">
@@ -147,7 +165,20 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 					 
                     <hr>
                     <ul class="nav nav-pills nav-stacked">
-                        <li class="active">
+						
+						 <li class="active">
+                            <a href="#">
+                                <b>Seguimiento de procesos </b>
+                            </a>
+                        </li>
+						
+					        <li>
+                            <a href="#" onClick="BusquedaPlanificacion()">
+                                <b>0. Solicitud Planificacion</b>
+                            </a>
+                        </li>
+						
+                        <li>
                             <a href="#" onClick="javascript:BusquedaGrilla('','1','1. Requerimiento Solicitado',1);">
                                 <b>1. Requerimiento Solicitado </b>
                             </a>
@@ -197,35 +228,41 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 							<!-- Nav tabs -->
 
 							<ul class="nav nav-tabs" id="mytabs">
+								
+								
 								<li class="active"><a href="#home" data-toggle="tab"><span class="glyphicon glyphicon-inbox">
 								</span>Bandeja de Entrada</a></li>
 
+								<!--
 							   <li><a href="#fdoc" data-toggle="tab"><span class="glyphicon glyphicon-file">
 								</span>  Informacion del tramite</a></li>
-
+								-->
 
 								<li><a href="#fproductos" data-toggle="tab"><span class="glyphicon glyphicon-apple">
 								</span>  Partidas Presupuestarias</a></li>
 
 
-								 <li><a href="#femail" data-toggle="tab"><span class="glyphicon glyphicon-earphone">
-								</span>  Documentos/Notificaciones</a></li>
+								 <li><a href="#femail" data-toggle="tab"><span class="glyphicon glyphicon-bed">
+								</span>  Enlace Planificacion / Documentos</a></li>
 
 							</ul>
 
 							 <!-- Tab panes  -->
 							<div class="tab-content">
-								  <!-- correo  -->
+								
+								  <!-- BANDEJA DE TRAMITES  -->
 
 								<div class="tab-pane fade in active" id="home">
 
-								   <div class="list-group" id = "BandejaDatos">  </div>
-
+										<div class="col-md-12" style="padding: 10px">  
+										   <div class="list-group" id = "BandejaDatos">  </div>
+										</div>	
 								</div>
 
-
+ 								  <!-- ELABORA DOCUMENTO
 
 								<div class="tab-pane fade in" id="fdoc">
+									
 										<div class="col-md-12"> 
 											<div class="panel-body" > 
 													<div class="col-md-12">  
@@ -276,40 +313,24 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 
 											</div> 			   
 										 </div> 
+									
 								</div>
 
+
+								  -->
 								<!------------------------------------------------------------------------------------------------------   -->
 								<!-- correo  -->
 								<!------------------------------------------------------------------------------------------------------   -->
 
-								<div class="tab-pane fade in" id="femail">
+								 <div class="tab-pane fade in" id="femail">
 
 										<div class="col-md-12"  style="padding: 5px"> 
-
-											 <div class="col-md-12"> 
-
-												  <div class="col-md-12" style="padding: 2px">  
-
-													  <h6>Mensaje Whatsapp</h6>
-
-															 <div class="col-md-2" style="padding: 3px">  
-																  <input name="bnuevow" type="button" onClick="EnviarWhatsapp()" style="font-size:12px;padding:5px 12px;border-radius:5px;background-color:#189D0E;color:white;text-shadow:none;"id="bnuevow" value=">> Enviar WhatsApp"> 
-															 </div> 	 
-
-															 <div class="col-md-10"  style="padding: 3px"> 
-																 <input name="tfono" type="text"   class="form-control" id="tfono" placeholder="593">
-															  </div> 	
-
-															 <div class="col-md-12"  style="padding: 3px"> 
-																  <input name="tmensajee" type="text"   class="form-control" id="tmensajee" placeholder="Mensaje a enviar"> 
-															 </div> 	  
-												  </div> 	
-
-											 </div>  
+ 											 
  
 											 <div class="col-md-12" style="padding-bottom: 10px;padding-top: 10px"> 
+												 
  															<div class="panel panel-default">
-															  <div class="panel-heading">Documentos complementarios</div>
+															  <div class="panel-heading">Enlace Planificacion / Documentos</div>
 																<div class="panel-body"> 
 																	<button type="button" class="btn btn-sm btn-default" id="loadDoc" >  
 																	  Agregar Documentos</button>	
@@ -324,6 +345,8 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 															  </div>
  
 										 	</div>  
+											
+											
 										</div> 		 
 
 								 </div>
@@ -331,7 +354,7 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 
 								<!-- partidas -->
 
-								<div class="tab-pane fade in" id="fproductos">
+							  	 <div class="tab-pane fade in" id="fproductos">
 
 									   <div class="panel panel-default">
 
@@ -411,21 +434,29 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 								<!-- ---------------------------------------------------------------------------------------  -->
 
 								  <div class="col-md-8"> 
+									  
 										 <h5>Avance </h5>
+									  
 										<div class="progress">
+											
 											<div id="ViewAvance"> </div>
+											
 										</div>	 
+									  
 								  </div> 
 
 								  <div class="col-md-8"> 
+									  
 									<div style="padding: 10px">
 										<div align="left" id="ViewAvancedias" style="color: #747474"> </div>
 									</div>	 
 									  
 									  <div style="padding: 10px">
+										  
 										  <div class="alert alert-warning">
 										  <img src= "../../kimages/alert.png" align="absmiddle" /><strong>  Para seleccionar el registro de un clic en el codigo del trámite que esta a lado de la unidad que solicita...</strong>
 										</div>
+										  
   									  </div>	
 									  
 									  
@@ -435,9 +466,14 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 							</div>
 					  
                   </div>
+		
+		
          </div>
 	
 	</div>  
+	
+	
+	
 
 <input name="idtramite1" type="hidden" id="idtramite1" >	
 <input name="solicita1" type="hidden" id="solicita1" >
@@ -445,47 +481,22 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 <input name="pag" type="hidden" id="pag" value="0">
 <input name="estado1" type="hidden" id="estado1">
 <!-- ---------------------------------------------------------------------------------------  -->
-	<script type="text/javascript" src="../../tinymce/tinymce.min.js"></script>
-
-    <script>
-         tinymce.init({ 
-                                                  selector: 'textarea',
-                                                  height: 250,
-                                                  plugins: [
-                                                    "advlist autolink lists link image charmap print preview anchor",
-                                                    "searchreplace visualblocks code fullscreen",
-                                                    "insertdatetime media table contextmenu paste"
-                                                ],
-                                                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-                                                 relative_urls: false,
-                                                 remove_script_host : false,
-                                                 file_browser_callback: openKCFinder
-
-         });
-		
- 		
-		function openKCFinder(field_name, url, type, win) {
-                                                    tinyMCE.activeEditor.windowManager.open({
-                                                     file: '../../keditor/kcfinder/browse.php?opener=tinymce4&field=' + field_name + '&type=' + type,
-                                                 //	file: '../../keditor/ckfinder/ckfinder.html',
-                                                        title: 'KCFinder',
-                                                        width: 750,
-                                                        height: 400,
-                                                        resizable: true,
-                                                        inline: true,
-                                                        close_previous:  false
-                                                    }, {
-                                                        window: win,
-                                                        input: field_name
-                                                    });
-                                                    return false;
-          }
-  </script> 
+<input type="hidden" id='proceso_nombre' name = 'proceso_nombre'>
+<input type="hidden" id="idtarea1" name="tarea1">
+<input type="hidden" id="idtarea_seg" name="idtarea_seg">
+<input type="hidden" id="idtarea_segcom" name="idtarea_segcom">	
+<input type="hidden" id="tareaf" name="tareaf">	
+<input type="hidden" id="idtarea_segf" name="idtarea_segf">		
 	
+	
+	
+	
+ 
 <!-- ---------------------------------------------------------------------------------------  -->
 <!-- ---------------------------------------------------------------------------------------  -->	
 
-	<div class="modal fade" id="myModalDocVisor" role="dialog">
+	   <div class="modal fade" id="myModalDocVisor" role="dialog">
+		
 			  <div class="modal-dialog" id="mdialTamanio">
 
 				  <!-- Modal content-->
@@ -506,6 +517,7 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 
 				</div>
   	</div>
+	
 	
 		<div class="container"> 
 			
@@ -724,7 +736,232 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 			
 			  <!-- /.modal -->
         </div>  	
+	
+	 
+		<div class="modal fade" id="myModalActualiza" tabindex="-1" role="dialog">
+		  
+		<div class="modal-dialog" id="mdialTamanio_sig">
+			  
+		 <div class="modal-content">
+			 
+		   <div class="modal-header">
+			 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			 <h4 class="modal-title">Siguiente Paso</h4>
+		   </div>
+			 
+			 
+			  
+				   <div class="modal-body">
+				   
+					   <div class="panel panel-default">
+				  
+						  <div class="panel-body">
+							  
+							   <div class="col-md-12">
+
+							   				<div id="ViewFormComentario"> var</div> 
+								   
+								   			 <div id="guardarDatosCom" style="padding: 15px;" align="center"></div>   
+  				
+							   </div>
+							  
+								<div class="col-md-12" style="padding: 8px" align="right">
+								
+									
+
+									    <button type="button" class="btn btn-sm btn-success" onClick="SiguienteProceso()" >Guardar / Enviar Proceso</button>
+									
+									 <button type="button" class="btn btn-sm btn-danger" id='saliraux2' data-dismiss="modal">Salir</button>
+							  </div>
+							  
+							  
+						   </div>
+					  </div>   
+						
+				   </div>
+ 		 
+			 
+		 </div><!-- /.modal-content --> 
+	   </div><!-- /.modal-dialog -->
+	 </div>
+
+	
+	<!---------------  FORMULARIO MODAL DE COMPRAS  ----------------->	
+ 
+      <div class="modal fade" id="myModalTarea" tabindex="-1" role="dialog">
+		  
+		  <div class="modal-dialog" id="mdialTamanio">
+			  
+			 <div class="modal-content">
+			   <div class="modal-header">
+				 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				 <h4 class="modal-title">ACTIVIDAD PLANIFICADA</h4>
+			   </div>
+
+			 
+			  
+				   <div class="modal-body">
+				   
+					   <div class="panel panel-default">
+				  
+						  <div class="panel-body">
+							  
+							   <div class="col-md-12">
+
+							   				<div id="ViewFormTarea"> var</div> 
+								   
+  				
+							   </div>
+							  
+								<div class="col-md-12" style="padding: 8px" align="right">
+								
+									 <div id="guardarPac" style="padding: 15px;" align="center"></div>   
+
+ 									   
+									
+									 <button type="button" class="btn btn-sm btn-danger" id='saliraux2' data-dismiss="modal">Salir</button>
+							  </div>
+							  
+							  
+						   </div>
+					  </div>   
+						
+				   </div>
+ 		 
+			 
+		 </div>
+	   </div>
+
+	 <!-- /.modal-dialog -->
+
+	</div>
       
+	
+	
+      <div class="modal fade" id="myModalActualiza" tabindex="-1" role="dialog">
+		  
+		<div class="modal-dialog" id="mdialTamanio_sig">
+			  
+		 <div class="modal-content">
+			 
+		   <div class="modal-header">
+			 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			 <h4 class="modal-title">Siguiente Paso</h4>
+		   </div>
+			 
+			 
+			  
+				   <div class="modal-body">
+				   
+					   <div class="panel panel-default">
+				  
+						  <div class="panel-body">
+							  
+							   <div class="col-md-12">
+
+							   				<div id="ViewFormComentario"> var</div> 
+								   
+								   			 <div id="guardarDatosCom" style="padding: 15px;" align="center"></div>   
+  				
+							   </div>
+							  
+								<div class="col-md-12" style="padding: 8px" align="right">
+								
+									
+
+									    <button type="button" class="btn btn-sm btn-success" onClick="SiguienteProceso()" >Guardar / Enviar Proceso</button>
+									
+									 <button type="button" class="btn btn-sm btn-danger" id='saliraux2' data-dismiss="modal">Salir</button>
+							  </div>
+							  
+							  
+						   </div>
+					  </div>   
+						
+				   </div>
+ 		 
+			 
+		 </div><!-- /.modal-content --> 
+	   </div><!-- /.modal-dialog -->
+	 </div>
+	
+	
+	  <div class="modal fade" id="myModalArchivo" tabindex="-1" role="dialog">
+		  
+		  <div class="modal-dialog" id="mdialTamanio">
+		 <div class="modal-content">
+		   <div class="modal-header">
+			 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			 <h4 class="modal-title">INICIO DE PROCESO:: DOCUMENTOS HABILITANTES</h4>
+		   </div>
+			 
+			 
+				   <div class="modal-body">
+				   
+					   <div class="panel panel-default">
+				  
+						  <div class="panel-body">
+							  
+							   <div class="col-md-12"  style="padding: 15px">
+
+								      <h5>Archivos Adjuntos  </h5>
+								   
+							   				<div id="Seguimiento_archivo"> var</div> 
+								   
+  				
+							   </div>
+							  
+								<div class="col-md-12" style="padding: 15px" align="right">
+								
+ 
+									  <button  type="button" onClick="AdjuntarDoc()" class="btn btn-sm btn-primary">
+									 <i class="icon-white icon-search"></i> Cargar archivos</button> 
+									
+									 <button type="button" class="btn btn-sm btn-danger" id='saliraux2' data-dismiss="modal">Salir</button>
+							  </div>
+							  
+							  
+						   </div>
+					  </div>   
+						
+				   </div>
+ 			 
+		 </div><!-- /.modal-content --> 
+	   </div><!-- /.modal-dialog -->
+	 </div> 
+	
+	
+	 <div class="modal fade" id="myModalRecorrido" role="dialog">
+		
+		  <div class="modal-dialog" id="mdialTamanior">
+    
+      <!-- Modal content-->
+			  
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">Recorrido de Documento</h4>
+				</div>
+				<div class="modal-body">
+
+
+					<div class="col-md-12">
+
+							   				<div id="ViewFormRecorrido"> var</div> 
+								   
+   				
+							   </div>
+
+				</div>
+
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+ 						</div>
+					  </div>
+    			 </div>
+ 		 </div>
+
 </div>   
 	        
 <div id="FormPie"></div>

@@ -42,7 +42,7 @@
       	
         $anio =   $_SESSION['anio'];
      
-       	$cadena0 = 'anio = '.$this->bd->sqlvalue_inyeccion( $anio,true). ' and ( registro = '.$this->bd->sqlvalue_inyeccion(trim($this->ruc),true).') and ';
+       	$cadena0 ="cuenta like '213%' and anio = ".$this->bd->sqlvalue_inyeccion( $anio,true). ' and   registro = '.$this->bd->sqlvalue_inyeccion(trim($this->ruc),true).'  and ';
         
       	$cadena1 = '( aux_busca ='.$this->bd->sqlvalue_inyeccion(0,true).")  ";
  
@@ -52,7 +52,7 @@
                 from view_diario_aux a where '. $cadena0.$cadena1.' order by id_asiento';
       	
        
-      	
+       	
       	$resultado  = $this->bd->ejecutar($sql);
  
       	

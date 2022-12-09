@@ -245,7 +245,7 @@ class proceso{
 
 					$Aciu = $this->bd->query_array('par_ciu',    
 					'id_par_ciu',                        // CAMPOS
-					'idprov ='.$this->bd->sqlvalue_inyeccion ( trim($idprov), true),1
+					'idprov ='.$this->bd->sqlvalue_inyeccion ( trim($idprov), true)
 					);	
 
 					$id_par_ciu 	=  $Aciu["id_par_ciu"]; 
@@ -538,36 +538,37 @@ class proceso{
 					id_ren_movimiento=".$this->bd->sqlvalue_inyeccion($id , true)." and 
 					id_par_ciu =".$this->bd->sqlvalue_inyeccion($id_par_ciu , true);
 
+ 
 	   }else {
 
 
-		$x_rubro= $this->bd->query_array('rentas.ren_movimiento_det',    
-		'max(idproducto_ser) as  idproducto_ser',                        // CAMPOS
-		'id_ren_movimiento='.$this->bd->sqlvalue_inyeccion($id, true)  
-		);
-		
-		$idproducto_ser = $x_rubro["idproducto_ser"]; 
+				$x_rubro= $this->bd->query_array('rentas.ren_movimiento_det',    
+				'max(idproducto_ser) as  idproducto_ser',                        // CAMPOS
+				'id_ren_movimiento='.$this->bd->sqlvalue_inyeccion($id, true)  
+				);
+				
+				$idproducto_ser = $x_rubro["idproducto_ser"]; 
 
-		$x_rubro_datos = $this->bd->query_array('rentas.ren_rubros_matriz',    
-		'id_rubro',                        // CAMPOS
-		'idproducto_ser='.$this->bd->sqlvalue_inyeccion($idproducto_ser, true)  
-		);
+				$x_rubro_datos = $this->bd->query_array('rentas.ren_rubros_matriz',    
+				'id_rubro',                        // CAMPOS
+				'idproducto_ser='.$this->bd->sqlvalue_inyeccion($idproducto_ser, true)  
+				);
 
-		$id_rubro = $x_rubro_datos["id_rubro"]; 
+				$id_rubro = $x_rubro_datos["id_rubro"]; 
 
 
-		$sql = " UPDATE rentas.ren_movimiento
-		SET 	estado=".$this->bd->sqlvalue_inyeccion($estado, true).",
-			 fechap=".$this->bd->sqlvalue_inyeccion($hoy, true).",
-			 id_rubro=".$this->bd->sqlvalue_inyeccion($id_rubro, true).",
-			 sesion_pago=".$this->bd->sqlvalue_inyeccion($this->sesion, true).",
-			 comprobante=".$this->bd->sqlvalue_inyeccion($compro, true).",
-			 carga=".$this->bd->sqlvalue_inyeccion(0, true)."
-		WHERE estado = 'E' and
-			id_ren_movimiento=".$this->bd->sqlvalue_inyeccion($id , true)." and 
-			id_par_ciu =".$this->bd->sqlvalue_inyeccion($id_par_ciu , true);
+				$sql = " UPDATE rentas.ren_movimiento
+				SET 	estado=".$this->bd->sqlvalue_inyeccion($estado, true).",
+					fechap=".$this->bd->sqlvalue_inyeccion($hoy, true).",
+					id_rubro=".$this->bd->sqlvalue_inyeccion($id_rubro, true).",
+					sesion_pago=".$this->bd->sqlvalue_inyeccion($this->sesion, true).",
+					comprobante=".$this->bd->sqlvalue_inyeccion($compro, true).",
+					carga=".$this->bd->sqlvalue_inyeccion(0, true)."
+				WHERE estado = 'E' and
+					id_ren_movimiento=".$this->bd->sqlvalue_inyeccion($id , true)." and 
+					id_par_ciu =".$this->bd->sqlvalue_inyeccion($id_par_ciu , true);
 
-		}
+				}
 
  	 
  	    
@@ -578,7 +579,7 @@ class proceso{
 		 $this->DetallePago($id);
 
  	  
- 	    $result = '<img src="../../kimages/ksavee.png" align="absmiddle"/>&nbsp;<b>COMPROBANTE EMITIDO CON EXITO VERIFIQUE.... [ '.$id.' ]</b>';
+ 	    $result = '<img src="../../kimages/ksavee.png" align="absmiddle"/>&nbsp;<b>COMPROBANTE EMITIDO CON EXITO VERIFIQUE.... [ '.$id.' '.$compro.' ]</b>';
 	        
 	     echo $result;
 	        

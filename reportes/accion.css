@@ -1,0 +1,144 @@
+@charset "utf-8";
+/* CSS Document */
+
+* {
+  font-size: 11px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, 'sans-serif';
+}
+ 
+
+
+		@page { margin: 150px 40px 150px 40px; }
+ 
+		body { 
+		    position: relative;
+		    width: 18cm;  
+		    margin: 0 auto; 
+ 		    font-size: 11px; 
+			/*z-index: 30000;*/
+		}
+ 
+ 		#header { position: fixed; left: 0px; top: -110px; right: 0px; height: 110px;   text-align: center; }
+	
+   		#footer { position: fixed; left: 0px; bottom: -125px; right: 0px; height: 60px;   }
+	
+		#footer .page:after { 
+			counter-increment: section;
+			content: "Pag " counter(section) " ";
+
+		}
+
+		.round3 {
+				border: 1px solid #000000;
+				border-radius: 5px;
+		}
+	
+		.tabla {
+			 border: #000000 1px solid;
+			 margin: 3px;	
+			 padding: 3px;
+			 border-style: ridge; 
+  		}
+	
+		.tablaTotal {
+	 	 margin: 3px;	
+		border-style: ridge; 	
+ 		 }
+
+	   .cabecera_font {
+		 font-size: 10px;
+ 		 color: #939393;
+		}
+	
+	
+		.tablaPie {
+		 border: #000000 1px solid;
+		 margin: 25px;	
+		 padding: 25px;
+		}
+		.tablaPie1 {
+		 border: #000000 1px solid;
+		 margin: 3px;	
+		 padding: 3px;
+		}
+
+		.tablap {
+			 border: #000000 1px solid;
+			 margin: 3px;	
+			 padding: 3px;
+			 border-collapse: collapse;
+			}
+
+ 
+		.lado {
+		 border: #000000 1px solid;
+		 margin: 1px;	
+		 padding: 1px;
+		 border-collapse: collapse;
+		}
+
+	  .logo_header{
+						border-collapse: collapse; 
+					   /* border: 0px solid #AAAAAA; */
+						font-size: 10px; 
+						padding: 5px;
+			}
+
+	
+	 #watermark {
+                position: fixed;
+                bottom:   -250px;
+                left:     150px;
+                /** El ancho y la altura pueden cambiar
+                    según las dimensiones de su membrete
+                **/
+                width:    20cm;
+                height:   24cm;
+
+                /** Tu marca de agua debe estar detrás de cada contenido **/
+                z-index:  -1000;
+            }
+	 
+   	 	 .opensans{	 
+ 			 color:#2F2F2F;
+			 font-size: 15px; 
+ 			 padding: 2px;
+			 font-weight: bold;
+	  	}	
+		
+		 
+   	 	 .celda1{	 
+			 border-collapse: collapse; 
+			 border: 1px solid #000000;
+			 color:#2F2F2F;
+			 font-size: 10px; 
+ 			 padding: 2px;
+			 border-style: ridge; 
+	  	}	
+			 
+		  .celda13{	 
+			 border-collapse: collapse; 
+			 border: 1px solid #000000 ;
+			 color:#000000;
+			 font-size: 10px; 
+ 			 padding: 2px;
+			  border-style: ridge; 
+	  	}	
+			 
+		  .celda11{	 
+			 border-collapse: collapse; 
+			 border: 1px solid #AAAAAA;
+			 font-size: 10px; 
+			 color:#2F2F2F;
+ 			 padding: 2px;
+			  border-style: ridge; 
+	  	}	
+			 
+		 .celda3{	 
+			 border-collapse: collapse; 
+			 color:#2F2F2F;
+ 			 font-size: 16px; 
+			 padding: 2px;
+			 border-style: ridge; 
+	  	}	
+ 

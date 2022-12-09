@@ -221,11 +221,16 @@ function goToURver( tipo , id) {
    	var fecha1     = $("#fecha1").val();
   	var fecha2     = $("#fecha2").val();
    	var cajero     = $("#cajero").val();
+   	
+ 	var estado1     = $("#estado1").val();
+   	
+   	
     
     var parametros = {
   				'fecha1' : fecha1,
 				'fecha2' : fecha2,
-				'cajero' : cajero
+				'cajero' : cajero,
+				'estado1':estado1
     };
  
 		$.ajax({

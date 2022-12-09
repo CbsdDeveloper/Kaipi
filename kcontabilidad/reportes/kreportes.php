@@ -18,6 +18,7 @@ class ReportePdf{
 	private $anio;
 	
 	
+	
 	//Constructor de la clase
 	function ReportePdf(){
 		//inicializamos la clase para conectarnos a la bd
@@ -131,14 +132,12 @@ class ReportePdf{
 		
 		$datos['tipoc']   = $tipo_mov;  
 		
-		$usuarios = $this->bd->__user($this->sesion);
-		
-		$datos['elaborado'] = ucwords(strtolower($usuarios['completo']));  
  		
+  		
  
 		$usuarios = $this->bd->__user($this->sesion);
 		
-		$datos['elaborado'] = ucwords(strtolower($usuarios['completo']));  
+		$datos['elaborado'] =  $usuarios['completo'] ;  
 		
 		
 		return $datos;
@@ -605,18 +604,19 @@ class ReportePdf{
 	        );
 	    
 	    
-	    $a = $this->bd->query_array('co_asientod',
+	     $a = $this->bd->query_array('co_asientod',
 	                                  'count(*) as hay_partida', 
-	                                  'partida  is not null and id_asiento = '.$this->bd->sqlvalue_inyeccion($id_asiento,true)
+	                                  'partida  is not null and 
+									   id_asiento = '.$this->bd->sqlvalue_inyeccion($id_asiento,true)
 	        );
 	    
 	   
 	    if ( $this->id_tramite  > 0 ){
 	        
-	        $sql_detalle = "select a.programa,a.partida, a.item, b.detalle, a.cuenta,sum(a.debe) as debe
+	        $sql_detalle = "select a.programa,a.partida, a.item, b.detalle, a.cuenta,
+								   sum(a.debe) as debe, sum(a.haber) as haber
                             from co_asientod a, presupuesto.pre_catalogo b
                             where a.id_asiento = ".$this->bd->sqlvalue_inyeccion($id_asiento, true)." and
-                            	  a.principal = 'S' and
                             	  a.item = b.codigo and b.tipo= 'arbol'
                             group by a.partida, a.cuenta, a.item, a.programa,b.detalle
                             order by a.programa, a.item, a.cuenta";
@@ -635,11 +635,11 @@ class ReportePdf{
 	            $sql_detalle = "select b.funcion as programa , b.partida,
                                    b.item_presupuesto as item, b.cuenta, 
                                    b.detalle_presupuesto as detalle, 
-                                   sum(b.haber)   as debe
+                                   sum(b.haber)   as haber,
+								     sum(b.debe)   as debe
             	    from view_diario_presupuesto b
             	    where b.id_asiento = ".$this->bd->sqlvalue_inyeccion($id_asiento, true)."  and
-            	    b.partida_enlace = 'ingreso' and 
-                    b.anio = ".$this->bd->sqlvalue_inyeccion(	$this->anio, true)."
+                     b.anio = ".$this->bd->sqlvalue_inyeccion(	$this->anio, true)."
             	    group by b.partida,b.funcion, b.cuenta, b.item_presupuesto  ,b.detalle_presupuesto
             	    order by b.funcion, b.item_presupuesto, b.cuenta";
 	            
@@ -648,7 +648,8 @@ class ReportePdf{
 	            $sql_detalle = "select b.funcion as programa , b.partida,
                                    b.item_presupuesto as item, b.cuenta,
                                    b.detalle_presupuesto as detalle,
-                                   sum(b.debe)   as debe
+                                   sum(b.debe)   as debe,
+								    sum(b.haber)   as haber
             	    from view_diario_presupuesto b
             	    where b.id_asiento = ".$this->bd->sqlvalue_inyeccion($id_asiento, true)."  and
             	    b.partida_enlace = '-' and
@@ -692,16 +693,39 @@ class ReportePdf{
              	    $valor2 = 0;
             	    
             	    while ($row=$this->bd->obtener_fila($stmt_detalle)){
-            	        echo  '<tr>
-            					   <td width="10%" '.$estilo.'  align="left">'.$row["programa"].'</td>
-                                    <td width="20%" '.$estilo.'  align="left">'.$row["partida"].'</td>
-                                    <td width="10%" '.$estilo.'  align="left">'.$row["item"].'</td>
-                                    <td width="40%" '.$estilo.'  align="left">'.  ($row["detalle"]).'</td>
-                                    <td width="10%" '.$estilo.'  align="left">'.$row["cuenta"].'</td>
-            						<td width="10%" '.$estilo.'  align="right">'.number_format($row["debe"], 2, ',', '.').'</td>';
-            	        echo  "</tr>";
+						
+							$parcial = $row["debe"] + $row["haber"];
+
+						if ( $tipo_cabe == 'Devengado'){
+
+							if ( $row["debe"] > 0 ){
+								 echo  '<tr>
+			            				<td width="10%" '.$estilo.'  align="left">'.$row["programa"].'</td>
+			                                    <td width="20%" '.$estilo.'  align="left">'.$row["partida"].'</td>
+			                                    <td width="10%" '.$estilo.'  align="left">'.$row["item"].'</td>
+			                                    <td width="40%" '.$estilo.'  align="left">'.  ($row["detalle"]).'</td>
+			                                    <td width="10%" '.$estilo.'  align="left">'.$row["cuenta"].'</td>
+			            				<td width="10%" '.$estilo.'  align="right">'.number_format($parcial, 2, ',', '.').'</td>';
+	            	      		      echo  "</tr>";
+            	      		       }
+						 }else	
+						 {
+						 	 echo  '<tr>
+		            				<td width="10%" '.$estilo.'  align="left">'.$row["programa"].'</td>
+		                                    <td width="20%" '.$estilo.'  align="left">'.$row["partida"].'</td>
+		                                    <td width="10%" '.$estilo.'  align="left">'.$row["item"].'</td>
+		                                    <td width="40%" '.$estilo.'  align="left">'.  ($row["detalle"]).'</td>
+		                                    <td width="10%" '.$estilo.'  align="left">'.$row["cuenta"].'</td>
+		            				<td width="10%" '.$estilo.'  align="right">'.number_format($parcial, 2, ',', '.').'</td>';
+		            	       		 echo  "</tr>";
+
+ 							}
+						
+					
+
+            	       
             	        
-             	        $valor2 = $valor2 + $row["debe"];
+             	        $valor2 = $valor2 + $parcial ;
             	    }
             	    
             	    echo '<tr>

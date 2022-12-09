@@ -178,6 +178,8 @@ function LimpiarPantalla() {
 	$("#comprobante").val("0");
 	$("#idprov").val("-");
 
+
+$("#valor").val("0.00");
  
 
 }

@@ -306,7 +306,7 @@ class proceso{
         $ruc        =   trim($_SESSION['ruc_registro']);
         
         
-        $nombre   =  trim($fila["orden_cliente_nombre"]);
+        $nombre   =   $this->reemplazar($fila["orden_cliente_nombre"]);
         $id       =  trim($idprov);
         
         
@@ -320,9 +320,9 @@ class proceso{
         $ccorreo  =  trim($fila["orden_email"]);
         $telefono =  trim($fila["orden_telefono"]);
            
-        $pro_direccion   = substr(trim($fila["orden_direccion"]),1,150);
+        $pro_direccion   =  $this->reemplazar(substr(trim($fila["orden_direccion"]),1,150));
         
-        $contacto   =  trim($fila["orden_cliente_nombre"]);
+        $contacto   =  $this->reemplazar($fila["orden_cliente_nombre"]);
          
      
         $le1 = strlen( $ccorreo );
@@ -411,6 +411,22 @@ class proceso{
 
              
 }
+
+function reemplazar($nombre){
+
+    $nombre = trim($nombre);
+
+         
+    $resultado = str_replace('"','',  $nombre);
+
+    $resultado = str_replace('/','',  $resultado);
+
+    $resultado = str_replace('/','',  $resultado);
+      
+    
+    return $resultado;
+    
+}    
     
 }
 ///------------------------------------------------------------------------

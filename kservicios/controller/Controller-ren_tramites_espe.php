@@ -72,7 +72,12 @@
         $this->set->_formulario( $this->evento_form,'inicio' ); // activa ajax para insertar informacion
   
     
- 
+        $MATRIZE = array(
+        'E'    => 'EMITIDO',
+        'P'    => 'PAGADO',
+        'A'    => 'ANULADO',
+        );
+        
        
                 $this->BarraHerramientas();
                 
@@ -91,6 +96,18 @@
                             $this->obj->text->text('Direccion','texto','direccion',120,120,$datos ,'required','','div-2-10') ;
                             
                             $this->obj->text->text('Email','texto','correo',120,120,$datos ,'required','','div-2-10') ;
+                            
+                            $this->obj->list->listae('Estado',$MATRIZE,'estado',$datos,'required','readonly','','div-8-4');
+                            
+                          
+                            
+                            
+                            echo ' <div class="col-md-12" style="padding-top: 10px;padding-bottom: 10px"> 
+                                         <div class="alert alert-success">
+                                          <strong>ADVERTENCIA!</strong> UNA VEZ GENERADA LA TRANSACCION DEBE PRESIONAR EL ICONO DE  
+                                            <i class="glyphicon glyphicon-flash"> </i> 
+                                            PARA PROCESAR EL PAGO Y LA SECUENCIA</span>
+                                        </div> </div>';
         
               $this->set->div_panel6('fin');
 
@@ -169,7 +186,7 @@
                 $datos['resolucion'] = 'EE-CONTROL';
                 
                 $this->obj->text->texto_oculto("enlace",$datos); 
-                $this->obj->text->texto_oculto("estado",$datos); 
+           
                 $this->obj->text->texto_oculto("referencia",$datos); 
             
                 $this->obj->text->texto_oculto("fecha_aprobacion",$datos); 
@@ -210,8 +227,7 @@
 
    $eventoc              = 'openView('."'".$formulario_impresion."')";
    
-   $eventoa              = "anular_informacion()";
-
+ 
 
    $eventocc  = "permiso_informacion()";
 

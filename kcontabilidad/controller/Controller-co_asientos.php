@@ -79,6 +79,7 @@
                 
                 
                 $this->obj->text->text('Comprobante',"texto",'comprobante',15,15,$datos,'required','readonly','div-1-3');
+                 
                 
                 $this->obj->text->text('Referencia',"texto",'documento',15,15,$datos,'required','','div-1-3');
                 
@@ -90,18 +91,18 @@
                 $this->obj->list->listae('Tipo',$MATRIZ,'tipo',$datos,'required','',$evento,'div-1-7');
                 
                 
-                $cadena = '<a onClick="buscatramite()" data-toggle="modal" data-target="#myModalGastoDev" href="#">Tramite</a>';
+                $cadena = '<a onClick="buscatramite()" title="Enlace con el tramite del compromiso" data-toggle="modal" data-target="#myModalGastoDev" href="#"><b>Tramite(*)</b></a>';
                 
                 $this->obj->text->text($cadena,"texto",'id_tramite',15,15,$datos,'','readonly','div-1-3');
                 
                 $this->obj->text->editor('Detalle','detalle',3,45,300,$datos,'required','','div-1-11') ;
           
-                $this->obj->text->textautocomplete('Cuenta',"texto",'txtcuenta',150,150,$datos,'','','div-1-5');
+                $this->obj->text->textautocomplete('<b>Digite Cuenta</b>',"texto",'txtcuenta',150,150,$datos,'','','div-1-5');
                
                 
                 $evento = 'onClick="AgregaCuenta()"';
                 
-                $cboton1 = 'Agregar <a href="#" '.$evento.' title="Agregar Cuenta"><img src="../../kimages/cnew.png"/></a>';
+                $cboton1 = '<b>Agregar Cuenta</b> <a href="#" '.$evento.' title="Agregar Cuenta"><img src="../../kimages/cnew.png"/></a>';
                 
                 $this->obj->text->textautocomplete($cboton1,"texto",'cuenta',15,15,$datos,'','','div-1-5');
  
@@ -112,13 +113,13 @@
                 
                 echo '<div class="col-md-6">
                  <a href="#" title= "Ver Lista de Auxiliares registrados" onClick="VerBeneficiarios()"  data-toggle="modal" data-target="#myModalprov">
-                 <img src="../../kimages/03_.png" align="absmiddle"/> Listar Auxiliares</a>  &nbsp; &nbsp;
+                 <img src="../../kimages/03_.png" align="absmiddle"/><b> Ver Auxiliares (Beneficiario)</b></a>  &nbsp; &nbsp;
                  <a href="#" title= "Ver Comprobantes electronicos emitidos relacionados" onClick="BusquedaGrillaFactura(oTableFactura)"  data-toggle="modal" data-target="#myModalfactura">
                  <img src="../../kimages/3p.png" align="absmiddle" /> Comprobante Retencion </a>  &nbsp; &nbsp;
                 <a href="#" title= "Ver Enlaces" onClick="AbrirEnlace()">
-                <img src="../../kimages/05_.png" align="absmiddle"/> Verificar Enlace Presupuestario </a>  &nbsp; &nbsp;
+                <img src="../../kimages/05_.png" align="absmiddle"/> <b>Enlace Gasto Presupuesto </b></a>  &nbsp; &nbsp;
                 <a href="#" title= "Verificar Enlaces Presupuestarios  Ingresos" data-toggle="modal" data-target="#myModalIngresos">
-                 <img src="../../kimages/5p.png" align="absmiddle"/> Enlace Ingresos</a>  &nbsp; &nbsp;
+                 <img src="../../kimages/5p.png" align="absmiddle"/><b> Enlace Ingresos (Presupuesto)</b></a>  &nbsp; &nbsp;
                 </div>';
                       
          $this->obj->text->texto_oculto("action",$datos); 
@@ -165,14 +166,14 @@
     $ToolArray = array( 
                  array( boton => 'Nuevo Regitros',    evento =>'', grafico => 'icon-white icon-plus' ,  type=>"add"),
                  array( boton => 'Guardar Registros', evento =>'', grafico => 'glyphicon glyphicon-floppy-saved' ,  type=>"submit") ,
-    		         array( boton => 'Aprobar asientos',  evento =>$evento,  grafico => 'glyphicon glyphicon-ok' ,  type=>"button_danger"),
-     	     	     array( boton => 'Reporte diario contable', evento =>$eventop,  grafico => 'glyphicon glyphicon-print' ,  type=>"button_default") ,
-    		        array( boton => 'Copiar asientos',  evento =>$evento1,  grafico => 'glyphicon glyphicon-paste' ,  type=>"button_default"),
-                array( boton => 'Exportar a excel', evento =>$eventoe,  grafico => 'glyphicon glyphicon-download-alt' ,  type=>"button_default") ,
-                array( boton => 'Orden de Gasto y Pago', evento =>$eventopp,  grafico => 'glyphicon glyphicon-print' ,  type=>"button_info") ,
-                array( boton => 'Proveedor', evento =>$eventope,  grafico => 'glyphicon glyphicon-user' ,  type=>"button_default")  ,
-               array( boton => 'Comprobante de Egreso - Pago', evento =>$eventoc,  grafico => 'glyphicon glyphicon-usd' ,  type=>"modal") ,
-             array( boton => 'Comprobante de Ingreso', evento =>$eventocc,  grafico => 'glyphicon glyphicon-send' ,  type=>"modal") ,
+    		     array( boton => 'Aprobar asientos',  evento =>$evento,  grafico => 'glyphicon glyphicon-ok' ,  type=>"button_danger"),
+     	      	 array( boton => 'Reporte diario contable', evento =>$eventop,  grafico => 'glyphicon glyphicon-print' ,  type=>"button_default") ,
+    		     array( boton => 'Copiar asientos',  evento =>$evento1,  grafico => 'glyphicon glyphicon-paste' ,  type=>"button_default"),
+                 array( boton => 'Exportar a excel', evento =>$eventoe,  grafico => 'glyphicon glyphicon-download-alt' ,  type=>"button_default") ,
+                 array( boton => 'Orden de Gasto y Pago', evento =>$eventopp,  grafico => 'glyphicon glyphicon-print' ,  type=>"button_info") ,
+                 array( boton => 'Proveedor', evento =>$eventope,  grafico => 'glyphicon glyphicon-user' ,  type=>"button_default")  ,
+                 array( boton => 'Comprobante de Egreso - Pago', evento =>$eventoc,  grafico => 'glyphicon glyphicon-usd' ,  type=>"modal") ,
+                 array( boton => 'Comprobante de Ingreso', evento =>$eventocc,  grafico => 'glyphicon glyphicon-send' ,  type=>"modal") ,
          
     );
                   

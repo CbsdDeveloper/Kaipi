@@ -16,12 +16,14 @@
      
     
     $aanticipo = $bd->query_array('co_anticipo',
-        'id_anticipo,estado',
+        'id_anticipo,estado,idcaso',
         'idcaso ='.$bd->sqlvalue_inyeccion( $id,true)
         );
     
      $id_anticipo = $aanticipo['id_anticipo'];
      $estado      = trim($aanticipo['estado']);
+     
+     $idcaso      = $aanticipo['idcaso'];
      
      
      if (  $estado  == 'controlprevio') {
@@ -39,6 +41,14 @@
                         	where id_anticipo='.$bd->sqlvalue_inyeccion( $id_anticipo ,true);
                         	
             	$bd->ejecutar($sql_update);
+            	
+            	
+            	$sql_update = "update flow.wk_proceso_caso 
+                        	set estado=". $bd->sqlvalue_inyeccion(  '6'  ,true).' 
+                        	where idcaso='.$bd->sqlvalue_inyeccion( $idcaso ,true);
+            	
+            	$bd->ejecutar($sql_update);
+            	
             	 
             	echo '  <b>CONTABILIZADO CON EXITO...'.$id_asiento.'</b>';
      }else  {

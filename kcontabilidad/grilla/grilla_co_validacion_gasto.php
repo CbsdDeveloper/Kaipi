@@ -4,7 +4,7 @@
    require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
   
   
-    class proceso{
+    class grilla_co_validacion_gasto{
  
       private $obj;
       private $bd;
@@ -16,7 +16,7 @@
       //-----------------------------------------------------------------------------------------------------------
       //Constructor de la clase
       //-----------------------------------------------------------------------------------------------------------
-      function proceso( ){
+      function grilla_co_validacion_gasto( ){
       
  
                 $this->obj     = 	new objects;
@@ -241,7 +241,7 @@ public function Ingreso($fitem, $ffecha1,$ffecha2,$tipo_cta){
  'festado' : festado  */
 ///------------------------------------------------------------------------ 
  
-    		$gestion   = 	new proceso;
+    		$gestion   = 	new grilla_co_validacion_gasto;
  
    
           

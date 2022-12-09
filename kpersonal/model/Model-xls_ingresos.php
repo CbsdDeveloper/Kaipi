@@ -76,8 +76,8 @@ if(isset($_POST['submit']))
     $anio       =    $rol["anio"];
     $total      =    0;
     
-    //Aqu� es donde seleccionamos nuestro csv
-    $fname = $_FILES['sel_file']['name'];
+     $fname = $_FILES['sel_file']['name'];
+
     echo 'Cargando nombre del archivo: '.$fname.' <br>';
     
    
@@ -90,6 +90,7 @@ if(isset($_POST['submit']))
         $handle = fopen($filename, "r");
         
         $i = 0;
+
         while (($data = fgetcsv($handle, 1000, ";")) !== FALSE)
         {
             
@@ -124,10 +125,12 @@ if(isset($_POST['submit']))
              $i = 1 + $i;
          
         }
+
         //cerramos la lectura del archivo "abrir archivo" con un "cerrar archivo"
+        
         fclose($handle);
         
-        echo "<h4><b>Importacion exitosa! Registros: ".$i.' - Monto total: $ '.$total.'</b></h4>';
+        echo "<h4><b>Importacion exitosa! Registros: ".$i.' </b></h4>';
         
     } 
 

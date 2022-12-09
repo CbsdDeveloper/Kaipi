@@ -607,6 +607,7 @@
 			         <button type="button" onClick="AnalisisReciproco(1)" class="btn btn-sm btn-info">Actualizar Pagos 213 sin afectacion</button>
 			        <button type="button" onClick="AnalisisReciproco(2)" class="btn btn-sm btn-info">Actualizar Pagos 213 Anticipo 124</button>
 			   
+			        <button type="button" onClick="CopiarReciproco()" class="btn btn-sm btn-default">Copiar</button>
 			   
 			   
 			      <button type="button" onClick="EliminarReciproco()" class="btn btn-sm btn-danger">Eliminar</button>

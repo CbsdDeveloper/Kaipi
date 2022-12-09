@@ -94,9 +94,9 @@ $datos['cheque'] = $datosB['cheque'];
 <table>
 				 
 <tr><td colspan="4" align="center" style="font-size: 10px">&nbsp;  </td> </tr>
-			    <tr bgcolor=#ECECEC><td colspan="4" align="center" style="font-size: 12px"><?php echo $datos['tipoc']?></td> </tr>
+			    <tr bgcolor=#ECECEC><td colspan="4" align="center" style="font-size: 14px"><b><?php echo $datos['tipoc']?></b></td> </tr>
 				<tr>
-				  <td colspan="4" align="center" style="font-size: 10px;color:#727272"><?php echo $datos['comprobante_pago'] ?></td>
+				  <td colspan="4" align="center" style="font-size: 12px;color:#727272"><b><?php echo $datos['comprobante_pago'] ?></b></td>
   				</tr>
 				<tr>
 				  <td colspan="4"  style="font-size: 10px">&nbsp;</td>
@@ -116,7 +116,7 @@ $datos['cheque'] = $datosB['cheque'];
   			  </tr>
 				<tr>
 				  <td class="solid"   style="font-size: 9px">Elaborador por</td>
-				  <td class="solid"  style="font-size: 9px"><?php echo $datos['sesion'] ?></td>
+				  <td class="solid"  style="font-size: 9px"><?php echo $datos['elaborado'] ?></td>
 				  <td class="solid"   style="font-size: 9px">Estado</td>
 				  <td class="solid"   style="font-size: 9px"><?php echo $datos['estado'] ?></td>
     </tr>

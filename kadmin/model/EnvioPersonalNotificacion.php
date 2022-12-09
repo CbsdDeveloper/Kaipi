@@ -17,13 +17,19 @@
      
      $mail->_DBconexion( $obj, $bd );
      
-     $mail->_smtp_tramites( );
+     $mail->_smtp_factura_electronica( );
      
      $plantilla       = trim($_GET['plantilla']) ;
      $id_cartelera    = $_GET['id_cartelera'];
-     $regimen         = trim($_GET['regimen']) ;
+
+
+     $director         = trim($_GET['director']) ;
      $unidades        = trim($_GET['unidades']) ;
-  
+
+     $rol              = trim($_GET['rol']) ;
+
+ 
+     
      
      $plantilla = $bd->query_array( 'ven_plantilla', 'contenido,   variable',   'id_plantilla='.$bd->sqlvalue_inyeccion($plantilla,true)
          );
@@ -33,12 +39,22 @@
      
      
        if (      $unidades  == 0  )   {
-            $sql_valida = "select idprov, razon,   correo ,regimen 
-            from view_nomina_rol
-                where estado="		.$bd->sqlvalue_inyeccion('S' ,true)." and
-                        regimen= ".$bd->sqlvalue_inyeccion($regimen ,true) ;
+
+
+                    if (      $rol  == '9') {
+
+                        $sql_valida = "select cedula as idprov, completo as razon,  email as correo 
+                                        from par_usuario
+                                        where coalesce(rol,'0') = ".$bd->sqlvalue_inyeccion($rol ,true) ;
+                    }else{
+                        $sql_valida = "select cedula as idprov, completo as razon,  email as correo 
+                                        from par_usuario
+                                        where director="		.$bd->sqlvalue_inyeccion( $director  ,true) ;
+                    }
+
+
         } else  {
-            $sql_valida = "select idprov, razon,   correo ,regimen 
+            $sql_valida = "select idprov, razon,   correo  
             from view_nomina_rol
                 where estado="		.$bd->sqlvalue_inyeccion('S' ,true)." and
                 id_departamento= ".$bd->sqlvalue_inyeccion($unidades ,true) ;

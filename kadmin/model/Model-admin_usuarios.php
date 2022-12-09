@@ -193,19 +193,29 @@
       //--------------------------------------------------------------------------------        
      function agregar(   ){
        
-                $password = @$_POST["clave"];	
-                
-            	$clave = $this->obj->var->_codifica($password);		
-            
-            	$completo = trim($_POST["apellido"]).' '.trim($_POST["nombre"]);
-                
-                $url = @$_POST["url"];
+
+
+                $password = $_POST["clave"];	
+                $clave    = $this->obj->var->_codifica($password);		
+                $completo = trim($_POST["apellido"]).' '.trim($_POST["nombre"]);
+                $url      = $_POST["url"];
                 
                 if (empty($url)){
-                 $url = 'masculino.png';
+                        $url = 'masculino.png';
                 }	
     
-                
+
+                $bandera = 1;
+
+                $login =  trim($_POST["login"]);
+                $email =  trim($_POST["email"]);
+
+                $datos = $this->bd->query_array('par_usuario','count(*) as nn', 'login='.$this->bd->sqlvalue_inyeccion($login,true));
+
+                $datos1 = $this->bd->query_array('par_usuario','count(*) as nn', 'email='.$this->bd->sqlvalue_inyeccion($email,true));
+
+
+
                 $telefono = substr(trim($_POST["telefono"]), 0,19);
                 
                 $movil   = substr(trim($_POST["movil"]), 0,19);
@@ -246,9 +256,8 @@
                                     
             $idD = $this->bd->JqueryInsertSQL('par_usuario',$InsertQuery);
             
-            //------------ seleccion de periodo
-       
-         $result = $this->div_resultado('editar',$idD,1);
+        
+            $result = $this->div_resultado('editar',$idD,1);
    
             echo $result;
           

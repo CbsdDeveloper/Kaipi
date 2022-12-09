@@ -68,6 +68,7 @@ function Busqueda( estado){
 function goToURLdetalle( codigo){
 	
 	
+	
 	var parametros = {
 											"codigo" : codigo 
 									};
@@ -90,7 +91,10 @@ function goToURLdetalle( codigo){
      													 $("#medida").val( response.i ); 
      													 $("#iva").val( response.j ); 
      													 $("#total_iva").val( response.k ); 
-     													  $("#cantidad_ca").val( response.l ); 
+     													 $("#cantidad_ca").val( response.l ); 
+     													 $("#id_operador").val( response.m ); 
+     													  $("#nombre_funcionario").val( response.n); 
+     													 
     											} 
     									});
 	 
@@ -131,6 +135,7 @@ function ActualizarDatos(){
   var medida 		    =  $("#medida").val( ); 
     
  var estado =  $("#vestado").val(  );  
+ var idprov =  $("#id_operador").val(  );  
   
   
   var parametros = {
@@ -141,7 +146,8 @@ function ActualizarDatos(){
 				 'costo' : costo,
 				 'cantidad' : cantidad,
 				 'medida':medida,
-				 'cantidad_ca':cantidad_ca
+				 'cantidad_ca':cantidad_ca,
+				 'idprov':idprov
 	  };
 	  
 	  if (  estado == 'enviado' ){

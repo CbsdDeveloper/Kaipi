@@ -203,7 +203,7 @@
         
        $bd->pideSq(0);
         
-     $bd->JqueryInsertSQL('inv_saldos_kar',$InsertQuery );
+     $bd->JqueryInsertSQL('inv_saldos_kar',$InsertQuery  );
         
  
         

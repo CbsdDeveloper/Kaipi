@@ -259,6 +259,7 @@ function BusquedaGrilla(oTable){
         };
 
 
+
 		$.ajax({
 		 	data:  parametros,
 		    url: '../grilla/grilla_nom_rol.php',
@@ -284,9 +285,9 @@ function BusquedaGrilla(oTable){
 
 						s[i][4],
 
- 					'<button class="btn btn-xs" onClick="javascript:goToURL('+"'editar'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;' + 
+ 					'<button class="btn btn-xs btn-warning" onClick="goToURL('+"'editar'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;' + 
 
-					'<button class="btn btn-xs" onClick="javascript:goToURL('+"'del'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-remove"></i></button>' 
+					'<button class="btn btn-xs btn-danger" onClick="goToURL('+"'del'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-remove"></i></button>' 
 
 				]);										
 

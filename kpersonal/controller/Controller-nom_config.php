@@ -103,61 +103,52 @@
                 
                 $tipo = $this->bd->retorna_tipo();
                 
-                
-                
-                $this->obj->text->text('Identificacion',"number",'id_config',20,15,$datos,'required','readonly','div-2-4') ; 
-                
-                
-                $MATRIZ =  $this->obj->array->nom_tipo();
-                
+                $MATRIZ  =  $this->obj->array->nom_tipo();
+                $MATRIZS =  $this->obj->array->catalogo_sino();
+                $MATRIZF =  $this->obj->array->nom_formula();
+                $MATRIZA =  $this->obj->array->nom_formula_afecta();
+                $MATRIZE =  $this->obj->array->nom_formula_par();
+
+
+                $this->obj->text->text('Codigo',"number",'id_config',20,15,$datos,'required','readonly','div-2-4') ; 
                 $this->obj->list->lista('Tipo',$MATRIZ,'tipo',$datos,'required','','div-2-4');
-                
-                
-                
                 $this->obj->text->text_yellow('Concepto',"texto",'nombre',80,80,$datos,'required','','div-2-10') ; 
- 
-                
-                
-                $MATRIZ =  $this->obj->array->catalogo_sino();
-                $this->obj->list->lista('Estado',$MATRIZ,'estado',$datos,'required','','div-2-4');
-                
-                
-                $MATRIZ =  $this->obj->array->nom_formula();
-                $this->obj->list->lista('Parametro',$MATRIZ,'estructura',$datos,'required','','div-2-4');
-                
-                $MATRIZ =  $this->obj->array->nom_formula_afecta();
-                $this->obj->list->lista('Afecta a la formula',$MATRIZ,'formula',$datos,'required','','div-2-4');
-                
-                $MATRIZ =  $this->obj->array->nom_formula_par();
-                $this->obj->list->lista('formula de:',$MATRIZ,'tipoformula',$datos,'required','','div-2-4');
-                
-                
+   
+            
+                $this->obj->list->lista('Estado',$MATRIZS,'estado',$datos,'required','','div-2-4');
+                $this->obj->list->lista('Parametro',$MATRIZF,'estructura',$datos,'required','','div-2-4');
+                $this->obj->list->lista('Afecta a la formula',$MATRIZA,'formula',$datos,'required','','div-2-4');
+             
+                $this->obj->list->lista('formula de:',$MATRIZE,'tipoformula',$datos,'required','','div-2-4');
                 $this->obj->text->text('valor (*)',"number",'monto',10,10,$datos,'required','','div-2-4') ; 
-                
-                
                 $this->obj->text->text('Variable',"texto",'variable',20,20,$datos,'','readonly','div-2-4') ; 
                 
                 
                 $this->set->div_label(12,'<h5><b>APLICA AL REGIMEN</b></h5>');
-                  
-            
                 
-                
-                $resultado =  $this->combo_lista("nom_regimen");
-                $this->obj->list->listadb($resultado,$tipo,'Regimen laboral?','regimen',$datos,'','','div-2-10');
-                
-                
-                $evento ='GuardaRolParametroPro()';
-                $texto  = '<a href="#" onClick="'.$evento.'">Programa (+)</a>';
-                
-                $resultado =  $this->combo_lista("presupuesto.pre_catalogo");
-                $this->obj->list->listadb($resultado,$tipo,$texto,'programa',$datos,'','','div-2-4');
-                
-                
-                $resultado =  $this->combo_lista("items");
-                $evento ='onChange="PoneCuenta(this.value)"';
-                
-                $this->obj->list->listadbe($resultado,$tipo,'Clasificador','partida',$datos,'','',$evento,'div-2-4');
+                $resultador =  $this->combo_lista("nom_regimen");
+                $resultadop =  $this->combo_lista("presupuesto.pre_catalogo");
+                $resultadoc =  $this->combo_lista("items");
+
+                $evento1 ='GuardaRolParametroPro()';
+                $evento2 ='onChange="PoneCuenta(this.value)"';
+
+                $texto  = '<a href="#" title="Copiar programa configuracion para regimen seleccionado" onClick="'.$evento1.'"><b>Programa (+)</b></a>';
+
+
+                $this->obj->list->listadb($resultador,$tipo,'<b>REGIMEN LABORAL</b>','regimen',$datos,'','','div-2-4');
+                    
+                echo '<div class="col-md-6" style="padding-bottom: 10px;padding-top: 5px"> 
+                         <button type="button"  onClick="Verparametros__regimen()" class="btn btn-warning btn-sm">Buscar Parametros</button> 
+                       </div>';
+
+
+                $this->set->div_label(12,'<h5><b>PARAMETRIZACION DE CUENTAS</b></h5>');
+
+                $this->obj->list->listadb($resultadop,$tipo,$texto,'programa',$datos,'','','div-2-4');
+
+                 
+                $this->obj->list->listadbe($resultadoc,$tipo,'Clasificador','partida',$datos,'','',$evento2,'div-2-4');
  
                 
                 

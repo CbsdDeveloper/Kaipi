@@ -1,13 +1,9 @@
-<?php 
-     session_start( );   
+<?php
+session_start();   
+require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
+require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
   
-    require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
- 	
- 	
-    require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
-  
-  
-    class proceso{
+class proceso{
  
   
       private $obj;
@@ -59,8 +55,7 @@
       //Constructor de la clase
       //-----------------------------------------------------------------------------------------------------------
       function div_resultado($accion,$id,$tipo){
-            //inicializamos la clase para conectarnos a la bd
-      
+       
         
       	   echo '<script type="text/javascript">accion('. $id. ','. "'".$accion."'" .')</script>';
              
@@ -247,5 +242,3 @@
      
    
  ?>
- 
-  

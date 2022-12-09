@@ -1,12 +1,12 @@
 <?php
-session_start( );
+session_start();
 
 require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
 
 require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
 
 
-class proceso{
+class ajax_ren_visor_factura_id{
     
      
     private $obj;
@@ -21,7 +21,7 @@ class proceso{
     //-----------------------------------------------------------------------------------------------------------
     //Constructor de la clase
     //-----------------------------------------------------------------------------------------------------------
-    function proceso( ){
+    function ajax_ren_visor_factura_id( ){
         //inicializamos la clase para conectarnos a la bd
         
         $this->obj     = 	new objects;
@@ -44,6 +44,7 @@ class proceso{
         
         $qquery = array(
             array( campo => 'id_ren_movimiento',    valor => '-',  filtro => 'N',   visor => 'S'),
+            array( campo => 'fecha_emision',valor => '-',filtro => 'N', visor => 'S'),
             array( campo => 'fecha',valor => '-',filtro => 'N', visor => 'S'),
             array( campo => 'secuencial',valor => '-',filtro => 'N', visor => 'S'),
             array( campo => 'autorizacion',valor => '-',filtro => 'N', visor => 'S'),
@@ -61,11 +62,12 @@ class proceso{
 
         echo '<table id="jsontableDoc" style="font-size: 13px" class="display table-condensed table-bordered table-hover" cellspacing="0" width="100%">
           <thead> <tr>
-                 <th width="10%" '.  $estilo.' > Emision </th>
-                 <th width="10%" '.  $estilo.'> Fecha </th>
+                 <th width="5%" '.  $estilo.' > Emision </th>
+                 <th width="10%" '.  $estilo.'> Fecha Emision </th>
+                 <th width="10%" '.  $estilo.'> Fecha Pago </th>
                  <th width="10%" '.  $estilo.'> Secuencia </th>
                  <th width="40%" '.  $estilo.'> Autorizacion </th>
-                 <th width="10%" '.  $estilo.'> Enviado </th>
+                 <th width="5%" '.  $estilo.'> Enviado </th>
                  <th width="10%" '.  $estilo.' align="right"> Total </th>
                  <th width="10%" '.  $estilo.' >  </th>
                 </tr>';
@@ -82,6 +84,7 @@ class proceso{
            
                 
             echo ' <td>'.$idproducto.'</td>';
+            echo ' <td>'.$fetch['fecha_emision'].'</td>';
             echo ' <td>'.$fetch['fecha'].'</td>';
             echo ' <td>'.$fetch['secuencial'].'</td>';
              echo ' <td>'.$fetch['autorizacion'].'</td>';
@@ -144,7 +147,7 @@ class proceso{
 ///------------------------------------------------------------------------
 ///------------------------------------------------------------------------
 
-$gestion   = 	new proceso;
+$gestion   = 	new ajax_ren_visor_factura_id;
  
  
 //------ grud de datos insercion

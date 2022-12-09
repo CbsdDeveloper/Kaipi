@@ -22,6 +22,7 @@ $cantidad         =  $_POST['cantidad'];
 $medida           =  trim($_POST['medida']);
 
 $cantidad_ca      =  $_POST['cantidad_ca'];
+$idprov          =  trim($_POST['idprov']);
 
 
 $fecha_modifica = date('Y-m-d');
@@ -32,6 +33,7 @@ $sql = "UPDATE adm.ad_vehiculo_comb
             u_km_inicio =".$bd->sqlvalue_inyeccion($u_km_inicio,true).",
             tipo_comb =".$bd->sqlvalue_inyeccion($tipo_comb,true).",
             medida =".$bd->sqlvalue_inyeccion($medida,true).",
+            idprov =".$bd->sqlvalue_inyeccion($idprov,true).",
             cantidad_ca =".$bd->sqlvalue_inyeccion($cantidad_ca,true).",
             estado =".$bd->sqlvalue_inyeccion('autorizado',true).",
             fecha_modifica=".$bd->sqlvalue_inyeccion($fecha_modifica,true).",

@@ -33,6 +33,29 @@ $(document).ready(function(){
 	  			
 		});
 	 
+	 
+	 	
+	    $('#loadp').on('click',function(){
+	 		   
+ 	    	 var vcuenta			= $("#idcategoria").val(); 
+	     
+	     	 
+	    	 var ancho = 1250; 
+	   	     var alto = 400; 
+	   	     var posicion_x ; 
+	   	     var posicion_y ; 
+	   	     var enlace; 
+	    	 var cadena 	=   'cue=' + vcuenta ;
+	    	 enlace 		= '../model/_exporta_constatacion?' + cadena;
+ 	         posicion_x		= (screen.width/2)-(ancho/2); 
+ 	   	     posicion_y		= (screen.height/2)-(alto/2); 
+	 
+ 	          window.open(enlace, '#','width='+ancho+',height='+alto+',toolbar=0,scrollbars=no,resizable=no,left='+posicion_x+',top='+posicion_y+'');
+ 	   	     
+	  			
+		});
+	 
+	 
 	    
 	    //-------------------------------------------
 	    
@@ -191,16 +214,15 @@ function goToURLDatos( id) {
 								s[i][5],
 								s[i][6],
 								s[i][7],
-								s[i][8],
-								s[i][9],
-							'<button class="btn btn-xs" onClick="javascript:goToURL(' + s[i][0] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;' 
+								'<input type="number" min="0" max="30" step="0.01" value="" style="text-align:right;" id="t'+ s[i][0]+'" name="t'+ s[i][0]+'">',
+							'<button class="btn btn-xs btn-warning" onClick="goToURL(' + s[i][0] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;' 
 						]);										
 					} // End For
 			} 					
 			} 
 	 	});
  
-		grafico(idcategoria);
+	//	grafico(idcategoria);
 		
   }   
 //--------------

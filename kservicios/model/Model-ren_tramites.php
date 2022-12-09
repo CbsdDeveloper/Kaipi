@@ -270,35 +270,65 @@ class proceso{
          }
 }
 //-------------------------------------------
-function editar_variables( $id_ren_tramite ){
+function editar_variables( $id_ren_tramite, $id_rubro ){
     
     
-    $sql_det1 = 'SELECT id_ren_tramite_var, variable, id_rubro_var, id_rubro,valor_variable, sesion ,nombre_variable
-                    FROM rentas.view_ren_tramite_var
-                    where id_ren_tramite = '.$this->bd->sqlvalue_inyeccion($id_ren_tramite,true) ;
- 
-
-         
-    $stmt1 = $this->bd->ejecutar($sql_det1);
+    $id_ren_tramite_var = 0;
     
-     
-    while ($xx=$this->bd->obtener_fila($stmt1)){
+    
+    $sql_det1 = 'SELECT id_rubro_var, nombre_variable,  variable,
+        imprime, tipo, lista,id_catalogo,variable_formula
+        FROM rentas.ren_rubros_var
+        where id_rubro = '.$this->bd->sqlvalue_inyeccion($id_rubro,true) .' order by id_rubro_var';
+    
+    $stmt11 = $this->bd->ejecutar($sql_det1);
+    
+    
+    while ($xx=$this->bd->obtener_fila($stmt11)){
         
-       // $id_rubro = $xx['id_rubro'];
-       // $objeto   = trim($xx['nombre_variable']).'_'.$xx['id_rubro_var'].'_'.$id_rubro ;
-       //  $objeto  = trim($xx['nombre_variable']).'_'.$xx['id_rubro_var'].'_'.$id_rubro ;
+        $objeto                   = trim($xx['variable'])  ;
         
-        $objeto  = trim($xx['variable'])  ;
-         
-        $id       = $xx['id_ren_tramite_var'];
+        $bandera                  = 0;
         
-        $this->ATabla_parametros[4][valor]  =  trim($_POST[$objeto]);
+        $valor                    = $_POST[$objeto];
         
-        $this->bd->_UpdateSQL('rentas.ren_tramites_var',$this->ATabla_parametros,$id );
+        $xy                       = $this->bd->query_array('rentas.view_ren_tramite_var',
+            '*',
+            'id_ren_tramite='.$this->bd->sqlvalue_inyeccion($id_ren_tramite,true) . ' and
+                                                            id_rubro_var='.$this->bd->sqlvalue_inyeccion($xx['id_rubro_var'],true)
+            );
         
+        
+        $id_ren_tramite_var       = $xy['id_ren_tramite_var'];
+        
+        if ( !empty($id_ren_tramite_var)){
+            $bandera = 1;
+        }
+        
+        if ( $id_ren_tramite_var  > 0 ){
+            $bandera = 1;
+        }
+        
+        if ( $bandera  == 1 ){
+            
+            $this->ATabla_parametros[4][valor]  =  trim($valor);
+            
+            $this->bd->_UpdateSQL('rentas.ren_tramites_var',$this->ATabla_parametros,$id_ren_tramite_var );
+        }else{
+            
+            
+            $this->ATabla_parametros[4][valor]  =  trim($valor);
+            $this->ATabla_parametros[1][valor]  =  $id_ren_tramite;
+            $this->ATabla_parametros[2][valor]  =  $xx['id_rubro_var'];
+            $this->ATabla_parametros[3][valor]  =  $id_rubro;
+            $this->ATabla_parametros[4][valor]  =  trim($valor);
+            
+            $this->bd->_InsertSQL('rentas.ren_tramites_var',$this->ATabla_parametros, 'rentas.ren_tramites_var_id_ren_tramite_var_seq');
+            
+        }
     }
-        
- }
+    
+}
    //------------------------------
     function editar_ciu( ){
         
@@ -307,24 +337,21 @@ function editar_variables( $id_ren_tramite ){
         $correo                 = $_POST["correo"];
         $id_par_ciu             = $_POST["id_par_ciu"];
         $contacto             = $_POST["contacto"];
-
+        
         $razon                  = $_POST["razon"];
         
- 
+        
         
         $UpdateQuery = array(
             array( campo => 'id_par_ciu',     valor => $id_par_ciu ,  filtro => 'S'),
             array( campo => 'direccion',      valor => trim($direccion) ,  filtro => 'N'),
             array( campo => 'razon',          valor => trim($razon) ,  filtro => 'N'),
             array( campo => 'correo',         valor => trim($correo),  filtro => 'N')  ,
-            array( campo => 'contacto',         valor => trim($contacto),  filtro => 'N')  
+            array( campo => 'contacto',         valor => trim($contacto),  filtro => 'N')
         );
         
         
         $this->bd->JqueryUpdateSQL('par_ciu',$UpdateQuery);
-        
-        $this->bd->JqueryUpdateSQL('par_ciu',$UpdateQuery);
-        
         
 }
     //--------------------------------------------------------------------------------
@@ -332,49 +359,45 @@ function editar_variables( $id_ren_tramite ){
     //--------------------------------------------------------------------------------
 function edicion( $id_ren_tramite ){
  
-        $estado                = $_POST['estado'];
-        $id_rubro              = $_POST["id_rubro"];
-         ///--------------------------------------------------------------
-        $idprov           = trim($_POST["idprov"]);
-        $id_par_ciu       = $_POST["id_par_ciu"];
+    $estado                = $_POST['estado'];
+    $id_rubro              = $_POST["id_rubro"];
+    $idprov                = trim($_POST["idprov"]);
+    $id_par_ciu            = $_POST["id_par_ciu"];
+    
+    
+    if ( $id_par_ciu > 0 ){
         
-        if ( $id_par_ciu > 0 ){
-            
-        }else{
-            $x = $this->bd->query_array('par_ciu',
-                '*',
-                'idprov='.$this->bd->sqlvalue_inyeccion(trim($idprov),true)
-                );
-            
-            $this->ATabla[1][valor] =  $x['id_par_ciu'];
-        }
-        
-        
-        $this->bd->_UpdateSQL($this->tabla,$this->ATabla,$id_ren_tramite);
-      
-        
-        $x = $this->bd->query_array('rentas.view_ren_tramite_var',   // TABLA
-            'count(*) as nn',                        // CAMPOS
-            'id_ren_tramite='.$this->bd->sqlvalue_inyeccion($id_ren_tramite,true) // CONDICION
+    }else{
+        $x = $this->bd->query_array('par_ciu',
+            '*',
+            'idprov='.$this->bd->sqlvalue_inyeccion(trim($idprov),true)
             );
         
-        $this->editar_ciu();
-        
-        if ( $x['nn'] > 0 ){
-            
-            $this->editar_variables( $id_ren_tramite );
-        }else{
-            
-            
-            $this->agregar_variables( $id_ren_tramite , $id_rubro) ;
-            
-        }
-     
-        
-         
-        $result = $this->div_resultado('editar',$id_ren_tramite,$estado,1);
-        
-        echo $result;
+        $this->ATabla[1][valor] =  $x['id_par_ciu'];
+    }
+    
+    
+    $xxx = $this->bd->query_array('rentas.ren_movimiento ',
+        'max(fechap) as fechap,fecha',
+        'id_tramite='.$this->bd->sqlvalue_inyeccion( $id_ren_tramite ,true). " and estado = 'P' "
+        );
+    
+    $periodo_pago =  $xxx['fechap'];
+    $xq = explode('-', $periodo_pago);
+    
+    $this->ATabla[15][valor] =  $xq[0];
+    $this->ATabla[16][valor] =  $xxx['fechap'];
+    
+    $this->bd->_UpdateSQL($this->tabla,$this->ATabla,$id_ren_tramite);
+    
+    $this->editar_ciu();
+    
+    $this->editar_variables( $id_ren_tramite , $id_rubro);
+    
+    
+    $result = $this->div_resultado('editar',$id_ren_tramite,$estado,1);
+    
+    echo $result;
         
     }
     

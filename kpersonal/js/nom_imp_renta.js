@@ -1,6 +1,6 @@
 var oTable;
 var formulario 		   =  'nom_imp_renta';
-var modulo_sistema     =  'knomina';
+var modulo_sistema     =  'kpersonal';
 
 /*
 llama las funciones para la operacion del formulario

@@ -308,6 +308,7 @@
 								
          }
          
+         $secuencial          = $bd->_secuencias($anio, 'CE',8);
          
          _actualiza_aux($id,$idprov,$secuencial,$detalle,$bd);
        
@@ -351,6 +352,8 @@
  //-------------------------
      function _actualiza_aux($id,$idprov,$comprobante,$detalle,$bd){
          
+         
+        
          
          $sql = "UPDATE co_asiento_aux
             							    SET 	detalle      =".$bd->sqlvalue_inyeccion(trim($detalle), true).",

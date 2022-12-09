@@ -12,6 +12,7 @@ $datos 			=	$gestion->CabAsiento($idasiento);
 
 $gestion->QR_DocumentoDoc($idasiento);
 
+
 /*
 
 COMPROBANTE DIARIO CONTABLE
@@ -56,7 +57,7 @@ COMPROBANTE DIARIO CONTABLE
 			    <tr bgcolor=#ECECEC><td colspan="4" align="center" style="font-size: 10px"> </td> </tr>
 			    <tr bgcolor=#ECECEC>
 			      <td colspan="4" align="center" style="font-size: 10px"></td> </tr>
-				<tr bgcolor=#ECECEC> <td class="solid" colspan="4"  style="font-size: 9px">Nro Comprobante <?php echo $datos['comprobante'] ?></td></tr>
+				<tr bgcolor=#ECECEC> <td class="solid" colspan="4"  style="font-size: 12px">Nro Comprobante Diario <b> <?php echo $datos['comprobante'] ?></b></td></tr>
 				<tr>
 				  <td class="solid"  style="font-size: 9px" width="20%">Fecha</td>
 				  <td class="solid"   style="font-size: 9px" width="30%"><?php echo $datos['fecha'] ?></td>
@@ -71,7 +72,7 @@ COMPROBANTE DIARIO CONTABLE
   			  </tr>
 				<tr>
 				  <td class="solid"   style="font-size: 9px">Elaborador por</td>
-				  <td class="solid"  style="font-size: 9px"><?php echo $datos['sesion'] ?></td>
+				  <td class="solid"  style="font-size: 9px"><?php echo $datos['elaborado'] ?></td>
 				  <td class="solid"   style="font-size: 9px">Estado</td>
 				  <td class="solid"   style="font-size: 9px"><?php echo $datos['estado'] ?></td>
     </tr>

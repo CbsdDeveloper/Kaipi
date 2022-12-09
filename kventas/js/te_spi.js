@@ -268,6 +268,7 @@ function accion(id, action)
      
      $("#nmes").val(mm);
      
+     $("#nmes1").val(mm);
  } 
  
   //------------------------------------------------------------------------- 
@@ -306,8 +307,8 @@ function accion(id, action)
        	                        s[i][4],
        	                        s[i][5],
        	                        s[i][6],
-                               	'<button class="btn btn-xs" onClick="javascript:goToURL('+"'editar'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;' + 
-								'<button class="btn btn-xs" onClick="javascript:goToURL('+"'del'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-remove"></i></button>' 
+                               	'<button class="btn btn-xs" onClick="goToURL('+"'editar'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;' + 
+								'<button class="btn btn-xs" onClick="goToURL('+"'del'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-remove"></i></button>' 
 							]);										
 						} // End For
 				  }						
@@ -328,6 +329,7 @@ function accion(id, action)
            	var nanio = $("#nanio").val();
             var ntipo = $("#ntipo").val();
             var nmes = $("#nmes").val();
+            var nmes1 = $("#nmes1").val();
             var cuenta = $("#cuenta").val();
             
        
@@ -335,6 +337,7 @@ function accion(id, action)
 					'nanio' : nanio , 
                     'ntipo' : ntipo  ,
                     'nmes' : nmes  ,
+                     'nmes1' : nmes1  ,
                     'ncuenta':cuenta
  	       };
  
@@ -545,14 +548,14 @@ if ( estado == 'digitado' ) {
 						 url:   '../model/Model-te_spi_lista_agrupa.php',
 						type:  'GET' ,
 						success:  function (data) {
-								 $("#result").html(data);   
+								 $("#ViewFormDetalle").html(data);   
  							} 
 					});
 					   
 				}
 			   }); 
 
-
+		 
  			
 	
 				 

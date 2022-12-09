@@ -18,8 +18,7 @@ $accion = trim($_POST["accion"]);
 
 $sesion = trim($_SESSION['email']);
 
-$fecha = date('Y-m-d');
-
+ 
 $bandera = 0;
 
 
@@ -27,8 +26,22 @@ $bandera = 0;
         if ( $accion  == 'aprobar' )  {  
 
             $id = trim($_POST["id"]);
-
+            
+            $xx = $bd->query_array('rentas.ren_serie_espe',   // TABLA
+                'estado,idproducto_ser',                        // CAMPOS
+                'id_especied='.$bd->sqlvalue_inyeccion(  $id ,true) // CONDICION
+                );
+            
+            $idproducto_ser = $xx['idproducto_ser'];
+            
             $sql = "UPDATE  rentas.ren_serie_espe
+                    set estado = 'N'
+                   where idproducto_ser = ".$bd->sqlvalue_inyeccion($idproducto_ser,true)  ;
+            
+            $bd->ejecutar($sql);
+            //---------------------------------------------------------------
+
+               $sql = "UPDATE  rentas.ren_serie_espe
                     set estado = 'S'
                    where id_especied = ".$bd->sqlvalue_inyeccion( $id ,true)  ;
 
@@ -59,9 +72,9 @@ $bandera = 0;
 
             $id = trim($_POST["id"]);
 
-            $xx = $this->bd->query_array('rentas.ren_serie_espe',   // TABLA
+            $xx = $bd->query_array('rentas.ren_serie_espe',   // TABLA
             'estado',                        // CAMPOS
-            'id_especied='.$this->bd->sqlvalue_inyeccion(  $id ,true) // CONDICION
+            'id_especied='.$bd->sqlvalue_inyeccion(  $id ,true) // CONDICION
             );
 
             if (   $xx['estado'] == 'N' )   {  

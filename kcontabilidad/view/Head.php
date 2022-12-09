@@ -165,6 +165,27 @@
 		}
 	 
 	 
+	 #mdialTamanio{
+  					width: 75% !important;
+		}
+  		 
+	 
+	 #mdialTamanio1 {
+  					width: 75% !important;
+		}
+	 
+	 
+	  #mdialTamanior {
+  					width: 85% !important;
+		}
+	 
+	  #mdialTamanioDoc {
+  					width: 65% !important;
+		}
+	 
+	 
+   		  
+	 
 	 
 	 iframe { 
 			display:block; 

@@ -61,20 +61,27 @@ session_start( );
          $this->obj->text->text('Codigo',"number" ,'id_combus' ,80,80, $datos ,'required','readonly','div-3-9') ;
          
          
-         $this->obj->text->text_blue('<b>Estado</b>','texto','estado',10,10,$datos ,'required','readonly','div-3-9') ;
+         $this->obj->text->text_blue('<b>Estado</b>','texto','estado',10,10,$datos ,'required','readonly','div-3-3') ;
  
-         $this->obj->text->text('Lugar Salida',"texto" ,'ubicacion_salida' ,80,80, $datos ,'required','','div-3-9') ;
+         $this->obj->text->text_yellow('Km.Actual',"entero" ,'u_km_inicio' ,80,80, $datos ,'required','','div-3-3') ;
          
-         $this->obj->text->text_yellow('Km.Actual',"entero" ,'u_km_inicio' ,80,80, $datos ,'required','','div-3-9') ;
+         
+         $this->obj->text->textautocomplete('<b>OPERADOR</b>',"texto",'nombre_funcionario',40,45,$datos,'required','','div-3-9');
+         
+         $this->obj->text->text('Identificacion','texto','id_operador',10,10,$datos ,'required','readonly','div-3-3') ;
+         
+         $this->obj->text->text('Lugar Salida',"texto" ,'ubicacion_salida' ,80,80, $datos ,'required','','div-3-3') ;
+         
+       
          
          $MATRIZ = array(
              'GALON'    => 'GALON',
              'CANECA'    => 'CANECA'
          );
          $evento     ='Onchange="habilita_campo(this.value)"';
-         $this->obj->list->listae('Unidad',$MATRIZ,'medida',$datos,'','',$evento,'div-3-9');
+         $this->obj->list->listae('Unidad',$MATRIZ,'medida',$datos,'','',$evento,'div-3-3');
          
-         $this->obj->text->text_blue('Nro.Canecas',"entero" ,'cantidad_ca' ,80,80, $datos ,'','readonly','div-3-9') ;
+         $this->obj->text->text_blue('Nro.Canecas',"entero" ,'cantidad_ca' ,80,80, $datos ,'','readonly','div-3-3') ;
          
          
         
@@ -85,13 +92,13 @@ session_start( );
          
          $this->obj->list->listadbe($resultado,$tipo,'Combustible','tipo_comb',$datos,'required','',$evento,'div-3-9') ;
          
-         $this->obj->text->text_yellow('Costo',"float" ,'costo' ,80,80, $datos ,'required','','div-3-9') ;
+         $this->obj->text->text_yellow('Costo',"float" ,'costo' ,80,80, $datos ,'required','','div-3-3') ;
          
-         $this->obj->text->text_yellow('Galones(*)',"number" ,'cantidad' ,80,80, $datos ,'required','','div-3-9') ;
+         $this->obj->text->text_blue('Galones(*)',"number" ,'cantidad' ,80,80, $datos ,'required','','div-3-3') ;
          
-         $this->obj->text->text('IVA $',"float" ,'iva' ,80,80, $datos ,'','readonly','div-3-9') ;
+         $this->obj->text->text('IVA $',"float" ,'iva' ,80,80, $datos ,'','readonly','div-3-3') ;
          
-         $this->obj->text->text_yellow('Galones $',"float" ,'total_consumo' ,80,80, $datos ,'','readonly','div-3-9') ;
+         $this->obj->text->text_yellow('Galones $',"float" ,'total_consumo' ,80,80, $datos ,'','readonly','div-3-3') ;
          
          $this->obj->text->text('Total $',"float" ,'total_iva' ,80,80, $datos ,'','readonly','div-3-9') ;
          
@@ -118,5 +125,43 @@ session_start( );
   $gestion->Formulario( );
   
  ?>
+  <script src="../../app/js/bootstrap3-typeahead.min.js"></script>  
+ <script>
+
+  jQuery.noConflict(); 
+	 
+   jQuery('#nombre_funcionario').typeahead({
+  	    source:  function (query, process) {
+          return $.get('../model/AutoCompleteCIU.php', { query: query }, function (data) {
+          		console.log(data);
+          		data = $.parseJSON(data);
+  	            return process(data);
+  	        });
+  	    } 
+  	});
+  	
+   jQuery("#nombre_funcionario").focusout(function(){
+  	 
+  	 var itemVariable = $("#nombre_funcionario").val();  
+  	 
+          		var parametros = {
+  											"itemVariable" : itemVariable 
+  									};
+  									 
+  									$.ajax({
+  											data:  parametros,
+  											url:   '../model/AutoCompleteIDCIU.php',
+  											type:  'GET' ,
+  											beforeSend: function () {
+  												$("#id_operador").val('...');
+  											},
+  											success:  function (response) {
+  												$("#id_operador").val(response);   
+  													  
+  											} 
+  									});
+  	 
+      });
+ 	 </script>
  
   

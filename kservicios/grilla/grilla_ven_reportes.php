@@ -43,20 +43,20 @@ class proceso{
 
         if ( $cajero == '-'){
                     
-                    $sql = 'SELECT  id_ren_movimiento, fecha ,  idprov, razon,  nombre_rubro,
+                    $sql = 'SELECT  id_ren_movimiento, fecha_emision as fecha ,  idprov, razon,  nombre_rubro,
                                     estado ,estado_proceso,
                                     coalesce(total,0 ) as apagar,id_par_ciu
-                    FROM  fecha_emision.view_ren_emision
-                    where  fecha between '.$this->bd->sqlvalue_inyeccion( $fecha1,true).' and '.$this->bd->sqlvalue_inyeccion($fecha2,true).'
+                    FROM  rentas.view_ren_emision
+                    where  fecha_emision between '.$this->bd->sqlvalue_inyeccion( $fecha1,true).' and '.$this->bd->sqlvalue_inyeccion($fecha2,true).'
                     order by id_ren_movimiento desc ';
         }else
         {
                     
-            $sql = 'SELECT  id_ren_movimiento, fecha ,  idprov, razon,  nombre_rubro,
+            $sql = 'SELECT  id_ren_movimiento, fecha_emision as fecha   ,  idprov, razon,  nombre_rubro,
                             estado ,estado_proceso,
                             coalesce(total,0 ) as apagar,id_par_ciu
             FROM  rentas.view_ren_emision
-            where  fecha between '.$this->bd->sqlvalue_inyeccion( $fecha1,true).' and '.$this->bd->sqlvalue_inyeccion($fecha2,true).' and 
+            where  fecha_emision between '.$this->bd->sqlvalue_inyeccion( $fecha1,true).' and '.$this->bd->sqlvalue_inyeccion($fecha2,true).' and 
                 sesion = '.$this->bd->sqlvalue_inyeccion( $cajero,true).'
             order by id_ren_movimiento desc ';
          }

@@ -70,7 +70,7 @@ $sql1 = "SELECT   id_tramite,  partida, certificado ,coalesce(compromiso,0) as c
                         
                         if ( $bandera == 0 ) {
                         
-                                $valor_dato = compromiso( $bd,$idtramite,$fcertifica,$anio);
+                            $valor_dato = compromiso( $bd,$idtramite,$fcertifica,$anio, $compro);
                                 $saldos_p->_saldo_gasto($anio);
                         }else {
                             
@@ -201,9 +201,23 @@ function compromiso_parcial($bd,$idtramite,$fcertifica,$anio,$compro,$ruc ){
     
 }
 //-------------------
-function compromiso( $bd,$idtramite,$fcertifica,$anio){
+function compromiso( $bd,$idtramite,$fcertifica,$anio, $compro){
         
 
+    //-- certificacion
+    $x = $bd->query_array('presupuesto.pre_tramite',
+        'comprobante',
+        'id_tramite='.$bd->sqlvalue_inyeccion($idtramite,true)
+        );
+    
+    
+    $long = strlen($x['comprobante']);
+    
+    if ( $long > 4 ){
+          $comprobante = trim($x['comprobante']);
+     }else{
+         $comprobante = trim($compro);
+    }
 
          //-----------------------------------------------------
          
@@ -234,6 +248,7 @@ function compromiso( $bd,$idtramite,$fcertifica,$anio){
              
              $sqlEdit = "UPDATE presupuesto.pre_tramite
                                SET 	estado=".$bd->sqlvalue_inyeccion('5', true).",
+                                    comprobante=".$bd->sqlvalue_inyeccion($comprobante, true).",
                                     fcompromiso= ".$fecha."
                              where id_tramite = ".$bd->sqlvalue_inyeccion($idtramite,true) ;
              

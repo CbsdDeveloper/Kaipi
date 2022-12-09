@@ -135,14 +135,14 @@
 					        <div class="panel-body" > 
 								
 						     <div class="col-md-12" style="padding: 20px">
-							   		<iframe width="100%" id="archivocsv" name = "archivocsv" height="160" src="../migra/_migra_personal.php" border="0" scrolling="no" allowTransparency="true" frameborder="0">
-							 	    </iframe>
+							    <!--		<iframe width="100%" id="archivocsv" name = "archivocsv" height="160" src="../migra/_migra_personal.php" border="0" scrolling="no" allowTransparency="true" frameborder="0">
+							 	    </iframe>--> 
 							   </div>
 						  		    
 								
 								  <div class="col-md-12" style="padding: 20px">
-							   		<iframe width="100%" id="archivocsv1" name = "archivocsv1" height="160" src="../migra/_migra_bienes_emapa.php" border="0" scrolling="no" allowTransparency="true" frameborder="0">
-							 	    </iframe>
+							   	     <!-- 	<iframe width="100%" id="archivocsv1" name = "archivocsv1" height="160" src="../migra/_migra_bienes_emapa.php" border="0" scrolling="no" allowTransparency="true" frameborder="0">
+							 	    </iframe>--> 
 							    </div>
 						   
                		       </div>
