@@ -108,7 +108,7 @@ header("Pragma: no-cache");
 																						<tr>
 																					    <th width="5%">Activo</th>
 																						<th width="20%">Detalle</th>
-																						<th width="20%">Custodio</th>
+																						<th width="15%">Custodio</th>
 																						<th width="10%">Estado</th>	
 																						<th width="10%">Fecha Compra</th>
 																						<th width="5%">Codigo</th>
@@ -117,7 +117,7 @@ header("Pragma: no-cache");
 																						<th width="5%">Costo</th>
 																						<th width="5%">Valor Residual</th>
 																						<th width="5%">Revalorizado</th>	
-																						<th width="5%">Acción</th>
+																						<th width="10%">Acción</th>
 																						</tr>
 																					</thead>
 														  </table>
@@ -143,6 +143,8 @@ header("Pragma: no-cache");
 
 
 	 <input type="hidden" id="cuenta_tmp" name="cuenta_tmp">
+
+ <input type="hidden" id="id_bien_tmp" name="id_bien_tmp">
 
    	<div id="FormPie"></div>  
 	
@@ -250,6 +252,63 @@ header("Pragma: no-cache");
 			  </div>
 			</div>
 	  </div>
+
+
+	<div class="modal fade" id="myModalCIU" role="dialog">
+
+			  <div class="modal-dialog" id="mdialTamanio1">
+
+				<!-- Modal content-->
+				 <div class="modal-content">
+					 
+				 <div class="modal-header">
+					 
+				  <button type="button" class="close"  data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">CAMBIO DE CUSTODIOS</h4>
+				 </div>
+					 
+				 <div class="modal-body">
+					 
+					   <div class="panel-body">
+ 					  		 
+					    
+					 
+							<div class="col-md-12" style="padding-top: 5px;">
+ 									 
+									 <div class="col-md-6" style="padding-top: 5px"> 
+										   <div class="panel-body">
+												   <div  style="width:100%; height:350px;">
+														 <!-- Content Here -->
+													   <div  id="ViewFormCIU"> aqui</div>       
+
+												   </div>
+										  </div>
+										</div>
+
+									   <div class="col-md-6" style="padding-top: 5px"> 
+										    <div class="panel-body">
+												<div  style="width:100%; height:350px;">
+													 <!-- Content Here -->
+												   <div id="ViewForm1"> </div>       
+												</div>
+											</div>	
+										</div>
+								 </div>	 
+							 
+							 </div>	
+					   	 
+				</div>
+				<div class="modal-footer">
+					
+					 <div id="ViewDato"> </div>    
+					 
+					
+				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			  </div>
+			</div>
+	  </div>
+
 
   </body>
  

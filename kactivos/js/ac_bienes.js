@@ -13,7 +13,7 @@ $(function(){
 //---------------------
 function validaCampos()
 {
-	var objetos = ["#clase_esigef", "#clasificador", "#identificador", "#idprov","#color","#material","#detalle_ubica","#razon"];
+	var objetos = ["#clase_esigef", "#clasificador", "#identificador", "#idprov","#material","#detalle_ubica","#razon"];
  
  
 	var longitud = objetos.length;
@@ -932,6 +932,17 @@ function VerVariables( str ) {
 	
     var subcuenta = cuenta.substring(0, 3);
  
+ 
+ 
+	if (subcuenta == '911' ){
+		 $("#elemento_gen").show();
+		 $("#elemento_veh").hide();
+		 $("#elemento_inm").hide();
+		 $("#elemento_inf").hide();
+		   $("#vida_util").val('10');
+	}
+ 
+ 
 	if (cuenta == '141.01.03' ){
 		 $("#elemento_gen").show();
 		 $("#elemento_veh").hide();
@@ -940,6 +951,8 @@ function VerVariables( str ) {
 		   $("#vida_util").val('10');
 	}
 	
+	
+ 
 	if (cuenta == '141.01.05' ){
 		 $("#elemento_gen").hide();
 		 $("#elemento_veh").show();
@@ -948,6 +961,16 @@ function VerVariables( str ) {
 		   $("#vida_util").val('5');
 	}
 
+ 
+	if (cuenta == '145.01.05' ){
+		 $("#elemento_gen").hide();
+		 $("#elemento_veh").show();
+		 $("#elemento_inm").hide();
+		 $("#elemento_inf").hide();
+		   $("#vida_util").val('5');
+	}
+
+	
 	
 	
 	

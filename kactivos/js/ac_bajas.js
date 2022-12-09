@@ -22,6 +22,7 @@ $(document).ready(function(){
         
         
           
+
         modulo();
 	
 		$("#MHeader").load('../view/View-HeaderModel.php');
@@ -491,7 +492,47 @@ function fecha_hoy()
 		     $("#ccactivo").val ('');
 	} 
  
+//----------
+function depre_acta( ) {
 
+
+	  var  id_acta     = 	$("#id_acta").val();
+ 	   var  fecha 	   = 	$("#fecha").val();
+ 	   
+ 		
+
+	    var parametros = {
+               'id_acta' : id_acta ,
+               'fecha':fecha 
+   	  };
+
+	    
+		  alertify.confirm("GENERAR DEPRECIACION DE LA BAJA " + id_acta, function (e) {
+			  if (e) {
+				 
+				  $.ajax({
+						data:  parametros,
+						url:   '../model/Model-ac_depreciar_baja.php',
+						type:  'GET' ,
+						cache: false,
+						beforeSend: function () { 
+									$("#GuardaDato").html('Procesando');
+							},
+						success:  function (data) {
+								 $("#GuardaDato").html(data);   
+								 
+								 
+							} 
+
+				}); 
+         				 
+			  }
+			 }); 
+
+ 		   	DetalleActivosNoAsignados( );
+} 
+
+//----------
 	function BusquedaGrillaRepo(oTable_doc){       
  	 
 	 
@@ -571,6 +612,34 @@ function fecha_hoy()
 	  if ( id_acta > 0 ) {
 		  
 		    var url = '../reportes/acta_entrega_baja';
+		    
+		    enlace = url+'?id='+id_acta  ;
+		 
+		  	window.open(enlace, '#','width='+ancho+',height='+alto+',toolbar=0,scrollbars=no,resizable=no,left='+posicion_x+',top='+posicion_y+'');
+
+		}
+	  
+	}  
+	
+  
+//----------------------------
+ function editor_ficha( ) {
+
+	  var ancho = 800; 
+	  var alto = 550; 
+	  var posicion_x ; 
+	  var posicion_y ; 
+	  var enlace; 
+	 
+	var id_acta = 	$("#id_acta").val ( );
+		
+	  posicion_x=(screen.width/2)-(ancho/2); 
+	  posicion_y=(screen.height/2)-(alto/2); 
+
+	  
+	  if ( id_acta > 0 ) {
+		  
+		    var url = '../view/editor.php';
 		    
 		    enlace = url+'?id='+id_acta  ;
 		 

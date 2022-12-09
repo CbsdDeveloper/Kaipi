@@ -237,6 +237,8 @@ $(document).ready(function(){
 	      
 	     });
  
+ 
+   $("#ViewFormCIU").load('../controller/Controller-clientesRUC.php');
 		
 });  
 //-----------------------------------------
@@ -882,7 +884,8 @@ function PoneDoc(file)
 						s[i][9],
 						s[i][10],
   					'<button class="btn btn-xs btn-warning" title ="Visualizar y editar transaccion del bien" onClick="goToURL('+"'editar'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;'  +
-				    '<button class="btn btn-xs btn-info" title ="Actualizar o Cambiar estado del Bien" onClick="goToURLCambio('+"'cambio'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-transfer"></i></button>&nbsp;' 
+				    '<button class="btn btn-xs btn-info" title ="Actualizar o Cambiar estado del Bien" onClick="goToURLCambio('+"'cambio'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-transfer"></i></button>&nbsp;' +
+				    '<button class="btn btn-xs btn-default" title ="Actualizar Custodio del Bien" onClick="goToURLUser('+"'cambio'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-user"></i></button>&nbsp;'  
 				]);										
 			} // End For
 		  } 						
@@ -1164,4 +1167,61 @@ function PoneDoc(file)
   
  }
  //---------------------------------
+  function goToURLUser(accion, idbien)
+ {
+  
+  $('#myModalCIU').modal('show');
+  
+    $('#id_bien_tmp').val(idbien);
+   
+     $('#vcodigo').val(idbien);
+   
+   
+ }
+ //---------------
+  function actualiza_cliente( id) {
  
+   var idbien =  $('#id_bien_tmp').val();
+	
+     var parametros = {
+                     'id' : id ,
+                     'idbien':idbien
+ 	  };
+	  $.ajax({
+					data:  parametros,
+					url:   '../model/ajax_usuario_cus.php',
+					type:  'GET' ,
+ 					beforeSend: function () { 
+ 							$("#ViewDato").html('Procesando');
+  					},
+					success:  function (data) {
+							 $("#ViewDato").html(data);   
+							     alert(data);
+							      $("#myModalCIU").modal('hide');
+						     	 BusquedaGrilla(oTable,1);
+  					} 
+			}); 
+
+    }
+ //------------
+ function goToURLPersonal( id) {
+ 
+ 
+	
+     var parametros = {
+                     'id' : id 
+ 	  };
+	  $.ajax({
+					data:  parametros,
+					url:   '../controller/Controller_unidades_user.php',
+					type:  'GET' ,
+ 					beforeSend: function () { 
+ 							$("#ViewForm1").html('Procesando');
+  					},
+					success:  function (data) {
+							 $("#ViewForm1").html(data);  // $("#cuenta").html(response);
+						     
+  					} 
+			}); 
+
+    }

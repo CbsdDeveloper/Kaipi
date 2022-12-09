@@ -122,7 +122,9 @@ $datos 			= $gestion->Acta_entrega($id);
 			     </tr>
 				  
 			   </table> 
- 
+  
+				<?php  echo $datos['adicional'] ?>
+	
 	
  </div> 
 	

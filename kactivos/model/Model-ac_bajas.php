@@ -45,8 +45,8 @@ class proceso{
             array( campo => 'id_acta',   tipo => 'NUMBER',   id => '0',  add => 'N',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'S'),
             array( campo => 'clase_documento',tipo => 'VARCHAR2',id => '1',add => 'S', edit => 'N', valor => '-', key => 'N'),
             array( campo => 'documento',tipo => 'VARCHAR2',id => '2',add => 'S', edit => 'N', valor => '-', key => 'N'),
-            array( campo => 'fecha',tipo => 'DATE',id => '3',add => 'S', edit => 'N', valor => '-', key => 'N'),
-            array( campo => 'estado',tipo => 'VARCHAR2',id => '4',add => 'S', edit => 'S', valor => 'N', key => 'N'),
+            array( campo => 'fecha',tipo => 'DATE',id => '3',add => 'S', edit => 'S', valor => '-', key => 'N'),
+            array( campo => 'estado',tipo => 'VARCHAR2',id => '4',add => 'S', edit => 'N', valor => 'N', key => 'N'),
             array( campo => 'detalle',tipo => 'VARCHAR2',id => '5',add => 'S', edit => 'S', valor => '-', key => 'N'),
             array( campo => 'resolucion',tipo => 'VARCHAR2',id => '6',add => 'S', edit => 'S', valor => '-', key => 'N'),
             array( campo => 'idprov',tipo => 'VARCHAR2',id => '7',add => 'S', edit => 'S', valor => '-', key => 'N'),
@@ -230,17 +230,20 @@ class proceso{
     //--------------------------------------------------------------------------------
     function edicion($id  ){
         
-       $estado    =     @$_POST["estado"];
+       $estado    =     $_POST["estado"];
        
-       $documento =     @$_POST["documento"];
+       $documento =     $_POST["documento"];
       
        if ( $estado == 'N'){
            
            $this->bd->_UpdateSQL($this->tabla,$this->ATabla,$id);
            
+       }else{
+           $this->ATabla[3][edit] =  'N';
+           $this->bd->_UpdateSQL($this->tabla,$this->ATabla,$id);
        }
            
-     
+        
        
        $datos = $this->div_resultado('editar',$id, 1,'digitado',$documento) ;
         

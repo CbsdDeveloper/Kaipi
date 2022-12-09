@@ -8,8 +8,7 @@ require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos
 
 class proceso{
     
-    //creamos la variable donde se instanciar la clase "mysql"
-    
+     
     private $obj;
     private $bd;
     

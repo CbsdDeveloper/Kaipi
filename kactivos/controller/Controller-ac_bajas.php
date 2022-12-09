@@ -59,6 +59,7 @@
       //Constructor de la clase
       //-----------------------------------------------------------------------------------------------------------
       function componente( ){
+        
             //inicializamos la clase para conectarnos a la bd
  
                 $this->obj     = 	new objects;
@@ -111,6 +112,7 @@
          
  
          
+
          
              $this->set->div_panel('fin');
          
@@ -124,19 +126,23 @@
    //----------------------------------------------
    function BarraHerramientas(){
  
-    $eventopa = 'javascript:AutorizarBaja()';
+    $eventopa = 'AutorizarBaja()';
     
     
-    
-     $eventoi = 'javascript:url_ficha()';
+     $eventoe = 'editor_ficha()';
+
+     $eventoi = 'url_ficha()';
        
     $ToolArray = array( 
                 array( boton => 'Nuevo Regitros',    evento =>'', grafico => 'icon-white icon-plus' ,  type=>"add"),
                 array( boton => 'Guardar Registros', evento =>'', grafico => 'glyphicon glyphicon-floppy-saved' ,  type=>"submit")  ,
                 array( boton => 'ADVERTENCIA... Autorizar Acta de Baja', evento =>$eventopa,  grafico => 'glyphicon glyphicon-ok' ,  type=>"button_danger"),
-                 array( boton => 'Impresion de Acta de Baja', evento =>$eventoi,  grafico => 'glyphicon glyphicon-print' ,  type=>"button_default")
+                 array( boton => 'Editor de Acta de Baja', evento =>$eventoe,  grafico => 'glyphicon glyphicon-text-width' ,  type=>"button_success"),
+                 array( boton => 'Impresion de Acta de Baja', evento =>$eventoi,  grafico => 'glyphicon glyphicon-print' ,  type=>"button_default"),
         
                  );
+
+
                   
    $this->obj->boton->ToolMenuDiv($ToolArray); 
  

@@ -66,46 +66,47 @@
            <!-- ------------------------------------------------------ -->
                   
          		   <div class="tab-pane fade in active" id="tab1" style="padding-top: 3px">
- 			  <div class="panel panel-default">
-					<div class="panel-body" > 
-											  
-			 		    <div class="col-md-12" style="padding: 1px">
- 					           <div class="col-md-3" style="background-color:#ededed;">
-													    
-														    <h5>Filtro búsqueda</h5>
-														    <div id="ViewFiltro"></div> 
-														   
-															<label style="padding-top: 5px;text-align: right;" class="col-md-3"> </label>
-															<div style="padding-top: 5px;" class="col-md-9">
-																	<button type="button" class="btn btn-sm btn-primary" id="load">  
-																	<i class="icon-white icon-search"></i> Buscar</button>	
-															</div>
-															<label style="padding-top: 5px;text-align: right;" class="col-md-3"> </label> 
-					   </div>
-							
-					           <div class="col-md-9">
-												        <h5>Transacciones por periódo</h5>
- 						  
-								 
-													   <table id="jsontable" class="display table table-condensed table-hover datatable" cellspacing="0" width="100%">
-																					<thead>
-																						<tr>
-																					    <th width="10%">Transacción</th>
-																						<th width="10%">Documento</th>
-																						<th width="10%">Fecha</th>
-																						<th width="30%">Detalle</th>						
-																						<th width="20%">Resolucion</th>
-																						<th width="10%">Nro.Bienes</th>	
-																						<th width="10%">Acción</th>
-																						</tr>
-																					</thead>
-														  </table>
-						     
-						          </div>  
-  						</div>
-					
-				  </div>
-				  </div>
+					   
+						  <div class="panel panel-default">
+								<div class="panel-body" > 
+
+									<div class="col-md-12" style="padding: 1px">
+										   <div class="col-md-3" style="background-color:#ededed;">
+
+																		<h5>Filtro búsqueda</h5>
+																		<div id="ViewFiltro"></div> 
+
+																		<label style="padding-top: 5px;text-align: right;" class="col-md-3"> </label>
+																		<div style="padding-top: 5px;" class="col-md-9">
+																				<button type="button" class="btn btn-sm btn-primary" id="load">  
+																				<i class="icon-white icon-search"></i> Buscar</button>	
+																		</div>
+																		<label style="padding-top: 5px;text-align: right;" class="col-md-3"> </label> 
+								   </div>
+
+										   <div class="col-md-9">
+																	<h5>Transacciones por periódo</h5>
+
+
+																   <table id="jsontable" class="display table table-condensed table-hover datatable" cellspacing="0" width="100%">
+																								<thead>
+																									<tr>
+																									<th width="10%">Transacción</th>
+																									<th width="10%">Documento</th>
+																									<th width="10%">Fecha</th>
+																									<th width="30%">Detalle</th>						
+																									<th width="20%">Resolucion</th>
+																									<th width="10%">Nro.Bienes</th>	
+																									<th width="10%">Acción</th>
+																									</tr>
+																								</thead>
+																	  </table>
+
+											  </div>  
+									</div>
+
+							  </div>
+							  </div>
                  </div>
            
  
@@ -117,6 +118,8 @@
 								<div id="ViewForm"> </div>
  								
 								<button type="button"  class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal">Buscar Bienes</button>
+								
+								<button type="button"  onClick="depre_acta()" class="btn btn-info btn-sm" >Deprecias Bienes</button>
 
 							</div>
 						

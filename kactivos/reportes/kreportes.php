@@ -92,6 +92,9 @@ class ReportePdf{
 		    $resultado_cab = $this->bd->ejecutar($sql);
 		    
 		    $datos = $this->bd->obtener_array( $resultado_cab);
+		    
+		    
+		    
  		
  
 		    $periodo                  = explode('-',$datos['fecha']);
@@ -148,7 +151,12 @@ class ReportePdf{
 		        
 		    $datos['ubicacion']     =   $AResultado['nombre'] ;
 		   
-		        
+		    $usuarios = $this->bd->__user($datos['sesion']); // nombre del usuario actual
+		    
+ 		        
+		    $datos['sesion']       =  trim($usuarios['completo']);  
+		    $datos['sesion_cargo'] =  trim($usuarios['cargo']);  
+		    
 		    
 		 
 		return $datos;
@@ -710,10 +718,69 @@ class ReportePdf{
 		$pie_contenido = str_replace('#SESION',$sesion, $pie_contenido);
 	    
 		echo $pie_contenido ;
-
-
+ 
 		
-		
+	}
+	//------------------------
+	function firma_baja($codigo_reporte,$datos){
+	    
+	    
+	    $reporte_pie   = $this->bd->query_array('par_reporte', 'pie', 'referencia='.$this->bd->sqlvalue_inyeccion( trim($codigo_reporte) ,true) );
+	    
+	    $pie_contenido = $reporte_pie["pie"];
+	    
+	    // NOMBRE / CARGO
+	    $a10 = $this->bd->query_array('wk_config','carpeta , carpetasub', 'tipo='.$this->bd->sqlvalue_inyeccion(20,true));
+	    
+	    $pie_contenido = str_replace('#BIENES',trim($a10['carpeta']), $pie_contenido);
+	    $pie_contenido = str_replace('#CARGO_BIENES',trim($a10['carpetasub']), $pie_contenido);
+	    
+	    $a10 = $this->bd->query_array('wk_config','carpeta , carpetasub', 'tipo='.$this->bd->sqlvalue_inyeccion(12,true));
+	    $pie_contenido = str_replace('#FINANCIERO',trim($a10['carpeta']), $pie_contenido);
+	    $pie_contenido = str_replace('#CARGO_FINANCIERO',trim($a10['carpetasub']), $pie_contenido);
+	    
+	    $a10 = $this->bd->query_array('wk_config','carpeta , carpetasub', 'tipo='.$this->bd->sqlvalue_inyeccion(14,true));
+	    $pie_contenido = str_replace('#CONTADOR',trim($a10['carpeta']), $pie_contenido);
+	    $pie_contenido = str_replace('#CARGO_CONTADOR',trim($a10['carpetasub']), $pie_contenido);
+	    
+	    $a10 = $this->bd->query_array('wk_config','carpeta , carpetasub', 'tipo='.$this->bd->sqlvalue_inyeccion(11,true));
+	    $pie_contenido = str_replace('#ADMINISTRATIVO',trim($a10['carpeta']), $pie_contenido);
+	    $pie_contenido = str_replace('#CARGO_ADMINISTRATIVO',trim($a10['carpetasub']), $pie_contenido);
+	    
+	    $a10 = $this->bd->query_array('wk_config','carpeta , carpetasub', 'tipo='.$this->bd->sqlvalue_inyeccion(16,true));
+	    $pie_contenido = str_replace('#GUARDAALMACEN',trim($a10['carpeta']), $pie_contenido);
+	    $pie_contenido = str_replace('#CARGO_GUARDAALMACEN',trim($a10['carpetasub']), $pie_contenido);
+	    
+	    //------------- llama a la tabla de parametros ---------------------//
+	    
+	   $fecha =  $this->bd->_fecha_completa($datos['fecha']);
+	    
+	    $pie_contenido = str_replace('#ACTA',trim($datos['documento']), $pie_contenido);
+	    
+	    $pie_contenido = str_replace('#DETALLE',trim($datos['detalle']), $pie_contenido);
+	    
+	    $pie_contenido = str_replace('#MOTIVO',trim($datos['resolucion']), $pie_contenido);
+	    
+	    $pie_contenido = str_replace('#RESOLUCION',trim($datos['resolucion']), $pie_contenido);
+	    
+	    $pie_contenido = str_replace('#CUSTODIO',trim($datos['razon']), $pie_contenido);
+	    $pie_contenido = str_replace('#CARGO_CUSTODIO',trim($datos['cargo']), $pie_contenido);
+	    
+	    
+	    $pie_contenido = str_replace('#FECHA',trim($fecha), $pie_contenido);
+ 
+ 
+	    
+	    $usuarios = $this->bd->__user($this->sesion); // nombre del usuario actual
+	    
+	    $sesion   = ucwords(strtolower($usuarios['completo']));
+	    
+	    
+	    $pie_contenido = str_replace('#SESION',$sesion, $pie_contenido);
+	    
+	    echo $pie_contenido ;
+	    
+	    
 	}
 	function pie_cliente($cliente){
 	    
@@ -1297,6 +1364,138 @@ function GrillaBienes_AC($id){
 	return $i;
  
 }
+//-----------------
+function GrillaBienesBaja($id){
+    
+    
+    
+    $datos = $this->bd->query_array('activo.ac_movimiento','*', 'id_acta='.$this->bd->sqlvalue_inyeccion($id,true));
+    
+    $fecha = $datos['fecha'];
+    
+    $sql = 'SELECT *
+                    FROM activo.view_acta_detalle
+                    where id_acta= '.$this->bd->sqlvalue_inyeccion($id,true) .' order by clase,id_bien' ;
+    
+    
+    
+    
+    echo ' <table id="table_detalle"  class="lado" cellspacing="0" width="90%" style="font-size: 9px"  >
+			<thead>
+			 <tr>
+	            <th class="lado" width="5%">Nro.</th>
+				<th class="lado" width="15%">Codigo</th>
+                <th class="lado" width="30%">Detalle Item</th>
+                <th class="lado" width="5%">Año Compra</th>
+ 	            <th class="lado" width="5%">Vida Util</th>
+                <th class="lado" width="8%">Dias Utilizados</th>
+                <th class="lado" width="8%">Adquisicion</th>
+				<th class="lado" width="8%">Valor Residual</th>
+                <th class="lado" width="8%">CPD</th>
+				<th class="lado" width="8%">Valor Libros</th>
+  				</tr>
+			</thead>';
+    
+    
+    $stmt1           = $this->bd->ejecutar($sql);
+    
+    $i = 1;
+    
+    $total = 0;
+    $valor_depreciacion= 0;
+    $valor_contable = 0;
+	 $valor1 = 0;
+    
+    
+    $cadena = '';
+    while ($y=$this->bd->obtener_fila($stmt1)){
+        
+        $fecha_fin = $y['fecha_adquisicion'];
+        
+        $dias = (strtotime($fecha)-strtotime($fecha_fin))/86400;
+        $dias = abs($dias);
+        $dias = floor($dias);
+          
+        $input = str_pad($y['id_bien'], 5, "0", STR_PAD_LEFT);
+        
+        $codigo =   trim($y['cuenta']).'-'. $input;
+        
+        $id_bien = $y['id_bien'];
+        
+        
+        $yy = $this->bd->query_array('activo.view_bienes',   // TABLA
+            '*',                        // CAMPOS
+            'id_bien='.$this->bd->sqlvalue_inyeccion(  $id_bien,true) // CONDICION
+            );
+        
+        
+        $xxy = $this->bd->query_array('web_modelo',
+            'nombre',
+            'idmodelo='.$this->bd->sqlvalue_inyeccion($yy['id_modelo'],true)
+            );
+        
+        $detalle =   trim($y['descripcion']) .' Color '.trim($y['color']).' '.trim($y['material']).' '.trim($y['dimension']) .' Modelo '. trim($xxy['nombre']) ;
+        
+ 
+		$valor = $y['costo_adquisicion']- $yy['valor_depreciacion'];
+		
+		if ($valor  < 0  ){
+			 $valor = 0;
+			}
+        
+        echo ' <tr>
+                <td class="lado" >'.$i.'</td>
+		    	<td class="lado" >'.$codigo.'</td>
+                <td class="lado" >'.trim($detalle).'</td>
+		        <td class="lado" >'.trim($y['anio_adquisicion']).'</td>
+				<td class="lado" >'.trim($y['vida_util']).'</td>
+                <td class="lado"> '. number_format($dias,0).' </td>
+                <td class="lado" >'.number_format($y['costo_adquisicion'],2).'</td>
+                <td class="lado" >'.$y['valor_residual'].'</td>
+  				<td class="lado" >'.$yy['valor_depreciacion'].'</td>
+				 <td class="lado" >'.number_format( $valor,2).'</td>
+  		   </tr>';
+        
+        $i++;
+        
+        $total = $total + $y['costo_adquisicion'];
+        $valor_depreciacion = $valor_depreciacion  + $y['valor_residual'];
+        $valor_contable=  $valor_contable  + $y['valor_depreciacion'];
+        
+		 $valor1 =  $valor1 +  $valor ; 
+        
+        $cadena = $cadena .','.$id_bien;
+    }
+    
+    $total              = number_format($total,2);
+    $valor_depreciacion= number_format($valor_depreciacion,2);
+    $valor_contable= number_format($valor_contable,2);
+    
+    
+    echo ' <tr>
+                 <td class="lado" > </td>
+		    	 <td class="lado" > </td>
+				 <td class="lado" > </td>
+                 <td class="lado" > </td>
+                  <td class="lado" > </td>
+			       <td class="lado" > Total</td>
+			     <td class="lado" >'.$total.' </td>
+                 <td class="lado" >'.$valor_depreciacion.' </td>
+  				 <td class="lado" >'.$valor_contable.'</td>
+				  <td class="lado" >'.$valor1.'</td>
+           </tr>';
+    
+    
+    echo	'</table><h5>Informacion Adicional</h5>';
+    
+    
+    pg_free_result($stmt1);
+    
+    $this->bien_componente_acta( $id ,$cadena);
+    
+    return $i;
+    
+}
 	//---------------------------------
 	function GrillaBienes($id){
  
@@ -1312,15 +1511,14 @@ function GrillaBienes_AC($id){
 			<thead>
 			 <tr>
 	           <th class="lado" width="5%">Nro.</th>
-				<th class="lado" width="10%">Codigo</th>
+				<th class="lado" width="14%">Codigo</th>
 				<th class="lado" width="10%">Referencia</th>
 				<th class="lado" width="10%">Clase</th>
-				<th class="lado" width="29%">Detalle Item</th>
-                <th class="lado" width="6%">Marca</th>
-                <th class="lado" width="6%">Serie</th>
-                <th class="lado" width="8%">Estado</th>
-				<th class="lado" width="8%">Adquisicion</th>
-                <th class="lado" width="8%">Costo</th>
+				<th class="lado" width="23%">Detalle Item</th>
+                <th class="lado" width="10%">Serie</th>
+                <th class="lado" width="4%">Estado</th>
+				<th class="lado" width="10%">Adquisicion</th>
+                <th class="lado" width="4%">Costo</th>
  				</tr>
 			</thead>';
 	       
@@ -1365,8 +1563,7 @@ function GrillaBienes_AC($id){
 				<td class="lado" >'.trim($y['codigo_actual']).'</td>
 				<td class="lado" >'.trim($y['clase']).'</td>
                 <td class="lado" >'.trim($detalle).'</td>
-                <td class="lado" >'.$y['marca'].'</td>
-                <td class="lado" >'.$y['serie'].'</td>
+                 <td class="lado" >'.$y['serie'].'</td>
                 <td class="lado" >'.$y['estado_bien'].'</td>
 				<td class="lado" >'.$yy['fecha_adquisicion'].'</td>
   				<td class="lado" >'.$y['costo_adquisicion'].'</td>
@@ -1384,8 +1581,7 @@ function GrillaBienes_AC($id){
 		    	 <td class="lado" > </td>
 				 <td class="lado" > </td>
                  <td class="lado" > </td>
-                 <td class="lado" > </td>
-                 <td class="lado" > </td>
+                  <td class="lado" > </td>
 			     <td class="lado" > </td>
 			     <td class="lado" > </td>
                  <td class="lado" >Total </td>

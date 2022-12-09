@@ -188,7 +188,7 @@
        
       $this->obj->text->text('Nro.Acta','texto','documento',10,10,$datos ,'','readonly','div-2-4') ;
        
-      $this->obj->text->editor('Detalle','detalle',2,70,100,$datos,'','','div-2-10');
+      $this->obj->text->editor('Detalle','detalle',2,250,250,$datos,'','','div-2-10');
       
  
       

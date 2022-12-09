@@ -42,6 +42,8 @@ if ( $accion == 'N'){
                        cuenta = ".$bd->sqlvalue_inyeccion($cuenta,true)." and
                        uso <>".$bd->sqlvalue_inyeccion('Baja',true) . ' and
                        anio_adquisicion <= '.$bd->sqlvalue_inyeccion($anio,true);
+        
+      
     }else {
         
         $sql = "SELECT  id_bien ,fecha_adquisicion, vida_util ,valor_residual ,costo_adquisicion ,
@@ -61,26 +63,35 @@ if ( $accion == 'N'){
     while($row=pg_fetch_assoc ($resultado1)) {
         
  
-        $fecha      = $row["fecha_adquisicion"] ;
         
-        
+        $fecha                  = $row["fecha_adquisicion"] ;
         $costo_adquisicion      = $row["costo_adquisicion"] ;
         $valor_residual         = $row["valor_residual"] ;
         $vida_util              = $row["vida_util"] ;
         
-      //  $valor_residual = 0;
+        //  $valor_residual = 0;
         
         $dias = (strtotime($fecha)-strtotime($fecha_fin))/86400;
         $dias = abs($dias); $dias = floor($dias);
         
         
- 
-        $CDP_parcial = ($costo_adquisicion - $valor_residual) / $vida_util;
+        $CDP_parcial     = ($costo_adquisicion - $valor_residual) / $vida_util;
         
+        $dias_var        = round($dias/365,1);
         
-        $CDP =  round($CDP_parcial * ($dias/365),2);
+        $CDP             =  round($CDP_parcial * $dias_var,2);
         
-        $diferencia = $costo_adquisicion - $CDP;
+        $costo_residual  = $costo_adquisicion - $valor_residual ;
+        
+        $diferencia      = $costo_residual - $CDP;
+        
+        if ( $diferencia < 0 ){
+            $diferencia = $valor_residual;
+            
+            $dias_var        =  1;
+            $CDP             =  round($CDP_parcial * $dias_var,2);
+        }
+        
         
        // $valida = $valor_residual - $diferencia;
         

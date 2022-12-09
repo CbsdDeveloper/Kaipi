@@ -2,6 +2,7 @@
 session_start( );
 require '../../kconfig/Db.class.php';    
 require '../../kconfig/Obj.conf.php'; 
+
 class proceso{
     
    
@@ -635,9 +636,9 @@ class proceso{
         $this->ATabla[39][valor]         =   $input;
         $this->ATabla[38][valor]         =   trim(@$_POST["idproveedor"]);
          
-        $valida      = $this->BuscaCustodio($id);
+        $valida      =   $this->BuscaCustodio($id);
         $uso         =   trim($_POST["uso"]);
-        $tiene_acta  =  $this->BuscaActa($id);
+        $tiene_acta  =   $this->BuscaActa($id);
 
         $clasificador         =   trim($_POST["clasificador"]);
         $identificador        =   trim($_POST["identificador"]);
@@ -720,9 +721,10 @@ class proceso{
     function eliminar($id ){
         
         
-        $uso = estado_activo($id ) ;
+        $uso = $this->estado_activo($id ) ;
         
         
+        $result = '<img src="../../kimages/kdel.png" align="absmiddle" />&nbsp;<b>NO REGISTRO ANULADO </b> estado:'.$uso;
  
         
         if (trim($uso) == 'Libre') {
@@ -843,7 +845,7 @@ class proceso{
         
         
         
-        return $x['uso'];
+        return trim($x['uso']);
         
         
     }

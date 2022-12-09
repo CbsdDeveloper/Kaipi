@@ -58,24 +58,49 @@ $datos 			= $gestion->Acta_entrega($id);
 		        <table width="90%" border="0">
 				  <tbody> 
 					<tr>
-					  <td colspan="2">En la ciudad de <?php echo $gestion->_Cab( 'ciudad' ); ?>, a los <?php echo $datos['fecha_completa'] ?>  comparecen:</td>
+					  <td colspan="2">En la ciudad de <?php echo $gestion->_Cab( 'ciudad' ); ?>, a los <?php echo $datos['fecha_completa'] ?>  se reunen:</td>
 				    </tr>
 					<tr>
 					  <td colspan="2" style="text-align: justify">&nbsp;</td>
 				    </tr>
-					<tr>
-					  <td colspan="2" style="text-align: justify">a.- <b><?php  echo $datos['funcionario_entrega'] ?></b>, <?php  echo $datos['cargo_entrega'] ?> , <?php  echo 'CONTROL DE BIENES' ?>, servidor de la institución que entrega el(los) bienes; y  </td>
-				    </tr>
+					
 					<tr> 
-					  <td colspan="2" style="text-align: justify" >b.- <b><?php  echo $datos['razon'] ?></b>, <?php  echo $datos['cargo'] ?>, servidor de la institución que recibe el(los) bienes en representacion de la <?php echo $gestion->_Cab( 'razon' ); ?>, según el documento habilitante.</td>
+					  <td colspan="2" style="text-align: justify" >a.- <b><?php  echo $datos['razon'] ?></b>, <?php  echo $datos['cargo'] ?>, en calidad de responsable directo de los bienes que hoy recibe, y </td>
+				    </tr>
+
+				    <tr>
+					  <td colspan="2" style="text-align: justify">b.- <b>  <?php echo $datos['sesion'] ?>   </b>, <?php  echo $datos['sesion_cargo'] ?> quien entrega, los bienes de propiedad del Cuerpo de Bomberos del Gobierno Autónomo Descentralizado Municipal de Santo Domingo.</td>
+				    </tr>
+				    <tr>
+					  <td colspan="2" style="text-align: justify">&nbsp;</td>
+				    </tr>
+					
+					<tr>
+					  <td colspan="2" style="text-align: justify" >En cumplimiento a lo que indica el Art. 7 OBLIGATORIEDAD, del Reglamento General de Bienes del Sector Público, al tenor de las siguientes cláusulas:</td>
+				    </tr>
+
+					<tr>
+					  <td>&nbsp;</td>
 				    </tr>
 					<tr>
-					  <td width="10%">&nbsp;</td>
-					  <td width="90%">&nbsp;</td>
-				    </tr>
+					  <td colspan="2" style="text-align: justify">PRIMERA: ANTECEDENTES. - La Contraloría General del Estado en el Art. 44, del Reglamento General para la Administración, Utilización, Manejo y Control de los Bienes y Existencias del Sector Público, dispone que el guardalmacén de bienes y/o inventarios, entregará los bienes al Usuario Final para las labores inherentes a su cargo o función, en el cual, constarán las condiciones y características de aquellos, de lo cual dejarán constancia en un acta de entrega y recepción.</td>
+					</tr>
 					<tr>
-					  <td colspan="2" style="text-align: justify">Quienes, en cumplimiento del inciso final del artículo 62 del Reglamento General Sustitutivo para el Manejo y Administración de Bienes del Sector Público, suscriben la presente ACTA DE ENTREGA-RECEPCIÓN de los siguientes bienes:</td>
-				    </tr>
+					  <td>&nbsp;</td>
+					</tr>
+					<tr>
+					  <td colspan="2" style="text-align: justify">Art. 18.- Designación del Custodio. - El titular de cada área de las entidades u organismos comprendidos 
+					  en el artículo 1 del presente reglamento, designará al/los Custodio/s Administrativo/s, 
+					  según la cantidad de bienes e inventarios de propiedad de la entidad u organismo. </td>
+					</tr>
+					<tr>
+					  <td>&nbsp;</td>
+					
+					</tr>
+					<tr>
+              <td colspan="2" style="text-align: justify">SEGUNDA: OBJETO. - Efectuar la Entrega-Recepción de los bienes propiedad del Cuerpo de Bomberos del GADM SD a reúnen <?php echo $datos['sesion'] ?>.
+					 Los bienes entregados son los siguientes:</td>
+					</tr>
 				  </tbody>
 				</table>
 				<br>
@@ -87,72 +112,26 @@ $datos 			= $gestion->Acta_entrega($id);
 					<tr>
 					  <td style="text-align: justify">&nbsp;</td>
 				    </tr>
-					<tr>
-					  <td style="text-align: justify">  Art.21.-Finalización de la responsabilidad de los custodios Administrativos.-La responsabilidad de los 
-					  custodios Administrativos y de   los usuarios finales, respeto de la custodia, cuidado, conservación y buen uso de los bienes concluirá 
-					  cuando, conforme a las disposiciones del presente reglamento, se hubieren suscrito las respectivas actas de entrega recepción de egreso 
-					  o devolución, según corresponda, o se hubieran procedido a su reposición o restitución de  su valor.</td>
-					</tr>
+					
 					<tr>
 					  <td>&nbsp;</td>
 					</tr>
-					<tr>
-					  <td align="justify" style="text-align: justify">Esta entrega recepción se sujeta a las siguientes clausulas:</td>
-					</tr>
-					<tr>
-					  <td>&nbsp;</td>
-				    </tr>
-					<tr>
-					  <td style="text-align: justify">Primera.- Los bienes Muebles e Inmuebles, descritos en la presente acta, a partir de la firma, estarán bajo 
-					  la responsabilidad, buen uso y cuidado del usuario o custodio final</td>
-					</tr>
-					<tr>
-					  <td>&nbsp;</td>
-					</tr>
-					<tr>
-					  <td style="text-align: justify">Segunda.- Art.144.-REPOSICION, RESTITUCION, DEL VALOR O REEMPLAZO  DEL BIEN.- Los bienes  de propiedad de las 
-					  entidades u organismos comprendidos en el Art.1 del presente reglamento deberán ser restituidos o reemplazados por otros bienes nuevos  de 
-					  similares o mejores  características, por parte de los usuarios finales o custodios  Administrativos en los siguientes casos:</td>
-					</tr>
-					<tr>
-					  <td>&nbsp;</td>
-					</tr>
-					<tr>
-					  <td style="text-align: justify">a)	Cuando los bienes hubieren sufrido daños parciales o totales producto de la negligencia o mal uso comprobados y quedaren inutilizados.</td>
-					</tr>
-					<tr>
-					  <td style="text-align: justify">b)	Cuando los bienes no hubieren sido presentados por el Usuario final o custodio Administrativo al momento de la constatación física</td>
-					</tr>
-					<tr>
-					  <td style="text-align: justify">c)	Cuando los bienes no hubieren sido entregados en el momento de la entrega recepción por cabio de usuario final, Custodio Administrativo o Cesación de funciones  de algunos aquellos </td>
-					</tr>
-                    <tr>
-                    <td style="text-align: justify">d)	Cuando hubiese negativa de la aseguradora  por el reclamo presentado, una vez comprobada legalmente la negligencia en el manejo  del bien por parte del usuario final </td>
-					</tr>
-					<tr>
-					  <td>&nbsp;</td>
-					</tr>
-					<tr>
-                    <td style="text-align: justify">La reposición del bien se podrá llevar a cabo, en dinero, al precio actual de mercado o con un bien nuevo de similares o superiores características al bien desaparecido, destruido o inutilizado, previa autorización del titular de la Unidad Administrativa</td>
-					</tr>
+					
 					<tr>
 					  <td>&nbsp;</td>
 					</tr>
                     <tr>
-                    <td style="text-align: justify">Tercera.- El daño, perdida, destrucción del bien, por negligencia o su mal uso comprobados por la autoridad competente, no imputable al deterioro normal de las cosas, será de responsabilidad del Usuario Final que lo tiene a su cargo, y de los servidores que de cualquier manera tienen acceso al bien cuando realicen acciones de mantenimiento o reparación por requerimiento propio, salvo que se conozca o se compruebe la identidad de la persona causante de la afectación al bien. </td>
+            <td style="text-align: justify">TERCERA: ACEPTACIÓN. - reúnen, <?php echo $datos['razon']  ?> ,
+					  
+					  acepta la recepción de los bienes descritos y se compromete a dar cumplimiento a lo que indica
+					   el Art. 47, 49, 146 del Reglamento General para la Administración, Utilización, Manejo y Control de los Bienes y 
+					   Existencias del Sector Público, a la Norma de control interno en su apartado 406-08 Uso de los bienes de larga duración 
+					   y para constancia firman los intervinientes: </td>
 					</tr>
 					<tr>
 					  <td>&nbsp;</td>
-					</tr>
-                    <tr>
-					  <td>&nbsp;</td>
-					</tr>
-                    <tr>
-                    <td style="text-align: justify">Para constancia y fe de lo actuado, firman las partes intervinientes, en unidad de acto, en un original y una copia de igual tenor. </td>
-					</tr>
-					<tr>
-					  <td>&nbsp;</td>
-					</tr>
+					
+
                     
 					<tr>
 					  <td>&nbsp;</td>
@@ -176,7 +155,7 @@ $datos 			= $gestion->Acta_entrega($id);
 			     </tr>
 				 <tr>
 				   <td  with="33%"  align="center" style="font-weight: normal;font-size: 10px"><b>
-				     <?php  echo 'ING. NELLY PACHECO' ?>
+				    	<?php echo $datos['sesion'] ?>
 				   </b></td>
 				  <td  with="33%"  align="center" style="font-weight: normal;font-size: 10px"><b>
 				     <?php  echo $datos['razon'] ?>
@@ -184,7 +163,7 @@ $datos 			= $gestion->Acta_entrega($id);
 			      </tr>
 				 <tr>
 				   <td  with="33%"  align="center" style="font-weight: normal;font-size: 10px"><b>
-				   <?php  echo 'CONTROL DE BIENES' ?>
+				   <?php  echo 'Analista de Control de Bienes ' ?>
 				   </b></td>
 				  <td  with="33%"  align="center" style="font-weight: normal;font-size: 10px"><b>
 				     CI. <?php  echo $datos['idprov'] ?>
