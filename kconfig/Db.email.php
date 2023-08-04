@@ -52,8 +52,8 @@ class EmailEnvio{
             )
         );
         
-        $this->mail->Username = "email.kaipi@gmail.com";
-        $this->mail->Password = "Barce$.J2014.1977@EmailUser";
+        $this->mail->Username = "no-replay@cbsd.gob.ec";
+        $this->mail->Password = "ZUu3YyLLLvv";
         
      
     }

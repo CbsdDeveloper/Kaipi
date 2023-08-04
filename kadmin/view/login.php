@@ -6,7 +6,7 @@ session_start( );
 <html>
 <head>
 <meta charset="utf-8">
-<title>Plataforma de Gestion Empresarial</title>
+<title>CBSD - Plataforma de Gestion Empresarial</title>
 	
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 

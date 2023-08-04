@@ -117,6 +117,9 @@ $firmas 		= $gestion->firmas();
  	
 
 		   <?php      $gestion->firma_reportes('AC-FC'); ?>
+
+		   	#ADMINISTRATIVO
+			#CARGO_ADMINISTRATIVO
 		
  
 		   <?php echo $gestion->pie_cliente($datos['nombre']); ?>

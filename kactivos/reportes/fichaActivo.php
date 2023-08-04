@@ -162,6 +162,10 @@ $firmas 		= $gestion->firmas();
 					 <tr>
 					 <td colspan="4">
 					 <?php     $gestion->firma_reportes('AC-FA'); ?>
+
+					 #ADMINISTRATIVO
+					 #CARGO_ADMINISTRATIVO
+
 				       </td>	
 				    </tr>			
 			  </tr>

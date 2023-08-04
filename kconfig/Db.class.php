@@ -50,13 +50,13 @@ class Db {
     $password   = '-' ;
     $dbType     = 'postgres';
        
-   	include('Db.user.php');
+   	// include('Db.user.php');
    
-   	$this->servidor	      = $this->_refd($host);
-   	$this->base_datos     = $this->_refd($db);
-   	$this->usuario        = $this->_refd($user);
-   	$this->password       = $this->_refd($password);
-   	$this->tipo           = $this->_refd($dbType);
+   	$this->servidor	      = '192.168.1.3'; //$this->_refd($host);
+   	$this->base_datos     = 'db_kaipi';//$this->_refd($db);
+   	$this->usuario        = 'postgres';//$this->_refd($user);
+   	$this->password       = 'Cbsd2019';//$this->_refd($password);
+   	$this->tipo           = 'postgress';//$this->_refd($dbType);
  
 	 
    	$this->pideSecuencia = 1;
@@ -1120,9 +1120,20 @@ class Db {
 	 if (isset($_SESSION['ip']))	{
  
 		$this->servidor = $this->_refd($_SESSION['ip']);
- 
-		}
- 
+        
+    }
+    // $this->servidor = '192.168.1.3';
+    $this->servidor = '127.0.0.1';
+    $this->base_datos = 'db_kaipi';
+    $this->usuario = 'postgres';
+    $this->password = 'root';
+    // $this->password = 'Cbsd2019';
+
+    // echo $this->servidor;
+    // echo $this->base_datos;
+    // echo $this->usuario;
+    // echo $this->password;
+    
  		$this->link= pg_connect("host=".$this->servidor."   dbname=".$this->base_datos."  port=5432    user=".$this->usuario."  password=".$this->password);
  
  		

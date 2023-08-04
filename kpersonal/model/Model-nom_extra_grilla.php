@@ -71,7 +71,7 @@ class proceso{
               WHERE '. $where. ' order by 6 asc';
         
         
-         
+         // SELECT  *   FROM  public.nom_rol_pagod  where id_rol = 23 and id_config=899  and regimen= 'NOMBRAMIENTOS LOSEP' and programa = '223' order by idprov
         
         $resultado = $this->bd->ejecutar($sql);
         

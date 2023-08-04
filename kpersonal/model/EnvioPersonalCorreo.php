@@ -96,7 +96,7 @@
      $content =  str_replace ( '#empresa' , trim($razon_social) ,  $content);
  
      
-     $pagina_web ='https://g-kaipi.cloud/BSigsig/';
+     $pagina_web ='https://g-kaipi.cloud/EP-online.cbsd/';
     
  
      
@@ -111,7 +111,7 @@
      
      $asunto = 'Resumen '.$periodo;
     
-     $mail->_DeCRM( $sesion, $_SESSION['razon']);
+    //  $mail->_DeCRM( $sesion, $_SESSION['razon']);
 
           
 
@@ -133,7 +133,7 @@
          
          $response = $mail->_EnviarElectronica();
          
- 
+         sleep(2);
      
      echo $response;
      

@@ -32,9 +32,9 @@ class componente{
         
         $this->bd	   =	     	new Db ;
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar('postgres','db_kaipi','root');
         
-        $this->ruc       =  $_SESSION['ruc_registro'];
+        $this->ruc       =  "2360003540001";
         
         $this->sesion 	 =  trim($_SESSION['email']);
         
@@ -62,7 +62,7 @@ class componente{
         
         $resultado = $this->bd->ejecutar("select id_rol as codigo, novedad as nombre
                 								from nom_rol_pago
-                								where  anio =". $this->bd->sqlvalue_inyeccion( $_SESSION['anio'], true)." and
+                								where  anio =". $this->bd->sqlvalue_inyeccion( 2023, true)." and
 								                      registro=". $this->bd->sqlvalue_inyeccion($this->ruc, true).'
                                            order by 1 desc ' );
         

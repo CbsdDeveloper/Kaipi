@@ -138,30 +138,30 @@ class EmailEnvio{
 
         $this->mail->IsSMTP();
         
-        if ( $this->tipo_enlace  == 1 ){
-            
-            $this->mail->SMTPDebug = 0;
-            $this->mail->Host       = $this->Host ;
-            $this->mail->Port 	    = $this->puerto;
-            
-            $this->mail->SMTPOptions = array(
-                'ssl' => array(
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true
-                )
-            );
-         }
-        else 
-        {
-            $this->mail->Host       = $this->Host ;
-            $this->mail->Port       = $this->puerto;    // El puerto que Mandrill nos indica utilizar
-         }
-        
-         $this->mail->SMTPAuth   = true;                // Indicamos que vamos a utilizar auteticaci�n SMTP
-         $this->mail->SMTPSecure = $this->SMTPSecure;  // Activamos el cifrado tls (tambi�n ssl)
-         $this->mail->Username   = $this->email_envio;
-         $this->mail->Password   = $this->clave ;
+        $this->mail->IsHTML(true);
+        $this->mail->CharSet = 'UTF-8';
+        $this->mail->setLanguage('es');
+        $this->mail->IsSMTP();
+        $this->mail->SMTPDebug  = 3;
+        // Configurar parámetros de correo
+        $this->mail->SMTPAuth = true;
+        $this->mail->SMTPSecure = 'tls';
+        // $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
+        $this->mail->Host = 'mail.cbsd.gob.ec';
+        $this->mail->Port = '587';
+        $this->mail->Username = 'no-replay@cbsd.gob.ec';
+        $this->mail->Password = 'ZUu3YyLLLvv';
+        // Parámetros de remitente
+        $this->mail->FromName = 'Cuerpo de Bomberos Santo Domingo | Roles';
+        $this->mail->From = 'no-replay@cbsd.gob.ec';
+
+        $this->mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
          
          
     }
@@ -241,11 +241,18 @@ class EmailEnvio{
         }
         else
         {
-            $this->mail->SMTPDebug   =  0;
+            $this->mail->SMTPDebug   =  2;
             $this->mail->IsSMTP(); // Indicamos que vamos a utilizar SMTP
             $this->mail->Host       =  $this->Host ;
             $this->mail->Port       =  $this->puerto ;
             $this->mail->SMTPAuth   =  true; // Indicamos que vamos a utilizar auteticaci�n SMTP
+            $this->mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );
             $this->mail->SMTPSecure =  $this->SMTPSecure;
             $this->mail->Username   =  $this->email_envio;
             $this->mail->Password   =  $this->clave ;
@@ -434,7 +441,7 @@ function _EnviarElectronica(  ){
             }else{
                 
                 $this->email_envio  =  "no-replay@cbsd.gob.ec";
-                $this->Host         =  "mail.cbsd.gob.ec";
+                $this->Host         =  "190.152.212.248";
                 $this->SMTPSecure   =  'tls' ;
                 $this->clave        =  "ZUu3YyLLLvv";
                 $this->puerto       =  '587';
@@ -449,10 +456,3 @@ function _EnviarElectronica(  ){
  
  
   }
- 
-
-
-
-?>
- 
-  
