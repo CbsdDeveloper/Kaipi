@@ -233,6 +233,49 @@ function AutorizarTramite( ) {
  
 	  
 }
+//--------------
+function EliminarBiend(idbien ) {
+	 
+	var id      = $("#id_bien_dep").val();
+	var estado  = $("#estado").val();
+
+	
+	
+	var parametros = {
+					'accion' : 'anula_bien' ,
+                    'id' : id ,
+					'idbien':idbien
+ 	  };
+ 
+	
+	if ( estado == 'N'){
+		
+ 
+
+	  alertify.confirm("Desea Eliminar los bienes BLD para generar informacion posterior?...", function (e) {
+		  if (e) {
+			 
+             	
+				 $.ajax({
+					 data:  parametros,
+					  url:   '../model/Model-'+ formulario,
+					 type: "GET",
+			       success: function(response)
+			       {
+			           $('#result').html(response);
+			           
+			       	DetalleActivosNoAsignados( id );
+			    	
+ 			       }
+				 });
+ 
+		  }
+		 }); 
+	  
+	}
+ 
+	  
+}
 //---- 
 function EliminarTramite( ) {
 	 

@@ -72,6 +72,8 @@ class proceso{
 
 	    $anio1			   = $estado["anio"];
 		$id_asiento        = $asiento["id_asiento"];
+		$aux        = $asiento["aux"];
+
 
 		$DivAsientosTareas = 'NO se actualizo';
 	    
@@ -88,11 +90,11 @@ class proceso{
 						
 						$this->bd->ejecutar($sql);
 						
-						if ( trim($asiento["aux"]) == 'S'){
+					 
 
 							$this->agregarEnlaceAux($anio1, $id_asiento,$cuenta0,$xid_asientod,$cuenta1);
 							 
-						}
+					 
  	        
 	    }
 	     	 echo $DivAsientosTareas;
@@ -114,28 +116,17 @@ saludos
 
   	    $anio1 = $anio - 1 ;
  
-		if ( $tipo_cuenta == '2'){
-       
-			$sql_det = "select cuenta,  idprov, sum(debe) as debe,sum(haber) as haber,sum(haber) - sum(debe) as saldo
+        
+			$sql_det = "select cuenta,  idprov, sum(debe) as debe,sum(haber) as haber,sum(debe) - sum(haber) as saldo
 			FROM view_aux
 			where anio = ".$this->bd->sqlvalue_inyeccion($anio1, true)." and  
 				  cuenta = ".$this->bd->sqlvalue_inyeccion($cuenta0, true)." and 
 				  estado= 'aprobado'
 			group by cuenta ,idprov
-			having sum(haber) - sum(debe) > 0
+			having sum(debe) - sum(haber) <> 0
 			order by cuenta,  idprov";
 			 
-		 }else{
-		  
-			 $sql_det = "select cuenta,  idprov, sum(debe) as debe,sum(haber) as haber,sum(debe) - sum(haber) as saldo
-			FROM  view_aux
-			where anio = ".$this->bd->sqlvalue_inyeccion($anio1, true)." and  
-			      cuenta = ".$this->bd->sqlvalue_inyeccion($cuenta0, true)." and 
-				  estado= 'aprobado'
-			group by cuenta ,idprov
-			having sum(debe) - sum(haber) > 0
-			order by cuenta,  idprov";
-		}
+			
 
 
 	 
@@ -147,11 +138,11 @@ saludos
 			$idprov = trim($x["idprov"]);
 			
 			if ( $tipo_cuenta == '1'){
-				$debe  = $x["saldo"];
+				$debe  = abs($x["saldo"]);
 				$haber = 0;
 			}else{
 				$debe  = 0;
-				$haber = $x["saldo"];
+				$haber = abs($x["saldo"]);
 			}
 			$total = $debe + $haber ;
 			$dato = strlen($idprov);

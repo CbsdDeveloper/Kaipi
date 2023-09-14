@@ -236,30 +236,36 @@ veraccion('seleccion','1204448086',0)
 function veraccion( accion,codigo,col ){   
 
 	var periodo      = 	$('#q_periodo').val();
- 	var id_rol1     = 	$('#id_rol1').val();
+ 	var id_rol1      = 	$('#id_rol1').val();
+    var id_config1    = 	$('#id_config1').val();
+
  
 	var parametros = {
 					 'periodo' : periodo,
 					 'accion': accion,
  					 'id_rol' : id_rol1,
 					 'codigo' : codigo ,
-					 'col': col
+					 'col': col,
+					 'id_config1':id_config1
  	   };
 
  
-	
-	$.ajax({
-				   url:   '../model/ajax_rol_novedad.php',
-				   data:  parametros,
-				  type:  'GET' ,
-				   beforeSend: function () { 
-						   $("#AccionCreada").html('Procesando');
-					},
-				  success:  function (data) {
-						   $("#AccionCreada").html(data);  
-					} 
+	if ( id_config1) {
+		
+				$.ajax({
+							url:   '../model/ajax_rol_novedad.php',
+							data:  parametros,
+							type:  'GET' ,
+							beforeSend: function () { 
+									$("#AccionCreada").html('Procesando');
+								},
+							success:  function (data) {
+									$("#AccionCreada").html(data);  
+								} 
 
-		  }); 
+					}); 
+
+		}
 
 }   
 

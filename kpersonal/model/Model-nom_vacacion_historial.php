@@ -112,17 +112,18 @@
      $qcabecera = array(
          array(etiqueta => 'Id',campo => 'id_vacacion',ancho => '5%', filtro => 'N', valor => '-', indice => 'S', visor => 'S'),
          array(etiqueta => 'Identificacion',campo => 'idprov',ancho => '5%', filtro => 'S', valor => $id, indice => 'N', visor => 'S'),
-         array(etiqueta => 'Estado',campo => 'estado_tramites',ancho => '10%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
-         array(etiqueta => 'Tipo',campo => 'tipo',ancho => '10%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
-         array(etiqueta => 'Motivo',campo => 'motivo',ancho => '10%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
+         array(etiqueta => 'Estado',campo => 'estado_tramites',ancho => '15%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
+         array(etiqueta => 'Motivo',campo => 'motivo',ancho => '20%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
          array(etiqueta => 'Novedad',campo => 'novedad',ancho => '20%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
-         array(etiqueta => 'Fecha Salida',campo => 'fecha_out',ancho => '10%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
-         array(etiqueta => 'Fecha Entrada',campo => 'fecha_in',ancho => '10%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
+         array(etiqueta => 'Salida',campo => 'fecha_out',ancho => '5%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
+         array(etiqueta => 'Entrada',campo => 'fecha_in',ancho => '5%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
          array(etiqueta => 'Nro.Dias',campo => 'dia_tomados',ancho => '5%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
-         array(etiqueta => 'Fraccion Dia/Hora',campo => 'hora_tomados',ancho => '5%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
+         array(etiqueta => 'Fraccion Hora/Dia',campo => 'hora_tomados',ancho => '5%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
+         array(etiqueta => 'Dia Contabiliza',campo => 'dia_acumula',ancho => '5%', filtro => 'N', valor => '-', indice => 'N', visor => 'S'),
          array(etiqueta => 'anio',campo => 'anio',ancho => '0%', filtro => 'S', valor =>  $this->anio, indice => 'N', visor => 'N'),
          array(etiqueta => 'estado_seg',campo => 'estado',ancho => '0%', filtro => 'S', valor => $estado, indice => 'N', visor => 'N'),
       );
+      
       
      $acciones = "editar,eliminar,''";
 

@@ -83,10 +83,20 @@
 
 																		<label style="padding-top: 5px;text-align: right;" class="col-md-3"> </label>
 																   
-																		<div style="padding-top: 5px;" class="col-md-9">
-																				<button type="button" class="btn btn-sm btn-primary" id="load">  <i class="icon-white icon-search"></i> Buscar</button>	
+																		<div style="padding-top: 15px;" class="col-md-9">
+																				<button type="button" class="btn btn-sm btn-primary" id="load">  
+																					<i class="icon-white icon-search"></i> Buscar Tabla Base Imponible</button>	
 																		</div>
+																   
+																   
+																   
 																		<label style="padding-top: 5px;text-align: right;" class="col-md-3"> </label> 
+																   
+																      <div style="padding-top: 25px;padding-bottom: 10px" class="col-md-9">
+																				<button type="button" class="btn btn-sm btn-warning" id="loadcam">  
+																					<i class="icon-white icon-adjust"></i> Copiar Tabla Periodo Anterior</button>	
+																		</div>
+																   
 																</div>
 
 																 <div class="col-md-9">

@@ -85,7 +85,7 @@ session_start( );
         $tipo = $this->bd->retorna_tipo();
             
             
-        $sql = "SELECT  id_bien || ' ' as  id, nombre_cuenta ,descripcion,detalle,serie,estado,costo_adquisicion 
+        $sql = "SELECT  id_bien || ' ' as  id,codigo_actual, cuenta || '-' || id_bien, nombre_cuenta ,descripcion,detalle,serie,estado,costo_adquisicion 
                             FROM activo.view_bienes
                             where idprov = ".$this->bd->sqlvalue_inyeccion(trim($idprov)  ,true). ' and 
                                   tipo_bien = '.$this->bd->sqlvalue_inyeccion(trim( $accion)  ,true).' order by nombre_cuenta' ;
@@ -100,7 +100,7 @@ session_start( );
                 '',         // icono de edicion = 'editar'
                 '',			// icono de eliminar = 'del'
                 'proceso_doc-0' ,        // evento funciones parametro Nombnre funcion - codigo primerio
-                "Nro.Bien, Cuenta,Descripcion,Referencia,Serie,Estado,Costo",  // nombre de cabecera de grill basica,
+                "Nro.Bien, Codigo Anterior, Codigo Actual, Cuenta,Descripcion,Referencia,Serie,Estado,Costo",  // nombre de cabecera de grill basica,
                 '9px',      // tamaño de letra
                 $accion         // id
                 );

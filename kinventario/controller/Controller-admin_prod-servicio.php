@@ -195,7 +195,7 @@ session_start( );
                         $resultado = $this->bd->ejecutar($union." select  trim(cuenta) as codigo, (trim(cuenta) || '. ' || trim(detalle))  as nombre
                     								from co_plan_ctas
                                                     where univel = 'S' and
-                                                          cuenta like '1%' and
+                                                         substring(cuenta,1,6) in ('634.08','131.01','133.01','135.01') and
                                                           anio = ".$this->bd->sqlvalue_inyeccion($this->anio ,true)." and
                                                           registro = ".$this->bd->sqlvalue_inyeccion($this->ruc,true)." and
                                                           tipo_cuenta in ('V')

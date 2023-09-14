@@ -52,9 +52,9 @@ session_start( );
 
               $this->set->div_panel7('<b> Información de impuesto a la renta </b>');
                        
-              $this->obj->text->text_blue('Id',"number" ,'id' ,80,80, $datos ,'required','','div-2-4');
+              $this->obj->text->text_blue('Codigo',"number" ,'id' ,80,80, $datos ,'required','readonly','div-2-4');
 
-              $this->obj->text->text_yellow('Anio',"number" ,'anio' ,80,80, $datos ,'required','','div-2-4');
+              $this->obj->text->text_yellow('Periodo',"number" ,'anio' ,80,80, $datos ,'required','','div-2-4');
 
               $this->obj->text->text('Tipo',"text" ,'tipo' ,80,80, $datos ,'required','readonly','div-2-4');
 

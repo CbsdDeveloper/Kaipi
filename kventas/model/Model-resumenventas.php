@@ -13,7 +13,8 @@ require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos
     
     
  
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    // $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar('postgres','db_kaipi','Cbsd2019');
     
     $fecha        = $_GET['fecha'];
     $cajero       = $_GET['cajero'];
@@ -51,7 +52,7 @@ require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos
 
      echo ' <h6 align="center"><b> DETALLE NOTAS DE CREDITO </b></h6>';
      
-     $sql = 'select a.fechaemisiondocsustento,b.razon,a.numdocmodificado,a.secuencial,b.base12, b.iva, b.base0, b.total
+     $sql = 'select a.fechaemisiondocsustento,b.razon,a.numdocmodificado,a.secuencial1,b.base12, b.iva, b.base0, b.total
 			from doctor_vta a
 			join view_ventas_fac b on b.id_movimiento = a.id_diario and
 				 a.fechaemisiondocsustento='.$bd->sqlvalue_inyeccion($fecha ,true);

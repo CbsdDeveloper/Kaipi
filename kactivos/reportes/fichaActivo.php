@@ -1,4 +1,9 @@
 <?php
+
+// Descomentar para depuración
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+
 session_start();
 ob_start();
 require('kreportes.php');
@@ -43,7 +48,7 @@ $firmas 		= $gestion->firmas();
 
 	<div id="footer">
 		
-		<?php echo $gestion->pie_cliente($datos['nombre']); ?>
+		<?php echo $gestion->pie_cliente(''); ?>
 		
 	</div>
 
@@ -125,7 +130,8 @@ $firmas 		= $gestion->firmas();
 				<td width="60%" style="padding: 3px">&nbsp; </td>
 			</tr>
 			<tr>
-				<td width="35%" style="padding: 5px"><img src="../../archivos/activos/<?php echo trim($datos['archivo']) ?>" width="170" height="92" /></td>
+				<!-- <td width="35%" style="padding: 5px"><img src="../../archivos/activos/<?php echo trim($datos['archivo']) ?>" width="170" height="92" /></td> -->
+				<td width="35%" style="padding: 5px"><img src="../../archivos/activos/default.png" width="92" height="92" /></td>
 				<td width="60%" align="left" valign="top">
 					<table width="100%" border="0" >
   							<tr>
@@ -146,7 +152,7 @@ $firmas 		= $gestion->firmas();
 		<table style="border-collapse: collapse; border: 1px solid #AAAAAA;font-weight: normal;font-size: 10px" border="0" width="95%" cellspacing="0" cellpadding="0">
 			<tbody>
 				<tr>
-					<td width="40%" colspan="4" bgcolor="#EDEDED" style="font-weight: normal;font-size: 11px;padding: 6px"> </td>
+					<td width="40%" colspan="4" bgcolor="#EDEDED" style="font-weight: normal;font-size: 11px;padding: 6px"> RESPONSABLE DEL INGRESO </td>
 				</tr>
 				<tr>
 					<td colspan="4" style="padding: 3px"> .</td>
@@ -163,8 +169,8 @@ $firmas 		= $gestion->firmas();
 					 <td colspan="4">
 					 <?php     $gestion->firma_reportes('AC-FA'); ?>
 
-					 #ADMINISTRATIVO
-					 #CARGO_ADMINISTRATIVO
+					<!-- #ADMINISTRATIVO
+					 #CARGO_ADMINISTRATIVO -->
 
 				       </td>	
 				    </tr>			

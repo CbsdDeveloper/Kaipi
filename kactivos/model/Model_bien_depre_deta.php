@@ -69,6 +69,7 @@ class proceso{
                      <th align="center" width="5%">Vida Util</th>
                      <th align="center" width="5%">Anio</th>
                      <th align="center" width="10%">(B) CDP</th>
+                     <th align="center" width="10%"></th>
                     </tr>
             </thead><tbody>';
         
@@ -94,6 +95,7 @@ class proceso{
               <td > '. $row['cuotadp'].' </td>
               <td > '. $row['diferencia'].' </td>
             <td> '. $row['acumulado'].' </td>
+            <td> <a href="#" onClick="EliminarBiend('.$row['id_bien'].')" title="eliminar bien">  <span class="glyphicon glyphicon-trash"></span>    </a> </td>
              </tr>';
         }
         

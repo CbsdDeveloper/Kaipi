@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/Lima');
 session_start( );
 
 require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
@@ -15,6 +16,7 @@ require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos
  
     $tipo 		= $bd->retorna_tipo();
     
+    $anio = date("Y"); 
     
     $idprov 		= trim($_GET["idprov"]);
     
@@ -23,7 +25,7 @@ require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos
     $sql = "SELECT id_tramite, fecha, unidad , comprobante, detalle,   proveedor,estado_presupuesto
             FROM presupuesto.view_pre_tramite
             where estado in ('4','5','6') and tipo is null and 
-                  idprov =".$bd->sqlvalue_inyeccion($idprov, true).' order by fecha';
+                  idprov =".$bd->sqlvalue_inyeccion($idprov, true).' and anio = '.$bd->sqlvalue_inyeccion($anio, true).' order by fecha,id_tramite';
 
     $resultado  = $bd->ejecutar($sql);
      

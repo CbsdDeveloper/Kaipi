@@ -68,8 +68,14 @@ class proceso{
 		    $this->Bloque_Activo( 'I',$anio);
 		    
 		}else {
-		    $this->cabecera('GASTO');
-		    $this->Bloque_Gasto( 'G',$anio);
+		   
+			if ( $tipo == 'GD' ) {
+				$this->cabecera_dato('GASTO');
+		   		 $this->Bloque_GastoD( 'G',$anio);
+			}else{
+				$this->cabecera('GASTO');
+				$this->Bloque_Gasto( 'G',$anio);
+	    	}
 		}
         		
 		
@@ -116,7 +122,7 @@ class proceso{
                      <td width="5%" '.$estilo.'>Item</td>
                     <td width="5%" '.$estilo.'>Inicial</td>
                     <td width="10%" '.$estilo.'>Reformas</td>
-                    <td width="10%" '.$estilo.'Codificado</td>
+                    <td width="10%" '.$estilo.'>Codificado</td>
                     <td width="10%" '.$estilo.'>Compromiso</td>
                     <td width="10%" '.$estilo.'>Devengado</td>
                     <td width="10%" '.$estilo.'>Pagado</td>
@@ -127,6 +133,36 @@ class proceso{
 	        
 	    }
  
+	}
+
+	function cabecera_dato($titulo){
+
+		$estilo = 'style ="background-color: #3e95d1;color:#f8f9fa;background-image: linear-gradient(to bottom, #3e95d1, #368ac5, #2d7fb8, #2474ac, #1a69a0);" ';
+	    
+ 
+	        
+	        echo '<table  class="table table-striped table-bordered table-hover table-checkable" width="100%" style="font-size: 13px;table-layout: auto">';
+	        echo ' <tr>
+                  <td colspan="12"><b>'.$titulo.'</b></td>
+                 </tr>
+                <tr>
+                     <td width="10%" '.$estilo.'>Clasificador</td>
+                     <td width="5%" '.$estilo.'>Grupo</td>
+                     <td width="5%" '.$estilo.'>Subgrupo</td>
+                     <td width="5%" '.$estilo.'>Item</td>
+					 <td width="5%" '.$estilo.'>Orientador</td>
+                     <td width="5%" '.$estilo.'>Inicial</td>
+                    <td width="5%" '.$estilo.'>Reformas</td>
+                    <td width="10%" '.$estilo.'>Codificado</td>
+                    <td width="10%" '.$estilo.'>Compromiso</td>
+                    <td width="10%" '.$estilo.'>Devengado</td>
+                    <td width="10%" '.$estilo.'>Pagado</td>
+                    <td width="10%" '.$estilo.'>Saldo x Comp</td>
+                    <td width="10%" '.$estilo.'>Saldo x Dev</td>
+                 </tr>';
+	        
+	        
+	  
 	}
 	//--------------------
 	public function Bloque_Activo( $tipo,$anio){
@@ -325,7 +361,112 @@ class proceso{
  	    
  	}
 	//--- ultimo nivel
+	public function Bloque_GastoD( $tipo,$anio){
+ 	    
+ 	    
+
+		$sql  =   'SELECT grupo, subgrupo, item, competencia,
+				orientador,
+				inicial,
+				reformas, codificado,compromiso,  devengado, pagado, anio
+		FROM presupuesto.view_gestion_periodo
+		where anio = '.$this->bd->sqlvalue_inyeccion($this->anio, true)." and tipo = 'G'
+		order by 1,2, 3, 4";
  
+		
+		$stmt = $this->bd->ejecutar($sql);
+		
+		$inicial_debe1 = 0;
+		$inicial_debe2 = 0;
+		$inicial_debe3 = 0;
+		$inicial_debe4 = 0;
+		
+		$inicial_debe5 = 0;
+		$inicial_debe6 = 0;
+		$inicial_debe7 = 0;
+		$inicial_debe8=0;
+		
+		while ($x=$this->bd->obtener_fila($stmt)){
+			
+			$cuenta = trim($x['grupo']);
+			$saldo1 = $x['inicial'] ;
+			$saldo2 = $x['reforma'] ;
+			$saldo3 = $x['codificado'] ;
+			$saldo4 = $x['compromiso'] ;
+			$saldo5 = $x['devengado'] ;
+			$saldo6 = $x['pagado'] ;
+			
+			$clasificador = $cuenta.'.'.trim($x['subgrupo']).'.'.trim($x['item']);
+			
+			$saldo7 = $x['saldo_compromiso'] ;
+			$saldo8 = $x['saldo_devengar'] ;
+			
+		   // $novedad = $saldo4 - $saldo5;
+			
+
+	  
+			if ( $saldo5  >  $saldo4) {
+				$clase = ' style="background-color: #F35052" '      ; 
+			 }else{
+				 $clase ='';
+			 }
+			
+			 
+			 if ( $saldo6  >  $saldo5) {
+				 $clase1 = ' style="background-color: #F35052" '      ;
+			 }else{
+				 $clase1 ='';
+			 }
+			 
+			 $item = "'".$cuenta.trim($x['subgrupo']).trim($x['item'])."'";
+			 $evento = "verifica_datos(".$item.','.'2'.')';
+			 $cadena = '<a href="#" data-toggle="modal" onclick='.$evento.' data-target="#myModalAsientos">'.$clasificador.'</a>';
+ 
+			 
+			echo "<tr>";
+			echo "<td><b>".'SG '.$cadena."</b></td>";
+			echo "<td><b>".$cuenta."</b></td>";
+			echo "<td><b>".trim($x['subgrupo'])."</b></td>";
+			echo "<td><b>".trim($x['item'])."</b></td>";
+			echo "<td><b>".trim($x['orientador'])."</b></td>";
+			
+			echo "<td align='right'>".number_format($saldo1,2)."</td>";
+			echo "<td align='right'>".number_format($saldo2,2)."</td>";
+			echo "<td align='right'>".number_format($saldo3,2)."</td>";
+			echo "<td align='right' ".$clase." >".number_format($saldo4,2)."</td>";
+			echo "<td align='right'>".number_format($saldo5,2)."</td>";
+			echo "<td align='right' ".$clase1.">".number_format($saldo6,2)."</td>";
+			echo "<td align='right'>".number_format($saldo7,2)."</td>";
+			echo "<td align='right'>".number_format($saldo8,2)."</td></tr>";
+			
+			$inicial_debe1 = $inicial_debe1 + $saldo1;
+			$inicial_debe2 = $inicial_debe2 + $saldo2;
+			$inicial_debe3 = $inicial_debe3 + $saldo3;
+			$inicial_debe4 = $inicial_debe4 + $saldo4;
+			$inicial_debe5 = $inicial_debe5 + $saldo5;
+			$inicial_debe6 = $inicial_debe6 + $saldo6;
+			$inicial_debe7 = $inicial_debe7 + $saldo7;
+			$inicial_debe8 = $inicial_debe8 + $saldo8;
+		}
+		
+		echo "<tr>";
+		echo "<td> </td>";
+		echo "<td> </td>";
+		echo "<td> </td>";
+		echo "<td> </td>";
+		echo "<td> </td>";
+		echo "<td align='right'>".number_format($inicial_debe1,2)."</td>";
+		echo "<td align='right'>".number_format($inicial_debe2,2)."</td>";
+		echo "<td align='right'>".number_format($inicial_debe3,2)."</td>";
+		echo "<td align='right'>".number_format($inicial_debe4,2)."</td>";
+		echo "<td align='right'>".number_format($inicial_debe5,2)."</td>";
+		echo "<td align='right'>".number_format($inicial_debe6,2)."</td>";
+		echo "<td align='right'>".number_format($inicial_debe7,2)."</td>";
+		echo "<td align='right'>".number_format($inicial_debe8,2)."</td></tr>";
+		
+		echo '</table>';
+		
+	}
 //---------------
 	function titulo($f1,$f2){
 	    

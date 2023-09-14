@@ -43,12 +43,12 @@
      
           $anio = $fanio - 1;
       
-          $sql = "select subgrupo as cuenta,sum(debe)as debe, sum(haber) as haber
+          $sql = "select cuenta,sum(debe)as debe, sum(haber) as haber
         from view_diario_conta
         where subgrupo like ". $this->bd->sqlvalue_inyeccion($grupo.'%' ,true) ." and 
                 anio =". $this->bd->sqlvalue_inyeccion($anio ,true) ."  
-        group by subgrupo
-        order by subgrupo";
+        group by cuenta
+        order by cuenta";
                   
           
            
@@ -69,15 +69,17 @@
       	    
        	    
               $saldo = $fetch['debe'] - $fetch['haber'] ; 
+
+              if (    $saldo    <> 0 ) {
       	 
-      		$output[] = array ($fetch['cuenta'],
-      		                       trim($x['detalle']),
-      		                       $fetch['debe'],
-      		                       $fetch['haber'],
-      		                       round($saldo,2)
-      		    
-      		);
-      		 
+                        $output[] = array (
+                                            trim($fetch['cuenta']),
+                                            trim($x['detalle']),
+                                            $fetch['debe'],
+                                            $fetch['haber'],
+                                            round($saldo,2)
+                        );
+                    }
       	}
 
       	echo json_encode($output);

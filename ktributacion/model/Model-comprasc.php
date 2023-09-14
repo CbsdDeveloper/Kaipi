@@ -39,6 +39,8 @@ class proceso{
         
         $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
         
+
+
         $this->ATabla = array(
             array( campo => 'id_compras',tipo => 'NUMBER',id => '0',add => 'N', edit => 'N', valor => '-', key => 'S'),
             array( campo => 'id_asiento',tipo => 'NUMBER',id => '1',add => 'S', edit => 'N', valor => '0', key => 'N'),
@@ -103,10 +105,10 @@ class proceso{
     }
     //Constructor de la clase
     //-----------------------------------------------------------------------------------------------------------
-    function div_limpiar( ){
+    function div_limpiar($id ){
         //inicializamos la clase para conectarnos a la bd
         
-        $resultado = 'REGISTRO ELIMINADO ';
+       
         
         echo '<script type="text/javascript">';
         
@@ -114,6 +116,8 @@ class proceso{
         
         echo '</script>';
         
+        $resultado = '<b>TRANSACCION ANULADA/ELIMINADA.  Transaccion:'.$id .' </b>';
+
         return $resultado;
         
     }
@@ -462,10 +466,15 @@ class proceso{
         $montoiva    = $_POST["montoiva"];
         $bservicios  = $_POST["bservicios"];
         $bbienes     = $_POST["bbienes"];
+
+        $tipocomprobante     = $_POST["tipocomprobante"];
+
+
+        
         
         $total_iva = $bservicios +  $bbienes;
         
-        $valida  = $this->BusquedaFactura($secuencia, trim($idprov)); 
+        $valida  = $this->BusquedaFactura($secuencia, trim($idprov), substr(@$_POST["serie"],0,3),substr(@$_POST["serie"],3,3), $tipocomprobante); 
         
         if ( $valida > 0 ){
             
@@ -504,12 +513,17 @@ class proceso{
     }
     //--------------------------------.
     //----------------------------------------------------
-    function BusquedaFactura($secuencial, $idprov){
+    function BusquedaFactura($secuencial, $idprov,$establecimiento,$puntoemision, $tipocomprobante){
         
+         
         
+
         $x = $this->bd->query_array('co_compras',
                                     'count(*) as nn', 
                                      'idprov='.$this->bd->sqlvalue_inyeccion(trim($idprov),true) .' and '.
+                                     'establecimiento='.$this->bd->sqlvalue_inyeccion($establecimiento,true) .' and '.
+                                     'tipocomprobante='.$this->bd->sqlvalue_inyeccion($tipocomprobante,true) .' and '.
+                                     'puntoemision='.$this->bd->sqlvalue_inyeccion($puntoemision,true) .' and '.
                                      'secuencial='.$this->bd->sqlvalue_inyeccion($secuencial,true) .' and '.
                                      'registro='.$this->bd->sqlvalue_inyeccion($this->ruc,true)  
             );
@@ -524,6 +538,12 @@ class proceso{
     //--------------------------------------------------------------------------------
     function edicion($id){
         
+
+        $AAnexo = $this->bd->query_array('co_compras',
+            'id_asiento,autretencion1,secretencion1,fecharegistro,transaccion,coalesce(codigoe,0) as codigoe,estado,secuencial,grupo',
+            'id_compras='.$this->bd->sqlvalue_inyeccion($id,true)
+            );
+
                 
         $tpidprov = '01';
         $estado  = '';
@@ -544,6 +564,25 @@ class proceso{
         
         $this->ATabla[36][valor] =   substr($detalle,0,149);
         
+        $grupo = 0;
+
+        if ( trim($AAnexo['estado']) == 'X' ) {
+            $grupo = 1;
+        }
+
+        if (  $grupo == 1 ){
+
+                $sql = "UPDATE co_compras
+                SET 	codigoe=".$this->bd->sqlvalue_inyeccion(trim($AAnexo['codigoe']), true).",
+                        transaccion=".$this->bd->sqlvalue_inyeccion(trim($AAnexo['transaccion']), true).",
+                        autretencion1=".$this->bd->sqlvalue_inyeccion(trim($AAnexo['autretencion1']), true).",
+                        secretencion1=".$this->bd->sqlvalue_inyeccion(trim($AAnexo['secretencion1']), true)."
+                WHERE referencia=".$this->bd->sqlvalue_inyeccion($id, true);
+
+            $this->bd->ejecutar($sql);
+        }
+
+
         if ( $total_iva  > $montoiva ) {
             
             $result = '<img src="../../kimages/kdel.png" align="absmiddle" />&nbsp;<b>EL MONTO RETENIDO EN IVA NO ES EL CORRECTO ?</b>';
@@ -576,26 +615,26 @@ class proceso{
         
   
         $AAnexo = $this->bd->query_array('co_compras',
-            'id_asiento,autretencion1,transaccion,codigoe,estado',
+            'id_asiento,autretencion1,transaccion,coalesce(codigoe,0) as codigoe,estado',
             'id_compras='.$this->bd->sqlvalue_inyeccion($id,true)
             );
         
         $result = '<b> NO SE PUEDE ELIMINAR LA TRANSACCION - ENLACE CONTABLE NRO.'.$AAnexo['id_compras'] .' </b>';
         
-        if ($AAnexo['transaccion'] == 'E' ) {
+        if ( trim($AAnexo['transaccion']) == 'E' ) {
             
             $result = '<b> NO SE PUEDE ELIMINAR LA TRANSACCION - ANEXO AUTORIZADO </b>';
             
         }else {
           
-                        if ( trim($AAnexo['estado'] ) == 'S' ){
+                        if ( trim($AAnexo['codigoe'] ) == 0 ){
                                     $sql = 'delete from co_compras  where id_compras='.$this->bd->sqlvalue_inyeccion($id, true);
                                     $this->bd->ejecutar($sql);
                                     
                                     $sql = 'delete from co_compras_f  where id_compras='.$this->bd->sqlvalue_inyeccion($id, true);
                                     $this->bd->ejecutar($sql);
                                     
-                                    $result = $this->div_limpiar();
+                                    $result = $this->div_limpiar($id);
                         }else {
                             $result = '<b> NO SE PUEDE ELIMINAR LA TRANSACCION - COMPROBANTE ENVIADO</b>';
                         }
@@ -610,73 +649,108 @@ class proceso{
         
        
         $AAnexo = $this->bd->query_array('co_compras',
-            'id_asiento,autretencion1,transaccion,codigoe,estado,secuencial',
+            'id_asiento,autretencion1,transaccion,coalesce(codigoe,0) as codigoe,estado,secuencial,grupo',
             'id_compras='.$this->bd->sqlvalue_inyeccion($id,true)
             );
         
-        $result = '<b> NO SE PUEDE ELIMINAR LA TRANSACCION - ENLACE CONTABLE NRO.'.$AAnexo['id_asiento'] .' </b>';
+ 
+
+        $result1 = '<b> NO SE PUEDE ANULAR LA TRANSACCION.'.$AAnexo['codigoe'].' Transaccion:'.$AAnexo['transaccion'] .' </b>';
 
 
-        $result = '<b> NO SE PUEDE ANULAR LA TRANSACCION </b>';
+ 
+        $bandera = 0;    
+        $grupo   = 0;    
 
-
-
-        
         if ( trim($AAnexo['transaccion']) == 'E' ) {
-            
-            if ( trim($AAnexo['estado'] ) == 'S' ){
-                
-                $secuencial = trim($AAnexo['secuencial'] ) ;
-                
-                $anulado    = '-'.substr($secuencial,1,9) ;
-                 
-                $sql = "UPDATE co_compras
-                        SET 	codigoe=".$this->bd->sqlvalue_inyeccion(0, true).",
-                                estado=".$this->bd->sqlvalue_inyeccion('N', true).",
-                                secuencial=".$this->bd->sqlvalue_inyeccion($anulado, true).",
-                                secretencion1=".$this->bd->sqlvalue_inyeccion('', true).",
-                                autretencion1=".$this->bd->sqlvalue_inyeccion('', true).",
-                                transaccion=".$this->bd->sqlvalue_inyeccion('', true)."
-                        WHERE id_compras=".$this->bd->sqlvalue_inyeccion($id, true);
-                
-                $this->bd->ejecutar($sql);
-                
-                $sql = 'delete from co_compras_f  where id_compras='.$this->bd->sqlvalue_inyeccion($id, true);
-                $this->bd->ejecutar($sql);
-                
-                $result = $this->div_limpiar();
-                
-                
-            } 
-            
-        }else {
-            
-            if ( trim($AAnexo['estado'] ) == 'X' ){
+            $bandera = 1;
+        }
 
-                $sql = 'delete from co_compras_f  where id_compras='.$this->bd->sqlvalue_inyeccion($id, true);
-                $this->bd->ejecutar($sql);
-                
-                $sql = "UPDATE co_compras
-                        SET 	grupo=".$this->bd->sqlvalue_inyeccion('N', true).",
-                                referencia=".$this->bd->sqlvalue_inyeccion(0, true)."
-                        WHERE referencia=".$this->bd->sqlvalue_inyeccion($id, true);
-                
-                $this->bd->ejecutar($sql);
-
-                $sql = 'delete from co_compras  where id_compras='.$this->bd->sqlvalue_inyeccion($id, true);
-                $this->bd->ejecutar($sql);
-
-                $result = $this->div_limpiar();
-    
-            } 
-
-            
+        if ( trim($AAnexo['codigoe']) == '1' ) {
+            $bandera = 1;
+        }
+        
+        if ( trim($AAnexo['estado']) == 'X' ) {
+            $grupo = 1;
         }
 
 
+           
+        if (  $grupo == 1 ){
+
+            if (   $bandera == 0){
+                $sql = 'delete from co_compras  where id_compras='.$this->bd->sqlvalue_inyeccion($id, true);
+                $this->bd->ejecutar($sql);
+
+                $sql = 'delete from co_compras_f  where id_compras='.$this->bd->sqlvalue_inyeccion($id, true);
+                $this->bd->ejecutar($sql);
+
+                $sql = "UPDATE co_compras
+                SET 	grupo=".$this->bd->sqlvalue_inyeccion('N', true).",
+                        referencia=".$this->bd->sqlvalue_inyeccion(0, true)."
+                WHERE referencia=".$this->bd->sqlvalue_inyeccion($id, true);
+        
+                $this->bd->ejecutar($sql);
+
+            }else{
+            
+                $secuencial = trim($AAnexo['secuencial'] ) ;
+                
+                $anulado    = '-'.substr($secuencial,1,9) ;
+
+                $sql = "UPDATE co_compras
+                SET 	codigoe=".$this->bd->sqlvalue_inyeccion(0, true).",
+                        estado=".$this->bd->sqlvalue_inyeccion('N', true).",
+                        secuencial=".$this->bd->sqlvalue_inyeccion($anulado, true).",
+                        transaccion=".$this->bd->sqlvalue_inyeccion('', true)."
+                WHERE id_compras=".$this->bd->sqlvalue_inyeccion($id, true);
+        
+              
+
+               $this->bd->ejecutar($sql);
+ 
+                $sql = 'delete from co_compras_f  where id_compras='.$this->bd->sqlvalue_inyeccion($id, true);
+                $this->bd->ejecutar($sql);
+
+                $sql = "UPDATE co_compras
+                SET 	grupo=".$this->bd->sqlvalue_inyeccion('N', true).",
+                        autretencion1=".$this->bd->sqlvalue_inyeccion('', true).",
+                        secretencion1=".$this->bd->sqlvalue_inyeccion('', true).",
+                        referencia=".$this->bd->sqlvalue_inyeccion(0, true)."
+                WHERE referencia=".$this->bd->sqlvalue_inyeccion($id, true);
+        
+                $this->bd->ejecutar($sql);
+            }
+    
+        }else{
+            if (   $bandera == 1){
+
+                $secuencial = trim($AAnexo['secuencial'] ) ;
+                
+                $anulado    = '-'.substr($secuencial,1,9) ;
+
+                $sql = "UPDATE co_compras
+                SET 	codigoe=".$this->bd->sqlvalue_inyeccion(0, true).",
+                        estado=".$this->bd->sqlvalue_inyeccion('N', true).",
+                        secuencial=".$this->bd->sqlvalue_inyeccion($anulado, true).",
+                        transaccion=".$this->bd->sqlvalue_inyeccion('', true)."
+                WHERE id_compras=".$this->bd->sqlvalue_inyeccion($id, true);
+        
+               $this->bd->ejecutar($sql);
+ 
+                $sql = 'delete from co_compras_f  where id_compras='.$this->bd->sqlvalue_inyeccion($id, true);
+                $this->bd->ejecutar($sql);
+            }     
+        }  
+
+        $result= '';
+
+       $result = $this->div_limpiar($id);
+
+      
        
         
-        echo $result;
+        echo   $result ;
         
     }
 }

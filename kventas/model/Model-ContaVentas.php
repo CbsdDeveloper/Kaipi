@@ -269,7 +269,7 @@ class proceso{
 										        
 										        $this->bd->ejecutar($sql);
 
-												echo $sql;
+							 
 										        
 										        $idAsiento =  $this->bd->ultima_secuencia('co_asiento');
 		  return $idAsiento;
@@ -401,7 +401,9 @@ function K_aux($id_asientod,$id_asiento,$idprov,$cuenta,$debe,$haber,$id_periodo
  	    
  	    $sql = "UPDATE inv_movimiento
 							    SET 	id_asiento_ref  =".$this->bd->sqlvalue_inyeccion($idAsiento, true)."
-							      WHERE id_asiento_ref is null and   
+							      WHERE tipo = 'F' and 
+								  	    estado = 'aprobado' and 
+								  	    id_asiento_ref is null and   
                                         ( fechaa  BETWEEN "."'".$f1."'". ' AND '."'".$f2."')" ;
  	    
  	    $this->bd->ejecutar($sql);

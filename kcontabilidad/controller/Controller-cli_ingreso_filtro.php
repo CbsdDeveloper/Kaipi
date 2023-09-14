@@ -49,6 +49,7 @@
         $tipo   = $this->bd->retorna_tipo();
       	
         $MATRIZ_N = array(
+          '-'    => '-- Todo Tipo --',
           'NN'    => 'Persona Natural',
           'NC'    => 'Persona Natural - Obligado a llevar contabilidad',
           'PJ'    => 'Persona Juridico ',
@@ -68,9 +69,9 @@
        	
         $this->obj->list->listae('',$MATRIZ,'bestado',$datos,'required','',$evento,'div-0-12');  // lista estatica que dibuja una lista de valores con evento
        	 
-      	$this->obj->text->text_blue('',"texto",'crazon',15,15,$datos,'required','','div-0-12','Busqueda Nombre'); // casillero de texto 
+      	$this->obj->text->text_blue('RAZON SOCIAL',"texto",'crazon',15,15,$datos,'required','','div-0-12','Busqueda Nombre'); // casillero de texto 
 
-        $this->obj->text->text_blue('',"texto",'cidprov',15,15,$datos,'required','','div-0-12','Busqueda Identificacion'); // casillero de texto 
+        $this->obj->text->text_blue('IDENTIFICACION',"texto",'cidprov',15,15,$datos,'required','','div-0-12','Busqueda Identificacion'); // casillero de texto 
       
       
       }

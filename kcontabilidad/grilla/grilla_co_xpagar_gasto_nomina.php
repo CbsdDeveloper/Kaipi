@@ -60,7 +60,7 @@
       $xx = $this->bd->query_array('nom_rol_pago','tipo', 
           'id_rol='.$this->bd->sqlvalue_inyeccion($id_rol,true));
       
-        
+ 
       if ( $xx['tipo'] == '0' ){
           $cadena1 = '  tipoformula = '.$this->bd->sqlvalue_inyeccion(('RS'),true) ;
       }
@@ -73,20 +73,26 @@
           $cadena1 = '  tipoformula = '.$this->bd->sqlvalue_inyeccion(('DT'),true) ;
       }
       
-	    if ( $xx['tipo'] == '3' ){
-          $cadena1 = '  tipoformula = '.$this->bd->sqlvalue_inyeccion(('CC'),true) ;
+	  if ( $xx['tipo'] == '3' ){
+          $cadena1 = '  tipoformula in '."('CC','RS','AA')" ;
       }
+
+     
  
     if ( $xx['tipo'] == '4' ){
-          $cadena1 = '  tipoformula = '.$this->bd->sqlvalue_inyeccion(('RS'),true) ;
+        $cadena1 = '  tipoformula in '."( 'RS','AA')" ;
       }
       
+
+   
+
       $where = $cadena0.$cadena1;
       
       $sql = 'SELECT  programa,nombre,clasificador, ingreso
                FROM view_rol_tramite
               where '. $where.' order by  clasificador';
-      
+     
+     
     
       
       $resultado  = $this->bd->ejecutar($sql);

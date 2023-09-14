@@ -21,7 +21,7 @@ session_start( );
     
   
     
-    $sql = "SELECT   idprov, razon,   id_departamento, id_cargo,   regimen, cargo,  programa,sueldo
+    $sql = "SELECT   idprov, razon,   id_departamento, id_cargo,   regimen, cargo,  programa,sueldo,discapacidad,fecha
 				  FROM view_nomina_rol
 				  where upper(razon) =".$bd->sqlvalue_inyeccion($txtcodigo,true) ;
   
@@ -32,6 +32,22 @@ session_start( );
     $x  = $bd->obtener_array( $resultado1);
     
     $prov = trim($x['idprov']);
+
+     if (  trim($x['discapacidad']) == '-'){
+        $discapacidad = 'N';
+     }else{
+        $discapacidad = 'S';
+     }
+
+
+     $avacacion = $bd->query_array('nom_cvacaciones','dias_pendientes', 
+     'idprov='.$bd->sqlvalue_inyeccion($prov,true). " and periodo = ".$bd->sqlvalue_inyeccion($anio,true)
+   );
+
+   $pendiente_vacacion =  $avacacion['dias_pendientes'];
+
+
+
  
     
     echo json_encode( array("a"=>$prov, 
@@ -39,7 +55,10 @@ session_start( );
                             "c"=> trim($x['programa']) ,
                             "d"=> $x['id_departamento'] ,
                             "e"=> $x['id_cargo'] ,
-                            "f"=> $x['sueldo'] 
+                            "f"=> $x['sueldo'] ,
+                            "g"=> $discapacidad  ,
+                            "h"=> $x['fecha'] ,
+                            "i"=> $pendiente_vacacion 
                        )  
                     );
     

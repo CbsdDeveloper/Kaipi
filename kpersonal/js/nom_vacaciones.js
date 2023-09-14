@@ -130,7 +130,8 @@ function changeAction(tipo,action,mensaje){
 					$("#action").val("add");
  
 					var resultado =  `<div class="alert alert-success"><img src="../../kimages/if_error_36026.png" align="absmiddle" />&nbsp;<strong>AGREGAR NUEVO REGISTRO DE TRANSACCION</strong>   COMPLETE LA INFORMACION PARA GUARDAR LA INFORMACION </div>`;
- 					$("#result").html(resultado);
+ 				
+					$("#result").html(resultado);
 
 		            LimpiarPantalla();
 
@@ -372,202 +373,107 @@ function fecha_hoy()
 	 
 	 
  }
-
-///----------------cedula
  
- function validarCiu() {
-
-     
-	 var action = $('#action').val();
-	 
- 	 var cad = document.getElementById("idprov").value.trim();
- 	 var tpidprov = document.getElementById("tpidprov").value.trim();
-
-	 var total = 0;
-     var longitud = cad.length;
-     var longcheck = longitud - 1;
-
-    
-    if ( action == 'add'){
- 			     if (tpidprov == '02'){
-			 
-						     if (cad != "" && longitud == 10){   
-			
-						       for(i = 0; i < longcheck; i++){
-			
-						         if (i%2 === 0) {
-			
-						           var aux = cad.charAt(i) * 2;
-			
-						           if (aux > 9) aux -= 9;
-			
-						           total += aux;
-			
-						         } else {
-			
-						           total += parseInt(cad.charAt(i)); // parseInt o concatenará en lugar de sumar
-			
-						         }
-			
-						       }
-			
-						       total = total % 10 ? 10 - total % 10 : 0;
-			
-						       if (cad.charAt(longitud-1) != total) {
-			
-			 			    	   document.getElementById("idprov").value = '';
-			
-						       }else{
-			
-						    	   valida_identificacionExiste(cad,tpidprov);
-			
-						       }
-			
-					          }else{
-			
-					        	  document.getElementById("idprov").value = '';
-			
-					           }
-			              }
-					      //-----------------------------------
-					      if (tpidprov == '01'){
-					
-					    	 validarRUC();
-					
-					     }
-    		}
-     
-
-   }
-
  //---------------------------------------------------------
 
- function valida_identificacionExiste(cedula,tipo) {
+ function ValidaTipo(tipo) {
 
-	 
-     var parametros = {
+  	
+		var fecha = fecha_hoy();
+		
+		$("#fecha_out").val(fecha);
+		$("#fecha_in").val(fecha);
+	
+ 	
+				if ( tipo == 'vacaciones') {
+					$("#hora_out").val('08:00');
+					$("#hora_in").val('08:00');
+					$('#hora_out').attr("readonly", true) ;
+					$('#hora_in').attr("readonly", true) ;
 
-					'cedula' : cedula ,
+					$('#fecha_out').attr("readonly", false) ;
+					$('#fecha_in').attr("readonly", false) ;
+	
+				} 
+	
+				if ( tipo == 'permiso_dia') {
+			
+					$("#hora_out").val('08:00');
+					$("#hora_in").val('08:00');
+					
+					$('#hora_out').attr("readonly", true) ;
+					$('#hora_in').attr("readonly", true) ;
 
-                    'tipo' : tipo 
+					$('#fecha_out').attr("readonly", false) ;
+					$('#fecha_in').attr("readonly", false) ;
 
- 	  };
+					
+				}
+	
+				if ( tipo == 'permiso_hora') {
 
-	  $.ajax({
+					$('#hora_out').attr("readonly", false) ;
+					$('#hora_in').attr("readonly", false) ;
 
-					data:  parametros,
-
-					url:   '../model/Model-cedula.php',
-
-					type:  'GET' ,
-
- 					 
-
-					success:  function (data) {
-
-							 $("#idprov").val(data);  // $("#cuenta").html(response);
-
-						     
-
-  					} 
-
-			}); 
- 
+					$('#fecha_out').attr("readonly", false) ;
+					$('#fecha_in').attr("readonly", true) ;
+				}
+		 
 
     }
 
  //--------------------------------------
+ function ValidaFecha(fechaSalida) {
 
- function validarRUC(){
+	var tipo = 	$('#tipo').val();
 
-	 
+	var fecha_entrada = addDaysToDate(fechaSalida, 1);
 
-	  var number = document.getElementById('idprov').value;
 
-	  var dto = number.length;
 
-	  var valor;
+	if ( tipo == 'permiso_hora') {
 
-	  var acu=0;
+		$("#fecha_in").val(fechaSalida);
 
-	 
+	}
+
+	if ( tipo == 'permiso_dia') {
+			
+		$("#hora_out").val('08:00');
+		$("#hora_in").val('08:00');
+		$("#fecha_in").val(fecha_entrada);
+		
+	}
+	if ( tipo == 'vacaciones') {
+			
+		$("#hora_out").val('08:00');
+		$("#hora_in").val('08:00');
+		$("#fecha_in").val(fecha_entrada);
+		
+	}
+
+
+ }
+ /*
+ suma dias
+ */
+ function addDaysToDate(date, days){
+
+    var res = new Date(date);
+    res.setDate(res.getDate() + days);
+
+
+	var myDate = new Date(res).toISOString();
+
+	const myArray = myDate.split("T");
+
+	str_fecha = myArray[0]; 
 
  
 
-	   for (var i=0; i<dto; i++){
-
-	   valor = number.substring(i,i+1);
-
-		   if(valor==0||valor==1||valor==2||valor==3||valor==4||valor==5||valor==6||valor==7||valor==8||valor==9){
-
-		    acu = acu+1;
-
-		   }
-
-	   }
-
-	   if(acu==dto){
-
-	    while(number.substring(10,13)!=001){
-
-	    	//    alert('Los tres últimos dígitos no tienen el código del RUC 001.');
-
-	     document.getElementById("idprov").value = 'NO_VALIDO';
-
-	     return;
-
-	    }
-
-	    while(number.substring(0,2)>24){    
-
-	     //alert('Los dos primeros dígitos no pueden ser mayores a 24.');
-
-	     document.getElementById("idprov").value = 'NO_VALIDO';
-
-	     return;
-
-	    }
-
-  
-
-	    var porcion1 = number.substring(2,3);
-
-	  /*  if(porcion1<6){
-
-	     alert('El tercer dígito es menor a 6, por lo \ntanto el usuario es una persona natural.\n');
-
-	    }
-
-	    else{
-
-	     if(porcion1==6){
-
-	      alert('El tercer dígito es igual a 6, por lo \ntanto el usuario es una entidad pública.\n');
-
-	     }
-
-	     else{
-
-	      if(porcion1==9){
-
-	       alert('El tercer dígito es igual a 9, por lo \ntanto el usuario es una sociedad privada.\n');
-
-	      }
-
-	     }
-
-	    }*/
-
-	   }
-
-	   else{
-
-		   document.getElementById("idprov").value = 'NO_VALIDO';
-
-	   }
+    return str_fecha;
+} 
  
- 
-	 }
 /*
 APRUEBA LA TRANSACCION DE LAS VACACIONES
 */
@@ -694,6 +600,38 @@ function Ver_doc_prov(idprov) {
  
 
     }
+//---------------
+function ValidaPermisos(tipo_dias,accion) {
+
+
+   var idprov =  $("#idprov").val();  
+	
+	var parametros = {
+
+				   'tipo' : tipo_dias,
+				   'idprov':idprov
+ 
+	  };
+
+	 $.ajax({
+				data:  parametros,
+				url:   '../model/ajax_valida_dia.php',
+				type:  'GET' ,
+				dataType: "json",
+				success:  function (response) {
+						$("#dia_toca").val( response.a );   
+						$("#dia_max").val( response.b );  
+						$("#hora_max").val( response.c );  
+							
+				} 
+		});
+
+		if ( accion == 0){
+			ValidaTipo(tipo_dias) ;
+		}
+		
+
+   }	
 /*
 */
 function Ver_consulta(estado) {

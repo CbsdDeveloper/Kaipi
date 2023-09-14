@@ -69,30 +69,36 @@ if ( $accion == 'N'){
         $valor_residual         = $row["valor_residual"] ;
         $vida_util              = $row["vida_util"] ;
         
-        //  $valor_residual = 0;
         
-        $dias = (strtotime($fecha)-strtotime($fecha_fin))/86400;
-        $dias = abs($dias); $dias = floor($dias);
+        $dias = (strtotime($fecha_fin)-strtotime($fecha))/86400;
+        $dias = abs($dias); 
+        $dias = floor($dias);
         
-        
+ 
         $CDP_parcial     = ($costo_adquisicion - $valor_residual) / $vida_util;
         
-        $dias_var        = round($dias/365,1);
+        $dias_var        = round($dias/365,2);
         
         $CDP             =  round($CDP_parcial * $dias_var,2);
         
         $costo_residual  = $costo_adquisicion - $valor_residual ;
         
         $diferencia      = $costo_residual - $CDP;
+
+
         
         if ( $diferencia < 0 ){
-            $diferencia = $valor_residual;
-            
+            $diferencia      = $valor_residual;
             $dias_var        =  1;
-            $CDP             =  round($CDP_parcial * $dias_var,2);
+            $CDP             =  $costo_residual;
+
         }
-        
-        
+
+      /*
+         echo  'Costo='.$costo_adquisicion.'<br>valor_residual='.$valor_residual.'<br>CDP_parcial='.$CDP_parcial.
+               '<br>CDP='.$CDP.' <br>dias='.$dias.'('.$dias_var.')'.'<br>vida util='.$vida_util.'<br>diferencia='.$diferencia.'<br><br>';
+     */
+         
        // $valida = $valor_residual - $diferencia;
         
         
@@ -135,6 +141,15 @@ if ( $accion == 'N'){
             
             $bd->_InsertSQL($tabla,$ATabla, $secuencia  );
             
+              /*
+        
+        $sql1 = "update activo.ac_bienes
+        set movimiento = ".$bd->sqlvalue_inyeccion(1, true).",
+            valor_depreciacion= ".$bd->sqlvalue_inyeccion($CDP, true).",
+            anio_depre= ".$bd->sqlvalue_inyeccion($anio, true).",
+            valor_contable= ".$bd->sqlvalue_inyeccion($diferencia, true).'
+        where id_bien='.$bd->sqlvalue_inyeccion( $row["id_bien"], true);
+*/
             
             $sql1 = "update activo.ac_bienes
                                     set movimiento = ".$bd->sqlvalue_inyeccion(1, true).",

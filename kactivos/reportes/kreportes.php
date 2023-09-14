@@ -23,7 +23,8 @@ class ReportePdf{
 
 		$this->bd     = 	new Db;
 	
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		// $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar('postgres','db_kaipi','root');
 
 		$this->ruc       =  $_SESSION['ruc_registro'];
 		
@@ -707,6 +708,10 @@ class ReportePdf{
 	 $a10 = $this->bd->query_array('wk_config','carpeta , carpetasub', 'tipo='.$this->bd->sqlvalue_inyeccion(16,true));
 	 $pie_contenido = str_replace('#GUARDAALMACEN',trim($a10['carpeta']), $pie_contenido);
 	 $pie_contenido = str_replace('#CARGO_GUARDAALMACEN',trim($a10['carpetasub']), $pie_contenido);
+
+	 $a10 = $this->bd->query_array('wk_config','carpeta , carpetasub', 'tipo='.$this->bd->sqlvalue_inyeccion(20,true));  
+	 $pie_contenido = str_replace('#BIENES',trim($a10['carpeta']), $pie_contenido);
+	 $pie_contenido = str_replace('#CARGO_BIENES',trim($a10['carpetasub']), $pie_contenido);
 		
 		//------------- llama a la tabla de parametros ---------------------//
 
@@ -986,6 +991,35 @@ class ReportePdf{
 	    
 	    $estilo = 'style="padding: 3px" ';
 
+		// Campos para vehículos
+		$SQL = "SELECT  * FROM activo.ac_bienes_vehiculo WHERE id_bien =".$this->bd->sqlvalue_inyeccion(trim($datos['id_bien']),true);
+	    $resutlado_consulta = $this->bd->ejecutar($SQL);
+		$datos_vehiculo = $this->bd->obtener_array($resutlado_consulta);
+
+		$html_datos_vehiculo='';
+		if ($datos_vehiculo) {
+			// print_r($datos_vehiculo);
+			$html_datos_vehiculo='
+			<tr>
+				<td '.$estilo.' >Clase Vehículo:</td>
+				<td '.$estilo.' >'.trim($datos_vehiculo['clase_ve']).'</td>
+				<td '.$estilo.' >Nro. Motor:</td>
+				<td '.$estilo.' >'.$datos_vehiculo['motor_ve'].'</td>
+			</tr>
+			<tr>
+				<td '.$estilo.' >Nro. Chasis:</td>
+				<td '.$estilo.' >'.trim($datos_vehiculo['chasis_ve']).'</td>
+				<td '.$estilo.' >Nro. Placa:</td>
+				<td '.$estilo.' >'.$datos_vehiculo['placa_ve'].'</td>
+			</tr>
+			<tr>
+				<td '.$estilo.' >Año Fabricacion:</td>
+				<td '.$estilo.' >'.trim($datos_vehiculo['anio_ve']).'</td>
+				<td '.$estilo.' >Color:</td>
+				<td '.$estilo.' >'.$datos_vehiculo['color_ve'].'</td>
+			</tr>';
+		}
+
 	    echo '<table style="border-collapse: collapse; border: 1px solid #AAAAAA;font-weight: normal;font-size: 10px" border="0" width="95%" cellspacing="0" >
 	             <tr>  <td colspan="4" bgcolor="#EDEDED" style="font-weight: normal;font-size: 11px;padding: 6px">2. '.$titulo.'  </td> </tr>
 				 
@@ -1004,6 +1038,7 @@ class ReportePdf{
     				   <td '.$estilo.' >'.$uso.'</td>
     				   <td '.$estilo.' >'.$datos['uso'].'</td>
  				 </tr>
+				 '.$html_datos_vehiculo.'
    					<tr>
 				      <td colspan="4"   bgcolor="#EDEDED" style="font-weight: normal;font-size: 11px;padding: 6px">3.'.$titulo1.'</td>
 			       </tr> 
@@ -2362,5 +2397,3 @@ function GrillaCompromiso($id){
     }
 
 }
-
-?>

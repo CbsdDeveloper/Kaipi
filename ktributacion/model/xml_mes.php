@@ -97,14 +97,19 @@ class proceso{
                     fechaemiret1,
                     CASE WHEN porcentaje_iva= 5 THEN valorretservicios   ELSE  0 end as valorretservicios20,
                     CASE WHEN porcentaje_iva= 4 THEN valorretbienes   ELSE  0 end as valorbienes10,
-                    id_compras,razon
+                    id_compras,razon,
+                    docmodificado,
+                    secmodificado,
+                    estabmodificado,
+                    autmodificado
              FROM view_anexos_compras V
              WHERE V.mes = ".$this->bd->sqlvalue_inyeccion($mes,true)." and
                    V.estado = ".$this->bd->sqlvalue_inyeccion('S',true)." and
                    V.registro = ".$this->bd->sqlvalue_inyeccion( $this->ruc,true)." and
                    V.anio=".$this->bd->sqlvalue_inyeccion($anio,true);
         
-        
+    
+
          $stmt = $this->bd->ejecutar($sql);
         
         return   $stmt;
@@ -189,7 +194,7 @@ class proceso{
         print '<codigoOperativo>IVA</codigoOperativo>';
         print  '<compras>';
  
-         while ($x=$this->bd->obtener_fila($stmt)){
+        while ($x=$this->bd->obtener_fila($stmt)){
             print  '<detalleCompras>';
             print  '<codSustento>'.$this->idsus(trim($x['idprov']), $x['codsustento']).'</codSustento>';
           
@@ -205,18 +210,20 @@ class proceso{
             }
             
             print  '<tipoComprobante>'. $tipo.'</tipoComprobante>';
-            
+            /*
             if ($tipo=='03'){
                 if (idruc($x['idprov']) == '03'){
                     print  '<tipoProv>02</tipoProv>';
                     print  '<denoProv>'.str_replace('.','',trim($x['razon'])).'</denoProv>';
                     $ba = 1;
-                }
+                }else{
+
+                }    
             }
-            
+            */
             if ($tipo=='15'){
                      print  '<tipoProv>01</tipoProv>';
-                    print  '<denoProv>'.str_replace('.','',trim($x['razon'])).'</denoProv>';
+                     print  '<denoProv>'.str_replace('.','',trim($x['razon'])).'</denoProv>';
                     $ba = 1;
              }
          
@@ -312,6 +319,15 @@ class proceso{
                 print  '<secRetencion1>'.trim($x['secretencion1']).'</secRetencion1>';
                 print  '<autRetencion1>'.trim($x['autretencion1']).'</autRetencion1>';
                 print  '<fechaEmiRet1>'.$this->idfecha($x['fechaemiret1']).'</fechaEmiRet1>';
+            }
+
+            // NOTAS DE CREDITO -> datos de documento moficiado
+            if ( $tipo == '04'  ){
+                print  '<docModificado>'.trim($x['docmodificado']).'</docModificado>';
+                print  '<estabModificado>'.trim(substr($x['estabmodificado'],0,3)).'</estabModificado>';
+                print  '<ptoEmiModificado>'.trim(substr($x['estabmodificado'],3,3)).'</ptoEmiModificado>';
+                print  '<secModificado>'.trim($x['secmodificado']).'</secModificado>';
+                print  '<autModificado>'.trim($x['autmodificado']).'</autModificado>';
             }
             print  '</detalleCompras>';
           
@@ -772,9 +788,9 @@ header("Content-type: MIME");
 header('Content-type: text/html; charset=utf-8');
 header("Content-type: application/octet-stream");
 header('Content-Type: application/octet-stream');
-header("Content-Disposition: attachment; filename='".$downloadfile."'");
+header("Content-Disposition: attachment; filename=".$downloadfile);
 header('Content-Transfer-Encoding: binary');
-header("Expires: 0");
+header("Expires: 0"); 
 $gestion->consultaId($anio,$mes);
  
 ?> 

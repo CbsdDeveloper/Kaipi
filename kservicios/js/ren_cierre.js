@@ -187,7 +187,7 @@ return today;
 			"idpago" : idpago  
 	};
 		
- 	if ( estado1 == 'N') {
+ 	// if ( estado1 == 'N') {
 
 		$.ajax({
 				url:   '../model/ajax_ren_visor_factura_id.php',
@@ -205,7 +205,7 @@ return today;
 		$("#Resultado_facturae_id").html('');   
 		
 
- 	}
+ 	// }
 }
  //---------------
  function goToURreporte(id_par_ciu,variable){        

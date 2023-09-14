@@ -17,6 +17,7 @@
       private $sesion;
       private $hoy;
       private $POST;
+      private $anio;
       //-----------------------------------------------------------------------------------------------------------
       //Constructor de la clase
       //-----------------------------------------------------------------------------------------------------------
@@ -29,6 +30,8 @@
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 $this->sesion 	 =  $_SESSION['email'];
                 $this->hoy 	     =  $this->bd->hoy();
+
+                $this->anio       =  $_SESSION['anio'];
         
                 $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
  
@@ -67,7 +70,7 @@
       	        array( campo => 'cargo',   valor => '-',  filtro => 'N',   visor => 'S'),
                   array( campo => 'id_cvacacion',   valor => '-',  filtro => 'N',   visor => 'S'),
                 array( campo => 'ajuste',   valor => '-',  filtro => 'N',   visor => 'S'),
-                array( campo => 'periodo',   valor => '-',  filtro => 'N',   visor => 'S'),
+                array( campo => 'periodo',   valor =>  $this->anio ,  filtro => 'S',   visor => 'S'),
       	        array( campo => 'estado',   valor => $qestado ,  filtro => 'S',   visor => 'N'),
       	        array( campo => 'id_departamento',   valor => $qunidad ,  filtro => $filtro,   visor => 'N'),
       	        array( campo => 'regimen',   valor => trim($qregimen) ,  filtro => $filtror,   visor => 'N') 
@@ -81,12 +84,21 @@
       	while ($fetch=$this->bd->obtener_fila($resultado)){
       		 
 
-      
+          /*
+                total = saldo_anterior + dias_derecho
+                dias_tomados  // suma todos los dias
+                dias_pendientes = total - dias_tomados
+                // tabla vacaciones
+
+                   dia_acumula  = valor q se va  calcular
+                dia_tomados dias
+                hora_tomados horas
+                */
             $total = $fetch['saldo_anterior'] + $fetch['dias_derecho'];
 
-            $diferencia = $this->suma_dias( $fetch['id_cvacacion'],trim($fetch['idprov']) ,  $fetch['ajuste'],  $fetch['periodo'], $total);
+            $this->suma_dias( $fetch['id_cvacacion'],trim($fetch['idprov']) ,  $fetch['ajuste'],  $fetch['periodo'], $total);
 
-            $pendiente =  $total - $diferencia;
+            $pendiente =  $total -  ($fetch['dias_tomados'] +  $fetch['ajuste']);
          
       		$output[] = array (
       		                $fetch['unidad'],
@@ -95,7 +107,7 @@
       		                $fetch['fecha'],
       		                $fetch['saldo_anterior'],
       		                $fetch['dias_derecho'],            
-      		                $diferencia,
+      		                $fetch['dias_tomados'],   
                             round($pendiente,2),  
                             trim($fetch['idprov']),
                             $fetch['ajuste'],  
@@ -113,33 +125,49 @@
       function suma_dias( $id_cvacacion, $id ,$ajuste, $periodo, $total ){
         
 
- 
+       
+
+
+
         $x = $this->bd->query_array('nom_vacaciones',
-                                    ' sum(dia_acumula) total,sum(dia_tomados) dia,sum(hora_tomados) hora', 
+                                    'sum(dia_acumula) total,
+                                     sum(dia_tomados) dia_tomados,
+                                     sum(hora_tomados) hora_tomados', 
                                     'idprov='.$this->bd->sqlvalue_inyeccion(trim($id),true) .' and 
                                      estado ='.$this->bd->sqlvalue_inyeccion( '2',true) .' and
-                                     anio ='.$this->bd->sqlvalue_inyeccion( $periodo,true) ." and
-                                     cargoa = 'S' "
+                                     anio ='.$this->bd->sqlvalue_inyeccion(  $this->anio     ,true) 
          );
         
         
-        
-        $saldo 			= $x["total"]  + $ajuste;
-        
-        $diferencia  = $total -  $saldo ;
-         
-        
+      
+ 
+         if(  ($x["dia_tomados"]  +   $x["hora_tomados"] ) > 0  ){
+  
+            $saldo 			        = $x["total"] ;
+            $dia_tomados 			= $x["dia_tomados"] ;
+            $hora_tomados 			= $x["hora_tomados"] ;
+        }else{
+  
+            $saldo 			        = 0 ;
+            $dia_tomados 			= 0;
+            $hora_tomados 			= 0 ;
+        }
+
+
         $sql = "update nom_cvacaciones
-				  set dias_tomados=".$this->bd->sqlvalue_inyeccion($saldo,true)." ,
-                      horas_tomadas=".$this->bd->sqlvalue_inyeccion( $x["hora"],true)." ,
-                      dias=".$this->bd->sqlvalue_inyeccion( $x["dia"],true)." ,
-                      dias_pendientes=".$this->bd->sqlvalue_inyeccion($diferencia,true)." 
+				  set dias_tomados= coalesce(ajuste,0) + ".$this->bd->sqlvalue_inyeccion($saldo,true)." ,
+                      horas_dias =".$this->bd->sqlvalue_inyeccion($hora_tomados,true)." ,
+                      dias= ".$this->bd->sqlvalue_inyeccion($dia_tomados,true)." ,
+                      dias_pendientes=(saldo_anterior + dias_derecho - coalesce(ajuste,0) ) - ".$this->bd->sqlvalue_inyeccion($saldo,true).'
 				  where  
-                  id_cvacacion =".$this->bd->sqlvalue_inyeccion($id_cvacacion,true)  ;
+                  idprov='.$this->bd->sqlvalue_inyeccion(trim($id),true) .' and 
+                  periodo ='.$this->bd->sqlvalue_inyeccion(  $this->anio     ,true) ;
         
+
+                 
         $this->bd->ejecutar($sql);
        
-        return   $saldo;
+        
  
 
        

@@ -98,7 +98,20 @@ class proceso{
 	    }elseif ($id == 8 ){
 	        $this->obj->grid->KP_sumatoria(5,"costo","", "","");
 			$bandera = 81;
- 	    }
+ 	   }elseif ($id == 201 ){
+		$destino = 'RESUMEN POR PERIODO GENERAL CONSUMO POR UNIDAD';
+		$bandera = 201;
+	}elseif ($id == 202 ){
+		$destino = 'RESUMEN POR PERIODO GENERAL FINANCIERO POR UNIDAD';
+		$bandera = 202;
+	}elseif ($id == 205 ){
+		$destino = 'RESUMEN POR ARTICULO/PRODUCTO';
+		$bandera = 205;
+	}
+	elseif ($id == 301 ){
+		$destino = 'RESUMEN POR ROTACION DE PRODUCTOS';
+		$bandera = 301;
+	 }
 	    
 	    $array_datos[0] = $destino;
 	    $array_datos[1] = $bandera;
@@ -106,7 +119,7 @@ class proceso{
 	    return $array_datos;
 	}
 //-----------------------------------------
-	function grilla( $f1,$f2,$tipo,$id,$cbodega,$ccuentas){
+	function grilla( $f1,$f2,$tipo,$id,$cbodega,$ccuentas,$producto_busca){
 	    
 	     $tipodb 		= $this->bd->retorna_tipo();
 	     $anioArray     = explode('-', $f2);
@@ -135,9 +148,12 @@ class proceso{
 	         
 	     }elseif($bandera == 1){
 	         
+			echo '<div class="col-md-12"> ';
 	         $resultado  = $this->bd->ejecutar($sql);
 	         $this->obj->grid->KP_GRID_CTA_query($resultado,$tipodb,'Id',$formulario,'S','',$action,'','',4);
 			 $this->firmas_elaborado();
+
+			 echo '</div> ';
 	         
 	     }elseif($bandera == 2){
 	         
@@ -162,10 +178,26 @@ class proceso{
 	    
 		}elseif($bandera == 81){
 	         
-
-			$this->Mov_grupo_detalle(  $f11,$f2,$tipo,$id,$cbodega,$ccuentas, $sql );
+ 			$this->Mov_grupo_detalle(  $f11,$f2,$tipo,$id,$cbodega,$ccuentas, $sql );
 			
-		}
+		}elseif($bandera == 201){
+				
+		    $this->Mov_grupo_unidades(  $f11,$f2,$tipo,$id,$cbodega,$ccuentas);
+
+	    }elseif($bandera == 202){
+				
+		    $this->Mov_grupo_unidades1(  $f11,$f2,$tipo,$id,$cbodega,$ccuentas);
+
+		}elseif($bandera == 205){
+				
+		    $this->Mov_grupo_unidades_pro(  $f11,$f2,$tipo,$id,$cbodega,$ccuentas,$producto_busca);
+
+	    }elseif($bandera == 301){
+				
+		    $this->Mov_grupo_rotacion(   $anio,$tipo,$id,$cbodega,$ccuentas);
+	    }
+
+		
 	 
 	}
 //---------------------------
@@ -184,6 +216,13 @@ function Mov_grupo_detalle( $f11,$f2,$tipo,$id,$cbodega,$ccuentas,$sql1 ){
 									  max(costo) as maximo
 									  */
 	
+if ( $ccuentas == '-') {
+}
+else {
+    echo '<h4>Cuenta Seleccionada: '.$ccuentas .'</h4>';	
+}
+
+
 	$this->cabecera_mov();
 	
 	$stmt  = $this->bd->ejecutar($sql1);
@@ -202,12 +241,15 @@ function Mov_grupo_detalle( $f11,$f2,$tipo,$id,$cbodega,$ccuentas,$sql1 ){
 		$cadena = '<a class="btn btn-xs" href="#" data-toggle="modal" data-target="#myModalActualiza" onclick="BuscaCuenta('.$idproducto.')"> 
 		'.$x['idproducto'].'</a>';
 		
+		$cadena1 = '<a class="btn btn-xs" href="#" data-toggle="modal" data-target="#myModalActualiza" onclick="BuscaMov('.$idproducto.')"> 
+		'.$x['producto'].'</a>';
+
 		echo "<tr>";
 		echo "<td>".$cadena ."</td>";
-		echo "<td><b>".$x['producto']."</b></td>";
+		echo "<td><b>".$cadena1 ."</b></td>";
 	
-		echo "<td>".$x['cuenta_inventario']."</td>";
-		echo "<td>".$x['cuenta_gasto']."</td>";
+		echo "<td><b>".$x['cuenta_inventario']."</b></td>";
+		echo "<td><b>".$x['cuenta_gasto']."</b></td>";
 
 		echo "<td>".$cantidad."</td>";
 
@@ -238,17 +280,33 @@ function Mov_grupo_detalle( $f11,$f2,$tipo,$id,$cbodega,$ccuentas,$sql1 ){
 	    
 	    if ($id == 1)  {
         	        if ( $tipo == 'I') {
-        	            $sql = "SELECT id_movimiento as movimiento,fecha,comprobante,
-                                      trim(detalle) detalle,id_tramite || ' ' as tramite,
-                                      idprov  || ' ' as identificacion,proveedor,
-                                      base12 as baseimponible,iva,base0 as tarifa0,total
-                                    FROM  view_inv_transaccion
-                                    where tipo     ='".$tipo."' and
-                                          registro = ".$this->bd->sqlvalue_inyeccion($this->ruc , true)." and
-                                          estado   = ".$this->bd->sqlvalue_inyeccion('aprobado', true)." and
-                                          (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )  order by fecha ";
+
+
+					   $sqlconta = " ( SELECT max(b.id_asiento) || '/<b>' || max(b.fecha) || '</b>' as periodo
+									FROM co_asiento b
+									WHERE b.id_tramite = a.id_tramite and b.estado= 'aprobado') as tramite_enlace_contable_fecha ";
+
+        	            $sql = "SELECT a.id_movimiento as nro_movimiento,
+									   '<b>' || a.fecha || '</b>'    as fecha_ingreso_inv,
+									   a.comprobante as nro_comprobante,
+                                       trim(a.detalle) detalle, 
+									   a.id_tramite || ' ' as tramite,". $sqlconta.",
+                                       a.idprov  || ' ' as identificacion,proveedor,
+                                       a.base12 as baseimponible,
+									   a.iva,
+									   a.base0 as tarifa0,
+									   a.total
+                                    FROM  view_inv_transaccion a
+                                    where a.tipo     ='".$tipo."' and
+                                          a.registro = ".$this->bd->sqlvalue_inyeccion($this->ruc , true)." and
+                                          a.estado   = ".$this->bd->sqlvalue_inyeccion('aprobado', true)." and
+                                          (a.fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )  order by a.fecha desc,a.comprobante desc ";
+
+										 
         	        }else {
-        	            $sql ="SELECT id_movimiento as movimiento,  fecha,  comprobante,
+        	            $sql ="SELECT id_movimiento as nro_movimiento,  
+										  fecha  as fecha_ingreso_inv,  
+										  comprobante as nro_comprobante,
                                           trim(detalle) detalle,   unidad, idprov  || ' ' as identificacion,
                                           proveedor as solicita,  total
                                     FROM  view_inv_transaccion
@@ -256,7 +314,7 @@ function Mov_grupo_detalle( $f11,$f2,$tipo,$id,$cbodega,$ccuentas,$sql1 ){
                                           registro = ".$this->bd->sqlvalue_inyeccion($this->ruc , true)." and
                                           estado   = ".$this->bd->sqlvalue_inyeccion('aprobado', true)." and
                                           (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )
-                                     order by fecha ";
+										  order by fecha desc,comprobante desc";
         	        }
 	    }
 	    
@@ -330,6 +388,7 @@ function Mov_grupo_detalle( $f11,$f2,$tipo,$id,$cbodega,$ccuentas,$sql1 ){
 	    
 	    if ($id == 4)  {
         	        $tipo  = 'I';
+
         	        $sql   = "SELECT producto,
         	                      sum(cantidad)  || ' ' as cantidad,
                                   sum(coalesce(baseiva)) as baseimponible,
@@ -728,7 +787,8 @@ function cabecera_general($tipo){
         	                      sum(monto)   as costo_total
                         FROM  view_diario_inventario
                     	WHERE tipo  <> 'A' and
-                     		  (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )
+                     		  (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' ) and
+							  cuenta <> '-' 
                         GROUP BY cuenta,item
                         ORDER BY 1";
          	    
@@ -755,7 +815,8 @@ function cabecera_general($tipo){
                             FROM view_inv_movimiento_conta
             	           WHERE tipo= 'I' and 
                      		     anio =". $this->bd->sqlvalue_inyeccion( $anio, true)." and
-                     		     (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )
+                     		     (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' ) and 
+								  cuenta_inv <> '-' 
                           GROUP BY  cuenta_inv,cuenta_gas,ncuenta_inv,clasificador 
                           ORDER BY cuenta_inv";
   	    
@@ -781,7 +842,8 @@ function cabecera_general($tipo){
                             FROM view_inv_movimiento_conta
             	           WHERE tipo= 'E' and
                      		     anio =". $this->bd->sqlvalue_inyeccion( $anio, true)." and
-                     		     (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )
+                     		     (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )  and 
+								  cuenta_inv <> '-' 
                           GROUP BY  cuenta_inv,cuenta_gas,ncuenta_inv,clasificador
                           ORDER BY cuenta_inv";
 	    
@@ -803,7 +865,7 @@ function cabecera_general($tipo){
  		FROM view_inv_movimiento_conta a, co_plan_ctas b
  		where   a.tipo= 'E' and trim(a.cuenta_gas) = trim(b.cuenta) and
  			    a.anio::character varying::text = b.anio and
- 			   (a.fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )
+ 			   (a.fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' ) and  cuenta_gas <> '-' 
          group by a.cuenta_gas, b.detalle
          union
          select cuenta_inv as inventario, ncuenta_inv as detalle, 0 as debe, sum(total) as haber
@@ -811,6 +873,7 @@ function cabecera_general($tipo){
          		where  tipo= 'E'  and
          			   anio =". $this->bd->sqlvalue_inyeccion( $anio, true)." and
          			   (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )
+					    and  cuenta_inv <> '-' 
          group by cuenta_inv,ncuenta_inv order by 1 asc, 3 desc";
 	    
 	    
@@ -872,6 +935,223 @@ function cabecera_general($tipo){
 	    
 	    echo '</div> ';
 	}
+	//-----------------------------
+	function Mov_grupo_rotacion(   $anio,$tipo,$id,$cbodega,$ccuentas){
+	    
+		$tipo1 		   =  $this->bd->retorna_tipo();
+
+		echo '<div class="col-md-8"> ';
+	   
+						$sql = "SELECT producto ,max(fecha) fecha,sum(cantidad) as cantidad,sum(total) as total
+						FROM view_inv_movimiento_det
+						where anio =" .$this->bd->sqlvalue_inyeccion($anio,true)." and 
+							tipo = 'E'
+						group by producto
+						order by 3 desc limit 12";
+
+ 
+						$resultado1  = $this->bd->ejecutar($sql);
+
+						$cabecera =  "Articulos mas solicitados ,Ultima Salida,Cantidad,Total";
+
+
+						$evento   = "";
+						$this->obj->table->table_basic_seleccion($resultado1,$tipo1,'','',$evento ,$cabecera);
+
+
+						$sql = "SELECT producto ,max(fecha) fecha,sum(cantidad) as cantidad,sum(total) as total
+						FROM view_inv_movimiento_det
+						where anio =" .$this->bd->sqlvalue_inyeccion($anio,true)." and 
+							tipo = 'I'
+						group by producto
+						order by 3 desc limit 12";
+
+
+						$resultado  = $this->bd->ejecutar($sql);
+
+						$cabecera =  "Articulos mas adquiridos,Ultima Compra,Cantidad,Total";
+
+
+						$evento   = "";
+						$this->obj->table->table_basic_seleccion($resultado,$tipo1,'','',$evento ,$cabecera);
+
+						echo '</div> ';				
+
+	}
+	//-----------------------------------------
+	function Mov_grupo_unidades( $f1,$f2,$tipo,$id,$cbodega,$ccuentas){
+	    
+
+		//$cbodega,$ccuentas
+
+		if ( $cbodega == '0'){
+			$cadenabod = '';
+		}	
+		else{
+			$cadenabod =' and idbodega ='.$this->bd->sqlvalue_inyeccion( $cbodega , true);
+		}	
+
+		if ( $tipo == 'I') {
+			$sql ="SELECT idprov  || ' ' as codigo, proveedor as nombre
+				FROM  view_inv_transaccion
+				where tipo     ='".$tipo."' and
+					  registro = ".$this->bd->sqlvalue_inyeccion($this->ruc , true)." and
+					  estado   = ".$this->bd->sqlvalue_inyeccion('aprobado', true)." and
+					 (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' ) ".$cadenabod ."
+				 group by  idprov,    proveedor
+				 order by proveedor ";
+		}else {
+			 $sql ="SELECT id_departamento || ' ' as codigo, unidad  as nombre
+				FROM  view_inv_transaccion
+				where tipo     ='".$tipo."' and
+					  registro = ".$this->bd->sqlvalue_inyeccion($this->ruc , true)." and
+					  estado   = ".$this->bd->sqlvalue_inyeccion('aprobado', true)." and
+					 (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )  ".$cadenabod ."
+				 group by  unidad,id_departamento
+				 order by unidad ";
+		}
+	    
+	    
+	    $stmt_lista = $this->bd->ejecutar($sql);
+	    
+	    
+	    echo '<div class="col-md-8"> ';
+	    
+	    while ($x=$this->bd->obtener_fila($stmt_lista)){
+
+	     	$codigo = trim($x['codigo']);
+	        $detalle = trim($x['nombre']);
+	        
+	        
+	        $etiqueta = $codigo.' '.$detalle;
+	        
+	        echo ' <ul class="list-group">
+                    <li class="list-group-item"> <b>'.$etiqueta.'</b></li>
+                   </ul>';
+
+	           $this->movimiento_unidades($f1,$f2,$codigo,$tipo,$cbodega,$ccuentas);
+	     
+	    }
+	    
+	    echo '</div> ';
+	}
+//------------------------------
+	function Mov_grupo_unidades_pro( $f1,$f2,$tipo,$id,$cbodega,$ccuentas,$producto){
+	    
+
+		//$cbodega,$ccuentas
+
+		if ( $cbodega == '0'){
+			$cadenabod = '';
+		}	
+		else{
+			$cadenabod =' and idbodega ='.$this->bd->sqlvalue_inyeccion( $cbodega , true);
+		}	
+
+
+		$nombre_producto = '%'.trim(strtoupper($producto)).'%';
+		
+ 
+	 
+		if ( $tipo == 'I') {
+
+			$sql ="SELECT producto , idproducto 
+				FROM  view_inv_movimiento_det
+				where tipo     ='".$tipo."' and
+			        	producto like  ".$this->bd->sqlvalue_inyeccion(	$nombre_producto  , true)." and
+					  estado   = ".$this->bd->sqlvalue_inyeccion('aprobado', true)." and
+					 (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' ) ".$cadenabod ."
+					 group by producto , idproducto 
+				 order by producto ";
+		}else {
+
+			 $sql ="SELECT producto , idproducto 
+				FROM  view_inv_movimiento_det
+				where tipo     ='".$tipo."' and
+					producto like  ".$this->bd->sqlvalue_inyeccion(	$nombre_producto  , true)." and
+					  estado   = ".$this->bd->sqlvalue_inyeccion('aprobado', true)." and
+					 (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )  ".$cadenabod ."
+					 group by producto , idproducto 
+				 order by producto ";
+		}
+ 
+		 
+
+
+	    
+	    $stmt_lista = $this->bd->ejecutar($sql);
+	    
+	    
+	    echo '<div class="col-md-8"> ';
+	    
+	    while ($x=$this->bd->obtener_fila($stmt_lista)){
+
+	     	$codigo = trim($x['idproducto']);
+	        $detalle = trim($x['producto']);
+	        
+	        
+	     
+	        echo ' <ul class="list-group">
+                    <li class="list-group-item"> <b>'.$detalle.'</b></li>
+                   </ul>';
+
+	           $this->movimiento_unidades_pro($f1,$f2,$codigo,$tipo,$cbodega,$codigo);
+	     
+	    }
+	    
+	    echo '</div> ';
+
+	 
+	}
+		//-----------------------------------------
+		function Mov_grupo_unidades1( $f1,$f2,$tipo,$id,$cbodega,$ccuentas){
+	    
+		
+			
+			if ( $tipo == 'I') {
+				$sql ="SELECT idprov  || ' ' as codigo, proveedor as nombre
+					FROM  view_inv_transaccion
+					where tipo     ='".$tipo."' and
+						  registro = ".$this->bd->sqlvalue_inyeccion($this->ruc , true)." and
+						  estado   = ".$this->bd->sqlvalue_inyeccion('aprobado', true)." and
+						 (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )
+					 group by  idprov,    proveedor
+					 order by proveedor ";
+			}else {
+				 $sql ="SELECT id_departamento || ' ' as codigo, unidad  as nombre
+					FROM  view_inv_transaccion
+					where tipo     ='".$tipo."' and
+						  registro = ".$this->bd->sqlvalue_inyeccion($this->ruc , true)." and
+						  estado   = ".$this->bd->sqlvalue_inyeccion('aprobado', true)." and
+						 (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )
+					 group by  unidad,id_departamento
+					 order by unidad ";
+			}
+			
+			
+			$stmt_lista = $this->bd->ejecutar($sql);
+			
+			
+			echo '<div class="col-md-8"> ';
+			
+			while ($x=$this->bd->obtener_fila($stmt_lista)){
+	
+				 $codigo = trim($x['codigo']);
+				$detalle = trim($x['nombre']);
+				
+				
+				$etiqueta = $codigo.' '.$detalle;
+				
+				echo ' <ul class="list-group">
+						<li class="list-group-item"> <b>'.$etiqueta.'</b></li>
+					   </ul>';
+	
+				   $this->movimiento_unidades1($f1,$f2,$codigo,$tipo);
+			 
+			}
+			
+			echo '</div> ';
+		}
 	//----------------------------------------------------------------
 	function cabecera_mov(){
 	    
@@ -992,6 +1272,176 @@ function cabecera_general($tipo){
 	    unset($x); //eliminamos la fila para evitar sobrecargar la memoria
 	    
 	    pg_free_result ($stmt) ;
+	    
+	}
+	//-------------
+	function movimiento_unidades($f1,$f2,$codigo,$tipo,$cbodega,$ccuentas){
+	    
+		$tipodb 		= $this->bd->retorna_tipo();
+		
+ 
+		
+		if ( $cbodega == '0'){
+			$cadenabod = '';
+		}	
+		else{
+			$cadenabod =' and idbodega ='.$this->bd->sqlvalue_inyeccion( $cbodega , true);
+		}	
+
+		if ( $ccuentas == '-'){
+			$cadenacta = '';
+		}	
+		else{
+			$cadenacta =' and cuenta_inv ='.$this->bd->sqlvalue_inyeccion( $ccuentas , true);
+		}	
+
+
+		if ( $tipo == 'I'){
+			$sql ="SELECT idproducto as codigo, producto,
+					  sum(cantidad)  || ' ' as cantidad,
+					  sum(coalesce(total)) as costo,
+					  sum(coalesce(total)) /  sum(cantidad)  as media,
+					  min(costo) as minimo,
+					  max(costo) as maximo
+				 from view_inv_movimiento_det
+			   where  tipo ='".$tipo."' and
+					  estado = ".$this->bd->sqlvalue_inyeccion( 'aprobado', true)." and
+					  idprov = ".$this->bd->sqlvalue_inyeccion( $codigo, true)." and
+					  (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' ) ".$cadenabod.$cadenacta ."
+				 group by idproducto,producto order by  producto ";
+		}else  {
+			$sql ="SELECT idproducto as codigo, producto,
+					  sum(cantidad)  || ' ' as cantidad,
+					  sum(coalesce(total)) as costo,
+					  sum(coalesce(total)) /  sum(cantidad)  as media,
+					  min(costo) as minimo,
+					  max(costo) as maximo
+				 from view_inv_movimiento_det
+			   where  tipo       ='".$tipo."' and
+			          id_departamento = ".$this->bd->sqlvalue_inyeccion( $codigo, true)." and
+					  estado     = ".$this->bd->sqlvalue_inyeccion( 'aprobado', true)." and
+					  (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )  ".$cadenabod.$cadenacta ."
+				 group by idproducto,producto order by  producto ";
+		 }
+
+		 $this->obj->grid->KP_sumatoria(3,"cantidad","costo", "","");
+
+		 $resultado  = $this->bd->ejecutar($sql);
+		 $formulario = '';
+		 $action     = '';
+
+		 $this->obj->grid->KP_GRID_CTA_query($resultado,$tipodb,'Id',$formulario,'S','',$action,'','',4);
+	 
+	    
+
+
+	}
+
+	//-------------
+	function movimiento_unidades_pro($f1,$f2,$codigo,$tipo,$cbodega,$producto){
+	    
+		$tipodb 		= $this->bd->retorna_tipo();
+		
+ 
+		
+		if ( $cbodega == '0'){
+			$cadenabod = '';
+		}	
+		else{
+			$cadenabod =' and idbodega ='.$this->bd->sqlvalue_inyeccion( $cbodega , true);
+		}	
+
+ 			$cadenacta = '';
+	 
+
+
+		if ( $tipo == 'I'){
+			$sql ="SELECT  b.nombre, 
+					  sum(a.cantidad)  || ' ' as cantidad,
+					  sum(coalesce(a.total)) as costo,
+					  sum(coalesce(a.total)) /  sum(cantidad)  as media,
+					  min(a.costo) as minimo,
+					  max(a.costo) as maximo
+				 from view_inv_movimiento_det a, nom_departamento b
+			   where  a.tipo ='".$tipo."' and
+					  a.estado = ".$this->bd->sqlvalue_inyeccion( 'aprobado', true)." and
+					  b.id_departamento = a.id_departamento  and 
+					  a.idproducto = ".$this->bd->sqlvalue_inyeccion( $producto, true)." and
+					  (a.fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' ) ".$cadenabod.$cadenacta ."
+				 group by  a.id_departamento, b.nombre order by  b.nombre ";
+		}else  {
+			$sql ="SELECT b.nombre, 
+					  sum(a.cantidad)  || ' ' as cantidad,
+					  sum(coalesce(a.total)) as costo,
+					  sum(coalesce(a.total)) /  sum(cantidad)  as media,
+					  min(a.costo) as minimo,
+					  max(a.costo) as maximo
+				 from view_inv_movimiento_det a, nom_departamento b
+			   where  a.tipo       ='".$tipo."' and
+			          a.idproducto = ".$this->bd->sqlvalue_inyeccion( $producto, true)." and
+					  a.estado     = ".$this->bd->sqlvalue_inyeccion( 'aprobado', true)." and
+					  b.id_departamento = a.id_departamento  and 
+					  (a.fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )  ".$cadenabod.$cadenacta ."
+					  group by  a.id_departamento, b.nombre order by  b.nombre ";
+		 }
+
+ 
+
+		 $this->obj->grid->KP_sumatoria(2,"cantidad","costo", "","");
+
+		 $resultado  = $this->bd->ejecutar($sql);
+		 $formulario = '';
+		 $action     = '';
+
+		 $this->obj->grid->KP_GRID_CTA_query($resultado,$tipodb,'Id',$formulario,'S','',$action,'','',4);
+	 
+	    
+
+
+	}
+	//-------------
+	function movimiento_unidades1($f1,$f2,$codigo,$tipo){
+	    
+		$tipodb 		= $this->bd->retorna_tipo();
+		
+		 
+
+		if ( $tipo == 'I'){
+			$sql ="SELECT cuenta_inv as cuenta, ncuenta_inv as detalle,
+					  sum(cantidad)  || ' ' as cantidad,
+					  sum(coalesce(total)) as costo,
+					  sum(coalesce(total)) /  sum(cantidad)  as media,
+					  min(costo) as minimo,
+					  max(costo) as maximo
+				 from view_inv_movimiento_det
+			   where  tipo ='".$tipo."' and
+					  estado = ".$this->bd->sqlvalue_inyeccion( 'aprobado', true)." and
+					  idprov = ".$this->bd->sqlvalue_inyeccion( $codigo, true)." and
+					  (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )
+				 group by cuenta_inv,ncuenta_inv order by  cuenta_inv ";
+		}else  {
+			$sql ="SELECT cuenta_inv as cuenta, ncuenta_inv as detalle,
+					  sum(cantidad)  || ' ' as cantidad,
+					  sum(coalesce(total)) as costo,
+					  sum(coalesce(total)) /  sum(cantidad)  as media,
+					  min(costo) as minimo,
+					  max(costo) as maximo
+				 from view_inv_movimiento_det
+			   where  tipo       ='".$tipo."' and
+			          id_departamento = ".$this->bd->sqlvalue_inyeccion( $codigo, true)." and
+					  estado     = ".$this->bd->sqlvalue_inyeccion( 'aprobado', true)." and
+					  (fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )
+				 group by  cuenta_inv,ncuenta_inv order by  cuenta_inv  ";
+		 }
+
+		 $this->obj->grid->KP_sumatoria(3,"cantidad","costo", "","");
+
+		 $resultado  = $this->bd->ejecutar($sql);
+		 $formulario = '';
+		 $action     = '';
+
+		 $this->obj->grid->KP_GRID_CTA_query($resultado,$tipodb,'Id',$formulario,'S','',$action,'','',4);
+	 
 	    
 	}
 	//----------------------------------------------------------------
@@ -1131,9 +1581,10 @@ if (isset($_GET["id"]))	{
     
     $cbodega               =     $_GET["cbodega"];
     $ccuentas              =     $_GET["ccuentas"];
+	$producto_busca =     $_GET["producto_busca"];
     
  
-    $gestion->grilla( $f1,$f2,$tipo,$id,$cbodega,trim($ccuentas));
+    $gestion->grilla( $f1,$f2,$tipo,$id,$cbodega,trim($ccuentas),$producto_busca);
  
 	
 }

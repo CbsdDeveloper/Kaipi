@@ -631,7 +631,7 @@ $gestion   = 	new proceso;
 $idprov             = $_GET['id'];
  
  
-$gestion->_n_impuesto_renta(  $id_periodo, 20,$idprov ,2021,1);
+$gestion->_n_impuesto_renta(  $id_periodo, 20,$idprov ,2023,1);
 
 ?>
  

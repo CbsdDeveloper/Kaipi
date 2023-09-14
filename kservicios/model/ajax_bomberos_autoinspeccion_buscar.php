@@ -11,7 +11,7 @@ $bd	   =	new Db;
 
 $obj     = 	new objects;
 
-$servidor ='45.183.141.106';
+$servidor ='192.168.1.3';
 $base_datos = 'db_cbsd';
 $usuario = 'postgres';
 $password = 'Cbsd2019';
@@ -49,7 +49,7 @@ if ( empty($_GET['codigo_ex'])) {
                         autoinspeccion_codigo,
                         autoinspeccion_fecha
                             FROM permisos.vw_autoinspecciones 
-                            where autoinspeccion_anio = '2022' and 
+                            where autoinspeccion_anio = '2023' and 
                                   ( entidad_ruc = ".$bd->sqlvalue_inyeccion(trim($ruc_ex)  ,true). " or 
                                      autoinspeccion_codigo=".$bd->sqlvalue_inyeccion(trim($codigo_ex)  ,true). " or 
                                      entidad_razonsocial like ".$bd->sqlvalue_inyeccion(trim($nombre_ex)  ,true) .') order by entidad_razonsocial ';

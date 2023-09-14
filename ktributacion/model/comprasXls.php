@@ -39,7 +39,7 @@
 				   porcentaje_iva, 
 				   formadepago, fechaemiret1, serie1, secretencion1, autretencion1, serie, comprobante, detalle
                 FROM view_anexos_compras 
-                WHERE anio =  ".$anio.' and mes = '.$mes.' and registro = '. "'".trim($_SESSION['ruc_registro']). "'". ' 
+                WHERE  estado = 'S' and anio =  ".$anio.' and mes = '.$mes.' and registro = '. "'".trim($_SESSION['ruc_registro']). "'". ' 
                 order by fecharegistro';
                 
        }

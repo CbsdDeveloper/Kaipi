@@ -10,6 +10,7 @@ function _genera_comprobante( codigo) {
      };
  
  
+ 
 
            if ( id_asiento > 0 ) {
                      

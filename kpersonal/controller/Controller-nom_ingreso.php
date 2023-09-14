@@ -398,8 +398,32 @@
        
        $this->obj->text->text('Turismo',"number",'turismo',40,45,$datos,'required','','div-2-4') ;
        
-       
-       
+
+       $MATRIZ = array(
+        '0'    => 'NO APLICA',
+        '60'    => 'De 30% al 49%' ,
+        '70'    => 'De 50% al 74%' ,
+        '80'    => 'De 75% al 84%' ,
+        '100'    => 'De 85% y más' ,
+    );
+   
+
+
+       $this->set->div_label(12,'Rebaja por gastos personales ');
+
+
+       $this->obj->list->lista('Deducción discapacidad:',$MATRIZ,'de_disca',$datos,'required','','div-8-4');
+
+       $MATRIZ =  $this->obj->array->catalogo_sino();
+       $this->obj->list->lista('Deducción Tercera Edad:',$MATRIZ,'de_edad',$datos,'required','','div-8-4');
+
+
+       $this->obj->list->lista('¿Usted o alguna carga familiar padece una enfermedad catastrófica, rara y/o huérfana?',$MATRIZ,'de_enfer',$datos,'required','','div-8-4');
+      
+       $this->obj->text->text('Número de cargas familiares (que no perciban ingresos gravados y sean dependientes del sujeto pasivo)',"number",'de_carga',40,45,$datos,'required','','div-8-4') ;
+
+
+
        $this->set->div_label(12,'<h5>(*) Aplica funcionario cumple con el tiempo del beneficio del Fondo de Reserva</h5>');
  
        $this->obj->list->lista('Fondos Reserva(*)',$MATRIZ,'fondo',$datos,'required','','div-3-3');

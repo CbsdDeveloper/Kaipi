@@ -404,7 +404,7 @@ function p_grid( $resultado,$numero_campos,$bandera,$editar,$del,$evento,$filas=
             echo '<td align="right"><b>'.number_format($nsuma5,2).'</b></td>';
         }	
         
-       echo "</tbody></table>";
+    //    echo "</tbody></table>";
     
         pg_free_result ($resultado) ;
         
@@ -565,7 +565,7 @@ function p_gridPdf( $resultado,$numero_campos,$bandera )  {
         
     }
     
-    echo "</table>";
+    // echo "</table>";
     
     pg_free_result ($resultado) ;
 }

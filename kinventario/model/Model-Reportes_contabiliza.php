@@ -13,6 +13,8 @@ $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
 	    $f2 				=     $_GET["fecha2"];
  
 	    $monto = valida_envio($bd, $f1,$f2 );
+
+		echo $monto.'<br>';
 	    
 	    if ( $monto > 0){
 	        
@@ -105,26 +107,26 @@ function nuevo($bd, $f1,$f2 ){
  //-------------------
  function valida_envio($bd, $f1,$f2 ){
      
-     $sql1 ="select a.cuenta_gas as inventario, b.detalle,
- 		sum(a.total) as debe ,
- 		0 as haber
- 		FROM view_movimiento_det_cta a, co_plan_ctas b
- 		where a.estado = 'aprobado' and a.id_asiento_ref is null and
- 			  a.tipo= 'E' and trim(a.cuenta_gas) = trim(b.cuenta) and
- 			  a.anio::character varying::text = b.anio and
- 			   (a.fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )
- group by a.cuenta_gas, b.detalle
- union
- select a.cuenta_inv as inventario, b.detalle, 0 as debe,
- 		sum(a.total) as haber
- 		FROM view_movimiento_det_cta a, co_plan_ctas b
- 		where a.estado = 'aprobado' and   a.id_asiento_ref is null and
- 			  a.tipo= 'E' and trim(a.cuenta_inv) = trim(b.cuenta) and
- 			  a.anio::character varying::text = b.anio and
- 			   (a.fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )
- group by a.cuenta_inv, b.detalle";
+	$sql1 ="select a.cuenta_gas as inventario, b.detalle,
+	sum(a.total) as debe ,
+	0 as haber
+	FROM view_movimiento_det_cta a, co_plan_ctas b
+	where a.estado = 'aprobado' and coalesce(a.id_asiento_ref,0) = 0 and
+		  a.tipo= 'E' and trim(a.cuenta_gas) = trim(b.cuenta) and
+		  a.anio::character varying::text = b.anio and
+		   (a.fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' ) and  a.cuenta_gas <> '-' 
+group by a.cuenta_gas, b.detalle
+union
+select a.cuenta_inv as inventario, b.detalle, 0 as debe,
+	sum(a.total) as haber
+	FROM view_movimiento_det_cta a, co_plan_ctas b
+	where a.estado = 'aprobado' and coalesce(a.id_asiento_ref,0) = 0 and
+		  a.tipo= 'E' and trim(a.cuenta_inv) = trim(b.cuenta) and
+		  a.anio::character varying::text = b.anio and
+		   (a.fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' ) and a.cuenta_inv <> '-' 
+group by a.cuenta_inv, b.detalle";
      
-     
+ 
      
      $stmt  = $bd->ejecutar($sql1);
      
@@ -146,19 +148,19 @@ function nuevo($bd, $f1,$f2 ){
  		sum(a.total) as debe ,
  		0 as haber
  		FROM view_movimiento_det_cta a, co_plan_ctas b
- 		where a.estado = 'aprobado' and a.id_asiento_ref is null and
+ 		where a.estado = 'aprobado' and coalesce(a.id_asiento_ref,0) = 0 and
  			  a.tipo= 'E' and trim(a.cuenta_gas) = trim(b.cuenta) and
  			  a.anio::character varying::text = b.anio and
- 			   (a.fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )
+ 			   (a.fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' ) and  a.cuenta_gas <> '-' 
  group by a.cuenta_gas, b.detalle
  union
  select a.cuenta_inv as inventario, b.detalle, 0 as debe,
  		sum(a.total) as haber
  		FROM view_movimiento_det_cta a, co_plan_ctas b
- 		where a.estado = 'aprobado' and   a.id_asiento_ref is null and
+ 		where a.estado = 'aprobado' and coalesce(a.id_asiento_ref,0) = 0 and
  			  a.tipo= 'E' and trim(a.cuenta_inv) = trim(b.cuenta) and
  			  a.anio::character varying::text = b.anio and
- 			   (a.fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' )
+ 			   (a.fecha  BETWEEN "."'".$f1."'". ' AND '."'".$f2."' ) and a.cuenta_inv <> '-' 
  group by a.cuenta_inv, b.detalle";
      
      

@@ -83,7 +83,7 @@ session_start( );
       	$this->obj->list->listadbe($resultado,$tipo,'Unidad','Vid_departamento',$datos,'','',$evento,'div-0-12');
       	
       	
-        $this->obj->text->text_yellow('',"texto",'vrazon',40,45,$datos,'','','div-0-12');
+        $this->obj->text->text_yellow('Digite nombre funcionario',"texto",'vrazon',40,45,$datos,'','','div-0-12');
       	
      // 	$this->obj->list->listadb($resultado,$tipo,'Custodio','Vidprov',$datos,'','','div-0-4');
       	

@@ -1096,7 +1096,7 @@ var proceso = $("#proceso_nombre").val();
 	{
 	              	$.ajax({
 										data:  parametros,
-										 url:   '../../kplanificacion/model/ajax_tarea_ejecuta_cer.php',
+										 url:   '../../kplanificacion/model/ajax_tarea_ejecuta_cer02.php',
 										type:  'POST' ,
 											beforeSend: function () { 
 													$("#guardarDatosCom").html('Procesando');
@@ -1105,6 +1105,8 @@ var proceso = $("#proceso_nombre").val();
 												    $("#guardarDatosCom").html(data); 
 												    
 												     BusquedaPlanificacion();
+
+													 alert('Verifique la informacion y genere el comprobante de certificación');
 						 					} 
 								});
 	}

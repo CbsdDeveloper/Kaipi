@@ -77,10 +77,18 @@ class proceso{
                     array( campo => 'sifondo',   tipo => 'VARCHAR2',   id => '34',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N') ,
                     array( campo => 'programa',   tipo => 'VARCHAR2',   id => '35',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N') ,
                     array( campo => 'fondo',   tipo => 'VARCHAR2',   id => '34',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N') ,
-                    array( campo => 'turismo',   tipo => 'NUMBER',   id => '35',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N')
+                    array( campo => 'turismo',   tipo => 'NUMBER',   id => '35',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
+                    // array( campo => 'de_edad',   tipo => 'VARCHAR2',   id => '36',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N') ,
+                    // array( campo => 'de_disca',   tipo => 'NUMBER',   id => '37',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
+                    // array( campo => 'de_enfer',   tipo => 'VARCHAR2',   id => '38',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N') ,
+                    // array( campo => 'de_carga',   tipo => 'NUMBER',   id => '39',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
                     
                   );
                 
+                 
+      
+                  
+
       }
        //-----------------------------------------------------------------------------------------------------------
       //Constructor de la clase
@@ -176,9 +184,14 @@ class proceso{
          array( campo => 'sihoras',   valor => '-',  filtro => 'N',   visor => 'S'),
          array( campo => 'sisubrogacion',   valor => '-',  filtro => 'N',   visor => 'S'),
          array( campo => 'discapacidad',   valor => '-',  filtro => 'N',   visor => 'S'),
-         array( campo => 'turismo',   valor => '-',  filtro => 'N',   visor => 'S')
+         array( campo => 'turismo',   valor => '-',  filtro => 'N',   visor => 'S'),
+         // array( campo => 'de_edad',   valor => '-',  filtro => 'N',   visor => 'S'),
+         // array( campo => 'de_enfer',   valor => '-',  filtro => 'N',   visor => 'S'),
+         // array( campo => 'de_carga',   valor => '-',  filtro => 'N',   visor => 'S'),
+         // array( campo => 'de_disca',   valor => '-',  filtro => 'N',   visor => 'S'),
            );
      
+           
         
           $datos = $this->bd->JqueryArrayVisor('view_nomina_rol',$qquery );           
  

@@ -116,10 +116,12 @@
                                     
                                     
                                     $MATRIZ =  $this->obj->array->catalogo_tipoPermiso();
-                                    $this->obj->list->lista('Tipo',$MATRIZ,'tipo',$datos,'required','','div-2-10');
+                                    $evento='Onchange="ValidaPermisos(this.value,0)"';
+                                    $this->obj->list->listae('Tipo',$MATRIZ,'tipo',$datos,'required','',$evento,'div-2-10');
+                                    $evento='';
+
                                     
-                                    
-                                    $MATRIZ =  $this->obj->array->catalogo_motivoPermiso_std();
+                                    $MATRIZ =  $this->obj->array->catalogo_motivoPermiso();
                                     $this->obj->list->lista('Motivo',$MATRIZ,'motivo',$datos,'required','','div-2-10');
                                     
                         
@@ -131,8 +133,10 @@
                                     
                                     $this->set->div_panel5('<h6> Informacion Periodo a solicitar<h6>');
                                 
-                                    
-                                    $this->obj->text->text_yellow('Fecha Salida',"date" ,'fecha_out' ,80,80, $datos ,'required','','div-3-9') ;
+                                    $evento='Onchange="ValidaFecha(this.value)"';
+                                    $this->obj->text->texte('Fecha Salida',"date" ,'fecha_out' ,80,80, $datos ,'required','',  $evento,'div-3-9') ;
+                                    $evento='';
+
                                     $this->obj->text->text_yellow('Fecha Entrada',"date" ,'fecha_in' ,80,80, $datos ,'required','','div-3-9') ;
                                    
                                  
@@ -150,15 +154,29 @@
                 
                 $this->set->div_panel7('<b>Parametro de validacion</b>');
       
-      
-                 
-                $this->obj->text->text_yellow('Nro.Dias Tomados',"number" ,'dia_acumula' ,80,80, $datos ,'required','readonly','div-3-9') ;
                 
-                $this->obj->text->text_blue('Nro.Dias Derecho',"number" ,'derecho' ,80,80, $datos ,'required','readonly','div-3-9') ;
+              /*
+                total = saldo_anterior + dias_derecho
+                dias_tomados  // suma todos los dias
+                dias_pendientes = total - dias_tomados
+                // tabla vacaciones
+
+                   dia_acumula  = valor q se va  calcular
+                dia_tomados dias
+                hora_tomados horas
+                */
+
+                $this->obj->text->text_yellow('Nro.Dias Asignados',"number" ,'dia_acumula' ,80,80, $datos ,'required','readonly','div-3-9') ;
+
+                $this->obj->text->text_blue('Nro.dia(s) Tomados',"number" ,'dias_tomados' ,80,80, $datos ,'required','readonly','div-3-9') ;
+             
+                $this->obj->text->text_blue('Fracción dia/hora',"number" ,'hora_tomados1' ,80,80, $datos ,'required','readonly','div-3-9') ;
+ 
+                $this->obj->text->text_blue('<b>DIA(S) PENDIENTES</b>',"number" ,'dia_valida' ,80,80, $datos ,'required','readonly','div-3-9') ;
                 
-                $this->obj->text->text_yellow('Nro.Dias Pendientes',"number" ,'dia_derecho' ,80,80, $datos ,'required','readonly','div-3-9') ;
-                 
-                  
+ 
+
+            
                $this->set->div_panel7('fin');
 
 
@@ -182,6 +200,9 @@
                 
                 
                 
+                $this->obj->text->texto_oculto("dia_toca",$datos); 
+                $this->obj->text->texto_oculto("dia_max",$datos); 
+                $this->obj->text->texto_oculto("hora_max",$datos); 
  
                       
          $this->obj->text->texto_oculto("action",$datos); 
@@ -370,10 +391,17 @@
 												
 													 $("#idprov").val( response.a );  
 													 
-													 $("#dia_derecho").val( response.b );  
+													 $("#dia_acumula").val( response.b );  
 
-													 $("#dia_acumula").val( response.c );  
+													 $("#dias_tomados").val( response.c );  
+
+                                                     $("#hora_tomados1").val( response.d );  
+
+                                                     $("#dia_valida").val( response.e );  
 													  
+
+                                                        
+
 											} 
 									});
 	 

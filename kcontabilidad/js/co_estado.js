@@ -34,6 +34,11 @@ $(document).ready(function(){
 
  	   });      
  	   
+		$('#financiero441').on('click',function(){
+
+			ResumenResultados11();
+ 
+		 });      
 
 		$('#financiero3').on('click',function(){
 
@@ -56,7 +61,13 @@ $(document).ready(function(){
 
 		  ResumenBalanceG();
 
-		});         
+		});      
+		
+		$('#financiero400').on('click',function(){
+
+			ResumenBalanceGD();
+  
+		  });  
 
  	  
  	  $('#financiero5').on('click',function(){
@@ -77,6 +88,16 @@ $(document).ready(function(){
  		  ResumenEjecucion();
 
  		});  
+
+
+
+		 $('#financiero661').on('click',function(){
+
+			ResumenEjecucion1();
+ 
+		  });  
+
+		 
  	  
 
   	  $("#excelButtonBalance").click(function(e) {
@@ -491,7 +512,8 @@ function ResumenBalance_Resumen()
 
 			    'ffecha1' : ffecha1, 
  			    'ffecha2' : ffecha2,
- 			    'com1' : com1
+ 			    'com1' : com1,
+				 'reporte': 0
      };
 
  	$.ajax({
@@ -518,7 +540,45 @@ function ResumenBalance_Resumen()
  }
 
 //------------------------------------------------------------------------- 
+function ResumenResultados11()
+
+{
+
+    var ffecha1 = $("#ffecha1").val();
+	 var ffecha2 = $("#ffecha2").val();
+	 var com1 = $("#com2").val();
+
+	 var parametros = {
+
+			   'ffecha1' : ffecha1, 
+				'ffecha2' : ffecha2,
+				'com1' : com1,
+				'reporte': 1
+	};
+
  
+	$.ajax({
+		   data:  parametros,
+		   url:   '../model/Model-ResultadosEsigef.php',
+		   type:  'POST' ,
+		   cache: false,
+		   beforeSend: function () { 
+
+					   $("#ViewResultadosEsigef").html('Procesando');
+
+			   },
+
+		   success:  function (data) {
+
+					$("#ViewResultadosEsigef").html(data); 
+
+			   } 
+
+   });
+
+	 
+
+}
  //------------------------------------------------------------------------- 
 function ResumenBalance()
 {
@@ -653,7 +713,54 @@ function ResumenBalance_Resumen()
 			    'nivelg': nivel ,
 			    'auxiliares' : auxiliares,
 			    'cuenta'     : cuenta,
-			    'com1' : com1
+			    'com1' : com1,
+				'reporte': 0
+    };
+
+ 
+ 	$.ajax({
+			data:  parametros,
+			 url:   '../model/Model-BalanceSituacion_Esigef.php',
+			type:  'POST' ,
+			cache: false,
+			beforeSend: function () { 
+						$("#ViewBalanceSituacion").html('Procesando');
+
+				},
+			success:  function (data) {
+
+					 $("#ViewBalanceSituacion").html(data); 
+
+				} 
+
+	});
+
+ }
+ //------------------
+ function ResumenBalanceGD()
+{
+
+
+	  var ffecha1 = $("#ffecha1").val();
+	  var ffecha2 = $("#ffecha2").val();
+
+ 
+ 	  var com1    =     $("#com1").val();
+	  var cuenta     =     $("#cuenta").val();
+	  var auxiliares =     $("#auxiliares").val();
+
+	  var tipo =     $("#tipo").val();
+	  var nivel =     $("#nivel").val();
+
+ 	 var parametros = {
+			    'bgfecha1' : ffecha1, 
+			    'bgfecha2' : ffecha2,
+			    'tipo' : tipo ,
+			    'nivelg': nivel ,
+			    'auxiliares' : auxiliares,
+			    'cuenta'     : cuenta,
+			    'com1' : com1,
+				'reporte': 1
     };
 
  
@@ -799,7 +906,37 @@ function ResumenBalance_Resumen()
 
  	 var parametros = {
  			    'ffecha1' : ffecha1, 
- 			    'ffecha2' : ffecha2
+ 			    'ffecha2' : ffecha2,
+				'reporte':  0
+      };
+
+ 	$.ajax({
+			 data:  parametros,
+			 url:   '../model/Model-Eejecucion.php',
+			 type:  'POST' ,
+			 cache: false,
+			 beforeSend: function () { 
+						$("#ViewEjecucion").html('Procesando');
+				},
+			success:  function (data) {
+					 $("#ViewEjecucion").html(data); 
+				} 
+
+	});
+
+}
+ //------
+ function ResumenEjecucion1()
+{
+
+  	  var ffecha1 = $("#ffecha1").val();
+	  var ffecha2 = $("#ffecha2").val();
+ 
+
+ 	 var parametros = {
+ 			    'ffecha1' : ffecha1, 
+ 			    'ffecha2' : ffecha2,
+				'reporte':  1
       };
 
  	$.ajax({

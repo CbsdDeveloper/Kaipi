@@ -359,9 +359,21 @@
 							  <div class="panel panel-default">
 								 <div class="panel-body">
 									   <div class="row">
-										 <div id="ViewFormAccion"> var</div> 
 										   
-										   <div id="AccionCreada"> var</div> 
+										   
+										 <div id="ViewFormAccion">  s</div> 
+										   
+										   <div id="AccionCreada">  </div> 
+										   
+										    <div class="col-md-12"  style="padding:15px;">
+														  <div class="alert alert-danger">
+														  <strong>Advertencia!</strong> Seleccione el rubro que desea afectar el calculo de la accion de personal.
+														</div>
+											  </div> 
+										   
+										  
+										   
+										   
 									   </div>	   
 								 </div>
 							 </div>

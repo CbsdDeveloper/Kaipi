@@ -273,13 +273,22 @@
 		  
         <div class="modal-body">
 			
-				 <div id='VisorArticuloActualiza'></div>
+			 <div class="modal-body">
+						 
+						 <div class='row'>
+							 
+				 				<div id='VisorArticuloActualiza' style="padding: 10px"></div>
 
-				 <p id="GuardaDatoA">&nbsp;   </p>	
+				 
+			   					 <div style="padding: 10px" align="center" id='GuardaDatoA'></div>
+						 </div>
+			 </div>
 			
         </div>
 		  
         <div class="modal-footer">
+ 
+ 			
 			<button type="button" onClick="ActualizaCuenta();" class="btn btn-warning" >Actualizar</button>
 			
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

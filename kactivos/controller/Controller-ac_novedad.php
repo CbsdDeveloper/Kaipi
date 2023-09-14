@@ -180,7 +180,35 @@
               
          }
          
-         $this->set->div_label(12,'Situacion Actual');
+         $MATRIZ = array(
+            '-'    => 'No Aplica',
+            'Actualizacion Bien'    => 'Actualizacion Bien',
+            'Reclasificacion'    => 'Reclasificacion (Cambio de Clase/Cuenta)',
+            'Mantenimiento'    => 'Mantenimiento',
+            'Reparacion'    => 'Reparacion',
+            'Perdida'    => 'Perdida',
+            'Defectuoso'    => 'Defectuoso',
+            'Reposicion'    => 'Reposición (*) Registra un nuevo bien y da De Baja Bien registrado'
+        );
+        
+        $MATRIZE = array(
+            'Bueno'    => 'Bueno',
+            'Malo'    => 'Malo',
+            'Regular'    => 'Regular'
+        );
+
+        $MATRIZT = array(
+            'Revision/Historial'    => 'Revision/Historial',
+            'Constatacion Fisica'    => 'Constatacion Fisica' 
+        );
+
+        $MATRIZC = array(
+            'N'    => 'NO',
+            'S'    => 'SI' 
+        );
+
+
+         $this->set->div_label(12,'<b>Situacion Actual</b>');
          
                         $this->obj->text->texto_oculto("fecha_a",$datos); 
                         $this->obj->text->texto_oculto("documento_h",$datos); 
@@ -190,41 +218,25 @@
                         $this->obj->text->texto_oculto("vida_util_h",$datos);
                         
                         
-                        $this->obj->text->text('Fecha Ingreso',"date",'fecha_h',15,15,$datos,'required','','div-2-10');
+                        $this->obj->text->text('Fecha Ingreso',"date",'fecha_h',15,15,$datos,'required','','div-2-4');
                             
+                        $this->obj->list->lista('Proceso',$MATRIZT,'proceso_t',$datos,'required','','div-2-4');
+
+                        
                         $this->obj->text->editor('Novedad','descripcion',3,350,350,$datos,'','','div-2-10');
                         
-                    
-                        $MATRIZ = array(
-                            '-'    => 'No Aplica',
-                            'Reclasificacion'    => 'Reclasificacion',
-                            'Mantenimiento'    => 'Mantenimiento',
-                            'Reparacion'    => 'Reparacion',
-                            'Perdida'    => 'Perdida',
-                            'Defectuoso'    => 'Defectuoso',
-                            'Reposicion'    => 'Reposición (*)'
-                        );
                         
+                        $this->obj->list->lista('Tipo',$MATRIZ,'tipo_h',$datos,'required','','div-2-4');
+                        $this->obj->list->lista('Actualiza Custodio',$MATRIZC,'custodio',$datos,'required','','div-2-4');
+                           
                         
-                        $this->obj->list->lista('Tipo',$MATRIZ,'tipo_h',$datos,'required','','div-2-10');
-                        
-                        
-                        $MATRIZ = array(
-                            'Bueno'    => 'Bueno',
-                            'Malo'    => 'Malo',
-                            'Regular'    => 'Regular'
-                        );
-                        
-                        
-                        $this->obj->list->lista('Estado',$MATRIZ,'estado_h',$datos,'required','','div-2-4');
-                        
+                        $this->obj->list->lista('Estado',$MATRIZE,'estado_h',$datos,'required','','div-2-4');
                         $this->obj->text->text('Valor Residual','number','valor_residual',10,10, $datos ,'','readonly','div-2-4');
                         
-                        $this->obj->text->text('Vida Util','number','vida_util',10,10, $datos ,'','readonly','div-2-4');
-                        
+                        $this->obj->text->text('Vida Util','number','vida_util',10,10, $datos ,'','readonly','div-2-4');                        
                         $this->obj->text->text('Costo Actual','number','costo_bien',10,10, $datos ,'','readonly','div-2-4');
                         
-        $this->set->div_label(12,'Categorización y cambio de cuenta');
+        $this->set->div_label(12,'<b>Categorización y cambio de cuenta</b>');
 
                         $MATRIZ = array(
                             ''    => '-- Seleccione el tipo de Bien -- ',
@@ -330,8 +342,10 @@
            array( campo => 'creacion',tipo => 'DATE',id => '12',add => 'S', edit => 'N', valor =>  $this->hoy, key => 'N'),
            array( campo => 'sesionm',tipo => 'VARCHAR2',id => '13',add => 'S', edit => 'S', valor => $this->sesion, key => 'N'),
            array( campo => 'modificacion',tipo => 'DATE',id => '14',add => 'S', edit => 'S', valor =>  $this->hoy, key => 'N'),
-           array( campo => 'vida_util',tipo => 'NUMBER',id => '15',add => 'S', edit => 'N', valor => $POST['vida_util'], key => 'N')
-       );
+           array( campo => 'vida_util',tipo => 'NUMBER',id => '15',add => 'S', edit => 'N', valor => $POST['vida_util'], key => 'N'),
+           array( campo => 'proceso_t',tipo => 'VARCHAR2',id => '16',add => 'S', edit => 'N', valor => $POST['proceso_t'], key => 'N'),
+           array( campo => 'custodio',tipo => 'VARCHAR2',id => '17',add => 'S', edit => 'N', valor => $POST['custodio'], key => 'N'),
+        );
        
     
        

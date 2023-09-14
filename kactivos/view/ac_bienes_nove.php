@@ -107,16 +107,13 @@ header("Pragma: no-cache");
 																					<thead>
 																						<tr>
 																					    <th width="5%">Activo</th>
-																						<th width="20%">Detalle</th>
-																						<th width="15%">Custodio</th>
-																						<th width="10%">Estado</th>	
-																						<th width="10%">Fecha Compra</th>
+																						<th width="40%">Detalle</th>
+																						<th width="20%">Custodio</th>
+																						<th width="5%">Estado</th>	
+																						<th width="5%">Compra</th>
 																						<th width="5%">Codigo</th>
 																						<th width="5%">Tiempo</th>		
 																						<th width="5%">Vida Util</th>
-																						<th width="5%">Costo</th>
-																						<th width="5%">Valor Residual</th>
-																						<th width="5%">Revalorizado</th>	
 																						<th width="10%">Acción</th>
 																						</tr>
 																					</thead>
@@ -308,6 +305,50 @@ header("Pragma: no-cache");
 			  </div>
 			</div>
 	  </div>
+
+
+
+	<div class="container"> 
+	
+	  <div class="modal fade" id="myModalbarra" tabindex="-1" role="dialog">
+  	  <div class="modal-dialog" id="mdialTamanio">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3  class="modal-title">Codigo de barras </h3>
+		  </div>
+				  <div class="modal-body">
+				   <div class="form-group" style="padding-bottom: 10px">
+			          <div class="panel panel-default">
+			          
+							 <div class="panel-body">
+								 
+								  <div id="ViewBarras"></div>
+
+								  <input type="hidden" name="cod" id="cod">
+								  <input type="hidden" name="nom" id="nom">
+
+							 </div>
+					     </div>   
+  					 </div>
+				  </div>
+				
+		  <div class="modal-footer" >
+		   	 
+			  <button type="button" class="btn btn-sm btn-warning" onclick="imprimir2()" >Formato QR / Barras</button>
+			  
+			  <button type="button" class="btn btn-sm btn-success" onclick="imprimir()" >Formato Grafico Barras </button>
+			  
+			   <button type="button" class="btn btn-sm btn-info" onclick="imprimir3()" >Formato Lineal Barras </button>
+			  
+			     <button type="button" class="btn btn-sm btn-primary" onclick="imprimir4()" >Formato QR </button>
+			  
+			<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Salir</button>
+ 		  </div>
+		</div><!-- /.modal-content --> 
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+   </div>  
 
 
   </body>

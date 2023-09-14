@@ -42,7 +42,7 @@
       	
         $anio =   $_SESSION['anio'];
      
-       	$cadena0 ="cuenta like '213%' and anio = ".$this->bd->sqlvalue_inyeccion( $anio,true). ' and   registro = '.$this->bd->sqlvalue_inyeccion(trim($this->ruc),true).'  and ';
+       	$cadena0 =" substring(cuenta,1,3) in ('213','224') and anio = ".$this->bd->sqlvalue_inyeccion( $anio,true). ' and   registro = '.$this->bd->sqlvalue_inyeccion(trim($this->ruc),true).'  and ';
         
       	$cadena1 = '( aux_busca ='.$this->bd->sqlvalue_inyeccion(0,true).")  ";
  

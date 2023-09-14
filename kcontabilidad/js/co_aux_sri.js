@@ -50,7 +50,10 @@ $(document).ready(function(){
 	    
 	    
 	   $('#load28').on('click',function(){
-	    	 
+
+			$("#parcial").val('0');
+
+		
             BusquedaGrillaa_resumen();
  
 		});
@@ -351,6 +354,42 @@ function changeAction(tipo,action,mensaje){
   
 
   }   
+
+//-----SumaTotal  
+function SumaTotal(total,objeto)
+ {
+ 
+	var total_dato =  $("#parcial").val();
+
+	var base    = parseFloat(total_dato)  ;
+	var parcial = parseFloat(total) ;
+
+	var total = 0;
+
+	if (objeto.checked == true){
+ 		estado = 'S'
+
+		 total = base + parcial;
+
+		 var base1    = parseFloat(total).toFixed(2)  ;
+
+		 $("#parcial").val(base1);
+
+	} else {
+
+		estado = 'N'
+
+		total = base - parcial;
+
+		var base1    = parseFloat(total).toFixed(2)  ;
+
+		$("#parcial").val(base1);
+
+	}
+
+	$("#ViewParcial").html('<h4><b>' + base1 + '</b><h4>');
+
+ }  
 //------------------------------------------------------------------------- 
 function myFunction(proveedor,codigo,objeto)
 

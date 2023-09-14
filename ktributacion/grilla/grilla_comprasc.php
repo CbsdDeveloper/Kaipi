@@ -52,6 +52,8 @@
       	    array( campo => 'baseimponible',valor => '-',filtro => 'N', visor => 'S'),
       	    array( campo => 'secretencion1',valor => '-',filtro => 'N', visor => 'S'),
       	    array( campo => 'id_tramite',valor => '-',filtro => 'N', visor => 'S'),
+			  array( campo => 'transaccion',valor => '-',filtro => 'N', visor => 'S'),
+			  array( campo => 'codigoe',valor => '-',filtro => 'N', visor => 'S'),
       	    array( campo => 'id_compras',valor => '-',filtro => 'N', visor => 'S'),
       	    array( campo => 'anio',valor => $anio,filtro => 'S', visor => 'N'),
       	    array( campo => 'mes',valor => $mes,filtro => 'S', visor => 'N'),
@@ -66,19 +68,22 @@
       	while ($fetch=$this->bd->obtener_fila($resultado)){
       		 
       	    $comprobante =   trim($fetch['autretencion1'] );
+
+			$codigoe =   trim($fetch['codigoe'] );
+			$transaccion =   trim($fetch['transaccion'] );
       	    
       	    $len = strlen($comprobante);
       	    
       	    if ($len > 10){
-      	        
-      	        $imagen  = '<img src="../../kimages/starok.png" align="absmiddle"   />';
-      	        
-      	        
+
+				if ( 	$transaccion == 'E') {
+      	   		     $imagen  = '<img src="../../kimages/starok.png" align="absmiddle"   />';
+				}else {
+					 $imagen  = '<img src="../../kimages/star.png" align="absmiddle"   />';
+				}
       	    }else{
-      	        
-      	        $imagen  = '<img src="../../kimages/star.png" align="absmiddle"   />';
-      	        
-      	    }
+       	        $imagen  = '<img src="../../kimages/star.png" align="absmiddle"   />';
+       	    }
       	    
       	    
       	    

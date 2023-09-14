@@ -84,7 +84,7 @@ var options = {
 	            },
 	            stops: [
 	                [0, color],
-	                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+	                [1, new Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
 	            ]
 	        };
 	    })

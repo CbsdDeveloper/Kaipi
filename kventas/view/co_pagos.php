@@ -75,7 +75,18 @@
  															 
 															<div style="padding-top: 15px;padding-bottom: 10px" class="col-md-9">
 																	<button type="button" class="btn btn-sm btn-primary" id="load">  
-																	<i class="icon-white icon-search"></i> Buscar</button>	
+																	<i class="icon-white icon-search"></i> Búsqueda de Comprobantes</button>	
+																
+																
+																
+																<a href="co_cobros" class="btn btn-sm btn-warning" role="button">Comprobantes de Ingreso
+																	<i class="icon-white icon-search"></i>
+																</a>
+
+																
+															 
+																
+																
 															</div>
 															 
 												</div>

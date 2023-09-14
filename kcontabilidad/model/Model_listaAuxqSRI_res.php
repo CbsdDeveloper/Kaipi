@@ -53,52 +53,19 @@ class Model_listaAuxqSRI_res{
 	        $cadena_mes = '';
 	    }
 	    
-	    if ( $bandera == 'S'){
- 	        
-	        $sql = "SELECT cuenta_detalle,  cuenta
-                FROM view_aux
-                where idprov = ".$this->bd->sqlvalue_inyeccion($idprov,true)." and
-                      cuenta = ".$this->bd->sqlvalue_inyeccion($cuenta,true)." and
-                      pago= ". $this->bd->sqlvalue_inyeccion('N' , true)." and 
-                      anio= ". $this->bd->sqlvalue_inyeccion($anio , true)." and 
-                      ".$cadena_mes." 
-                      registro = ". $this->bd->sqlvalue_inyeccion(trim($this->ruc) , true)."
-                group by cuenta_detalle, cuenta
-                order by cuenta_detalle,  cuenta";    
-	        
-	    }else {
-	        
-	        $sql = "SELECT cuenta_detalle,  cuenta
-                FROM view_aux
-                where idprov = ".$this->bd->sqlvalue_inyeccion($idprov,true)." and
-                      ".$cadena_mes."  
-                      anio= ". $this->bd->sqlvalue_inyeccion($anio , true)." and 
-                      pago= ". $this->bd->sqlvalue_inyeccion('N' , true)." and 
-                      registro = ". $this->bd->sqlvalue_inyeccion(trim($this->ruc) , true)."
-                group by cuenta_detalle, cuenta
-                order by cuenta_detalle,  cuenta";    
-	    }
-	    
+	 
 	    
 	  
-       $total_general = 0;
+       		$total_general = 0;
       
-	    $stmt = $this->bd->ejecutar($sql);
+ 
+	        
+	        $total  =  $this->GrillaPago( $idprov,$cuenta,$cmes,$anio,$bandera);
 	    
-	    while ($x=$this->bd->obtener_fila($stmt)){
-	        
-	        $cnombre =  trim($x['cuenta_detalle']);
-	        
-	        $cuenta =  trim($x['cuenta']);
-	        
-	        $total  =  $this->GrillaPago( $idprov,$cuenta,$cmes,$anio);
-	    
-	        echo '   <li class="list-group-item"><b>'.$cuenta.' '.$cnombre.'</b><span class="badge">'. $total.'</span></li>';
-	        
-	        $total_general  = $total_general  +  $total ;
-	      
+ 	        
+ 	      
 	   
-	    }
+	    
 	    
  	    
 	    echo ' </ul>
@@ -107,45 +74,52 @@ class Model_listaAuxqSRI_res{
 	    
  
 		
-	    $ViewFormCxc= '<h4><b>'.' Resumen de Auxiliares '. $total_general.'</b></h4>';
+	    $ViewFormCxc= '<h4><b>'.' Resumen de Auxiliares '. $total.'</b></h4>';
 	    
 	    echo $ViewFormCxc;
 	
 	}
  	//---------------------------------
-	function GrillaPago( $idprov,$cuenta,$cmes,$anio){
+	function GrillaPago( $idprov,$cuenta,$cmes,$anio,$bandera){
 	    
-	  
+	 
  
-	    $cadena_mes =  ' mes = '.$this->bd->sqlvalue_inyeccion($cmes,true).' and ';
+	    $cadena_mes =  ' and mes = '.$this->bd->sqlvalue_inyeccion($cmes,true).'  ';
 	    
 	    if ( $cmes == '-'){
 	        $cadena_mes = '';
 	    }
 	    
 	    
-	    $sql = "SELECT  id_asiento ,
-                        fecha ,
-                        comprobante ,
-                        substring( detalle,0,70) || '...' as detalle ,  
-                        partida,
+	    $sql = "SELECT  cuenta,
+						cuenta_detalle as detalle,
                         sum(debe) as debe  , 
-                        sum(haber)  as haber ,bandera,id_asientod
+                        sum(haber)  as haber 
                 FROM view_aux
                 where idprov = ". $this->bd->sqlvalue_inyeccion($idprov , true).' and 
                        estado = '. $this->bd->sqlvalue_inyeccion('aprobado' , true).' and 
                        pago= '. $this->bd->sqlvalue_inyeccion('N' , true).' and 
                        anio= '. $this->bd->sqlvalue_inyeccion($anio , true).' and 
-                       registro = '. $this->bd->sqlvalue_inyeccion(trim($this->ruc) , true).' and 
+                       registro = '. $this->bd->sqlvalue_inyeccion(trim($this->ruc) , true).'   
                        '. $cadena_mes.'   
-                      cuenta = '. $this->bd->sqlvalue_inyeccion(trim($cuenta) , true).'
-                group by  id_asiento ,
-                        fecha ,
-                        comprobante ,
-                         detalle ,  
-                        partida,bandera,id_asientod';
+                group by  cuenta ,
+						  cuenta_detalle
+				order by  cuenta , cuenta_detalle';
 
+				$nombre = 'resumen_total';
+
+				echo '<table class="table table-bordered table-hover table-tabletools" id='."'".$nombre."'".' border="0" width="100%">
+				<thead> <tr>';
+					
  
+					echo '<th width="10%" bgcolor="#167cd8" style="color: #F4F4F4">Cuenta</th>';
+					echo '<th width="30%" bgcolor="#167cd8" style="color: #F4F4F4">Detalle</th>';
+					echo '<th width="10%" bgcolor="#167cd8" style="color: #F4F4F4">Debe</th>';
+					echo '<th width="10%" bgcolor="#167cd8" style="color: #F4F4F4">Haber</th>';
+					echo '<th width="10%" bgcolor="#167cd8" style="color: #F4F4F4">Saldo</th>';
+					echo '<th width="10%" bgcolor="#167cd8" style="color: #F4F4F4"></th>';
+					 
+					echo '</tr></thead><tbody>';
     
             
             $resultado  = $this->bd->ejecutar($sql);
@@ -157,9 +131,31 @@ class Model_listaAuxqSRI_res{
             $k = 1;
             
             while($row=pg_fetch_assoc($resultado)) {
-                $nsuma1 = $nsuma1 + $row['debe'];
-                $nsuma2 = $nsuma2 + $row['haber'];
-                $k++;
+                
+				$total =   $row['haber'] - $row['debe'];
+
+				if ( $total > 0  ) {
+						$nsuma1 = $nsuma1 + $row['debe'];
+						$nsuma2 = $nsuma2 + $row['haber'];
+
+					
+
+						$check =' ';
+						$bandera = '<input type="checkbox" onclick="SumaTotal('.$total .',this)" '.$check.'> ';
+						
+		
+						echo "<tr><td><b>".trim($row['cuenta']).'</b></td>';
+						echo "<td>".trim($row['detalle']).'</td>';
+			
+						echo "<td align='right'>".number_format($row['debe'],2).'</td>';
+						echo "<td align='right'>".number_format($row['haber'],2).'</td>';
+						echo "<td align='right'><b>".number_format($total,2).'</b></td>';
+						
+						echo "<td>".$bandera.'</td></tr>';
+					}
+
+				$k++;
+
                  
             }
 	     

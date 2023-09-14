@@ -70,7 +70,7 @@ public function Gasto( $fitem,$ffecha1,$ffecha2){
                                 
     
     $sql = "select  item_presupuesto,cuenta_superior ,sum(debe) as debe, sum(haber) as haber
-            FROM public.view_diario_presupuesto
+            FROM view_diario_presupuesto
             where grupo_presupuesto = ".$this->bd->sqlvalue_inyeccion(trim($fitem),true)." and 
                    partida_enlace = '-' and ".$fecha." 
             group by  item_presupuesto,cuenta_superior";

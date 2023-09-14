@@ -74,15 +74,21 @@
             
             }  
 
-		 	$output[] = array (
-		      				    $fetch['id_acta'],
-		 						trim($fetch['clase_documento']),
-		      				    trim($fetch['documento']),
- 		 	                    $fetch['estado'],
-                		 	    $fetch['modificacion'],
-                                $bandera
- 		      		);	 
-      		
+            $estado =  trim($fetch['estado']);
+
+            if ( $estado  == 'X' ){
+
+            }else{ 
+
+                    $output[] = array (
+                                        $fetch['id_acta'],
+                                        trim($fetch['clase_documento']),
+                                        trim($fetch['documento']),
+                                        $fetch['estado'],
+                                        $fetch['modificacion'],
+                                        $bandera
+                            );	 
+                }
       	}
  
  

@@ -124,7 +124,7 @@ class componente{
                 $this->obj->list->listae('Forma pago',$MATRIZ,'tipo',$datos,'required','',$evento,'div-2-4');
                 
                 
-                $this->obj->text->text('Nro.Cheque',"texto",'cheque',15,15,$datos,'required','','div-2-4');
+                $this->obj->text->text('Cheque/Documento',"texto",'cheque',15,15,$datos,'required','','div-2-4');
                 
                 $this->obj->text->text('US $',"number",'monto',0,30,$datos,'required','readonly','div-2-4') ; 
                 

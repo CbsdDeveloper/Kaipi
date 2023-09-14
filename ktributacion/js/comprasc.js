@@ -1,20 +1,7 @@
 var oTable; 
 var formulario = 'comprasc'; 
 
-$(function(){
-	
-    $(document).bind("contextmenu",function(e){
-        return false;
-    });
-    
-    window.addEventListener("keypress", function(event){
-        if (event.keyCode == 13){
-            event.preventDefault();
-        }
-    }, false);
-	
-});
-
+ 
 //------------------------------------------------------------------------- 
 $(document).ready(function(){
     
@@ -907,8 +894,15 @@ function deltramite(accion,codigo,fila){
 		    var str 	= id2;
 		    var cadena  = str.trim();
 		    var tope 	= cadena.length;
+
+			console.log(id);
+			console.log(id1);
+			console.log(id2);
+			console.log(str);
+			console.log(cadena);
+			console.log(tope);
 		    
-		    if ( tope < 150 ){
+		    if ( tope < 300 ){
 		    	   $("#detalle").val(cadena);   
 		    }
 		    

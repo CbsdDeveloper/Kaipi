@@ -228,7 +228,7 @@
       
        $this->set->div_panel('<b> CARACTERISTICAS ESPECIFICAS DEL BIEN</b>');
       
-      $this->obj->text->editor('Caracteristicas Adicionales','detalle',4,250,250,$datos,'','','div-2-10');
+      $this->obj->text->editor('Caracteristicas Adicionales','detalle',4,450,450,$datos,'','','div-2-10');
       
       $this->set->div_panel('fin');
       
@@ -344,8 +344,7 @@
    
       $this->obj->text->texto_oculto("identificador",$datos); 
       
- 
-      
+    
       
       $this->obj->text->textautocomplete('<b>Clase Bien</b>',"texto",'clase',40,45,$datos,'','','div-2-10');
       
@@ -395,6 +394,8 @@
       $this->obj->list->lista('Uso',$MATRIZ,'uso',$datos,'','disabled','div-2-4');
       
       
+
+
       $cadena = '<a href="#" onClick="DetalleBien()">Descripcion <img src="../../kimages/tips.png" align="absmiddle" Title="Mensaje"/></a>';
       
       $this->obj->text->editor($cadena,'descripcion',3,70,100,$datos,'','','div-2-10');

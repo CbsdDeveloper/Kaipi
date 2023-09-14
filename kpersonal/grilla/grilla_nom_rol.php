@@ -55,7 +55,16 @@ class proceso{
         
         while ($fetch=$this->bd->obtener_fila($resultado)){
             
-            $output[] = array ($fetch['id_rol'],$fetch['anio'],$fetch['novedad'],$fetch['estado'],$fetch['sesion']);
+            $estado = 'NO';
+            if ( $fetch['estado'] == 'S'){
+                $estado = 'SI';
+            }
+            $output[] = array (
+                $fetch['id_rol'],
+                $fetch['anio'],
+                '<b>'.$fetch['novedad'].'</b>',
+                $estado ,
+                $fetch['sesion']);
             
         }
         

@@ -56,13 +56,13 @@
       	    $filtro2= 'S';
 			$filtro21= 'N';
 			$sfiltro1 = 'N';
-      	    $dato = 'LIKE.'. strtoupper($crazon).'%';   // PALABRA RESERVADA PARA BUSCAR COICIDENCIAS CON LA VARIABLE LIKE
+      	    $dato = 'LIKE.'. '%'.strtoupper($crazon).'%';   // PALABRA RESERVADA PARA BUSCAR COICIDENCIAS CON LA VARIABLE LIKE
       	}
 
 	    $lon1      =  strlen( $cidprov);
        	$filtro21  = 'N';
       	
-      	if ( $lon1 >  5 ){
+      	if ( $lon1 >  3 ){
       	    $filtro21= 'S';
 			$sfiltro1 = 'N';
 			$filtro2= 'N';
@@ -80,7 +80,7 @@
       			array( campo => 'estado',       valor =>$bestado,  filtro => 'S',         visor => 'N'),
       	        array( campo => 'idciudad',     valor =>$ciudad,   filtro => $sfiltro1,   visor => 'N'),
       			array( campo => 'naturaleza',   valor =>$naturaleza,  filtro => $sfiltro, visor => 'N'),
-      			array( campo => 'modulo',       valor =>"C",          filtro => 'S',      visor => 'N')
+      			array( campo => 'modulo',       valor =>"-",          filtro => 'N',      visor => 'S')
       	);
       	
 	   // tabla par_ciu 
@@ -92,7 +92,7 @@
       		
       		$output[] = array (
       				trim($fetch['idprov']),
-      				$fetch['razon'],
+      				'<b>'.trim($fetch['razon']). '</b> ('.trim($fetch['modulo']).')',
       				$fetch['correo'],
       				$fetch['telefono']
       				

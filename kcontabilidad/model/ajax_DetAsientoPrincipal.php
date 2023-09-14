@@ -68,7 +68,7 @@ session_start();
         $title1     = 'title="Eliminar Informacion"';
         $boton_del  = '<button   class="btn btn-xs" '.$title1.$funcion1.'   ><i class="glyphicon glyphicon-remove"></i></button>&nbsp;';
         
-        $cpartida   = '<span style="color: #A0A0A0">'.trim($y['partida']).'</span>';
+        $cpartida   = '<span style="color: #ff1717"><b>'.trim($y['partida']).'</b></span>';
         
         $boton_gas  = '';
         $fondo      = '';

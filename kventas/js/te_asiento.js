@@ -5,27 +5,6 @@ var oTableIngreso;
 var oTableFactura;
 
 
-$(function(){
-
-    $(document).bind("contextmenu",function(e){
-
-        return false;
-
-    });
-
-	window.addEventListener("keypress", function(event){
-
-        if (event.keyCode == 13){
-
-            event.preventDefault();
-
-        }
-
-    }, false);
-
-    
-});
-
 //-------------------------------------------------------------------------
 
 $(document).ready(function(){
@@ -71,6 +50,18 @@ $(document).ready(function(){
 	   $('#load').on('click',function(){
             BusquedaGrilla(oTable);
 		});
+
+
+ 
+			$.ajax({
+				url: "../model/ajax_aux_cxcp.php",
+				type: "GET",
+				success: function(response)
+				{
+						$('#cfiltro').html(response);
+				}
+			});
+
 
 //-----------------------------------------------------------------
 });  
@@ -230,6 +221,27 @@ function BuscaContra(cuenta){
     			success: function(response)
     			{
     			$('#cuenta1').html(response);
+    			}
+    		});
+     
+}
+//----------------
+function BuscaCxPC(){
+	 
+	var cuenta = $("#cfiltro").val();
+
+
+    var parametros = {
+    		'cuenta' : cuenta  
+    		}; 
+
+    		$.ajax({
+    			data: parametros,
+    			url: "../model/ajax_aux_cxcp_lista.php",
+    			type: "GET",
+    			success: function(response)
+    			{
+    			$('#ViewCxC').html(response);
     			}
     		});
      
@@ -1470,6 +1482,44 @@ function accion_pago(id,modo,comprobante)
 			  }
 
 		 });
+
+}
+//------------
+function goToURL_agrega(accion,idprov){
+
+ 
+	 var    cuenta			  =   $("#cfiltro").val();
+	 var	id_asiento    	    =   $("#id_asiento").val( );
+
+	var parametros = {
+			   'accion' : accion ,
+			   'idprov' : idprov ,
+			   'cuenta' : cuenta,
+			   'id_asiento' : id_asiento 
+
+   };
+
+   if (id_asiento){
+				 $.ajax({
+							   data:  parametros,
+							   url:   '../model/Model-te_dasientos.php',
+							   type:  'GET' ,
+							   cache: false,
+							   beforeSend: function () { 
+									   $("#result").html('Procesando');
+
+							   },
+							   success:  function (data) {
+										$("#result").html(data);  // $("#cuenta").html(response);
+
+							   } 
+
+					   }); 
+
+				 
+					    $('#myModalcc').modal('hide')
+					}
+		 
 
 }
 //--------------

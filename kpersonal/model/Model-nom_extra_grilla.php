@@ -71,7 +71,7 @@ class proceso{
               WHERE '. $where. ' order by 6 asc';
         
         
-         // SELECT  *   FROM  public.nom_rol_pagod  where id_rol = 23 and id_config=899  and regimen= 'NOMBRAMIENTOS LOSEP' and programa = '223' order by idprov
+         
         
         $resultado = $this->bd->ejecutar($sql);
         
@@ -141,7 +141,7 @@ class proceso{
      	       FROM view_nomina_rol
 			   where    regimen='.$this->bd->sqlvalue_inyeccion($regimen ,true). ' and
                          programa='.$this->bd->sqlvalue_inyeccion(trim($programa) ,true). ' and
-                         msale = '.$this->bd->sqlvalue_inyeccion( '-1' ,true) ;
+                         msale  = '.$this->bd->sqlvalue_inyeccion( '-1' ,true). ' or msale = '.  $this->bd->sqlvalue_inyeccion(  $mes ,true)  ;
         }
           
         $stmt = $this->bd->ejecutar($sql);
@@ -170,12 +170,27 @@ class proceso{
             $dias       = 0;
             $programa   = trim($x['programa']);
 
+
+            $fecha_salida = $x['fecha_salida'];
+            $valida_anio  = explode('-',$fecha_salida);
+
+            $anio_salida =  $valida_anio[0];
+
+            if (empty( $fecha_salida )){
+
+            }else{
+                if ( $valida_anio == $rol["anio"]){
+                } else{
+                    $rol_valida["numero"] == 1;
+                }
+            }
+
             
             if ($rol_valida["numero"] == 0){
                 
                 $dias         = $this->formula->_n_sueldo_dias($x['fecha'],$rol["mes"],$rol["anio"], $x['fecha_salida'] );
                 
-                $fecha_salida = $x['fecha_salida'];
+              
 
  
                 $nbandera = 0;

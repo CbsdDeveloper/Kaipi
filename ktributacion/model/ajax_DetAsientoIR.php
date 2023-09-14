@@ -13,8 +13,7 @@
      
      $id_compras     = $_GET['id_compras'] ;
     
-    $fuente = "Fuente de Impuesto a la Renta";
-    
+     
     
     $sql = 'SELECT id_compras as "Referencia" ,
                   codigo, '."

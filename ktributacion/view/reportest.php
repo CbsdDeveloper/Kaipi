@@ -139,6 +139,7 @@
 																		<li><a href="#" onClick="imprimir_comprobanteM('../reportes/resumen_proveedor')" >Resumen por proveedores</a></li>
 																		<li class="divider"></li>
 																		<li><a href="#" onClick="imprimir_comprobanteM('../reportes/resumen_cliente')" >Ventas emitidas</a></li>
+																   	<li><a href="#" onClick="imprimir_comprobanteM('../reportes/resumen_cliente1')" >Ventas/Retencion</a></li>
 																		<li><a href="#" onClick="generaExcel('../reportes/ventasResumen')">Resumen Ventas</a></li>
 																	</ul>
 														  </div> 

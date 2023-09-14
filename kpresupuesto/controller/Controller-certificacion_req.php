@@ -149,8 +149,7 @@ session_start( );
                 
                 $this->obj->list->listae('Planificado?',$MATRIZ,'planificado',$datos,'','',$evento,'div-2-4');
                 
-          //      $this->obj->text->text('Comprobante',"texto" ,'comprobante' ,80,80, $datos ,'','readonly','div-2-4') ;
-                
+                 
                 $id_unidad = $usuario['id_departamento'] ;
                 
               
@@ -158,24 +157,13 @@ session_start( );
                 $this->obj->text->text('Documento',"texto" ,'documento' ,80,80, $datos ,'required','','div-2-4') ;
                 
              
-                $resultado = $this->bd->ejecutar("select 0 as codigo , '  [  Tarea Planificada asociada ]' as nombre union
-                                                    SELECT idtarea as codigo, tarea as nombre
-                                                    FROM planificacion.view_tarea_poa 
-                                                    where id_departamento = ".$this->bd->sqlvalue_inyeccion($id_unidad ,true)." and 
-                                                            anio = ".$this->bd->sqlvalue_inyeccion( $this->anio ,true)." and 
-                                                           estado = 'S' and 
-                                                           cumplimiento = 'N' and 
-                                                           recurso = 'S' and reprogramacion = 'N'");
-                
-                $this->obj->list->listadb($resultado,$tipo,'Tarea Planificada','id_tarea',$datos,'required','','div-2-10');
+         
                   
                 $this->obj->text->editor('Detalle','detalle',4,45,550,$datos,'required','','div-2-10') ;
                 
             
-                
-                $MATRIZ = $this->obj->array->catalogo_compras();
-                $evento='';
-                $this->obj->list->listae('Proceso Contratacion',$MATRIZ,'tipocp',$datos,'','',$evento,'div-2-10');
+             
+             
                 
                 $this->set->div_label(12,'ASIGNACION RESPONSABLES TRAMITE');
                 
@@ -262,6 +250,13 @@ session_start( );
                 $this->obj->list->listae('Estado',$MATRIZ,'estado',$datos,'','',$evento,'div-2-4');
                 
       	  $this->obj->text->texto_oculto("action",$datos); 
+            $this->obj->text->texto_oculto("id_tarea",$datos); 
+            $this->obj->text->texto_oculto("tipocp",$datos); 
+
+
+
+            
+            
       	 
              
           $this->set->_formulario('-','fin'); 

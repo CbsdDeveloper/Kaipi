@@ -67,12 +67,11 @@
 									  <table id="jsontable" class="display table-condensed" cellspacing="0" width="100%">
 											 <thead  bgcolor=#F5F5F5>
 											   <tr>   
-													<th width="10%">Id</th>
-													<th width="20%">Motivo</th>
-													<th width="35%">Detalle Legal</th>
-													<th width="15%">Sesion</th>
+													<th width="5%">Id</th>
+													<th width="15%">Motivo</th>
+													<th width="65%">Detalle Legal</th>
 													<th width="10%">Afecta Rol</th>
-													<th width="10%">Acciones</th>
+													<th width="5%">Acciones</th>
 											   </tr>
 											</thead>
 									 </table>
@@ -82,7 +81,9 @@
 							 </div> 
 					 </div>
 
-					 <!-- ------------------------------------------------------ -->
+			           
+			   
+			   <!-- ------------------------------------------------------ -->
 					 <!-- Tab 2 -->
 					 <!-- ------------------------------------------------------ -->
 

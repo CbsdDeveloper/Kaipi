@@ -265,6 +265,24 @@ class proceso{
         echo $result;
         
     }
+
+        //----------------------
+        function cierre_dato($id ){
+        
+        
+        
+            $sql = 'update  nom_rol_pago
+                       set  estado='.$this->bd->sqlvalue_inyeccion('S', true).
+                       'WHERE  id_rol = '.$this->bd->sqlvalue_inyeccion($id, true);
+            
+            $this->bd->ejecutar($sql);
+            
+            
+            $result = '<img src="../../kimages/ksavee.png" align="absmiddle"/>&nbsp;<b>PERIODOS '.$id.'   CERRADO  </b>';
+            
+            echo $result;
+            
+        }
     
 }
 ///------------------------------------------------------------------------
@@ -290,7 +308,14 @@ if (isset($_GET['accion']))	{
         
         $gestion->cierre($anio);
         
-    }else{
+    }elseif ( $accion == 'SI'){
+        
+        $anio        = $_GET['anio'];
+        
+        $gestion->cierre_dato($id);
+        
+    }
+     else{
         
         $gestion->consultaId($accion,$id);
         

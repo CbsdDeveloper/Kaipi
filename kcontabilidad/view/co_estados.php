@@ -114,6 +114,7 @@
 						        <!-- ------------------------------------------------------ -->
 					 	   
                                <div class="tab-pane fade in" id="tab0"  style="padding-top: 3px">
+								   
                                       <div class="panel panel-default">
                                           <div class="panel-body" > 
                                                   <div class="col-md-10"> 
@@ -127,6 +128,7 @@
 						   
 						   
 						       <div class="tab-pane fade in" id="tab2"  style="padding-top: 3px">
+								   
 								  <div class="panel panel-default">
 									  <div class="panel-body" > 
 
@@ -160,7 +162,7 @@
 										  
 										   <div class="col-md-12" style="padding-bottom:5;padding-top:5px"> 
 											  
-													<div style="height: 500px; overflow-y: scroll;">
+													<div style="height: 750px; overflow-y: scroll;">
 
 													  <div id="ViewBalance"> </div>
 
@@ -190,10 +192,13 @@
 												</select>
 										    </div>  	 
 										  
-										    <div class="col-md-3" style="padding-top: 2px"> 
+										    <div class="col-md-4" style="padding-top: 2px"> 
 
 												  <button type="button" class="btn btn-sm btn-default" id="financiero4">
 												 <span class="glyphicon glyphicon-cog"></span> Estado Situacion</button>
+												
+												  <button type="button" class="btn btn-sm btn-info" id="financiero400">
+												 <span class="glyphicon glyphicon-cog"></span> Estado Situacion Detalle</button>
  
 
 										  		 <button type="button" class="btn btn-sm btn-default" onClick="imprimir('ViewBalanceSituacion')">
@@ -211,7 +216,7 @@
 										  
 										   <div class="col-md-12" style="padding-bottom:5;padding-top:5px"> 
 											  
-													<div style="height: 500px; overflow-y: scroll;">
+													<div style="height: 750px; overflow-y: scroll;">
 
 													  <div id="ViewBalanceSituacion"> </div>
 
@@ -226,7 +231,9 @@
 						   
 						   
 						   <!-- Tab 4 -->
+						   
 							 <div class="tab-pane fade in" id="tab4"  style="padding-top: 3px">
+								 
 								  <div class="panel panel-default">
 									  <div class="panel-body" > 
 										  
@@ -240,10 +247,15 @@
 														</select>
 										        </div>  
 												
-												 <div class="col-md-3"> 
+												 <div class="col-md-4"> 
 												
 												  <button type="button" class="btn btn-sm btn-default" id="financiero44">
 												 <span class="glyphicon glyphicon-cog"></span> Estado de Resultados</button>
+													 
+													   <button type="button" class="btn btn-sm btn-info" id="financiero441">
+												 <span class="glyphicon glyphicon-cog"></span> Estado Resultados Detalle</button>
+ 
+													 
 
 												 <button type="button" class="btn btn-sm btn-default" onClick="imprimir('ViewResultadosEsigef')">
 													 <span class="glyphicon glyphicon-print"></span> Reporte</button>
@@ -259,12 +271,10 @@
 										  
 											   <div class="col-md-12" style="padding-bottom:5;padding-top:5px"> 
 
-														<div style="height: 500px; overflow-y: scroll;">
-
+ 
 														  <div id="ViewResultadosEsigef"> </div>
 
-													   </div>   
-
+ 
 											  </div>
 								 		  
 		 
@@ -296,12 +306,10 @@
 										  
 										   <div class="col-md-12" style="padding-bottom:5;padding-top:5px"> 
 											  
-													<div style="height: 500px; overflow-y: scroll;">
-
+ 
 													  <div id="ViewFlujo"> </div>
 
-												   </div>   
-										 
+ 										 
 									 	  </div>
 										  
 									  </div>
@@ -312,13 +320,21 @@
 						   
 						      <!-- Tab 6 -->
 							 <div class="tab-pane fade in" id="tab6"  style="padding-top: 3px">
+								 
 								  <div class="panel panel-default">
+									  
 									  <div class="panel-body" > 
 										  
 										  <div class="col-md-12" style="padding-bottom:15;padding-top: 10px"> 
 
 												  <button type="button" class="btn btn-sm btn-default" id="financiero66">
 												 <span class="glyphicon glyphicon-cog"></span> Estado Ejecucion</button>
+											  
+											  
+											    <button type="button" class="btn btn-sm btn-info" id="financiero661">
+												 <span class="glyphicon glyphicon-cog"></span> Estado Ejecucion Detalle</button>
+											  
+											  
 
 												 <button type="button" class="btn btn-sm btn-default" onClick="imprimir('ViewEjecucion')">
 										 <span class="glyphicon glyphicon-print"></span> Reporte</button>
@@ -330,12 +346,10 @@
 										  
 										   <div class="col-md-12" style="padding-bottom:5;padding-top:5px"> 
 											  
-													<div style="height: 500px; overflow-y: scroll;">
-
+ 
 													  <div id="ViewEjecucion"> </div>
 
-												   </div>   
-										 
+ 										 
 									 	  </div>
  										  
 										   
@@ -362,12 +376,10 @@
 										  
 										   <div class="col-md-12" style="padding-bottom:5;padding-top:5px"> 
 											  
-													<div style="height: 500px; overflow-y: scroll;">
-
+ 
 													  <div id="ViewNotasDetalle"> </div>
 
-												   </div>   
-										 
+ 										 
 									 	  </div>
  										  
 										   

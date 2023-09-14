@@ -26,6 +26,9 @@ class Formula_rol{
 
       private $salario;
 
+      private $indice;
+      private $canasta;
+
       
       //-----------------------------------------------------------------------------------------------------------
       //Constructor de la clase
@@ -51,6 +54,22 @@ class Formula_rol{
                 'tipo='.$this->bd->sqlvalue_inyeccion('70',true) 
                 );
         
+                $sindice = $this->bd->query_array('wk_config',
+                'modulo as indice',
+                'tipo='.$this->bd->sqlvalue_inyeccion('-70',true) 
+                );
+        
+                $this->indice =  $sindice['indice'];
+            
+          
+
+                $scanasta = $this->bd->query_array('wk_config',
+                'modulo as canasta',
+                'tipo='.$this->bd->sqlvalue_inyeccion('-71',true) 
+                );
+        
+                $this->canasta =  $scanasta['canasta'];
+    
 
                 $this->salario 	 =   $smu['salario'];
                
@@ -238,21 +257,30 @@ function diasEntreFechas($fechainicio, $fechafin){
         
         
         $xxx = $this->bd->query_array('view_nomina_rol',
-            'anio_trascurrido,fecha,sifondo,fondo,
+            'anio_trascurrido,fecha,sifondo,fondo,regimen,
                 sidecimo, sicuarto, sihoras, sisubrogacion,sueldo,coalesce(cargas,0) as cargas',
             'idprov='.$this->bd->sqlvalue_inyeccion(trim($idprov),true)
             );
         
-        $salaria        =   $xxx['cargas'];
+        $salaria           =   $xxx['cargas'];
+        $regimen           =  $xxx['regimen'];
         
-        $monto_pago =  $salaria * 4;
+        $carga_valor = $this->bd->query_array('view_nomina_rol_reg',
+        'monto',
+         'regimen='.$this->bd->sqlvalue_inyeccion(trim($regimen),true)." and
+          tipoformula  = 'AC' "
+        );
+
+
+        $monto_pago =  $salaria *  $carga_valor['monto'];
  
+        if (  $monto_pago > 0 ){
+            return $monto_pago;
+        }else{
+            return 0;
+        }
         
-        
-        return $monto_pago;
-        
-        
-        
+ 
     }  
 
 
@@ -650,7 +678,7 @@ function _n_decimo_cuarto(  $id_periodo, $id_rol,$idprov ,$anio,$mes  ){
 
     $dias         = $this->_n_sueldo_dias($x['fecha'],$mes,$anio, $x['fecha_salida'] );
     
-   
+    echo ''.$dias ;
     
     if ( $x['sicuarto']  == 'N') {
         
@@ -747,6 +775,8 @@ function _monto_Aporte_IESS( $monto_iess  ){
 
     $this->monto_iess = $monto_iess ;
 
+  
+
 }
    /*
    CALCULO DEL APORTE PERSONAL
@@ -823,8 +853,9 @@ function _monto_Aporte_IESS( $monto_iess  ){
         
     }
 
-     //- impuesto a la renta
-     function _n_impuesto_renta(  $id_periodo, $id_rol,$idprov ,$anio,$mes,$simula="N" ){
+    //------------
+      //- impuesto a la renta
+      function _n_impuesto_renta_2022(  $id_periodo, $id_rol,$idprov ,$anio,$mes,$simula="N" ){
         
    
         $actual = $this->bd->query_array('view_nom_rol_formula',
@@ -869,9 +900,9 @@ function _monto_Aporte_IESS( $monto_iess  ){
             echo 'Gastos Personales:'. round($gastos_personales,2) .'<br>';
         }
 
+//11.45
 
-
-        $iess_parcial            =  $sueldo_mes * (11.45/100) ;
+        $iess_parcial            =  $sueldo_mes * (9.45/100) ;
         
         ///$this->_n_Aporte_personal_IESS_renta( $id_periodo, $id_rol,$idprov ,$anio,$mes,   $sueldo_mes );
 
@@ -943,6 +974,154 @@ function _monto_Aporte_IESS( $monto_iess  ){
         
         
     }
+
+     //- impuesto a la renta
+     function _n_impuesto_renta(  $id_periodo, $id_rol,$idprov ,$anio,$mes,$simula="N" ){
+        
+        
+   
+        $actual = $this->bd->query_array('view_nom_rol_formula',
+            ' coalesce(sum(ingreso),0) promedio',
+            'idprov='.$this->bd->sqlvalue_inyeccion(trim($idprov),true).' and
+                 tipoformula  in ('." 'RS','EE'".')'.' AND
+                  mes  =  '.$this->bd->sqlvalue_inyeccion($mes,true).' and
+                  anio = '.$this->bd->sqlvalue_inyeccion($anio,true).' and
+                  formula='.$this->bd->sqlvalue_inyeccion( 'I',true)
+            );
+        
+       $ingresos_fondo = $this->bd->query_array('view_nom_rol_formula',
+            'sum(coalesce(ingreso,0)) as suma',
+             'idprov='.$this->bd->sqlvalue_inyeccion(trim($idprov),true).' and
+              id_periodo='.$this->bd->sqlvalue_inyeccion($id_periodo,true).' and
+              id_rol='.$this->bd->sqlvalue_inyeccion($id_rol,true)." and
+              tipoformula  = 'FR' "
+            );
+ 
+      
+        $sueldo_mes   = round($actual['promedio'],2);
+ 
+        $decimo_tercero  = round($actual['promedio'],2);
+
+        $sueldo_anual   = $sueldo_mes * 12 ;
+
+        if ( $simula == 'S'){
+            echo 'Empleado:'.  $idprov .'++++++++++++++++++++<br>';
+            echo 'Sueldo y Salario Mes:'.  $sueldo_mes .'<br>';
+        }
+
+ 
+
+        $xxx = $this->bd->query_array('view_nomina_rol',
+            'fecha,sueldo,regimen,
+             coalesce(vivienda,0) + coalesce(vestimenta,0) +coalesce(salud,0) + coalesce(educacion,0)  + coalesce(turismo,0) +coalesce(alimentacion,0) as saldo',
+            'idprov='.$this->bd->sqlvalue_inyeccion(trim($idprov),true));
+        
+        $gastos_personales =  $xxx['saldo'];
+        $regimen           =  $xxx['regimen'];
+
+
+        $iess_valor = $this->bd->query_array('view_nomina_rol_reg',
+        'monto',
+         'regimen='.$this->bd->sqlvalue_inyeccion(trim($regimen),true)." and
+          tipoformula  = 'AP' "
+        );
+
+        $iess               =  $iess_valor['monto']; 
+        $this->monto_iess   =  $iess;
+ 
+        
+        if ( $simula == 'S'){
+            echo 'Gastos Personales:'. round($gastos_personales,2) .'<br>';
+        }
+ 
+        $iess_parcial            =  $sueldo_mes * ( $iess/100) ;
+        
+        ///$this->_n_Aporte_personal_IESS_renta( $id_periodo, $id_rol,$idprov ,$anio,$mes,   $sueldo_mes );
+
+        if ( $simula == 'S'){
+            echo 'Aporte Iess mensual:'.  round(  $iess_parcial) .'<br>';
+        }
+        
+        $base1 = ( $sueldo_mes   * 12 ) - (   $iess_parcial  * 12) ;
+         
+        if ( $simula == 'S'){
+            echo ' Base Imponible:'.  round($base1,2) .'<br>';
+        }
+      
+
+        $IR =  $this->_monto_impuesto_renta(  $base1 ,$anio  );
+
+        if ( $simula == 'S'){
+            echo ' TABLA IRENTA:'.  round($IR,2) .'<br>';
+        }
+
+
+        $dec4 =   $this->salario;
+         
+
+        $ingresos_adicionales    = ( $ingresos_fondo['suma'] * 12)  ;  
+ 
+        $ingresos_excento =  $decimo_tercero +  $dec4 +    $ingresos_adicionales  ;
+
+        if ( $simula == 'S'){
+
+            echo ' INGRESOS excento:'.$decimo_tercero.'+'.$dec4 .'+'. $ingresos_adicionales .'='.$ingresos_excento .'<br>';
+
+        }
+
+ 
+
+        // $indice     =  $this->indice; 
+
+        // $canasta    =   $this->canasta ; 
+
+        $indice     =  24967.86; 
+
+        $canasta    =  5344.08 ; 
+ 
+ 
+        if (  $gastos_personales > $canasta ){
+                $base_calculo = $canasta ;
+        }else{
+                $base_calculo = $gastos_personales ;
+        }
+
+        $ingresos_brutos = $ingresos_excento +   $sueldo_anual;
+
+        if ( $simula == 'S'){
+
+            echo ' INDICE : '.$indice.'<br>';
+            echo ' CANASTA : '.$canasta.'<br>';
+            echo ' BASE CALCULO : '.$base_calculo.'<br>';
+            echo ' INGRESOS BRUTOS : '.$ingresos_brutos.'<br>';
+
+        }
+
+        if ($ingresos_brutos >  $indice  ){
+            $rebaja =    $base_calculo *(10/100)  ;
+        }else{
+            $rebaja =    $base_calculo *(20/100)  ;
+        }
+
+        $impuesto =   $IR -  $rebaja;
+
+
+         $valor_mensual =  $impuesto / 12;
+
+         if ( $simula == 'S'){
+
+            echo ' REBAJA : '.$rebaja.'<br>';
+            echo ' IMPUESTO : '.$impuesto.'<br>';
+            echo ' VALOR MENSUAL : '.$valor_mensual.'<br>';
+
+        }
+
+
+ 
+        return  $valor_mensual ;
+        
+        
+    }
  /*
  */
 
@@ -982,11 +1161,25 @@ function _monto_Aporte_IESS( $monto_iess  ){
 
 
     $xxx = $this->bd->query_array('view_nomina_rol',
-        'fecha,sueldo,
+        'fecha,sueldo,regimen,
          coalesce(vivienda,0) + coalesce(vestimenta,0) +coalesce(salud,0) + coalesce(educacion,0)  + coalesce(turismo,0) +coalesce(alimentacion,0) as saldo',
         'idprov='.$this->bd->sqlvalue_inyeccion(trim($idprov),true));
     
     $gastos_personales =  $xxx['saldo'];
+
+    $regimen           =  $xxx['regimen'];
+
+
+    $iess_valor = $this->bd->query_array('view_nomina_rol_reg',
+    'monto',
+     'regimen='.$this->bd->sqlvalue_inyeccion(trim($regimen),true)." and
+      tipoformula  = 'AP' "
+    );
+
+    $iess               =  $iess_valor['monto']; 
+    $this->monto_iess   =  $iess;
+
+
     
     if ( $simula == 'S'){
         echo 'Gastos Personales:'. round($gastos_personales,2) .'<br>';
@@ -994,7 +1187,7 @@ function _monto_Aporte_IESS( $monto_iess  ){
 
 
 
-    $iess_parcial            =  $sueldo_mes * (11.45/100) ;
+    $iess_parcial            =  $sueldo_mes * ( $iess/100) ;
     
     ///$this->_n_Aporte_personal_IESS_renta( $id_periodo, $id_rol,$idprov ,$anio,$mes,   $sueldo_mes );
 
@@ -1029,9 +1222,14 @@ function _monto_Aporte_IESS( $monto_iess  ){
 
     }
 
-    $indice     =  24090.30; 
+   // $indice     =  24090.30; 
 
-    $canasta    =  5037.55 ; 
+    //$canasta    =  5037.55 ; 
+
+    $indice     =  $this->indice; 
+
+    $canasta    =   $this->canasta ; 
+
 
 
 

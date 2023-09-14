@@ -63,10 +63,11 @@
 											 <thead  bgcolor=#F5F5F5>
 											   <tr>   
 													<th width="10%">Id</th>
-													<th width="20%">Nombre</th>
+													<th width="20%">Detalle Cargo</th>
 													<th width="20%">Productos</th>
-													<th width="30%">Competencias</th>
+													<th width="20%">Competencias</th>
 													 <th width="10%">Nivel Jerarquico</th>
+												   	 <th width="10%">Nro.Funcionarios</th>
 													<th width="10%">Acciones</th>
 											   </tr>
 											</thead>

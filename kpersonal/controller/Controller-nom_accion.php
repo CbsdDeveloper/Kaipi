@@ -112,6 +112,7 @@
 
 
                             $resultado =  $this->combo_lista("nom_accion_lista");
+                            
                             $evento    = 'OnChange="ValidaAccion(this.value)"';
                             $this->obj->list->listadbe($resultado,$tipo,'Motivo','motivo',$datos,'required','',$evento,'div-2-10');
 

@@ -141,7 +141,7 @@ function BusquedaGrillaTramite(oTableTramite,tipo){
 		                      s[i][3],
 		                      s[i][4],
 		                      s[i][5],
-		                      '<button title="Tramite Generar Devengado " class="btn btn-xs" onClick="javascript:goToURL('+"'editar'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-ok"></i></button> ' 
+		                      '<button title="Tramite Generar Devengado" class="btn btn-xs btn-warning" onClick="goToURL('+"'editar'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-ok"></i></button> ' 
 		                  ]);									
 					} // End For
 				   }				

@@ -12,20 +12,22 @@ session_start( );
 	
     <?php  
 		    require('Head.php')  ;
+	
 			require('../controller/Controller-ac_novedad.php')  ;
+	
 			$gestion   = 	new componente;
 	
 			
-		if  (isset($_POST['bien_tmp'])) {
-			
-			$gestion->guarda_nuevo($_POST); 
-			
-			
-			echo '<div class="alert alert-success">
-				  <strong>ADVERTENCIA!</strong> LOS DATOS SE ENCUENTRAN ACTUALIZADOS... <b>VERIFIQUE LA INFORMACION QUE INDICA EL SISTEMA</b>
-				</div>';
-		 
-		} 
+				if  (isset($_POST['bien_tmp'])) {
+
+					$gestion->guarda_nuevo($_POST); 
+
+
+					echo '<div class="alert alert-success">
+						  <strong>ADVERTENCIA!</strong> LOS DATOS SE ENCUENTRAN ACTUALIZADOS... <b>VERIFIQUE LA INFORMACION QUE INDICA EL SISTEMA</b>
+						</div>';
+
+				} 
 	
 	
  	?> 

@@ -156,6 +156,40 @@ function goToURL(accion,id) {
  
 	
 }
+//-------------
+
+function AnulaActa() {
+	
+	var idacta = $("#cacta").val ();
+
+	var parametros = {
+		'id' : idacta ,
+		'accion': 'reversion'
+		};
+
+
+	alertify.confirm("<p>DESEA REVERTIR EL ACTA PROCESO IRREVERSIBLE...</p>", function (e) {
+		if (e) {
+		   
+			   
+			$.ajax({
+				data:  parametros,
+				url: "../model/Model-ac_trasf.php",
+				type: "GET",
+			 success: function(response)
+			 {
+	   
+					 $('#ResultadosBIenes').html(response);
+				
+				   
+			 }
+			});
+			   
+		}
+	   }); 
+	
+}
+
 ///-------------
 function goToURLBusqueda(idprov) {
 	
@@ -228,7 +262,8 @@ function goToURL_custodio(id) {
 function goToURLvisor(idacta) {
 	 
 	 
-	 
+	$("#cacta").val (idacta);
+
 	 var parametros = {
 				 'idacta' : idacta 
  };

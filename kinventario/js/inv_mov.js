@@ -169,6 +169,7 @@ function goToURL( id, vista ) {
    	var tipo       = $("#tipo1").val();
   	var fecha1     = $("#fecha1").val();
   	var fecha2     = $("#fecha2").val();
+	var producto_busca = $("#producto_busca").val();
  	
  
   	var cbodega     = $("#cbodega").val();
@@ -180,7 +181,8 @@ function goToURL( id, vista ) {
 				'fecha2' : fecha2,  
 				'id' : id,
 				'cbodega' : cbodega,
-				'ccuentas' : ccuentas
+				'ccuentas' : ccuentas,
+				'producto_busca':producto_busca
     };
 	    
 		$.ajax({
@@ -318,6 +320,35 @@ function goToProceso(  ) {
     return this.formatear(num);
    }
   }
+
+//---------------------  
+function BuscaMov(id)
+{
+ 
+	var tipourl 				  = $( '#tipo1' ).val();
+	objeto 					      =  '#url_' + id;
+	var url 				      = $(objeto).val();	
+	
+	var parametros = {
+			"tipourl" : tipourl ,
+            "url" : url ,
+            "id" : id
+	};
+	
+	$.ajax({
+ 			 url:   '../controller/Controller-unidad_articulo.php',
+ 			data:  parametros,
+			type:  'GET' ,
+				beforeSend: function () { 
+						$("#VisorArticuloActualiza").html('Procesando');
+				},
+			success:  function (data) {
+					 $("#VisorArticuloActualiza").html(data);   
+				     
+				} 
+	});
+ 
+}  
 //----------------
 function BuscaCuenta(id)
 {

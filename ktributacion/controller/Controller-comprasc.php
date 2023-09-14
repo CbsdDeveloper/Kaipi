@@ -424,7 +424,7 @@
        $this->obj->text->text('Nro.Serie modificado',"texto",'estabmodificado',6,6,$datos,'','','div-3-3');
  
        
-       $this->obj->text->text('Autorizacion',"texto",'autmodificado',47,47,$datos,'','','div-3-3');
+       $this->obj->text->text('Autorizacion',"texto",'autmodificado',49,49,$datos,'','','div-3-3');
        
       
  

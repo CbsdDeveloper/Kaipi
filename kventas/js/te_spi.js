@@ -307,8 +307,8 @@ function accion(id, action)
        	                        s[i][4],
        	                        s[i][5],
        	                        s[i][6],
-                               	'<button class="btn btn-xs" onClick="goToURL('+"'editar'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;' + 
-								'<button class="btn btn-xs" onClick="goToURL('+"'del'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-remove"></i></button>' 
+                               	'<button class="btn btn-xs btn-warning" onClick="goToURL('+"'editar'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;' + 
+								'<button class="btn btn-xs btn-danger" onClick="goToURL('+"'del'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-remove"></i></button>' 
 							]);										
 						} // End For
 				  }						
@@ -652,6 +652,46 @@ if ( estado != 'aprobado' ) {
 						    'id_spi_det' : id_spi_det,
 						    'id_spi' : id_spi,
 						    'id_asiento_aux': id_asiento_aux
+			   };
+				  
+				  
+				$.ajax({
+						data:  parametros,
+						 url:   '../model/Model-te_spi_lista.php',
+						type:  'GET' ,
+						success:  function (data) {
+								 $("#ViewFormDetalle").html(data);   
+ 							} 
+				});
+	
+				 
+	} else 	{
+		
+		alert('Guarde la informacion para realizar esta transaccion');
+	}
+}	
+ 
+}
+
+function goToSpiCambio(id_spi_det,estado_ciu)
+{
+ 
+var id_spi = 	$("#id_spi").val();
+
+var estado = 	$("#estado").val();
+
+
+if ( estado != 'aprobado' ) {
+	
+	if ( id_spi > 0 ){
+			
+				 
+				 
+				 var parametros = {
+						    'accion': 'cambio',
+						    'id_spi_det' : id_spi_det,
+						    'id_spi' : id_spi,
+						    'estado_ciu': estado_ciu
 			   };
 				  
 				  

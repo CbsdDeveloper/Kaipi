@@ -14,6 +14,7 @@
     
 	
  <style type="text/css">
+	 
   		#mdialTamanio{
   					width: 75% !important;
 		}
@@ -182,16 +183,24 @@
  										   
 											   	  <div id="ViewForm"> </div>
  											   
-											    <div class="col-md-12">
+											    
+											   
+											   
+											   <div class="col-md-12">
 
-														<a href="#" title= "Ver Auxiliares" onClick="VerBeneficiarios()"  data-toggle="modal" data-target="#myModalprov"><img src="../../kimages/03_.png" align="absmiddle"/></a>  &nbsp;
+														<a href="#" title= "Ver Auxiliares" onClick="VerBeneficiarios()"  data-toggle="modal" data-target="#myModalprov"><img src="../../kimages/03_.png" align="absmiddle"/> Ver Auxiliares</a>  &nbsp;
 
+
+												   	<a href="#" title= "Ver Cuentas por Pagar/Cobrar" data-toggle="modal" data-target="#myModalcc"><img src="../../kimages/02_.png" align="absmiddle"/> Ver CxPagar/Cobrar</a>  &nbsp;
+
+												   
+												   
 														<a href="#" title= "Ver Comprobantes relacionados" onClick="BusquedaGrillaFactura(oTableFactura)"  data-toggle="modal" data-target="#myModalfactura">
-															<img src="../../kimages/3p.png" align="absmiddle" />
+															<img src="../../kimages/3p.png" align="absmiddle" /> Comprobantes Electronicos
 														</a>  
 
 													<a href="#" title= "Enlace Presupuesto Ingreso" onClick="VerIngresos(oTableIngreso)"  data-toggle="modal" data-target="#myModalIngresos">
-                 									<img src="../../kimages/5p.png" align="absmiddle"/>  </a>
+                 									<img src="../../kimages/5p.png" align="absmiddle"/> Enlace Presupuesto Ingreso</a>
 													
 												   </div>
  											   
@@ -212,7 +221,17 @@
                        							  </div>
 											   
 											  	 
-											      
+											       <div class="col-md-12">
+													   
+													   <div class="alert alert-success">
+															  <strong>Advertencia!</strong> Para cerrar cuentas de años anteriores por pagar no se olvide de realizar juego de cuentas con 213.81/83/85 etc. en el caso que no tengan afectación presupuestaria/ para las de afectación debe realizar certificación presupuestaria.	
+															</div>
+
+															<div class="alert alert-info">
+															  <strong>Información!</strong> Para las cuentas por cobrar debe tomar en cuenta realizar el cruce de las cuentas 124.98/113.98/ Enlazar con las cuentas que tienen afectación presupuestaria.
+															</div>
+
+												   </div>
 											   
 										   </div>
 										   
@@ -437,6 +456,61 @@
 
 
 
+
+  <div class="container"> 
+	
+	  <div class="modal fade" id="myModalcc" tabindex="-1" role="dialog">
+		  
+		  <div class="modal-dialog" id="mdialTamanio_aux_d">
+
+					<div class="modal-content">
+
+								  <div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+									<h3  class="modal-title">Cuentas por Pagar/Cobrar</h3>
+								  </div>
+
+								  <div class="modal-body">
+ 													 <div class="panel panel-default">
+
+														 <div class="panel-body">
+															 
+															  <div class="col-md-12" style="padding: 10px">
+ 																	   <div class="col-md-6">
+ 																	  			<select name="cfiltro" id="cfiltro" class="form-control"></select>
+ 															  			</div>
+																         <div class="col-md-3">
+ 																			  <button type="button" onClick="BuscaCxPC()" class="btn btn-sm btn-info">Buscar</button>
+ 															  			</div>
+ 															  </div>
+															 
+															 
+															    <div class="col-md-12" style="padding: 10px">
+ 																	 <div id="ViewCxC">  </div> 
+ 															  </div>
+															 
+														 </div>
+
+													 </div>   
+ 								  </div>
+
+								  <div class="modal-footer" >
+
+									<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Salir</button>
+								  </div>
+
+					</div>
+			  <!-- /.modal-content --> 
+		  </div>
+		  <!-- /.modal-dialog -->
+	 </div>
+	
+	<!-- /.modal -->
+	
+   </div>  
+
+
+
   <div class="container"> 
 	  
 				  <div class="modal fade" id="myModalAsistente" tabindex="-1" role="dialog">
@@ -603,7 +677,7 @@
 	
   </div>  
  			
-<div class="container"> 
+  <div class="container"> 
 	
 	  <div class="modal fade" id="myModalIngresos" tabindex="-1" role="dialog">
 		  

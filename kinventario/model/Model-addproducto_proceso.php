@@ -55,9 +55,9 @@
 	function nuevo_tramite($bd,$tramite ){
 	    
 	    
-	    $x = $bd->query_array('flow.view_proceso_caso',   // TABLA
+	    $x = $bd->query_array('flow.view_proceso_caso01',   // TABLA
 	        '*',                        // CAMPOS
-	        'idcaso='.$bd->sqlvalue_inyeccion($tramite,true) // CONDICION
+	        'idcaso01='.$bd->sqlvalue_inyeccion($tramite,true) // CONDICION
 	        );
  
 	    $ruc         =     trim($_SESSION['ruc_registro']);
@@ -226,16 +226,16 @@
  	    
  	    
  
- 	    
+ 	    /*
  	    if ( trim($x['estado']) == 'aprobado'){
  	        
  	        
  	    }else {
-		 
+		 */
 			$bd->JqueryDeleteSQL($tabla,$where);
-
+/*
 		}
- 	   
+ 	  */ 
  	    
  	}
     

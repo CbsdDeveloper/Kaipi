@@ -78,9 +78,11 @@ class proceso{
 		    
              
 		    echo "<tr>";
+
+			
 		    
-		    echo '<td title= "Verificar Flujo" onClick="revisa_flujo(this,'.$x['id_asiento'].')"><a href="#">'.$x['id_asiento']."</a></td>";
-            echo "<td>".$x['fecha']."</td>";
+		    echo '<td title= "Detalle de Cuentas por Asiento" onClick="revisa_flujo(this,'.$x['id_asiento'].')"><b><a href="#">'.$x['id_asiento']."</a></b></td>";
+			echo '<td title= "Detalle Asientos" onClick="irAsientoPago('.$x['id_asiento'].')"><a href="#">'.$x['fecha']."</a></td>";
 		    echo "<td>".$x['detalle']."</td>";
  		    echo "<td align='right'>".number_format($x['debe'],2)."</td>";
 		    echo "<td align='right'>".number_format($x['haber'],2)."</td>";

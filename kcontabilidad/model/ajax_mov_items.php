@@ -147,7 +147,7 @@ class proceso{
                     aumento, 
                     disminuye
             FROM presupuesto.view_reforma_detalle
-            where anio         =".$this->bd->sqlvalue_inyeccion($anio ,true). " and 
+            where anio         =".$this->bd->sqlvalue_inyeccion($anio ,true). " and estado ='aprobado' and 
                   clasificador = ".$this->bd->sqlvalue_inyeccion($partida ,true). "  and 
                   tipo         = ".$this->bd->sqlvalue_inyeccion($presupuesto ,true). " order by fecha desc" ;
      

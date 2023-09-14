@@ -412,6 +412,9 @@ class proceso{
         if ( $motivo == 'RENUNCIA') {
             $salida = 1;
         }
+        if ( $motivo == 'REMOCIÓN') {
+            $salida = 1;
+        }
         if ( $motivo == 'SALIDA') {
             $salida = 1;
         }

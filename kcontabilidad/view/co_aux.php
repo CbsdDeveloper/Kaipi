@@ -33,9 +33,13 @@
    </div>
 	
        <!-- Content Here -->
+	
     <div class="col-md-12"> 
+		
        <!-- Content Here -->
+		
 	    <div class="row">
+			
  		 	     <div class="col-md-12">
 							  
 								<ul id="mytabs" class="nav nav-tabs">                    
@@ -61,7 +65,9 @@
 								<!-- ------------------------------------------------------ -->
 								<!-- Tab panes -->
 								<!-- ------------------------------------------------------ -->
+		
 								<div class="tab-content">
+									
 										   <!-- Tab 1 -->
 									
 										  <div class="tab-pane fade in active"   id="tab1" style="padding-top: 3px">
@@ -132,6 +138,7 @@
 													</div>
 
 											   </div>  
+												  
 											 </div> 
 											  
 										  </div>
@@ -146,47 +153,37 @@
 
 													 <div class="col-md-12" style="padding: 1px">
  														 
-														 
-													        <div class="col-md-12">
-														   
-														   	  <div class="col-md-3">
+ 														   
+																	   	  <div class="col-md-2">
 																 <select id="bandera" name = "bandera" class="form-control">
 																   <option value="S">[ Por Cuenta ]</option>
 																   <option value="N">[ Todas las Cuentas ] </option>
  																 </select>
 															  </div>  
 													
-														      <div class="col-md-3">
-																 <select id="cuenta" name="cuenta" class="form-control">
- 																  </select>
-															  </div>  
+																		  <div class="col-md-3">
+																			 <select id="cuenta" name="cuenta" class="form-control"> </select>
+																		  </div>  
   														   
-														      <div class="col-md-2" style="padding: 1px"> 
+														     			   <div class="col-md-7" style="padding: 1px"> 
 
-																 <button type="button" class="btn btn-primary btn-sm btn-block" id="load2">  
-																			<i class="icon-white icon-search"></i> Busqueda</button>	
+																				 <button type="button" class="btn btn-primary btn-sm" id="load2">  
+																					<i class="icon-white icon-search"></i> Busqueda</button>	
+ 
+																 				<button type="button" class="btn btn-warning btn-sm" id="load30">  
+																					<i class="icon-white icon-search"></i> Agrupar</button>	
+  																  
+																  				<button type="button" class="btn btn-default btn-sm" id="loadxls2" title="Descargar archivo en excel">  
+																					<i class="icon-white icon-download-alt"></i> Descargar
+															 					 </button>	
+ 															 
+																  				<button type="button" class="btn btn-default btn-sm" onClick="imprimir('ImpresionAux')">  
+																					<i class="icon-white icon-print"></i> Imprimir
+															 				   </button>	
+    
+													   					</div>  
 
-															  </div>
- 														     
-														      <div class="col-md-2" style="padding: 1px"> 
-																  
-																  <button type="button" class="btn btn-default btn-sm btn-block" id="loadxls2" title="Descargar archivo en excel">  
-																			<i class="icon-white icon-download-alt"></i> Descargar
-															  </button>	
-
-															  </div>
-															 
-															 <div class="col-md-2" style="padding: 1px"> 
-																  <button type="button" class="btn btn-default btn-sm btn-block" onClick="imprimir('ImpresionAux')">  
-																			<i class="icon-white icon-print"></i> Imprimir
-															  </button>	
-
-															  </div>
-					 
- 														   
-													   </div>  
-
-															<div class="col-md-12" id="ImpresionAux">
+																	    	<div class="col-md-12" id="ImpresionAux">
 																
 																 <h4><b>Resumen de Transacciones por Auxiliar</b> </h4>
 																
@@ -197,13 +194,14 @@
 														   </div>  
  
 
-													</div>
-
+ 
 													   
 												   </div>
-											  </div>
+											      </div>
 
 										  </div>
+											  
+										    </div>  	  
 
 										<!-- Tab 3 -->	
 									
@@ -213,10 +211,10 @@
 
 												   <div class="panel-body" > 
 
-													 <div class="col-md-12" style="padding: 1px">
+															 <div class="col-md-12" style="padding: 1px">
  														 
 														 
-														 <div class="col-md-12">
+														     <div class="col-md-12">
   													
 															  <div class="col-md-4">
 																 <select id="cuenta1" name="cuenta1" class="form-control">
@@ -346,8 +344,10 @@
 									
  
 							    </div>
-			    </div>	  
+			    </div>	
+	
  		</div>
+	
     </div>
      <!-- /.auxiliar -->
 

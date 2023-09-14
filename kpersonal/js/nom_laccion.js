@@ -44,8 +44,17 @@ $(document).ready(function(){
 
    		
 
-	     oTable = $('#jsontable').dataTable(); 
-
+		oTable 	= $('#jsontable').dataTable( {      
+			searching: true,
+			paging: true, 
+			info: true,         
+			lengthChange:true ,
+			aoColumnDefs: [
+				 { "sClass": "highlight", "aTargets": [ 1 ] },
+				{ "sClass": "ye", "aTargets": [ 3 ] } 
+			  ] 
+	   } );
+		
 	    
 
 	    BusquedaGrilla( oTable);
@@ -284,17 +293,10 @@ function LimpiarPantalla() {
 				for(var i = 0; i < s.length; i++) {
 
 				    	oTable.fnAddData([
-
 								s[i][0],
-
 								s[i][1],
-
 								s[i][2],
-
 	 	                        s[i][3],
-	 	                        
-	 	                        s[i][4],
-
  	                          	'<button class="btn btn-xs btn-warning" onClick="goToURL('+"'editar'"+','+"'"+ s[i][0]+"'" +')"><i class="glyphicon glyphicon-edit"></i></button> ' + 
 
 								'<button class="btn btn-xs btn-danger" onClick="goToURL('+"'del'"+','+ "'"+ s[i][0]+"'" +')"><i class="glyphicon glyphicon-remove"></i></button>' 

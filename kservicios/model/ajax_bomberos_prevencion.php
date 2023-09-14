@@ -13,7 +13,7 @@ $bd_local	   =	new Db;
 $bd_local->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
 
 
-$servidor ='45.183.141.106';
+$servidor ='192.168.1.3';
 $base_datos = 'db_cbsd';
 $usuario = 'postgres';
 $password = 'Cbsd2019';

@@ -22,7 +22,7 @@ session_start( );
       $id_config = 5;
 
  
-     
+ 
      
      $sql = 'select  identificacion,
                     funcionario,
@@ -48,6 +48,12 @@ session_start( );
             );
 
             $ingreso = $x['mensual'];
+
+            $saldo = $x['saldo'];
+
+            if (  $saldo  < 1 ){
+                $ingreso =   $saldo ;
+            }
 
             $x_id_config_reg = $bd->query_array(
                 'nom_config_regimen',

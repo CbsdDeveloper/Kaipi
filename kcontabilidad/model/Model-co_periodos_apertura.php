@@ -28,6 +28,10 @@ $x          = $bd->obtener_array( $resultado1);
 
 $id_asiento = $x['id_asiento'] ;
 
+ 
+
+echo '<script> $("#v_asiento").val('."'".$id_asiento."'".')</script> ';
+
 if ( $accion == 1 ){
     
     asiento_contable($bd ,$ruc_registro,$fanio,$id_asiento);
@@ -915,10 +919,23 @@ function asiento_contable($bd ,$ruc_registro,$fanio,$idasiento){
         $evento1 =  'onChange="actualiza_datoh('.'this.value,'. $y['id_asientod'].')" ';
         
         $cuenta = trim($y['cuenta']);
-         
+
+        $cuenta_visor = trim($y['cuenta']);
+
+        $cuenta_filtro = substr($cuenta,0,6);
+ 
+
+        $datos_tras = $bd->query_array('co_traslado','count(*) as nn', 'cuenta1 like '.$bd->sqlvalue_inyeccion( $cuenta_filtro.'%',true));
+
+        
+        if ( $datos_tras['nn'] > 0 ){
+
+            $cuenta_visor = '<b>'. trim($y['cuenta']).' (*) </b>';
+        }
+
         echo ' <tr>
                <td '.$color.'>'.$acciones.$fondo.'</td>
-				<td>'.$cuenta.'</td>
+				<td>'.$cuenta_visor.'</td>
 				<td>'.$y['detalle'].'</td>
                 <td align="right">'.' <input type="number" '.$evento.$clased.' value='.'"'.trim($y['debe']).'"'.'>'.'</td>
                 <td align="right">'.' <input type="number" '.$evento1.$claseh.'value='.'"'.trim($y['haber']).'"'.'>'.'</td>

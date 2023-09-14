@@ -85,6 +85,26 @@ class proceso{
             $nombre           = $this->bd->eliminar_simbolos(trim($x['nombretrab']));
             $apellido         = $this->bd->eliminar_simbolos(trim($x['apellidotrab']));
             
+            $nombre = str_replace("ñ","n",$nombre);
+            $nombre = str_replace("Ñ","N",$nombre);
+
+            $apellido = str_replace("ñ","n",$apellido);
+            $apellido = str_replace("Ñ","N",$apellido);
+
+            $apellido = str_replace("Á","A",$apellido);
+            $apellido = str_replace("Í","I",$apellido);
+            $apellido = str_replace("Ó","O",$apellido);
+            $apellido = str_replace("Ú","U",$apellido);
+            $apellido = str_replace("É","E",$apellido);
+
+            $nombre = str_replace("Á","A",$nombre);
+            $nombre = str_replace("Í","I",$nombre);
+            $nombre = str_replace("Ó","O",$nombre);
+            $nombre = str_replace("Ú","U",$nombre);
+            $nombre = str_replace("É","E",$nombre);
+
+            
+
             print  '<datRetRelDep>';
             print  '<empleado>';
                     print  '<benGalpg>'.trim($x['bengalpg']).'</benGalpg>';
@@ -121,11 +141,16 @@ class proceso{
              print  '<deducEducartcult>'.trim(str_replace(',','.',$x['deduceducartcult'])).'</deducEducartcult>';
              print  '<deducAliement>'.trim(str_replace(',','.',$x['deducaliement'])).'</deducAliement>';
              print  '<deducVestim>'.trim(str_replace(',','.',$x['deducvestim'])).'</deducVestim>';
+             print  '<deduccionTurismo>'.trim(str_replace(',','.',$x['deduturismo'])).'</deduccionTurismo>';
+ 
              print  '<exoDiscap>'.trim(str_replace(',','.',$x['exodiscap'])).'</exoDiscap>';
              print  '<exoTerEd>'.trim(str_replace(',','.',$x['exotered'])).'</exoTerEd>';
              print  '<basImp>'.trim(str_replace(',','.',$x['basimp'])).'</basImp>';
              print  '<impRentCaus>'.trim(str_replace(',','.',$x['imprentcaus'])).'</impRentCaus>';
-             print  '<valRetAsuOtrosEmpls>'.trim(str_replace(',','.',$x['valretasuotrosempls'])).'</valRetAsuOtrosEmpls>';
+             print  '<rebajaGastosPersonales>'.trim(str_replace(',','.',$x['rebajagapersona'])).'</rebajaGastosPersonales>';
+             print  '<impuestoRentaRebajaGastosPersonales>'.trim(str_replace(',','.',$x['imprebajagapersona'])).'</impuestoRentaRebajaGastosPersonales>';
+
+             print  '<valRetAsuOtrosEmpls>'.trim(str_replace(',','.','0.00')).'</valRetAsuOtrosEmpls>';
              print  '<valImpAsuEsteEmpl>'.trim(str_replace(',','.',$x['valimpasuesteempl'])).'</valImpAsuEsteEmpl>';
              print  '<valRet>'.trim(str_replace(',','.',$x['valret'])).'</valRet>';
              print  '</datRetRelDep>';
@@ -160,7 +185,7 @@ header("Content-type: MIME");
 header('Content-type: text/html; charset=utf-8');
 header("Content-type: application/octet-stream");
 header('Content-Type: application/octet-stream');
-header("Content-Disposition: attachment; filename='".$downloadfile."'");
+header("Content-Disposition: attachment; filename=".$downloadfile);
 header('Content-Transfer-Encoding: binary');
 header("Expires: 0");
 

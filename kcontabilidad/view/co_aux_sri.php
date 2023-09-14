@@ -258,8 +258,11 @@
 															      <div id="ViewFormAux"> </div>
 																
 																
-																  <div id="ViewData"> </div>
-
+																   <div id="ViewData"> </div>
+															 
+															  		<div align="right" id="ViewParcial"> </div>
+															 
+																    <input type="hidden" name ="parcial" id="parcial">
 														   </div>  
  
 

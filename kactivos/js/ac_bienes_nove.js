@@ -178,6 +178,7 @@ function url_ficha(url){
     window.open(enlace,'#','width='+ancho+',height='+alto+',left='+posicion_x+',top='+posicion_y+'');
  
  }
+
 //-------------------------------------------------------------------------
 $(document).ready(function(){
     
@@ -189,7 +190,7 @@ $(document).ready(function(){
             lengthChange:true ,
             aoColumnDefs: [
    		      { "sClass": "highlight", "aTargets": [ 1 ] },
-  		      { "sClass": "ye", "aTargets": [ 9 ] },
+  		      { "sClass": "ye", "aTargets": [ 2 ] },
   		      { "sClass": "de", "aTargets": [ 3 ] },
   		      { "sClass": "di", "aTargets": [ 6 ] },
   		    ] 
@@ -328,8 +329,8 @@ function modulo()
 function url_open(tipo){
 
 	  var id = $('#id_bien').val();
-	  var ancho = 1024; 
-	  var alto = 650; 
+	  var ancho = 1280; 
+	  var alto = 610; 
 	  var posicion_x ; 
 	  var posicion_y ; 
 	  var enlace; 
@@ -338,18 +339,18 @@ function url_open(tipo){
 	  
 	  
   if (tipo == 1 )	{
-	alertify.confirm("<p>DESEA GENERAR REGISTRO PARA REVALORIZACION DEL BIEN<br><br></p>", function (e) {
-		  if (e) {
-			 
-			  var url = '../view/ac_bienes_revalorizado.php';
-			  enlace = url+'?id='+id +'&action=add' ;
-			  
-			  if ( id) {
-				  	window.open(enlace, '#','width='+ancho+',height='+alto+',toolbar=0,scrollbars=no,resizable=no,left='+posicion_x+',top='+posicion_y+'');
+			alertify.confirm("<p>DESEA GENERAR REGISTRO PARA REVALORIZACION DEL BIEN<br><br></p>", function (e) {
+				if (e) {
+					
+					var url = '../view/ac_bienes_revalorizado.php';
+					enlace = url+'?id='+id +'&action=add' ;
+					
+					if ( id) {
+							window.open(enlace, '#','width='+ancho+',height='+alto+',toolbar=0,scrollbars=no,resizable=no,left='+posicion_x+',top='+posicion_y+'');
 
-				}
- 		     }
-		 }); 
+						}
+					}
+				}); 
   }else{
 	  var url = '../view/ac_bienes_novedad.php';
 	  enlace = url+'?id='+id +'&action=add' ;
@@ -468,6 +469,125 @@ function _asigna(variable,valor) {
    
 	
 }
+function goToURLBarra(accion,id,nom) {
+
+	$("#nom").val(nom);
+
+
+
+	 var parametros = {
+			    'id' : id
+      };
+	 
+  
+	    if ( accion == 'barra') {
+	    
+	    	
+	 	    $.ajax({
+	 			data:  parametros,
+	 			 url:   '../code/code.php',
+	 			type:  'GET' ,
+	 			success:  function (data) {
+	 					 $("#ViewBarras").html('<img src="../code/'+data + '">');
+	 					  $("#cod").val(data);
+
+ 	 				} 
+	 	    });
+	 	    
+	 	    
+	 		$('#myModalbarra').modal('show');
+	    	
+	    }
+ 
+}
+
+
+function imprimir(){
+
+  	
+    cod    =$("#cod").val();
+    nom    =$("#nom").val();
+
+    var cadena 	= 'cod=' + cod +'&nom=' + nom;
+    var ancho = 1000; 
+	var alto = 400; 
+	var posicion_x ; 
+	var posicion_y ; 
+	var enlace; 
+	
+
+    enlace= "../view/imprimir.php?"+cadena;
+    
+    window.open(enlace, '#','width='+ancho+',height='+alto+',toolbar=0,scrollbars=no,resizable=no,left='+posicion_x+',top='+posicion_y+'');
+ 	   	    	 
+
+  }
+//-------------------------------------
+  function imprimir2(){
+
+  	
+    cod    =$("#cod").val();
+    nom    =$("#nom").val();
+
+    var cadena 	= 'cod=' + cod +'&nom=' + nom;
+    var ancho = 1000; 
+	var alto = 400; 
+	var posicion_x ; 
+	var posicion_y ; 
+	var enlace; 
+	
+
+    enlace= "../view/imprimir_v1.php?"+cadena;
+    
+    window.open(enlace, '#','width='+ancho+',height='+alto+',toolbar=0,scrollbars=no,resizable=no,left='+posicion_x+',top='+posicion_y+'');
+ 	   	    	 
+
+  }
+
+  //-------------------------------------
+  function imprimir3(){
+
+  	
+    cod    =$("#cod").val();
+    nom    =$("#nom").val();
+
+    var cadena 	= 'cod=' + cod +'&nom=' + nom;
+    var ancho = 1000; 
+	var alto = 400; 
+	var posicion_x ; 
+	var posicion_y ; 
+	var enlace; 
+	
+
+    enlace= "../view/imprimir_v2.php?"+cadena;
+    
+    window.open(enlace, '#','width='+ancho+',height='+alto+',toolbar=0,scrollbars=no,resizable=no,left='+posicion_x+',top='+posicion_y+'');
+ 	   	    	 
+
+  }
+
+    //-------------------------------------
+	function imprimir4(){
+
+  	
+		cod    =$("#cod").val();
+		nom    =$("#nom").val();
+	
+		var cadena 	= 'cod=' + cod +'&nom=' + nom;
+		var ancho = 1000; 
+		var alto = 400; 
+		var posicion_x ; 
+		var posicion_y ; 
+		var enlace; 
+		
+	
+		enlace= "../view/imprimir_v3.php?"+cadena;
+		
+		window.open(enlace, '#','width='+ancho+',height='+alto+',toolbar=0,scrollbars=no,resizable=no,left='+posicion_x+',top='+posicion_y+'');
+						 
+	
+	  }
+
 // ir a la opcion de editar
 function goToURL(accion,id) {
 
@@ -598,7 +718,28 @@ function goToURL(accion,id) {
 function goToURLCambio(accion, idbien)
 {
  
- 		 
+ 	var ancho = 1280; 
+	var alto = 610; 
+	var posicion_x ; 
+	var posicion_y ; 
+	var enlace; 
+	posicion_x=(screen.width/2)-(ancho/2); 
+	posicion_y=(screen.height/2)-(alto/2); 
+	
+	
+ 
+	var url = '../view/ac_bienes_novedad.php';
+
+	enlace = url+'?id='+idbien +'&action=add' ;
+	
+	if ( idbien) {
+			window.open(enlace, '#','width='+ancho+',height='+alto+',toolbar=0,scrollbars=no,resizable=no,left='+posicion_x+',top='+posicion_y+'');
+
+	  }
+ 
+
+
+	/*
 	 var parametros = {
 			    'id' : idbien,
 			    'accion' : accion
@@ -624,7 +765,7 @@ function goToURLCambio(accion, idbien)
 		  }
 		 }); 
 	  
- 
+ */
 }
 //---------------------- 
 
@@ -880,12 +1021,11 @@ function PoneDoc(file)
 						s[i][5],
 						s[i][6],
 						s[i][7],
-						s[i][8],
-						s[i][9],
-						s[i][10],
-  					'<button class="btn btn-xs btn-warning" title ="Visualizar y editar transaccion del bien" onClick="goToURL('+"'editar'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;'  +
-				    '<button class="btn btn-xs btn-info" title ="Actualizar o Cambiar estado del Bien" onClick="goToURLCambio('+"'cambio'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-transfer"></i></button>&nbsp;' +
-				    '<button class="btn btn-xs btn-default" title ="Actualizar Custodio del Bien" onClick="goToURLUser('+"'cambio'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-user"></i></button>&nbsp;'  
+				    '<button class="btn btn-xs btn-info" title ="Actualizar o Cambiar Estado/Constatación del Bien" onClick="goToURLCambio('+"'cambio'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;' +
+					'<button class="btn btn-xs btn-danger" title ="Registro/Editar de revalorización/novedad" onClick="goToURL('+"'editar'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-usd"></i></button>&nbsp;'  +
+					'<button class="btn btn-xs btn-default" title ="Actualizar Custodio del Bien" onClick="goToURLUser('+"'cambio'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-user"></i></button>&nbsp;'  +
+					'<button class="btn btn-xs btn-success" title="Genere codigo de Barra" onClick="goToURLBarra('+"'barra'"+','+"'"+ s[i][4]  + "'"+','+"'"+ s[i][3]  + "'"+')"><i class="glyphicon glyphicon-barcode"></i></button>&nbsp;' 
+
 				]);										
 			} // End For
 		  } 						

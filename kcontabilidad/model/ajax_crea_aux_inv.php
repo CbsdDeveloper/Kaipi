@@ -10,7 +10,7 @@
     $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
  
 	$monto         =     $_GET["monto"];
-    $grupo         =     trim($_GET["grupo"]);
+    $cuenta2       =     trim($_GET["grupo"]);
 	$fanio         =     $_GET["fanio"];
  
     $ruc_registro     =  $_SESSION['ruc_registro'];
@@ -27,7 +27,7 @@
     $id_asiento = $x['id_asiento'] ;
 
 
-
+/*
 
   $valida = $bd->query_array('co_asientod',
                     'count(*) as nn',
@@ -43,6 +43,8 @@
 
        }else   {      
 
+        */
+
         $aasiento = $bd->query_array('co_asiento',
                     'id_periodo,anio,mes,fecha,creacion,sesion',
                     'id_asiento='.$bd->sqlvalue_inyeccion($id_asiento,true)  
@@ -56,7 +58,7 @@
  
                     $fecha			= $bd->fecha($fecha);
 
-                    $sql = "select  cuenta,sum(debe) as debe, sum(haber) as haber
+             /*       $sql = "select  cuenta,sum(debe) as debe, sum(haber) as haber
                     from view_diario_conta
                     where cuenta like ". $bd->sqlvalue_inyeccion($grupo.'%' ,true) ." and 
                             anio =". $bd->sqlvalue_inyeccion($anio -1 ,true) ."  
@@ -69,11 +71,21 @@
             
                 while ($fetch=$bd->obtener_fila($resultado)){
 
+                       $cuenta2 = trim($fetch['cuenta']);
 
-                    $cuenta2 = trim($fetch['cuenta']);
+                    */
 
-                    $debe  = $fetch['debe'];
-                    $haber = $fetch['haber'];
+                
+                    if ( $monto  > 0 ) {
+                        $debe  =  $monto;
+                        $haber =  '0.00';
+                    }
+                    else {
+                        $debe  = '0.00';
+                        $haber = abs( $monto);
+                    }
+
+                  
 
                     $sql_inserta = "INSERT INTO co_asientod (
                         id_asiento, cuenta, aux,debe, haber, id_periodo, anio, mes,
@@ -96,8 +108,8 @@
                     
                     
                         echo 'cuenta creada con exito...';
-                    }
+//                    }
 
-     }            
+     //}            
     
 ?>

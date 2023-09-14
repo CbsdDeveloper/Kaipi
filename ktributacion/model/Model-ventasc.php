@@ -295,6 +295,7 @@ class proceso{
                 $this->ATabla[10][valor] =  '0.00';
                 $this->ATabla[11][valor] =  '0.00';
 
+                $secuencia = trim($x['secuencia'] );
                 $this->ATabla[12][valor] =  trim($x['secuencia'] ) ;
                 $this->ATabla[13][valor] = '001';
 
@@ -307,9 +308,19 @@ class proceso{
                 $this->ATabla[18][valor] =  '1';
                 $this->ATabla[19][valor] =  'E';
                 $this->ATabla[20][valor] =  '20';
- 
+  
+                $datos = $this->bd->query_array('co_ventas',
+                                                'count(*) as nn', 
+                                                'idcliente='.$this->bd->sqlvalue_inyeccion($idcliente,true). ' and 
+                                                 secuencial='.$this->bd->sqlvalue_inyeccion($secuencia,true)
+                    );
                 
-                $id = $this->bd->_InsertSQL($this->tabla,$this->ATabla,$this->secuencia);
+                if ( $datos['nn'] > 0 ) {
+                    
+                }else {
+                    $this->bd->_InsertSQL($this->tabla,$this->ATabla,$this->secuencia);
+                }
+               
                 
             }
 

@@ -176,10 +176,10 @@
         
        
     $ToolArray = array( 
-        array( boton => 'Registro de revalorizacion',    evento =>$evento1, grafico => 'glyphicon glyphicon-random' ,  type=>"button_warning"),
-        array( boton => 'Registro de Novedades del Bien',    evento =>$evento2, grafico => 'glyphicon glyphicon-warning-sign' ,  type=>"button_danger"),
-                    array( boton => 'Ficha Tecnica', evento =>$eventoi,  grafico => 'glyphicon glyphicon-print' ,  type=>"button_default") 
-                 );
+        array( boton => 'Registro de revalorizacion-REVALORIZACION',            evento =>$evento1, grafico => 'glyphicon glyphicon-random' ,  type=>"button_warning"),
+        array( boton => 'Registro de Novedades del Bien-AGREGAR NOVEDADES',     evento =>$evento2, grafico => 'glyphicon glyphicon-warning-sign' ,  type=>"button_danger"),
+        array( boton => 'Ficha Tecnica',                     evento =>$eventoi,  grafico => 'glyphicon glyphicon-print' ,  type=>"button_default") 
+    );
                   
    $this->obj->boton->ToolMenuDiv($ToolArray); 
  

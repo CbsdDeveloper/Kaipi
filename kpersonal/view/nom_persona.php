@@ -125,10 +125,23 @@
 															 <option value="N">Desactivo</option>
 												</select>
 											   </div> 
+												
+											 
+												
 											   <div class="col-md-2"  style="padding-top: 5px;"> 
 													<button type="button" class="btn btn-sm btn-primary" id="load"><i class="icon-white icon-search"></i> Búsqueda</button>
 												   
-												   <button type="button" class="btn btn-sm btn-info" id="excelload"><i class="glyphicon glyphicon-download-alt"></i>  </button>
+												     <div class="btn-group">
+													 <div class="btn-group">
+													  <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown">
+													  Reportes/Descarga <span class="caret"></span></button>
+													  <ul class="dropdown-menu" role="menu">
+														  <li><a href="#">Decimo Cuarto</a></li>
+														<li><a href="#">Decimo Tercero</a></li>
+														<li><a href="#">Aporte Patronal/Personal</a></li>
+													  </ul>
+													</div>
+												  </div>
 												   
 									   			</div> 
 									   		</div> 
@@ -254,7 +267,7 @@
 						
 					<label style="padding-top: 12px;text-align: right;" class="col-md-3">Año Nacimiento</label>	
 					  <div  style="padding-top: 5px;" class="col-md-9">	
-						  <input name="anio_carga" id="anio_carga" type="number" required="required" class="form-control" id="anio_carga" max="2019" min="1985" size="30" />
+						  <input name="anio_carga1" id="anio_carga1" type="number" required="required" class="form-control" max="2019" min="1985" size="30" />
 					 </div>	
 						
 					

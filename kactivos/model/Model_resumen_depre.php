@@ -130,13 +130,14 @@ class proceso{
         $union = "Select '-' as codigo, ' [ No aplica ] ' as nombre union" ;
         
         $datos = array();
-        
+
+         
         $resultado = $this->bd->ejecutar($union." select trim(cuenta) as codigo, (trim(cuenta) || '. ' || trim(detalle))  as nombre
 								                        from co_plan_ctas
                                                         where univel = 'S' and
                                                               anio = ".$this->bd->sqlvalue_inyeccion($this->anio ,true)." and
                                                               registro = ".$this->bd->sqlvalue_inyeccion($this->ruc,true)." and
-                                                              trim(cuenta) like '638.5%' ORDER BY 1");
+                                                              substring(trim(cuenta),1,3) in ('638','639') ORDER BY 1");
         
         $this->obj->list->listadb($resultado,$tipo_db,'Cuenta Cierre','cuenta_depre',$datos,'','','div-2-4');
         

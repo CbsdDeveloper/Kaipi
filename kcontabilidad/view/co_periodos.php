@@ -106,6 +106,12 @@
                   			<span class="glyphicon glyphicon-link"></span> Asiento Apertura</a>
                   		</li>
 			
+			
+						<li><a href="#tab4" data-toggle="tab">
+                  			<span class="glyphicon glyphicon-link"></span> Catalogo de Traslado de cuentas</a>
+                  		</li>
+			
+			
                    </ul>
 		
                      <!-- ------------------------------------------------------ -->
@@ -160,7 +166,7 @@
                 
 				  			<!-- Tab 2 -->
                  
-			 	 		   <div class="tab-pane fade in" id="tab2"  style="padding-top: 3px">
+			 	 <div class="tab-pane fade in" id="tab2"  style="padding-top: 3px">
 					 
 							  <div class="panel panel-default">
 								  
@@ -196,6 +202,9 @@
 															    <option value="2021">2021</option>
 															 	<option value="2019">2019</option>
 															</select>
+													   </div>
+														<div class="col-md-2">
+															 <input type="text"  class="form-control" name="v_asiento" id="v_asiento" readonly>
 													   </div>	
 
 													  <div class="col-md-8">  </div>	
@@ -241,6 +250,22 @@
 
 										  </div>
 									  </div>
+                </div>
+					   
+					   
+					   
+					   <div class="tab-pane fade in" id="tab4"  style="padding-top: 3px">
+					 
+							  <div class="panel panel-default">
+								  
+								  <div class="panel-body" > 
+									     <div class="col-md-8" style="padding: 10px">
+									  			 <div id="ViewFormCatalogo"> </div>
+										 </div>	 
+								  </div>
+								  
+							  </div>
+					 
                 </div>
 					   
                      

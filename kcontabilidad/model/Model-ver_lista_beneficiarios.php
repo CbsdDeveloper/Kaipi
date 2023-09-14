@@ -28,13 +28,13 @@
     echo ' <table id="table_ciu" class="table table-hover datatable" cellspacing="0" width="100%" style="font-size: 11px"  >
 			<thead>
 			 <tr>
-				<th width="5%">Referencia</th>
+				<th width="10%">Referencia</th>
                 <th width="10%">Cuenta</th>
-                <th width="40%">Detalle</th>
- 				<th width="30%">Beneficiario</th>
-		        <th width="5%">Debe</th>
-                <th width="5%">Haber</th>
-                <th width="5%"></th>
+                <th width="30%">Detalle</th>
+ 				<th width="26%">Beneficiario</th>
+		        <th width="7%">Debe</th>
+                <th width="7%">Haber</th>
+                <th width="10%"></th>
 				</tr>
 			</thead>';
 
@@ -59,9 +59,9 @@
         
     	echo ' <tr>
 				<td>'.$x['id_asiento_aux'].'</td>
-                <td>'.$x['cuenta'].'</td>
-                <td>'.$x['cuenta_detalle'].'</td>
- 				<td>'.$x['razon'].'</td>
+                <td>'.trim($x['cuenta']).'</td>
+                <td>'.trim($x['cuenta_detalle']).'</td>
+ 				<td>'.trim($x['razon']).'</td>
   				<td align="right">'.$x['debe'].'</td>
                 <td align="right">'.$x['haber'].'</td>
                 <td align="right"> '.$bandera.'</td>

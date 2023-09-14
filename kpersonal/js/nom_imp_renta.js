@@ -40,6 +40,14 @@ $(document).ready(function(){
 
 		});  
 
+		$('#loadcam').on('click',function(){
+	   
+			CambioTabla();
+
+	   }); 
+
+		
+
 });  
 /*
  boton que ejecuta los mensajes para insertar el registro
@@ -100,6 +108,35 @@ function goToURL(accion,id) {
 
 			}); 
 
+    }
+
+//--------	
+function CambioTabla( ) {
+
+	var banio = $("#banio").val();
+
+
+    var parametros = {
+				'banio' : banio  ,
+				'accion' : 'cambio' ,
+    };
+
+	  $.ajax({
+
+					data:  parametros,
+					url:   '../model/Model-'+ formulario+'.php',
+					type:  'GET' ,
+					cache: false,
+					beforeSend: function () { 
+ 							$("#result").html('Procesando informacion');
+  					},
+					success:  function (data) {
+							 alert(data);
+  					} 
+
+			}); 
+
+			BusquedaGrilla(oTable);
     }
 /*
 limpia la pantalla con los objetos de la base

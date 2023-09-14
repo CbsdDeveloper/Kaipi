@@ -197,7 +197,7 @@
 					        <div class="panel-body" > 
 						    
  								
-								     <div class="col-md-12" style="padding-left: 130px;padding-top: 10px;padding-bottom: 10px"> 
+								     <div class="col-md-12" style="padding-left: 130px;padding-top: 10px;padding-bottom: 10px; height:600px"> 
 										  
 										 
  										  <h4>Generacion de archivos y reporte</h4>

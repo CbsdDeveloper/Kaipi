@@ -124,7 +124,7 @@
 											   
 											    <h5><b>2. Custodios Administrativos</b></h5>
 											
-											   <div style="height: 650px; overflow-y: scroll; padding: 5px">
+											   <div style="height: 550px; overflow-y: scroll; padding: 5px">
 												   
 											   			<div id="ViewFiltroCiu"></div> 
 												   
@@ -270,22 +270,34 @@
 
 				<!-- Modal content-->
 				 <div class="modal-content">
-				 <div class="modal-header">
-				  <button type="button" class="close"  data-dismiss="modal">&times;</button>
-				  <h4 class="modal-title">Bienes Asignados en la Acta</h4>
-				 </div>
-				 <div class="modal-body">
-					 <div class='row'>
-							<div class="col-md-12" style="padding-top: 5px;">
-								  <div style="height:400px;width:100%;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
+							 <div class="modal-header">
+							  <button type="button" class="close"  data-dismiss="modal">&times;</button>
+							  <h4 class="modal-title">Bienes Asignados en la Acta</h4>
+							 </div>
 
-											<div id='VisorBIenes'></div>
-								 </div>	
-							 </div>	
-					  </div>	 
-				</div>
+							 <div class="modal-body">
+								 
+								 <div class='row'>
+										<div class="col-md-12" style="padding-top: 5px;">
+											  <div style="height:400px;width:100%;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
+
+														<div id='VisorBIenes'></div>
+												  
+												  		<div id='ResultadosBIenes'></div>
+												  
+											 </div>	
+										 </div>	
+								  </div>	 
+							</div>
+					 
 				<div class="modal-footer">
-				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				 
+					<input type="hidden" id="cacta" name="cacta">
+					
+					<button type="button" onClick="AnulaActa()"  class="btn btn-danger" >Revertir Acta</button>
+					
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					
 				</div>
 			  </div>
 			</div>

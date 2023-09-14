@@ -192,11 +192,11 @@ where 	registro = ".$this->bd->sqlvalue_inyeccion($this->ruc ,true)." and
 	 $pie_contenido = str_replace('#CARGO_TESORERO',trim($a10['carpetasub']), $pie_contenido);
 
  
-	 $a10 = $this->bd->query_array('wk_config','carpeta , carpetasub', 'tipo='.$this->bd->sqlvalue_inyeccion(16,true));
+	 $a10 = $this->bd->query_array('wk_config','carpeta , carpetasub', 'tipo='.$this->bd->sqlvalue_inyeccion(20,true));
 	 $pie_contenido = str_replace('#BIENES',trim($a10['carpeta']), $pie_contenido);
 	 $pie_contenido = str_replace('#CARGO_BIENES',trim($a10['carpetasub']), $pie_contenido);
 			
-     $a10 = $this->bd->query_array('wk_config','carpeta , carpetasub', 'tipo='.$this->bd->sqlvalue_inyeccion(20,true));
+     $a10 = $this->bd->query_array('wk_config','carpeta , carpetasub', 'tipo='.$this->bd->sqlvalue_inyeccion(16,true));
 	 $pie_contenido = str_replace('#GUARDAALMACEN',trim($a10['carpeta']), $pie_contenido);
 	 $pie_contenido = str_replace('#CARGO_GUARDAALMACEN',trim($a10['carpetasub']), $pie_contenido);			
  

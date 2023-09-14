@@ -1,5 +1,9 @@
 <?php
 session_start( ); 
+
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,13 +15,14 @@ session_start( );
 	
  	$bd    = new Db ;
  
-	$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+	//$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+	$bd->conectar('postgres','db_kaipi','Cbsd2019');
 	
  	if  (isset($_GET['status'])) {
 		
 			 	$carpeta =  $_GET['file'] ;
 		
-				$archivo =  @$_POST["userfile"];
+				$archivo =  $_POST["userfile"];
      	
 			    $filename = guarda_imagen('sas',$carpeta,$archivo,$bd  ); 
 				
@@ -149,9 +154,10 @@ function guarda_imagen($sesion_variable,$carpeta_variable,$archivo ,$bd   ){
 		//$carpeta_variable
 		//	$folder = trim($ACarpeta['carpeta']);
 	    $folder = '../archivos/xml/';
+	    // $folder = '/var/www/kaipi.cbsd.gob.ec/public_html/archivos/xml/';
+		// print_r (sys_get_temp_dir());
 	    // $file = '../archivos/'.$archivo ;
 	    //$folder.$filename
-  		
 			$archivo_temporal = $_FILES["userfile"]['tmp_name'];
 			$archivo = $_FILES["userfile"]['name'];
 			$subir = $_FILES["userfile"]['name'];
@@ -159,7 +165,6 @@ function guarda_imagen($sesion_variable,$carpeta_variable,$archivo ,$bd   ){
 			$prefijo = substr(md5(uniqid(rand())),0,6);
 		   
 		    $copiado = move_uploaded_file($archivo_temporal,$folder.$archivo); 
-  		   
 			if($copiado==false){ 
 				return "error"; 
 			}else{ 

@@ -300,7 +300,7 @@ function Actualiza_bomberos($id_renpago){
 //-------------------------
 function externo_bomberos($id_emite_externo,$documento){
 
-	$servidor ='45.183.141.106';
+	$servidor ='192.168.1.3';
 	$base_datos = 'db_cbsd';
 	$usuario = 'postgres';
 	$password = 'Cbsd2019';

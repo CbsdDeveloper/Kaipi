@@ -254,7 +254,8 @@
 													Resumen  <span class="caret"></span></button>
 													<ul class="dropdown-menu" role="menu">
 													     <li><a href="#" onClick="Cedula_Resumen('I')">1. Resumen Ingreso  </a></li>
-														<li><a href="#" onClick="Cedula_Resumen('G')">2. Resumen Gasto </a></li>
+													 	 <li><a href="#" onClick="Cedula_Resumen('G')">2. Resumen Gasto </a></li>
+														 <li><a href="#" onClick="Cedula_Resumen('GD')">3. Resumen Gasto Detalle </a></li>
 														 <li><a href="#" onClick="Archivo_balance(4)">(*) Archivo Presupuestario Inicial</a></li>
 														 <li><a href="#" onClick="Archivo_balance(5)">Archivo Cedula Presupuestaria</a></li>
 														 <li><a href="#" onClick="Archivo_balance(8)">Cedula Presupuestaria BDE</a></li>
@@ -310,6 +311,10 @@
 												   
 												   
 												  
+												   	<button type="button" class="btn btn-sm btn-info" id="financiero_flujo1">
+														 <span class="glyphicon glyphicon-apple"></span> Flujo Efectivo</button>
+												   
+												   
 												   
 												   <div class="btn-group">
 															<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">

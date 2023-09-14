@@ -20,6 +20,7 @@ session_start( );
 <head>
 	
 <link rel="shortcut icon" href="../../app/kaipi-favicon.png">
+<title>CBSD - Plataforma de Gestion Empresarial</title>
   
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	
@@ -210,11 +211,11 @@ session_start( );
 														<img src="../../kimages/zdocume.png" width="48" height="47">  
 												</a> 
 												 
-												   <!-- 
-
+												   
 												<a href="https://mail.cbsd.gob.ec/" style="font-size: 12px" target="_blank" title="Correo Institucional Zimbra">
 														<img src="../../kimages/zimbra.png" width="54" height="56"  >  
 												</a>  
+<!-- 
 
 												<a href="https://web.gestiondocumental.gob.ec/" style="font-size: 12px" target="_blank" title="Quipux Gestión Documental ">
 														<img src="../../kimages/quipux.png"  >  
@@ -310,7 +311,7 @@ session_start( );
 
 											  <div  style="background-image: url(../../kimages/01.png);padding-top: 3px" align="center"> 
 
-												  <iframe width="100%" id="recordar" name = "recordar" height="450px" src="../../notificaciones/" border="0" scrolling="no" allowTransparency="true" frameborder="0"></iframe>
+												  <iframe width="100%" id="recordar" name = "recordar" height="450px" src="../../notificaciones/index.php" border="0" scrolling="no" allowTransparency="true" frameborder="0"></iframe>
 
 											  </div>     	
 

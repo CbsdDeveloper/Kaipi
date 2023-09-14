@@ -11,90 +11,97 @@ $bd	   =	new Db;
 
 $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
 
-$id_rol          = $_GET['id_rol'];
-$accion          = trim($_GET['codigo']);
-  
+$id_rol          =   $_GET['id_rol'];
+$accion          =   trim($_GET['codigo']);
+$id_config1      =   $_GET['id_config1'];
+$ruc             =   trim($_SESSION['ruc_registro']);
+
 
 $rol = $bd->query_array('view_nom_accion', 
     'id_accion,fecha,fecha_rige,motivo, idprov, razon,p_cargo ,sueldo,p_sueldo',
     'id_accion='.$bd->sqlvalue_inyeccion($accion,true)
     );
 
+   
 $idprov = trim($rol['idprov']);
+$motivo = trim($rol['motivo']);
 
-$User = $bd->query_array('view_nom_rol_formula',
-    '*',
-    'idprov='.$bd->sqlvalue_inyeccion(trim(trim($idprov)),true).' and
-             id_rol='.$bd->sqlvalue_inyeccion($id_rol,true).' and
-             formula='.$bd->sqlvalue_inyeccion( 'I',true) ." and tipoformula  in ('RS') "
+$sueldo   = trim($rol['sueldo']);
+$p_sueldo = trim($rol['p_sueldo']);
+
+
+
+$rol_tipo = $bd->query_array('nom_accion_lista', 
+    'nombre,  afecta, monto',
+    'nombre='.$bd->sqlvalue_inyeccion($motivo,true)
     );
 
 
-$fecha_rige =  $User['fecha_rige'];
-
-$id_rold =  $User['id_rold'];
-
-$sueldo  =  $User['sueldo'];
-
-$valor_parcial = ( 15 * $sueldo ) / 30;
+    $monto_afecta = $rol_tipo['monto'];
 
 
-$sql_existe = "update   nom_rol_pagod
-set sueldo = ". $bd->sqlvalue_inyeccion($valor_parcial ,true).",
-ingreso = ". $bd->sqlvalue_inyeccion($valor_parcial ,true).",
-dias = ". $bd->sqlvalue_inyeccion('15' ,true)."
-where id_rold="	   .$bd->sqlvalue_inyeccion($id_rold ,true) ;
+    if ( $motivo == 'ENCARGO'){
 
-$bd->ejecutar($sql_existe);
- 
-echo 'actualice';
+        $ingreso = $p_sueldo - $sueldo;
 
-/*
+    }else{
 
-$ruc =   trim($_SESSION['ruc_registro']);
+        if (   $monto_afecta  > 0 ){
 
+            $p1 =  ($monto_afecta /100);
+
+            $ingreso = $p_sueldo * $p1;
+
+        }
+
+    }
+    
+    
 $rol              = $bd->query_array('nom_rol_pago', 'id_periodo, mes, anio, registro', 'id_rol='.$bd->sqlvalue_inyeccion($id_rol,true));
 
 $rol_view         = $bd->query_array('view_nomina_rol', 'regimen,programa,sueldo,id_departamento,id_cargo,sueldo,fecha','idprov='.$bd->sqlvalue_inyeccion($idprov,true));
 
-$variable_formula = $bd->query_array('view_nomina_rol_reg','estructura, formula, monto, variable ,tipoformula,tipo_config','id_config_reg='.$bd->sqlvalue_inyeccion($id_config_reg,true));
-  
 
-if ( trim( $variable_formula['tipo_config'] ) == 'I' ){   
-    $ingreso   = $monto ;
-    $descuento = '0.00';
-}else{   
-    $ingreso   = '0.00';
-    $descuento = $monto ;
-}
+///------------ verifica datos -----------------------/
 
-
-$dias = 30;
-
- 
 $sql_existe = "select id_rold
 from nom_rol_pagod
 where id_rol="	   .$bd->sqlvalue_inyeccion($id_rol ,true)." and
       id_periodo= ".$bd->sqlvalue_inyeccion($rol["id_periodo"] ,true)." and
       idprov= "	   .$bd->sqlvalue_inyeccion(trim($idprov),true)." and
-      id_config =" .$bd->sqlvalue_inyeccion( $id_config_reg ,true);
+      id_config =" .$bd->sqlvalue_inyeccion( $id_config1 ,true);
 
-
-      
 
       $resultado21 = $bd->ejecutar($sql_existe);
+
       $rol_valida = $bd->obtener_array( $resultado21);    
 
+      $descuento  = 0;
 
-if ( $rol_valida['id_rold']  > 0 )      {    
 
-    $accion  = 'editar';
-    $id_rold = $rol_valida['id_rold'] ;
-}
+      $resultado = 'NO se actualizo....('.$idprov.')';
 
- 
- 
-if ( $accion == 'add'){   
+
+      if ( $rol_valida['id_rold']  > 0 )      {    
+
+          $id_rold = $rol_valida['id_rold'] ;
+
+          $sql = 'update nom_rol_pagod
+                    set ingreso = '.$bd->sqlvalue_inyeccion($ingreso ,true).'
+                    where id_rold = '.$bd->sqlvalue_inyeccion($id_rold ,true);
+
+
+                if (  $ingreso  > 0 )     {       
+
+                $bd->ejecutar($sql);
+
+                $resultado = 'Registro actualizado....('.$idprov.')';
+            
+                }
+         }
+        else{
+
+              $dias = 30;
 
                 $sql = "INSERT INTO nom_rol_pagod(
                     id_rol, id_periodo, idprov, id_config, ingreso, descuento, registro, anio, mes,
@@ -103,7 +110,7 @@ if ( $accion == 'add'){
                 $bd->sqlvalue_inyeccion($id_rol , true).",".
                 $bd->sqlvalue_inyeccion($rol["id_periodo"], true).",".
                 $bd->sqlvalue_inyeccion($idprov, true).",".
-                $bd->sqlvalue_inyeccion($id_config_reg, true).",".
+                $bd->sqlvalue_inyeccion($id_config1, true).",".
                 $bd->sqlvalue_inyeccion($ingreso, true).",".
                 $bd->sqlvalue_inyeccion($descuento, true).",".
                 $bd->sqlvalue_inyeccion( $ruc , true).",".
@@ -117,24 +124,19 @@ if ( $accion == 'add'){
                 $bd->sqlvalue_inyeccion($rol_view['programa'], true).",".
                 $bd->sqlvalue_inyeccion($rol_view['fecha'], true).")";
 
-                $bd->ejecutar($sql);
+                  if (  $ingreso  > 0 )     {       
 
-                echo 'Registro agregado....('.$idprov.')';
-}else{   
+                    $bd->ejecutar($sql);
 
-    $sql = 'update nom_rol_pagod
-            set ingreso = '.$bd->sqlvalue_inyeccion($ingreso ,true).',
-                descuento = '.$bd->sqlvalue_inyeccion($descuento ,true).'
-            where id_rold = '.$bd->sqlvalue_inyeccion($id_rold ,true);
-
+                    $resultado = 'Registro actualizado....('.$idprov.')';
+                    
+               }
  
-            $bd->ejecutar($sql);
-
-            echo 'Registro actualizado....('.$idprov.')';
-}
-  
+      }
     
- */
+
+      echo $resultado ;
+ 
 
 
 ?>

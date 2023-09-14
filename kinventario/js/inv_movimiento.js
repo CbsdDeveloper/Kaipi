@@ -1310,10 +1310,13 @@ function PictureArticulo(id)
 	objeto 					      =  '#url_' + id;
 	var url 				      = $(objeto).val();	
 	
+	var id_movimiento	    = 	 $('#id_movimiento').val(); 
+
 	var parametros = {
 			"tipourl" : tipourl ,
             "url" : url ,
-            "id" : id
+            "id" : id,
+			'id_movimiento':id_movimiento
 	};
 	
 	$.ajax({
@@ -1339,12 +1342,17 @@ function ActualizaCuenta( )
 	 var cuenta_inventario 	= 	 $('#cuenta_inventario').val();
 	 var idproductop 		= 	 $('#idproductop').val();
 	 var cuenta_gas 		= 	 $('#cuenta_gas').val(); 
+
+	 var fcaducidad 		= 	 $('#fcaducidad').val(); 
+	 var id_movimiento	    = 	 $('#id_movimiento').val(); 
      
 	
 	var parametros = {
 			"cuenta_inventario" : cuenta_inventario ,
-            "idproductop" : idproductop ,
-            "cuenta_gas" : cuenta_gas
+            "idproductop"  : idproductop ,
+            "cuenta_gas"   : cuenta_gas,
+			'fcaducidad'   : fcaducidad,
+			'id_movimiento': id_movimiento
 	};
 	
 	$.ajax({

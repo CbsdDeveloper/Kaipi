@@ -69,7 +69,7 @@ $i = 0;
 						                  a.publica = 'O' and a.ruta =".$bd->sqlvalue_inyeccion($moduloOpcion,true)." and
 						                  b.idusuario  =" .$bd->sqlvalue_inyeccion($_SESSION['usuario'] ,true).'  and
 									      a.script  = '.$bd->sqlvalue_inyeccion('A' ,true).'
-									order by a.script, a.id_par_modulo' ;
+									order by a.logo  ' ;
 					
 		 
 					/*Ejecutamos la query*/
@@ -103,7 +103,7 @@ $sql = "select a.modulo,a.vinculo,a.script
 	                 a.publica = 'O' and a.ruta =".$bd->sqlvalue_inyeccion($moduloOpcion,true)." and
 	                  b.idusuario  =" .$bd->sqlvalue_inyeccion($_SESSION['usuario'] ,true).'  and
 				      a.script  = '.$bd->sqlvalue_inyeccion('B' ,true).'
-				order by a.script, a.id_par_modulo' ;
+				order by a.logo  ' ;
 
 /*Ejecutamos la query*/
 $stmt1 = $bd->ejecutar($sql);
@@ -130,7 +130,7 @@ $sql = "select a.modulo,a.vinculo,a.script
 	                  a.publica = 'O' and a.ruta =".$bd->sqlvalue_inyeccion($moduloOpcion,true)." and
 	                  b.idusuario  =" .$bd->sqlvalue_inyeccion($_SESSION['usuario'] ,true).'  and
 				      a.script  = '.$bd->sqlvalue_inyeccion('C' ,true).'
-				order by a.script, a.id_par_modulo' ;
+				order by a.logo  ' ;
 
 /*Ejecutamos la query*/
 $stmt2 = $bd->ejecutar($sql);

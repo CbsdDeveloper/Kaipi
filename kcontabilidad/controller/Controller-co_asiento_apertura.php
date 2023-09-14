@@ -38,7 +38,7 @@ session_start( );
                  
       }
       
-      function Formulario(  $id_asiento, $cuenta, $grupo ){
+      function Formulario(  $id_asiento, $cuenta, $grupo,$fanio ){
     
           $datos              = array();
           
@@ -58,7 +58,7 @@ session_start( );
                   
                
                   
-                      $resultado = $this->sql_cuenta_gasto($grupo ,$id_asiento );
+                      $resultado = $this->sql_cuenta_gasto($grupo ,$id_asiento,$cuenta );
                       
                       $this->obj->list->listadbe($resultado,$tipo,'Trasladar','cuenta1',$datos,'required','',$evento,'div-2-10');
               
@@ -67,25 +67,59 @@ session_start( );
                       
                   $this->set->div_panel12('fin');
           
-        
+                  $cuenta_filtro = substr($cuenta,0,3);
  		 
+                  $evento   = "";  // nombre funcion javascript-columna de codigo primario
+                  $edita    = '';
+                  $del      = '';
+                  $tipo 		     = $this->bd->retorna_tipo(); // TIPO DE CONEXION DE BASE DE DATOS ... POSTGRES
+
+    
+                  if (   $cuenta_filtro == '111') {
+
+                  }else 
+                  {
+                        $sql = "select  idprov,razon,  sum(debe) - sum(haber) saldo
+                        from view_aux
+                        where anio = ".$this->bd->sqlvalue_inyeccion($fanio-1 , true)." and 
+                            estado = 'aprobado' and
+                        cuenta = ".$this->bd->sqlvalue_inyeccion($cuenta, true).
+                        "group by idprov,razon,cuenta
+                        having  sum(debe) - sum(haber) <> 0";
+
+                        $resultado  = $this->bd->ejecutar($sql); // EJECUTA SENTENCIA SQL  RETORNA RESULTADO
+
+                        
+                                        
+                        $cabecera =  "Identificacion,Nombre,Saldo"; // CABECERA DE TABLAR GRILLA HA VISUALIZAR
+                        
+                        $evento   = "VerAuxiliarDato-0";
+                        $edita = 'seleccion';
+                        $del= '';
+                        $this->obj->table->table_basic_seleccion($resultado,$tipo,$edita,$del,$evento ,$cabecera);
+
+                    }
+                  
+
+
     }
    
     //-------------
-    function sql_cuenta_gasto($grupo ,$id_asiento ){
+    function sql_cuenta_gasto($grupo ,$id_asiento,$cuenta ){
         
         $anio = $this->anio;
        
+        $cuenta_filtro = substr($cuenta,0,6);
  
-        $resultado = $this->bd->ejecutar("SELECT '-' as codigo, ' [ 0. Seleccione Cuenta ] ' as nombre union
-                                       select cuenta as codigo ,cuenta || ' '|| detalle as nombre
-                                            FROM co_plan_ctas
-                                            where anio = ".$this->bd->sqlvalue_inyeccion($anio, true)."  and
-                                                  substring(cuenta,1,3) in ('124','224','226') and
-                                                  estado = 'S' and 
-                                                  univel='S'
-                                          order by 1"
-            );
+                $resultado = $this->bd->ejecutar("SELECT '-' as codigo, ' [ 0. Seleccione Cuenta ] ' as nombre union                    
+                                                    SELECT b.cuenta as codigo ,b.cuenta || ' '|| b.detalle as nombre 
+                                                    FROM co_traslado a , co_plan_ctas b
+                                                    where a.cuenta1 like ".$this->bd->sqlvalue_inyeccion($cuenta_filtro.'%', true)."   and 
+                                                            b.cuenta like trim(a.cuenta2) || '%' and 
+                                                            b.anio = ".$this->bd->sqlvalue_inyeccion($anio, true)."   and
+                                                            b.estado = 'S' and 
+                                                            b.univel = 'S' order by 1"
+             );
         
        
         
@@ -104,7 +138,9 @@ session_start( );
   $id_asientod      = $_GET['id_asientod'] ;
   $cuenta          = trim($_GET['cuenta']) ;
   $grupo           = trim($_GET['grupo']) ;
+
+  $fanio    = trim($_GET['fanio']) ;
  
-  $gestion->Formulario( $id_asientod, $cuenta, $grupo);
+  $gestion->Formulario( $id_asientod, $cuenta, $grupo,$fanio);
   
  ?> 

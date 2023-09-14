@@ -769,6 +769,10 @@ function LimpiarPantalla() {
  	$("#id_departamento").val("");
   	$("#planificado").val("");
  	
+	  $("#tipocp").val("No Aplica");
+
+	  
+	  
     }
 //-------------
 function LimpiaDatosPartida() {
@@ -933,7 +937,7 @@ function LimpiaOrden() {
 	  	 
 		 $.ajax({
 			 data:  parametros,
-			 url: "../model/Model-BusquedaTramite.php",
+			 url: "../model/Model-BusquedaTramite_req.php",
 			 type: "GET",
 	        success: function(response)
 	        {

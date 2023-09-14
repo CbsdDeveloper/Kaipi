@@ -93,8 +93,43 @@ class proceso{
 	}
  
 //----------------------------
-    
 
+function valida_esigef_c(  $anio ){
+		
+   
+      $anio1 = $anio  - 1;
+
+
+      $sql1 = "SELECT cuenta 
+      FROM co_plan_ctas
+      where impresion = 1 and 
+            anio = ".$this->bd->sqlvalue_inyeccion( $anio1,true)." order by cuenta ";
+      
+
+
+      $stmt1 = $this->bd->ejecutar($sql1);
+
+      $i = 0;
+      while ($fila=$this->bd->obtener_fila($stmt1)){
+              
+              $cuenta = trim($fila['cuenta']);
+
+              $sql_edit= 'update co_plan_ctas
+                              set impresion='.$this->bd->sqlvalue_inyeccion(1,true).'
+                              where cuenta =  '.$this->bd->sqlvalue_inyeccion($cuenta,true).' and
+                                    anio = '.$this->bd->sqlvalue_inyeccion($anio,true);
+
+              $this->bd->ejecutar($sql_edit);
+
+              $i++;
+
+      }
+
+ 
+      echo 'Datos actualizados....'.$i.'<br>';
+    }
+
+//-----
     function valida_esigef(  $anio ){
 		
    
@@ -113,7 +148,7 @@ class proceso{
 
         $stmt1 = $this->bd->ejecutar($sql1);
 
- 
+        $i = 0;
         while ($fila=$this->bd->obtener_fila($stmt1)){
                 
                 $cuenta = trim($fila['cuenta']);
@@ -124,12 +159,13 @@ class proceso{
                                       anio = '.$this->bd->sqlvalue_inyeccion($anio,true);
  
                 $this->bd->ejecutar($sql_edit);
+
+                $i++;
   
         }
-
-      
+ 
    
- 	     echo 'Datos actualizados....';
+ 	     echo 'Datos actualizados....'.$i.'<br>';
 	}
     //--------------------------
 	function valida_asociacion( $id_registro ,$anio,$tipo ){
@@ -198,6 +234,9 @@ if (isset($_GET['anio_selecciona']))	{
       }else {
 
            $gestion->valida_esigef($_GET['anio_selecciona']  );
+
+           $gestion->valida_esigef_c($_GET['anio_selecciona']  );
+ 
 
  
     }

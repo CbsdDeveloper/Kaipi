@@ -174,7 +174,7 @@
  
       
       
-      $this->obj->text->text_dia('Fecha','120','fecha',15,15,$datos,'required','','div-2-4');
+      $this->obj->text->text_dia('Fecha','365','fecha',15,15,$datos,'required','','div-2-4');
         
        
        

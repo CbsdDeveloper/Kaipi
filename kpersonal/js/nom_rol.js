@@ -82,6 +82,32 @@ function goToURL(accion,id) {
 			}); 
 
 }
+// ir a la opcion de editar
+function goToCierre(accion,id) {
+
+	var parametros = {
+				   'accion' : accion ,
+				   'id' : id 
+	  };
+
+	 $.ajax({
+				   data:  parametros,
+				   url:   '../model/Model-nom_rol.php',
+				   type:  'GET' ,
+				   cache: false,
+				   beforeSend: function () { 
+
+							$("#result").html('Procesando');
+
+					 },
+				   success:  function (data) {
+							$("#result").html(data);  // $("#cuenta").html(response);
+					 } 
+		   }); 
+
+		   BusquedaGrilla(oTable);
+}
+//-------------------
 //-------------------------------------------------------------------------
 function CerrarPeriodo( ) {
 
@@ -285,9 +311,9 @@ function BusquedaGrilla(oTable){
 
 						s[i][4],
 
- 					'<button class="btn btn-xs btn-warning" onClick="goToURL('+"'editar'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;' + 
-
-					'<button class="btn btn-xs btn-danger" onClick="goToURL('+"'del'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-remove"></i></button>' 
+ 					'<button class="btn btn-xs btn-warning" title="Editar Registro" onClick="goToURL('+"'editar'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;' + 
+					 '<button class="btn btn-xs btn-info" title="Cerrar Periodo" onClick="goToCierre('+"'SI'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-ban-circle"></i></button>&nbsp;' + 
+					'<button class="btn btn-xs btn-danger" title="Eliminar Registro" onClick="goToURL('+"'del'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-remove"></i></button>' 
 
 				]);										
 

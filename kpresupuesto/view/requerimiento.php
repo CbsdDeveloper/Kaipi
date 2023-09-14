@@ -155,44 +155,24 @@ hr { margin-top: 5px;margin-bottom: 10px; }
                             </a>
                         </li>
 
-						<li>
-                            <a href="#" onClick="javascript:BusquedaGrilla('','2.1','2.1 Aval de Planificacion',1);">2.1 Aval de Planificacion
-                            </a>
-                        </li>
-						
-						<li>
-                            <a href="#" onClick="javascript:BusquedaGrilla('','2.2','2.2 Aval de Compras Publicas',1);">2.2 Aval de Compras Publicas
-                            </a>
-                        </li>
-						
+					 
 						
                         <li>
                              <a href="#" onClick="javascript:BusquedaGrilla('','3','3. (*) Emision Certificacion ',1);"><b>3. (*) Emision Certificacion</b>
                              </a>
                         </li>
 						
-						
-						 <li>
-                             <a href="#" onClick="javascript:BusquedaGrilla('','3.1','3.1 En proceso de contratación',1);">3.1 En proceso de contratación
-                             </a>
-                        </li>
-						
 						<li>
-                             <a href="#" onClick="javascript:BusquedaGrilla('','3.2','3.2 En proceso de recepcion',1);">3.2 En proceso de recepción
+                             <a href="#" onClick="javascript:BusquedaGrilla('','5','5. Tramite Compromiso ',1);">5.  Tramite Compromiso 
                              </a>
                         </li>
-						
+						 
 						<li>
-                             <a href="#" onClick="javascript:BusquedaGrilla('','3.3','3.3 En proceso orden pago',1);">3.3 En proceso orden pago
-                             </a>
-                        </li>
-						
-						 <li>
                              <a href="#" onClick="javascript:BusquedaGrilla('','6','6. Tramite Devengado ',1);"><b>6.  Tramite Devengado </b>
                              </a>
                         </li>
-                         
 
+						
                         <li>
                             <a href="#" onClick="javascript:BusquedaGrilla('','0','Anular proceso',1);">Anular proceso
                             </a>
@@ -255,6 +235,7 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 
 
 								<div class="tab-pane fade in" id="fdoc">
+									
 										<div class="col-md-12"> 
 											<div class="panel-body" > 
 													<div class="col-md-12">  
@@ -315,26 +296,7 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 
 										<div class="col-md-12"  style="padding: 5px"> 
 
-											 <div class="col-md-12"> 
-
-												  <div class="col-md-12" style="padding: 2px">  
-
-													  <h6>Mensaje Whatsapp</h6>
-
-															 <div class="col-md-2" style="padding: 3px">  
-																  <input name="bnuevow" type="button" onClick="EnviarWhatsapp()" style="font-size:12px;padding:5px 12px;border-radius:5px;background-color:#189D0E;color:white;text-shadow:none;"id="bnuevow" value=">> Enviar WhatsApp"> 
-															 </div> 	 
-
-															 <div class="col-md-10"  style="padding: 3px"> 
-																 <input name="tfono" type="text"   class="form-control" id="tfono" placeholder="593">
-															  </div> 	
-
-															 <div class="col-md-12"  style="padding: 3px"> 
-																  <input name="tmensajee" type="text"   class="form-control" id="tmensajee" placeholder="Mensaje a enviar"> 
-															 </div> 	  
-												  </div> 	
-
-											 </div>  
+											 
  
 											 <div class="col-md-12" style="padding-bottom: 10px;padding-top: 10px"> 
  															<div class="panel panel-default">
@@ -366,54 +328,7 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 
 										  <div class="panel-body" > 
 
-														<div class="col-md-12" >
-
-															  <div class="col-md-8" style="padding-top: 8px" >
-
-																 <div class="btn-group btn-group-justified1">  
-
-																 <div class="btn-group">
-																		  <button type="button" id="p1_nuevo"
-																				 class="btn btn-warning btn-sm" onClick="limpiaPartida();"
-																				 title="Ingresar partidas presupuestarias"
-																				  data-toggle="modal" data-target="#myModalProducto"> 
-																				 <span class="glyphicon glyphicon-bell"></span>  Seleccionar partidas
-																		   </button>
-																	 </div> 
-
-																	  <div class="btn-group">
-																			 <button type="button" id="p1_savec"  onClick="GenerarCertificacion()"  title="Generar Certificacion" class="btn btn-danger btn-sm" id="bpartida_nuevo" > Generar Certificacion  
-																				   <span class="glyphicon glyphicon-ok-sign"></span>  
-																			 </button>
-																	 </div> 
-
-																	<div class="btn-group"> 
-																			 <button type="button" id="p1_print_c"  onClick="ImprimirActa()"  title="Imprimir Certificacion" class="btn btn-info btn-sm" id="bpartida_imprime" >  Imprimir Certificacion
-																				   <span class="glyphicon glyphicon-print"></span>  
-																			 </button>
-																	  </div> 
-																	 
-																	 <div class="btn-group"> 
-																			 <button type="button" id="p1_print_c"  onClick="ImprimirAval()"  title="Imprimir Aval Planificacion" class="btn btn-warning btn-sm" id="bpartida_imprime" >  Imprimir Aval Planificacion
-																				   <span class="glyphicon glyphicon-print"></span>  
-																			 </button>
-																	  </div> 
-
-																 </div> 
-
-															  </div> 
-
-															  <div class="col-md-1" style="padding-top: 15px"  >
-																 Certificación
-															  </div>
-
-															  <div class="col-md-3" style="padding-top:8px" >
-
-																 <input type="date" name="fcertifica" id="fcertifica"  class="form-control" placeholder="Fecha Certificacion" size="80" maxlength="80">
-
-															  </div>
-
-														 </div>
+														 
 
 														<div class="col-md-12"> 
 

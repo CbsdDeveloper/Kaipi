@@ -89,7 +89,7 @@
       	
       	$this->set->div_label(12,'Seleccione Beneficiario');
       	
-		 		$this->obj->text->textautocomplete('Beneficiario',"texto",'beneficiario',15,15,$datos,'required','','div-2-10');
+		 		$this->obj->text->textautocomplete('Beneficiario',"texto",'beneficiario',150,150,$datos,'required','','div-2-10');
 		 
                 $this->obj->text->text('Identificacion',"texto",'idprov',15,15,$datos,'required','readonly','div-2-4');
 		 

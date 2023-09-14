@@ -20,7 +20,7 @@
     FROM public.view_nom_accion
     where estado = 'S' and 
           finalizado = 'N' and 
-          motivo in ('ENCARGO','SUBROGACION','LICENCIA SIN REMUNERACION') and 
+          motivo in ('ENCARGO','SUBROGACION','LICENCIA SIN REMUNERACION','LICENCIA CON REMUNERACION - MATERNIDAD','PERMISO POR MATERNIDAD','PERMISO POR ENFERMEDAD') and 
           anio= ".$bd->sqlvalue_inyeccion($anio, true)."
     order by motivo,razon" ;
      

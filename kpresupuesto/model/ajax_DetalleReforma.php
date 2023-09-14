@@ -64,7 +64,7 @@ echo '<table id="jsontableReforma" class="table  table-hover table-bordered" cel
                     <th align="center" width="10%">Inicial</th>
                     <th align="center" width="9%">Codificado</th>
                     <th align="center" width="8%">Reformas</th>
-                    <th align="center" width="8%">Saldo</th>
+                    <th align="center" width="8%">Disponible</th>
                     <th align="center" width="15%">'.$cab1.'</th>
                     <th align="center" width="15%">'.$cab2.'</th>
                     <th align="center" width="5%">Acciones</th>
@@ -102,11 +102,11 @@ echo '<table id="jsontableReforma" class="table  table-hover table-bordered" cel
             
             echo ' <tr>
 				<td>'.$y['partida'].'</td>
-				<td>'.$y['detalle'].'</td>
+				<td><b>'.$y['detalle'].'</b></td>
  				<td>'.$y['clasificador'].'</td>
                 <td>'.$y['fuente'].'</td>
-                <td>'.$y['inicial'].'</td>
-                <td>'.$y['codificado'].'</td>
+                <td><b>'.$y['inicial'].'</b></td>
+                <td><b>'.$y['codificado'].'</b></td>
                 <td>'.$y['reformas'].'</td>
                 <td align="right">'.' <input type="number" class="form-control" min="0" max="9999999" step="0.01" readonly value="'.round($y['saldo'],2).'"    id="sa_'.trim($y['id']).'" name="sa_'.trim($y['id']).'">'.'</td>
                 <td align="right">'.' <input type="number" '.$evento.$tipo1.' class="form-control" min="-999999999" max="9999999999" step="0.01"  value="'.$y['aumento'].'"   id="au_'.trim($y['id']).'" name="au_'.trim($y['id']).'">'.'</td>

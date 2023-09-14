@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+ 
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+ 
+	  
+	   <script>
+	  //-------------------------------------------------------------------------
+				/*	$(document).ready(function(){
+		
+				setInterval(function(){ 
+ 						$.get('mensaje.php?id=1', function(response){
+ 							 $("#nchat").html( response );  
+						}); 
+					}, 8000);
+				
+			
+				setInterval(function(){ 
+ 						$.get('mensaje.php?id=2', function(response){
+ 							 $("#nagenda").html( response);  
+						}); 
+					}, 4000); 
+				
+		 	setInterval(function(){ 
+ 						$.get('mensaje.php?id=3', function(response){
+ 							 $("#npost").html( response);  
+						}); 
+					}, 4500);
+ 
+			});  */
+	   </script>
+  </head>
+
+  <body>
+	  
+	  
+	   <div class='col-md-4' style="padding: 5px"> 
+ 
+ 	  		<button type="button" class="btn btn-primary btn-sm" > <span class="badge" style="font-size: 11px" id="nchat">0</span> 
+				<span class="glyphicon glyphicon glyphicon-comment"></span>
+ 		   </button>
+   	 
+ 	  		 <button type="button" class="btn btn-danger btn-sm btn-block"> <small>Agenda</small> 
+				 <span class="badge"  style="font-size: 11px" id="nagenda">0</span>  </button>   
+   		 
+ 	  		<button type="button" class="btn btn-warning btn-sm btn-block"><small>Cartelera</small> 
+				   <span class="badge" style="font-size: 11px" id="npost">0</span> </button>     
+   		</div>       
+  
+
+ 
+  </body>
+</html>

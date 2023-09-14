@@ -21,7 +21,7 @@ $(document).ready(function(){
          oTable_inversion = $('#jsontable_inversion').dataTable(); 
          
          
-         
+		 CatalogoTraslado();  
 
 		$("#MHeader").load('../view/View-HeaderModel.php');
 		$("#FormPie").load('../view/View-pie.php');
@@ -144,12 +144,15 @@ var fanio = $("#anio_asiento").val();
 function PoneEnlace(id_asientod,cuenta)
 {
  
+	var fanio = $("#anio_asiento").val();
+
 
 	$("#id_asientodx").val(id_asientod);
 		 
 			 	 var parametros = {
 						    'cuenta' 	 : cuenta ,
-						    'id_asientod' : id_asientod
+						    'id_asientod' : id_asientod,
+							'fanio':fanio
  			    };
 
 			 	$.ajax({
@@ -267,7 +270,8 @@ function goToURLInversion(monto,grupo)
 {
  
 	var fanio = $("#fanio").val();
- 
+
+  
 			 	 var parametros = {
 					  		 'monto' :  monto ,
  						     'grupo' : grupo,
@@ -321,6 +325,47 @@ function AgregaAuxiliar()
 
 				$('#myModalAux').modal('hide');
 		 
+
+}
+
+
+// completar 
+function VerAuxiliarDato(accion,id_prov,col)
+{
+ 
+//	VerAuxiliarDato('seleccion','1205440710',4)
+
+  
+var valor   =  document.getElementById('tablaBasica').tBodies[0].rows[col].cells[2].innerHTML;
+
+ 
+var fanio = $("#anio_asiento").val();
+
+	var cuenta    = $("#cuenta0").val();
+	var v_asiento = $("#v_asiento").val();
+
+	if (v_asiento) {
+		 
+			 	 var parametros = {
+						    'cuenta' 	 : cuenta ,
+						    'id_prov' : id_prov,
+							'fanio': fanio,
+							'accion':accion,
+							'col':col,
+							'v_asiento':v_asiento,
+							'valor':valor
+ 			    };
+
+			 	$.ajax({
+						data:  parametros,
+						url:   '../model/ajax_crea_aux_ini.php',
+						type:  'GET' ,
+						cache: false,
+						success:  function (data) {
+								 $("#guardarIngreso").html(data);   
+							} 
+				});
+			}
 
 }
 
@@ -1020,12 +1065,46 @@ function modulo()
 
 	});
 
-      
-
-
-
+ 
  }
+//-------------
+function CatalogoTraslado()
 
+ {
+
+ 
+	var parametros = {
+
+		'accion' : 'visor' 
+
+};
+
+ 	$.ajax({
+			 data:  parametros,
+			 url:   '../model/ajax_traslado.php',
+
+			type:  'GET' ,
+
+			cache: false,
+
+			beforeSend: function () { 
+
+						$("#ViewFormCatalogo").html('Procesando');
+
+				},
+
+			success:  function (data) {
+
+					 $("#ViewFormCatalogo").html(data);  // $("#cuenta").html(response);
+
+				     
+
+				} 
+
+	});
+
+ 
+ }
 //-----------------
 
  function FormView()
@@ -1055,6 +1134,9 @@ function modulo()
   
 
 	 $("#ViewFiltro").load('../controller/Controller-co_periodos_filtro.php');
+
+	 
+
 
 	 
 

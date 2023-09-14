@@ -9,8 +9,7 @@
   
     class proceso{
  
-      //creamos la variable donde se instanciar la clase "mysql"
- 
+  
       private $obj;
       private $bd;
       
@@ -57,9 +56,21 @@
       
       	while ($fetch=$this->bd->obtener_fila($resultado)){
       		 
+
+          $hora = $this->bd->query_array('view_nomina_rol',  
+          'count(*) as nn',                       
+          'id_cargo='.$this->bd->sqlvalue_inyeccion(  trim( $fetch['id_cargo']),true) 
+          );
+
+ 
+
       		$output[] = array (
-      							$fetch['id_cargo'],$fetch['nombre'],$fetch['productos'],
-      		    $fetch['competencias'] , $fetch['jerarquico'] 
+      							$fetch['id_cargo'],
+                    $fetch['nombre'],
+                    $fetch['productos'],
+      		          $fetch['competencias'] , 
+                    $fetch['jerarquico'] ,
+                    $hora['nn'] ,
        					);
       	}	
       

@@ -132,12 +132,12 @@ class proceso{
             
             
             $sql = 'SELECT idprov, id_departamento, id_cargo, regimen,  fecha, sueldo,
-                           fondo,vivienda,salud, alimentacion,educacion,vestimenta,
-                           sifondo,sidecimo,sicuarto,sihoras,sisubrogacion,programa,fecha_salida
-     	       FROM view_nomina_rol
-			   where    regimen='.$this->bd->sqlvalue_inyeccion($regimen ,true). ' and
-                         programa='.$this->bd->sqlvalue_inyeccion(trim($programa) ,true). ' and
-                         msale = '.$this->bd->sqlvalue_inyeccion('-1' ,true) ;
+            fondo,vivienda,salud, alimentacion,educacion,vestimenta,
+            sifondo,sidecimo,sicuarto,sihoras,sisubrogacion,programa,fecha_salida
+ FROM view_nomina_rol
+where    regimen='.$this->bd->sqlvalue_inyeccion($regimen ,true). ' and
+          programa='.$this->bd->sqlvalue_inyeccion(trim($programa) ,true). ' and
+          msale  = '.$this->bd->sqlvalue_inyeccion( '-1' ,true). ' or msale = '.  $this->bd->sqlvalue_inyeccion(  $mes ,true)  ;
             
             
         }
@@ -170,6 +170,20 @@ class proceso{
             $ingreso = 0;
             $dias    = 0;
             
+            $fecha_salida = $x['fecha_salida'];
+            $valida_anio  = explode('-',$fecha_salida);
+            
+            $anio_salida =  $valida_anio[0];
+            
+            if (empty( $fecha_salida )){
+                
+            }else{
+                if ( $valida_anio == $rol["anio"]){
+                } else{
+                    $rol_valida["numero"] == 1;
+                }
+            }
+            
             if ($rol_valida["numero"] == 0){
                 
                   
@@ -198,7 +212,7 @@ class proceso{
                     if ( $tipoformula == 'RR'){
                         
                      
-                        $ingreso =$this->formula->_n_impuesto_renta($rol["id_periodo"], $id_rol,trim($x['idprov']) ,$rol["anio"],$rol["mes"]);
+                        $ingreso =$this->formula->_n_impuesto_renta($rol["id_periodo"], $id_rol,trim($x['idprov']) ,$rol["anio"],$rol["mes"],'S');
                         
                     }
                     

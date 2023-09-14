@@ -56,9 +56,9 @@ where 	registro = ".$bd->sqlvalue_inyeccion($registro,true)." and
 				<th width="30%">Beneficiario</th>
 				<th width="10%">Ingreso</th>
                 <th width="10%">Egreso</th>
-                <th width="5%"> &nbsp; </th>
-                <th width="5%"> &nbsp; </th>
-                <th width="5%"> &nbsp; </th>
+                <th width="5%"> Accion </th>
+                <th width="5%"> Conciliado </th>
+                <th width="5%"> Ref. </th>
 				</tr>
 			</thead>';
 

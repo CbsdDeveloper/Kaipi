@@ -212,6 +212,16 @@ class proceso{
 	function detalle_auxiliar( $f1,$f2,$cuenta){
 	    
 
+		$saldos_periodo = $this->bd->query_array('co_diario','sum(debe) - sum(haber) as saldo', 
+										 'fecha < '.$this->bd->sqlvalue_inyeccion( $f1,true). ' and 
+										 cuenta = '.$this->bd->sqlvalue_inyeccion(trim($cuenta), true).' and 
+										  anio='.$this->bd->sqlvalue_inyeccion($this->anio, true) 
+										);
+
+	    $saldos = $saldos_periodo['saldo'];
+
+	 
+
         $where = '( fecha BETWEEN '.$this->bd->sqlvalue_inyeccion(trim($f1),true)." and ".$this->bd->sqlvalue_inyeccion(trim($f2),true)." )   ";
 
         $sql = 'SELECT  *
@@ -232,6 +242,32 @@ class proceso{
 		 
 		 $saldo_linea = 0;
 
+
+		 //------- saldos iniciales
+
+		 if ( $saldos < 0 ) {
+			$idebe= 0;
+			$ihaber=    $saldos*-1;
+		}
+		 else {	
+			$idebe=    $saldos;
+			$ihaber=0;
+		}
+			echo "<tr>";
+		    
+		 echo "<td> </td>";
+		 echo "<td>$f1</td>";
+		 echo "<td>-</td>";
+		 echo "<td>Saldo Anterior</td>";
+		  echo "<td align='right'>".number_format($idebe,2)."</td>";
+		 echo "<td align='right'>".number_format($ihaber,2)."</td>";
+		 echo "<td align='right'>".number_format(  $saldos,2)."</td>";
+		  
+		 echo "</tr>";
+
+
+		 $saldo_linea =   $saldos;
+		 //---------------------------
          while ($xx=$this->bd->obtener_fila($stmt1)){
 		    
 		    $saldo = $xx['debe'] - $xx['haber'];
@@ -267,7 +303,7 @@ class proceso{
 		}
  
         $saldo = $ndebe -  $nhaber;
-		
+	 
 		echo "<tr>";
 		
 		echo "<td align='right'></td>";
@@ -276,10 +312,11 @@ class proceso{
 		echo "<td align='right'></td>";
         echo "<td align='right'><b>".number_format($ndebe,2)."</b></td>";
 		echo "<td align='right'><b>".number_format($nhaber,2)."</b></td>";
-		echo "<td align='right'><b>".number_format($saldo,2)."</b></td>";
+		echo "<td align='right'><b> </b></td>";
 		
 		
 		echo "</tr>";
+		 
  		echo "</table>";
  		
 		unset($xx); //eliminamos la fila para evitar sobrecargar la memoria

@@ -37,6 +37,13 @@ $(document).ready(function(){
  
 		});
 
+		$('#load30').on('click',function(){
+ 
+            BusquedaGrilla30();
+ 
+		});
+
+
 	    $('#load2').on('click',function(){
 	    	 
             BusquedaGrillaa();
@@ -352,6 +359,43 @@ function changeAction(tipo,action,mensaje){
 		 
 
   }  
+ //---------- 
+ function BusquedaGrilla30(){        	 
+
+	  
+	  
+ 
+	var anio = $("#anio").val();
+	var prove =  $("#prove").val();
+	
+	var cuenta  =  $("#cuenta").val();
+	var bandera =  $("#bandera").val();  
+
+	var parametros = {
+			   'anio' : anio  ,
+			   'cuenta' : cuenta   ,
+			   'prove' : prove  ,
+			   'bandera' : bandera   
+	 };
+	
+	
+	$.ajax({
+		  data:  parametros,
+		  url:   '../model/Model_listaAuxq30.php',
+		  type:  'GET' ,
+		  beforeSend: function () { 
+
+				  $("#ViewFormAux").html('Procesando');
+
+		  },
+		  success:  function (data) {
+			   $("#ViewFormAux").html(data);   
+
+		  } 
+  });	 
+
+
+}
 //---------------------------------
  function BusquedaGrillaa(){        	 
 
@@ -387,10 +431,7 @@ function changeAction(tipo,action,mensaje){
 			} 
 	});	 
 
-      
-		 
-		 
-
+ 
   }   
 //------------------------------------------------------------------------- 
 function modulo()

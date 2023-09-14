@@ -34,8 +34,8 @@ ob_start();
 	 $nom=$_GET['nom'];
 	 ?>
 
-<div class="page" >
-		<img src="Logocbsd.png" width="70px" height="20px" ><br>
+<div class="page"  align="center">
+		<img src="logo_b.png" width="44" height="36" ><br>
 		<label style="font-size: 9px; margin:0;"><b>
 			<?php 
 		$da=substr($nom, 0,20) ;

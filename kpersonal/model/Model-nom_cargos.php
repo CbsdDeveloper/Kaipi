@@ -20,7 +20,7 @@ session_start( );
       //-----------------------------------------------------------------------------------------------------------
       //Constructor de la clase
       //-----------------------------------------------------------------------------------------------------------
-      function proceso( ){
+      function proceso( ){        
             //inicializamos la clase para conectarnos a la bd
  
                 $this->obj     = 	new objects;
@@ -43,9 +43,17 @@ session_start( );
                     array( campo => 'competencias',   tipo => 'VARCHAR2',   id => '3',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
                     array( campo => 'jerarquico',   tipo => 'VARCHAR2',   id => '4',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
                     array( campo => 'tipo',   tipo => 'VARCHAR2',   id => '5',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
-                    array( campo => 'sigla',   tipo => 'VARCHAR2',   id => '6',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N')
+                    array( campo => 'sigla',   tipo => 'VARCHAR2',   id => '6',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
+                    array( campo => 'dia_max',   tipo => 'NUMBER',   id => '7',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
+                    array( campo => 'hora_max',   tipo => 'NUMBER',   id => '8',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
+                    array( campo => 'dias_vacacion',   tipo => 'NUMBER',   id => '9',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
+                    array( campo => 'dias_acumula',   tipo => 'NUMBER',   id => '10',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
+                    array( campo => 'dia_vaca',   tipo => 'NUMBER',   id => '11',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
+                    array( campo => 'dia_permiso',   tipo => 'NUMBER',   id => '12',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
                 );
-                
+              
+           
+
       }
        //-----------------------------------------------------------------------------------------------------------
       //Constructor de la clase
@@ -112,10 +120,17 @@ session_start( );
          array( campo => 'competencias',   valor => '-',  filtro => 'N',   visor => 'S'),
          array( campo => 'jerarquico',   valor => '-',  filtro => 'N',   visor => 'S'),
          array( campo => 'sigla',   valor => '-',  filtro => 'N',   visor => 'S'),
-         array( campo => 'tipo',   valor => '-',  filtro => 'N',   visor => 'S')
+         array( campo => 'tipo',   valor => '-',  filtro => 'N',   visor => 'S'),
+         array( campo => 'dia_max',   valor => '-',  filtro => 'N',   visor => 'S'),
+         array( campo => 'hora_max',   valor => '-',  filtro => 'N',   visor => 'S'),
+         array( campo => 'dias_vacacion',   valor => '-',  filtro => 'N',   visor => 'S'),
+         array( campo => 'dias_acumula',   valor => '-',  filtro => 'N',   visor => 'S'),
+         array( campo => 'dia_vaca',   valor => '-',  filtro => 'N',   visor => 'S'),
+         array( campo => 'dia_permiso',   valor => '-',  filtro => 'N',   visor => 'S')
            );
      
-     
+ 
+              
  
          $this->bd->JqueryArrayVisor('nom_cargo',$qquery );           
  

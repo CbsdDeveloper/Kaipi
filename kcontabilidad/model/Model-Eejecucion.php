@@ -5,6 +5,8 @@ require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
 
 require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
 
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 class proceso{
 	
@@ -38,7 +40,7 @@ class proceso{
 	}
    
 	//--- calcula libro diario
-	function grilla( $f1,$f2){
+	function grilla( $f1,$f2,$reporte){
 		
 	    $valor1 = 0;
 	    $valor2 = 0;
@@ -56,10 +58,10 @@ class proceso{
 	    echo '<h5><b>SUPERAVIT O DEFICIT CORRIENTE</b></h5>';
 	    
 	    $this->cabecera('INGRESOS CORRIENTES');
-	    $ingreso = $this->Bloque_Activo($f1,$f2,1,1);
+	    $ingreso = $this->Bloque_Activo($f1,$f2,1,1,$reporte);
 	    
 	    $this->cabecera('GASTOS CORRIENTES');
-	    $gasto = $this->Bloque_Activo($f1,$f2,1,2);
+	    $gasto = $this->Bloque_Activo($f1,$f2,1,2,$reporte);
 	    
 	    
 	    $datos['t1'] = $ingreso['t1'] - $gasto['t1'];
@@ -77,17 +79,17 @@ class proceso{
 	    echo '<h5><b>SUPERAVIT O DEFICIT DE INVERSION</b></h5>';
 	    
 	    $this->cabecera('INGRESOS DE CAPITAL');
-	    $ingreso = $this->Bloque_Activo($f1,$f2,2,1);
+	    $ingreso = $this->Bloque_Activo($f1,$f2,2,1,$reporte);
 	    
 	    $this->cabecera('GASTOS DE PRODUCCION');
-	    $gasto1 = $this->Bloque_Activo($f1,$f2,2,2);
+	    $gasto1 = $this->Bloque_Activo($f1,$f2,2,2,$reporte);
 	    
 	    $this->cabecera('GASTOS DE INVERSION');
-	    $gasto2 = $this->Bloque_Activo($f1,$f2,2,3);
+	    $gasto2 = $this->Bloque_Activo($f1,$f2,2,3,$reporte);
 	    
 	    
 	    $this->cabecera('GASTOS DE CAPITAL');
-	    $gasto3 = $this->Bloque_Activo($f1,$f2,2,4);
+	    $gasto3 = $this->Bloque_Activo($f1,$f2,2,4,$reporte);
  	    
 	    
 	    $datos['t1'] = $ingreso['t1'] -  ( $gasto1['t1'] + $gasto2['t1'] + $gasto3['t1'] );
@@ -103,10 +105,10 @@ class proceso{
 	    echo '<h5><b> SUPERAVIT O DEFICIT DE FINANCIAMIENTO</b></h5>';
 	   
 	    $this->cabecera('INGRESOS DE FINANCIAMIENTO');
-	    $ingreso = $this->Bloque_Activo($f1,$f2,3,1);
+	    $ingreso = $this->Bloque_Activo($f1,$f2,3,1,$reporte);
 	    
 	    $this->cabecera('APLICACION DEL FINANCIAMIENTO');
-	    $gasto = $this->Bloque_Activo($f1,$f2,3,2);
+	    $gasto = $this->Bloque_Activo($f1,$f2,3,2,$reporte);
 	    
 	    
 	    
@@ -138,7 +140,7 @@ class proceso{
 	 
 	}
 	//----------------------------------------
-	public function Bloque_Activo( $f1,$f2,$orden1,$orden2 ){
+	public function Bloque_Activo( $f1,$f2,$orden1,$orden2,$reporte ){
 	    
 	    
 	    $sql = 'SELECT    nivel1, nivel2, nivel3, grupo1, grupo2, grupo3, cuenta, tipo, sin_signo, con_signo, estado
@@ -158,8 +160,6 @@ class proceso{
 	    while ($x=$this->bd->obtener_fila($stmt)){
 	        
  	        
-	        
-	        
 	        if ( trim($x['cuenta']) == '37'){
 	            
 	            $codificado = $this->suma_codificado($f1, $f2,trim($x["tipo"]) ,trim($x["cuenta"]));
@@ -184,6 +184,21 @@ class proceso{
 	        echo "<td align='right'>".number_format($codificado,2)."</td>";
 	        echo "<td align='right'>".number_format($devengado,2)."</td>";
 	        echo "<td align='right'>".number_format($saldo,2)."</td>";
+			echo "</tr>";
+
+			if (trim($reporte)  == '1'){
+
+				 if (abs($saldo) > 0  ){
+						echo '<tr>
+						<td></td>
+						<td colspan="3">';
+								$this->_detalle_cuenta($x['cuenta'], trim($x["tipo"]),$f1,$f2);
+						echo '</td>
+						<td></td>
+						</tr>';
+			   }
+ 		   }
+
 	        
 	        $t1 = $t1 + $codificado;
 	        $t2 = $t2 + $devengado;
@@ -205,6 +220,62 @@ class proceso{
 	     
 	    return $datos;
 	}
+	//------------------------//--------------------------
+function _detalle_cuenta($cuenta, $tipo_mov,$f1,$f2){
+
+	$wheref = ' and ( fecha BETWEEN '.$this->bd->sqlvalue_inyeccion(trim($f1),true)." and ".
+		                             $this->bd->sqlvalue_inyeccion(trim($f2),true)." ) ";
+		
+ 
+	$tipo 		     = $this->bd->retorna_tipo(); // TIPO DE CONEXION DE BASE DE DATOS ... POSTGRES
+	
+	$font ="10";
+	$background="#ececec";
+	
+
+	if ( $tipo_mov ==  'G' ){
+
+		$cuenta = '213.'.$cuenta.'%';
+
+		$sql22 = "select cuenta,detalle_cuenta,  sum(haber) devengado
+		from view_diario_detalle
+		where anio =".$this->bd->sqlvalue_inyeccion($this->anio, true)." and estado = 'aprobado' and 
+			  cuenta like ".$this->bd->sqlvalue_inyeccion($cuenta, true).$wheref." 
+			  group by cuenta,detalle_cuenta";
+
+     }
+
+	 if ( $tipo_mov ==  'I' ){
+
+		$cuenta = '113.'.$cuenta.'%';
+
+		$sql22 = "select cuenta,detalle_cuenta, sum(debe) as devengado
+		from view_diario_detalle
+		where anio =".$this->bd->sqlvalue_inyeccion($this->anio, true)." and estado = 'aprobado' and 
+			  cuenta like ".$this->bd->sqlvalue_inyeccion($cuenta, true).$wheref." 
+			  group by cuenta,detalle_cuenta";
+
+     }
+ 
+ 
+	 
+				$evento = '';
+				$edita    = '';
+				$del      = '';			
+ 
+	  
+	$resultado22  = $this->bd->ejecutar($sql22); // EJECUTA SENTENCIA SQL  RETORNA RESULTADO
+	
+	$cabecera =  "Cuenta,Detalle,Saldo"; // CABECERA DE TABLAR GRILLA HA VISUALIZAR
+
+  
+ 
+	// $this->obj->table->table_pdf_js($resultado22,$tipo,$edita,$del,$evento ,$cabecera,$font,$background,"1");
+	$this->obj->table->table_pdf_js($resultado22,$tipo,$cabecera);
+
+ 
+
+}
 	//------------------------
 	function titulo($f1,$f2){
 	    
@@ -481,9 +552,11 @@ if (isset($_POST["ffecha1"]))	{
 	
 	$f1 			    =     $_POST["ffecha1"];
 	$f2 				=     $_POST["ffecha2"];
+
+	$reporte 				=     $_POST["reporte"];
  
  
-	$gestion->grilla( $f1,$f2 );
+	$gestion->grilla( $f1,$f2,$reporte );
  
 	
 }

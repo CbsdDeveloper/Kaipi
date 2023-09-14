@@ -20,6 +20,7 @@ $ACarpeta   =  $bd->query_array('wk_config',  'carpetasub',  'tipo='.$bd->sqlval
 $carpeta    =  trim($ACarpeta['carpetasub']);
 
 $imagen 	=  $carpeta.trim($_SESSION['foto']);
+$imagen 	=  $carpeta.trim($x['url']);
 
 $rol        =  trim($x['rol']);
 

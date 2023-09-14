@@ -33,19 +33,27 @@ session_start( );
     $prov = trim($dataProv['idprov']);
     
     
-    $x = $bd->query_array('nom_vacaciones',
-        ' coalesce(max(dia_derecho),0) as dia_derecho , coalesce(max(dia_acumula),0) as dia_acumula',
-        'idprov='.$bd->sqlvalue_inyeccion(trim($prov),true) .' and
-         anio ='.$bd->sqlvalue_inyeccion($anio,true) ." and
-         cargoa = 'S' "
-        );
-    
-    
+    $hora = $bd->query_array('nom_cvacaciones',  
+    'dias_pendientes,dias_tomados,(saldo_anterior + dias_derecho) as total,horas_dias',                       
+    'idprov='.$bd->sqlvalue_inyeccion(  trim( $prov),true).' and 
+     periodo=' .$bd->sqlvalue_inyeccion(    $anio  ,true) 
+    );
+
+                    
+    $dias_tomados  = $hora['dias_tomados'];
+    $dia_acumula   = $hora['total'];
+    $hora_tomados  = $hora['horas_dias'];
+    $dia_valida       = $hora['dias_pendientes'];
+
+
+ 
  
     
     echo json_encode( array("a"=>$prov, 
-                            "b"=> $x['dia_derecho'] ,
-                            "c"=> $x['dia_acumula'] 
+                            "b"=>  $dia_acumula,
+                            "c"=>  $dias_tomados ,
+                            "d"=>  $hora_tomados ,
+                            "e"=>  $dia_valida  
                        )  
                     );
     

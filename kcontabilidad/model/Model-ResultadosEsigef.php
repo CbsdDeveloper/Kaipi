@@ -5,6 +5,8 @@ require '../../kconfig/Db.class.php';
 
 require '../../kconfig/Obj.conf.php';  
 
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 class proceso{
 	
@@ -41,7 +43,7 @@ class proceso{
 	}
    
 	//--- calcula libro diario
-	function grilla( $f1,$f2,$com1){
+	function grilla( $f1,$f2,$com1,$reporte){
 		
  
 	    $this->compa = $com1;
@@ -56,20 +58,20 @@ class proceso{
  
 	    
 	    $this->cabecera('<b>RESULTADO DE EXPLOTACION</b>',$com1);
-	    $ingreso1= $this->Bloque_Activo($f1,$f2,1,1);
+	    $ingreso1= $this->Bloque_Activo($f1,$f2,1,1,$reporte);
 	     
 	    $this->cabecera('<b>RESULTADO DE OPERACION</b>',$com1);
-	    $ingreso2 = $this->Bloque_Activo($f1,$f2,2,1);
+	    $ingreso2 = $this->Bloque_Activo($f1,$f2,2,1,$reporte);
 	    
 	    $this->cabecera('<b>TRANSFERENCIAS NETAS</b>',$com1);
-	    $ingreso3 = $this->Bloque_Activo($f1,$f2,3,1);
+	    $ingreso3 = $this->Bloque_Activo($f1,$f2,3,1,$reporte);
 	    
 	    $this->cabecera('<b>RESULTADO FINANCIERO</b>',$com1);
-	    $ingreso4 = $this->Bloque_Activo($f1,$f2,4,1);
+	    $ingreso4 = $this->Bloque_Activo($f1,$f2,4,1,$reporte);
 	    
 	   
 	    $this->cabecera('<b>OTROS INGRESOS Y GASTOS</b>',$com1);
-	    $ingreso5 = $this->Bloque_Activo($f1,$f2,5,1);
+	    $ingreso5 = $this->Bloque_Activo($f1,$f2,5,1,$reporte);
 	    
 
 	    
@@ -89,7 +91,7 @@ class proceso{
 	 
 	}
 	//----------------------------------------
-	public function Bloque_Activo( $f1,$f2,$orden1,$orden2 ){
+	public function Bloque_Activo( $f1,$f2,$orden1,$orden2 ,$reporte){
  
 	    
 	    $sql = 'SELECT    orden1, orden2, grupo1, grupo2, guia, cta1, cta2, cta3, sinsigno, consigno, anio
@@ -133,8 +135,21 @@ class proceso{
  	        }else{
  	            echo "</tr>";
  	        }
- 	        
- 	       
+ 	         
+			 
+			 if (trim($reporte)  == '1'){
+
+				if (abs($saldo) > 0  ){
+						echo '<tr>
+						<td></td>
+						<td colspan="2">';
+	
+							 	 $this->_detalle_cuenta($f1,$f2, $x["cta1"] ,  $x["cta2"] , $x["cta3"] , $guia );
+	
+						echo '</td>
+						</tr>';
+				 }
+			}
 	        
  	        $t3 = $t3 + $saldo;
  	        
@@ -151,6 +166,7 @@ class proceso{
  	        echo "</tr>";
  	    }
  	   
+
 	    
 	    echo '</table>';
 	    
@@ -158,6 +174,73 @@ class proceso{
 	     
 	    return $t3;
 	}
+	//-----------------------
+	//--------------------------
+function _detalle_cuenta( $fecha1,$fecha2,$cuenta1,$cuenta2,$cuenta3, $guia ){
+
+
+	$cadena2 = " and estado = 'aprobado' and ( fecha BETWEEN ".$this->bd->sqlvalue_inyeccion($fecha1,true)." and ".
+	$this->bd->sqlvalue_inyeccion($fecha2,true)." )   ";
+
+	$bandera = 0;
+
+	if ( $guia == '/') {
+		// 635.01-04	635.01	635.04	635.01
+		$bandera = 1;
+		$where = ' where subgrupo between ' .$this->bd->sqlvalue_inyeccion( $cuenta1   ,true). ' and '.$this->bd->sqlvalue_inyeccion( $cuenta2   ,true).' '.$cadena2;
+	
+	}
+
+
+	if ( $guia == '-') {
+		// 625.01/04	625.01	625.04  -------------   635.02/03-07 ----------624.01/04
+		if (empty($cuenta2))  {
+			$where = ' where subgrupo in (' .$this->bd->sqlvalue_inyeccion( $cuenta1   ,true). ','.$this->bd->sqlvalue_inyeccion( $cuenta2   ,true).') '.$cadena2;
+		}else {
+			$where = ' where subgrupo in (' .$this->bd->sqlvalue_inyeccion( $cuenta1   ,true). ','.
+					 $this->bd->sqlvalue_inyeccion( $cuenta2   ,true).','.$this->bd->sqlvalue_inyeccion( $cuenta3  ,true).') '.$cadena2;
+		}
+ 	
+		$bandera = 2;
+	}
+
+	 
+
+	if ( $bandera == 0 ){
+		$where = ' where mayor  =  ' .$this->bd->sqlvalue_inyeccion( $cuenta3   ,true).$cadena2;
+		 
+	}
+
+  
+				
+				$sql22         = 'SELECT cuenta,detalle_cuenta,sum(debe)  - sum(haber) AS saldo 
+								  FROM view_diario_detalle '.$where .' group by cuenta,detalle_cuenta';
+
+
+  
+					$tipo 		     = $this->bd->retorna_tipo(); // TIPO DE CONEXION DE BASE DE DATOS ... POSTGRES
+					
+					$font ="10";
+					$background="#ececec";
+							
+					
+								$evento = '';
+								$edita    = '';
+								$del      = '';			
+				
+					
+					$resultado22  = $this->bd->ejecutar($sql22); // EJECUTA SENTENCIA SQL  RETORNA RESULTADO
+					
+					$cabecera =  "Cuenta,Detalle,Saldo"; // CABECERA DE TABLAR GRILLA HA VISUALIZAR
+
+				
+				
+					// $this->obj->table->tabla_visor($resultado22,$tipo,$edita,$del,$evento ,$cabecera,$font,$background,"1");
+					$this->obj->table->table_pdf_js($resultado22,$tipo,$cabecera);
+
+ 
+
+}
 	//------------------------
 	function titulo($f1,$f2){
 	    
@@ -571,7 +654,10 @@ if (isset($_POST["ffecha1"]))	{
  
 	$com1 				=     $_POST["com1"];
  
-	$gestion->grilla( $f1,$f2 ,$com1);
+	$reporte			=     $_POST["reporte"];
+ 
+
+	$gestion->grilla( $f1,$f2 ,$com1,$reporte);
  
 	
 }

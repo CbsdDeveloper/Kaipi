@@ -143,14 +143,14 @@ class componente{
                  $this->set->div_panel('<b> INGRESOS PERSONAL </b>');
                 
                  
-                 $this->obj->text->text('Sueldos y Salarios',"number" ,'suelsal' ,80,80, $datos ,'required','','div-6-6') ;
-                 $this->obj->text->text('Sobresueldos y otros',"number" ,'sobsuelcomremu' ,80,80, $datos ,'required','','div-6-6') ;
-                 $this->obj->text->text('Participacion util',"number" ,'partutil' ,80,80, $datos ,'required','','div-6-6') ;
-                 $this->obj->text->text('Ingresos gravados generados con otros empleadores',"number" ,'intgrabgen' ,80,80, $datos ,'required','','div-6-6') ;
-                 $this->obj->text->text('Impuesto a la renta asumido por este empleador',"number" ,'imprentempl' ,80,80, $datos ,'required','','div-6-6') ;
-                 $this->obj->text->text('Decimo tercer sueldo',"number" ,'decimter' ,80,80, $datos ,'required','','div-6-6') ;
-                 $this->obj->text->text('Decimo cuarto sueldo',"number" ,'decimcuar' ,80,80, $datos ,'required','','div-6-6') ;
-                 $this->obj->text->text('Fondo reserva',"number" ,'fondoreserva' ,80,80, $datos ,'required','','div-6-6') ;
+                 $this->obj->text->text_yellow('Sueldos y Salarios',"number" ,'suelsal' ,80,80, $datos ,'required','','div-6-6') ;
+                 $this->obj->text->text_yellow('Sobresueldos y otros',"number" ,'sobsuelcomremu' ,80,80, $datos ,'required','','div-6-6') ;
+                 $this->obj->text->text_yellow('Participacion util',"number" ,'partutil' ,80,80, $datos ,'required','','div-6-6') ;
+                 $this->obj->text->text_yellow('Ingresos gravados generados con otros empleadores',"number" ,'intgrabgen' ,80,80, $datos ,'required','','div-6-6') ;
+                 $this->obj->text->text_yellow('Impuesto a la renta asumido por este empleador',"number" ,'imprentempl' ,80,80, $datos ,'required','','div-6-6') ;
+                 $this->obj->text->text_blue('Decimo tercer sueldo',"number" ,'decimter' ,80,80, $datos ,'required','','div-6-6') ;
+                 $this->obj->text->text_blue('Decimo cuarto sueldo',"number" ,'decimcuar' ,80,80, $datos ,'required','','div-6-6') ;
+                 $this->obj->text->text_blue('Fondo reserva',"number" ,'fondoreserva' ,80,80, $datos ,'required','','div-6-6') ;
                  $this->obj->text->text('Salario digno',"number" ,'salariodigno' ,80,80, $datos ,'required','','div-6-6') ;
                  $this->obj->text->text('Otros ingresos en relacion de dependencia',"number" ,'otrosingrengrav' ,80,80, $datos ,'required','','div-6-6') ;
                  $this->obj->text->text('Ingresos gravadas con este empleador',"number" ,'inggravconesteempl' ,80,80, $datos ,'required','','div-6-6') ;
@@ -170,11 +170,15 @@ class componente{
              
                  $this->set->div_label(12,'DEDUCCIONES GASTOS PERSONALES ');	 
                  
-                 $this->obj->text->text('Vivienda',"number" ,'deducvivienda' ,80,80, $datos ,'required','','div-6-6') ;
-                 $this->obj->text->text('Salud',"number" ,'deducsalud' ,80,80, $datos ,'required','','div-6-6') ;
-                 $this->obj->text->text('Educacion',"number" ,'deduceducartcult' ,80,80, $datos ,'required','','div-6-6') ;
-                 $this->obj->text->text('Alimentacion',"number" ,'deducaliement' ,80,80, $datos ,'required','','div-6-6') ;
-                 $this->obj->text->text('Vestimenta',"number" ,'deducvestim' ,80,80, $datos ,'required','','div-6-6') ;
+                 $this->obj->text->text_blue('Vivienda',"number" ,'deducvivienda' ,80,80, $datos ,'required','','div-6-6') ;
+                 $this->obj->text->text_blue('Salud',"number" ,'deducsalud' ,80,80, $datos ,'required','','div-6-6') ;
+                 $this->obj->text->text_blue('Educacion',"number" ,'deduceducartcult' ,80,80, $datos ,'required','','div-6-6') ;
+                 $this->obj->text->text_blue('Alimentacion',"number" ,'deducaliement' ,80,80, $datos ,'required','','div-6-6') ;
+                 $this->obj->text->text_blue('Vestimenta',"number" ,'deducvestim' ,80,80, $datos ,'required','','div-6-6') ;
+                 $this->obj->text->text_blue('Turismo',"number" ,'deduturismo' ,80,80, $datos ,'required','','div-6-6') ;
+
+                 
+
                
                 $this->set->div_label(12,'EXONERACIONES ');	 
                 
@@ -183,7 +187,13 @@ class componente{
                
                 $this->set->div_label(12,'RESUMEN IMPOSITIVO ');	 
                 
-                $this->obj->text->text('Base Imponible',"number" ,'basimp' ,80,80, $datos ,'required','','div-6-6') ;
+                $this->obj->text->text_yellow('Base Imponible',"number" ,'basimp' ,80,80, $datos ,'required','','div-6-6') ;
+
+                $this->obj->text->text_blue('Rebaja Gastos Personales',"number" ,'rebajagapersona' ,80,80, $datos ,'required','','div-6-6') ;
+                $this->obj->text->text_blue('Impuesto Rebaja Gastos Personales',"number" ,'imprebajagapersona' ,80,80, $datos ,'required','','div-6-6') ;
+
+ 
+
                 $this->obj->text->text('Impuesto a la renta causado',"number" ,'imprentcaus' ,80,80, $datos ,'required','','div-6-6') ;
                 $this->obj->text->text('Impuesto retenido y asumido por otros empleadores',"number" ,'valretasuotrosempls' ,80,80, $datos ,'required','','div-6-6') ;
                 $this->obj->text->text('Impuesto asumido por este empleador',"number" ,'valimpasuesteempl' ,80,80, $datos ,'required','','div-6-6') ;
@@ -211,6 +221,7 @@ class componente{
        
        $eventoe = "javascript:goToURLCalculo(1)";
        $eventoa = "javascript:goToURLCalculo(2)";
+       $eventob = "javascript:goToURLCalculo(3)";
    	
     $ToolArray = array( 
                 array( boton => 'Nuevo Regitros',    evento =>'', grafico => 'icon-white icon-plus' ,  type=>"add"),
@@ -218,6 +229,7 @@ class componente{
                 array( boton => 'Imprimir Ficha 107', evento =>$eventof,  grafico => 'glyphicon glyphicon-print' ,  type=>"button"),
                 array( boton => 'Calcular Base Impuesto a la renta', evento =>$eventoe,  grafico => 'glyphicon glyphicon-pencil' ,  type=>"button_default"),
                 array( boton => 'Enlace Base Impuesto a la renta', evento =>$eventoa,  grafico => 'glyphicon glyphicon-list-alt' ,  type=>"button_danger"),
+                array( boton => 'Calcular Base Rebaja de Gastos', evento =>$eventob,  grafico => 'glyphicon glyphicon-retweet' ,  type=>"button_info"),
                  );
                   
    $this->obj->boton->ToolMenuDiv($ToolArray); 

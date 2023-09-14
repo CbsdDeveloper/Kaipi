@@ -192,6 +192,150 @@ function accion(id,modo)
 	 
 
 }
+function ProcesoInformacion( ){   
+
+ 
+	var banio 			= 	$('#canio').val();
+	var idprov   		= 	$('#idret').val();
+  
+
+	var parametros = {
+					'banio' 		  : banio, 
+					'idprov': idprov 
+	 };
+
+	var parametros1 = {
+					'banio' 		  : banio, 
+					'idprov': idprov 
+	 };
+	 
+	 $.ajax({
+				   data:  parametros,
+				   url:   '../../kpersonal/model/ajax_personal_rol00.php',
+				   type:  'GET' ,
+					beforeSend: function () { 
+							$("#Viewrol").html('Procesando');
+					 },
+				   success:  function (data) {
+							$("#Viewrol").html(data); 
+
+					 } 
+
+		   }); 
+		   
+		   
+	   
+		$.ajax({
+				   data:  parametros1,
+				   url:   '../../kpersonal/model/ajax_personal_rol01.php',
+				   type:  'GET' ,
+					beforeSend: function () { 
+							$("#ViewResumen").html('Procesando');
+					 },
+				   success:  function (data) {
+							$("#ViewResumen").html(data); 
+
+					 } 
+
+		   }); 	
+		   
+		   
+
+
+} 
+//----------------
+function goToDeta2( accion, nombre){   
+
+ 
+	var banio 			= 	$('#canio').val();
+	var idprov   		= 	$('#idret').val();
+
+	var parametros = {
+					'banio' 		  : banio, 
+					'idprov': idprov ,
+					'tipo': 2,
+					'accion' :accion,
+					'nombre' : nombre
+	 };
+
+ 
+	 
+	 $.ajax({
+				   data:  parametros,
+				   url:   '../../kpersonal/model/ajax_personal_rol02.php',
+				   type:  'GET' ,
+					beforeSend: function () { 
+							$("#ViewFormRolPersona").html('Procesando');
+					 },
+				   success:  function (data) {
+							$("#ViewFormRolPersona").html(data); 
+
+					 } 
+
+		   }); 
+
+
+$('#myModal').modal('show');
+
+} 
+
+//---------
+function goToDeta1( accion, nombre){   
+
+ 
+	var banio 			= 	$('#canio').val();
+	var idprov   		= 	$('#idret').val();
+
+	var parametros = {
+					'banio' 		  : banio, 
+					'idprov': idprov ,
+					'accion' :accion,
+					'tipo': 1,
+					'nombre' : nombre
+	 };
+
+ 
+	 
+	 $.ajax({
+				   data:  parametros,
+				   url:   '../../kpersonal/model/ajax_personal_rol02.php',
+				   type:  'GET' ,
+					beforeSend: function () { 
+							$("#ViewFormRolPersona").html('Procesando');
+					 },
+				   success:  function (data) {
+							$("#ViewFormRolPersona").html(data); 
+
+					 } 
+
+		   }); 
+
+
+$('#myModal').modal('show');
+
+} 
+//---------
+function goToRol(accion, id_rol1)
+  {
+  	 
+  	 var id =  	$('#idprov').val();
+  	 
+  	   var url = '../../reportes/view_rol_nomina.php'
+
+	       var posicion_x; 
+	       var posicion_y; 
+	       var enlace = url + '?codigo='+id +'&id_rol=' + id_rol1+ '&accion='+accion;
+
+	       var ancho = 1000;
+
+	       var alto = 520;
+
+	       posicion_x=(screen.width/2)-(ancho/2); 
+	       posicion_y=(screen.height/2)-(alto/2); 
+
+	       window.open(enlace,'#','width='+ancho+',height='+alto+',left='+posicion_x+',top='+posicion_y+'');
+  	 
+} 
 //-------
 function genera_xml()
 {
@@ -243,29 +387,50 @@ function goToURLCalculo(tipo) {
 	var idret  = $("#idret").val();
 	
 	
-	
+	alert('Revisa los datos de Base Imponible/Actualiza información');
+
 	var parametros = {
 					'accion' : tipo ,
                     'anio' : anio ,
                     'idret' : idret
  	  };
 	
-	$.ajax({
-	    type:  'GET' ,
-		data:  parametros,
-		url:   '../model/Model-'+formulario,
-		dataType: "json",
-		success:  function (response) {
- 
+
+	  if ( tipo == '3'){
+
+					$.ajax({
+						data:  parametros,
+						url:   '../model/Model-'+formulario,
+						type:  'GET' ,
+						cache: false,
+						beforeSend: function () { 
+								$("#result").html('Procesando');
+						},
+						success:  function (data) {
+								$("#result").html(data);   
+								
+						} 
+				}); 
+
+
+
+      }else{
+				$.ajax({
+					type:  'GET' ,
+					data:  parametros,
+					url:   '../model/Model-'+formulario,
+					dataType: "json",
+					success:  function (response) {
 			
-				 $("#basimp").val( response.a );  
-				 
-				 $("#valret").val( response.b );  
-				  
-		} 
-});
-	
-	  
+						
+							$("#basimp").val( response.a );  
+							
+							$("#valret").val( response.b );  
+							
+					} 
+			});
+				
+		}
 
     }
 

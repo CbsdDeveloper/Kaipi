@@ -114,7 +114,7 @@ class proceso{
                        estado = '. $this->bd->sqlvalue_inyeccion('aprobado' , true).' and 
                        anio = '. $this->bd->sqlvalue_inyeccion( $anio , true).' and 
                        registro = '. $this->bd->sqlvalue_inyeccion(trim($this->ruc) , true).' and 
-                      cuenta = '. $this->bd->sqlvalue_inyeccion(trim($cuenta) , true);
+                      cuenta = '. $this->bd->sqlvalue_inyeccion(trim($cuenta) , true).' order by fecha';
 
 	   
       

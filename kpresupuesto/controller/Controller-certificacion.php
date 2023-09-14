@@ -155,10 +155,7 @@ session_start( );
                 
             
                 
-                $MATRIZ = $this->obj->array->catalogo_compras();
-                $evento='';
-                $this->obj->list->listae('Proceso Contratacion',$MATRIZ,'tipocp',$datos,'','',$evento,'div-2-10');
-                
+              
                 $this->set->div_label(12,'ASIGNACION RESPONSABLES TRAMITE');
                 
                 $depar = $this->permisos($usuario);
@@ -244,6 +241,9 @@ session_start( );
                 $this->obj->list->listae('Estado',$MATRIZ,'estado',$datos,'','',$evento,'div-2-4');
                 
       	  $this->obj->text->texto_oculto("action",$datos); 
+
+            $this->obj->text->texto_oculto("tipocp",$datos); 
+            
       	 
              
           $this->set->_formulario('-','fin'); 

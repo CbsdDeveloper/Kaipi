@@ -8,7 +8,7 @@ session_start( );
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     
-    <title>Plataforma de Gestion Empresarial</title>
+    <title>CBSD - Plataforma de Gestion Empresarial</title>
 	
     <?php  require('Head.php')  ?> 
  </head>

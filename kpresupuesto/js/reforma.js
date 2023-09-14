@@ -877,6 +877,44 @@ function aprobacion(url){
 			  }
 		 });
 }
+//-----------------
+function CalculaSaldos( ){
+
+ 
+	 var	id    =   $("#id_reforma").val();
+	 var	fecha    =   $("#fecha").val();
+
+	 
+
+	var parametros = {
+ 			   'id' : id ,
+			   'fecha': fecha
+   };
+
+	var mensaje = 'Desea Actualizar disponible de partida ' +id ;
+
+	alertify.confirm("<p>"+mensaje+"<br><br></p>", function (e) {
+
+	if (e) {
+
+				 $.ajax({
+							   data:  parametros,
+							   url:   '../model/ajax_SaldosReforma.php',
+							   type:  'GET' ,
+							   cache: false,
+							   beforeSend: function () { 
+									   $("#result").html('Procesando');
+							   },
+							   success:  function (data) {
+										$("#result").html(data);  // $("#cuenta").html(response);
+							   } 
+					   }); 
+
+					   DetalleAsiento();
+			 
+			 }
+		});
+}
 //-------------------
 function Revierte( ){
 

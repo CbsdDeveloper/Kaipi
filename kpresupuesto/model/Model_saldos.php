@@ -426,6 +426,71 @@ class saldo_presupuesto{
         
         
     }
+    //----------------
+    function saldo_gastos_periodo_partida($f1,$fecha,$partida){
+        
+        
+        $aperiodo = explode('-',$fecha);
+        
+        $anio = $aperiodo[0];
+        
+      
+        $fecha1 = $f1;
+        
+        
+        //-------------------------------------------------
+        $sql_compromiso = 'SELECT partida,
+                           sum(certificado) as c1
+                    FROM presupuesto.view_tramites
+                   WHERE anio ='.$this->bd->sqlvalue_inyeccion($anio, true)."  and
+                          partida =".$this->bd->sqlvalue_inyeccion($partida, true)."  and
+                         estado = '3' AND
+                         fcertifica  between ".$this->bd->sqlvalue_inyeccion($f1, true).'  and '.$this->bd->sqlvalue_inyeccion($fecha, true)."
+                group by  partida
+                order by partida";
+        
+        
+        $stmt131 = $this->bd->ejecutar($sql_compromiso);
+        
+        $certificado  = 0 ;
+
+        while ($fila=$this->bd->obtener_fila($stmt131)){
+            
+             $certificado   = $certificado + $fila['c1'] ;
+            
+         }
+        
+ 
+        //-------------------------------------------------
+        //-------------------------------------------------
+        $sql_compromiso = 'SELECT partida,
+                           sum(compromiso) as c1
+                    FROM presupuesto.view_tramites
+                   WHERE anio ='.$this->bd->sqlvalue_inyeccion($anio, true)."  and
+                         partida =".$this->bd->sqlvalue_inyeccion($partida, true)."  and
+                         estado in ('5','6') AND  
+                         fcompromiso  between ".$this->bd->sqlvalue_inyeccion($fecha1, true).'  and '.$this->bd->sqlvalue_inyeccion($fecha, true)."
+                group by  partida
+                order by partida";
+        
+        $stmt131 = $this->bd->ejecutar($sql_compromiso);
+
+        $compromiso = 0;
+        
+        while ($fila1=$this->bd->obtener_fila($stmt131)){
+            
+             $compromiso   =   $compromiso + $fila1['c1'] ;
+            
+        }
+        
+        $total_datos =   $compromiso + $certificado  ;
+    
+        
+        return  $total_datos;
+     
+        
+        
+    }
     //--------------------
     //  resumen de pagos
     function saldo_gastos_pagos($fecha1,$fecha){
@@ -1024,6 +1089,88 @@ class saldo_presupuesto{
         
         
   }
+  //-----------------------------
+  function saldo_Reformas_periodo_fecha( $anio,$f1,$f2,$tipo_presupuesto,$partida ){
+        
+        
+    $aperiodo = explode('-',$f2);
+    
+    $anio = $aperiodo[0];
+    
+ 
+    $fecha1 = $f1;
+     
+    
+    $sql_det = "SELECT partida, tipo, tipo_reforma,sum(aumento) aumento, sum(disminuye)    disminuye
+                    FROM presupuesto.view_reforma_detalle
+                    where estado = 'aprobado' and 
+                          anio =" .$this->bd->sqlvalue_inyeccion($anio, true)." and 
+                          partida =" .$this->bd->sqlvalue_inyeccion($partida, true)." and 
+                          tipo =" .$this->bd->sqlvalue_inyeccion($tipo_presupuesto, true)." and 
+                          fecha  between ".$this->bd->sqlvalue_inyeccion($fecha1, true).'  and '.$this->bd->sqlvalue_inyeccion($f2, true)."
+                    group by partida, tipo,tipo_reforma  order by tipo_reforma";
+    
+  
+
+    $total_reforma = 0                 ;
+    
+    $stmt13 = $this->bd->ejecutar($sql_det);
+    
+    while ($fila=$this->bd->obtener_fila($stmt13)){
+        
+        
+        $partida   = trim($fila['partida']);
+        $aumento   = $fila['aumento'];
+        $disminuye = $fila['disminuye'];
+        
+     
+       
+        $tipo         = trim($fila['tipo']);
+        
+        $tipo_reforma = trim($fila['tipo_reforma']);
+        
+        
+        if ($tipo_reforma == 'Traspaso'){
+ 
+           $total_reforma =  $total_reforma  +  ( $aumento - $disminuye);                             
+        }
+     
+        if ($tipo_reforma == 'Reduccion'){
+             
+            
+            if ( $tipo == 'I'){
+                $disminuye   = $fila['aumento']  ;
+                $aumento     = $fila['disminuye'];
+            }else{
+                $aumento   = $fila['aumento']  ;
+                $disminuye = $fila['disminuye'];
+            }
+            
+            $total_reforma =  $total_reforma  +  ( $aumento - $disminuye);           
+
+        }
+        
+        if ($tipo_reforma == 'Suplemento'){
+            
+            if ( $tipo == 'I'){
+                $aumento   = $fila['aumento']  ;
+                $disminuye     = $fila['disminuye'];
+            }else{
+                $aumento   = $fila['disminuye']  ;
+                $disminuye = $fila['aumento'];
+            }
+             
+            $total_reforma =  $total_reforma  +  ( $aumento - $disminuye);    
+        }
+        
+          
+    }
+    
+
+     return  $total_reforma;
+    
+    
+}
     //--------------------------------------------------------------------------
     function _Comprobante($tipo,$anio){
         
@@ -1396,7 +1543,8 @@ class saldo_presupuesto{
                                 0 as certificado, 0 as compromiso, 0 as devengado, 0 as pagado, 
                                 anio, proyecto, competencia, partida, detalle, fuente
                             FROM presupuesto.pre_gestion
-                            where ( coalesce(inicial,0) + coalesce(codificado,0) +coalesce(devengado,0) + coalesce(compromiso,0)  )  >  0  and anio = ".$this->bd->sqlvalue_inyeccion( $anio , true);
+                            where ( coalesce(inicial,0) + coalesce(abs(codificado),0) +coalesce(devengado,0) + coalesce(compromiso,0)  )  >  0  and 
+                                 anio = ".$this->bd->sqlvalue_inyeccion( $anio , true);
 
             $this->bd->ejecutar($sql_saldos);
         
@@ -1420,6 +1568,57 @@ class saldo_presupuesto{
         
  
     }
+
+    function PresupuestoDisponible_partida($f2,$partida,$tipo_presupuesto ){
+        
+        
+        $aperiodo = explode('-',$f2);
+       
+        $anio = $aperiodo[0];
+ 
+
+        $p1_inicial = $this->bd->query_array('presupuesto.pre_gestion',
+        'inicial',
+          'anio='.$this->bd->sqlvalue_inyeccion($anio ,true). ' and partida = '.$this->bd->sqlvalue_inyeccion($partida ,true)
+        );
+
+       $monto_inicial =   $p1_inicial['inicial'];
+       
+       //$anio,$f1,$f2
+       $f1 = $anio.'-01-01';
+       
+       if ( trim($tipo_presupuesto)  == 'I'){
+
+       } else    {
+
+          $compromiso_certificado  =    $this->saldo_gastos_periodo_partida($f1,$f2,$partida);
+
+
+          $reforma                 =   $this->saldo_Reformas_periodo_fecha($anio,$f1,$f2,'G',$partida);
+
+         
+
+          $total_disponible =    ( $monto_inicial  +  $reforma)  -    $compromiso_certificado;
+
+        
+       }
+
+      
+
+       return $total_disponible;
+/*
+
+
+      
+  
+
+       $this->saldo_ingreso_periodo($f1,$f2);
+
+     
+
+      */
+
+   }
     //------------------
     function PresupuestoPeriodo_pagos($f1,$f2 ){
         
@@ -1520,7 +1719,7 @@ class saldo_presupuesto{
                     0 as certificado, 0 as compromiso, 0 as devengado, 0 as pagado, 
                     anio, proyecto, competencia, partida, detalle, fuente
                 FROM presupuesto.pre_gestion
-                where tipo = 'G' and (inicial + codificado  )  >  0 and anio = ".$this->bd->sqlvalue_inyeccion( $anio , true);
+                where tipo = 'G' and (inicial + abs(codificado)  )  >  0 and anio = ".$this->bd->sqlvalue_inyeccion( $anio , true);
 
 
                 $this->bd->ejecutar($sql_saldos);
@@ -1556,7 +1755,7 @@ class saldo_presupuesto{
                             0 as certificado, 0 as compromiso, 0 as devengado, 0 as pagado, 
                             anio, proyecto, competencia, partida, detalle, fuente
                         FROM presupuesto.pre_gestion
-                        where (inicial + codificado  )  >  0 and  tipo = 'I' and anio = ".$this->bd->sqlvalue_inyeccion( $anio , true);
+                        where (inicial + abs(codificado)  )  >  0 and  tipo = 'I' and anio = ".$this->bd->sqlvalue_inyeccion( $anio , true);
 
 
          $this->bd->ejecutar($sql_saldos);

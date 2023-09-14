@@ -144,15 +144,18 @@ class componente{
                 $this->obj->list->listadb($resultado,$tipo,'Solicita','id_departamento',$datos,'required','','div-2-4');
                 
                 $cadena1 = 'onClick="PonePartida();"';
-                $cboton1 = '<a href="#" '.$cadena1.'><img title= "Seleccionar Partidas" src="../../kimages/if_wishlist_add_64997.png"/></a>&nbsp; ';
+                $cboton1 = '<a href="#" '.$cadena1.'><img title= "Seleccionar Partidas" src="../../kimages/1p.png"/></a>&nbsp;&nbsp; ';
 
                 $cadena1 = 'onClick="AbrePartida();"';
-                $cboton2 = ' &nbsp;<a href="#" '.$cadena1.'><img title="Importar archivo excel reforma" src="../../kimages/wdocumentos.png"/></a>';
+                $cboton2 = ' &nbsp;<a href="#" '.$cadena1.'><img title="Importar archivo excel reforma" src="../../kimages/01_.png"/></a>&nbsp;&nbsp;';
                 
                 
+                $cadena1 = 'onClick="CalculaSaldos();"';
+                $cboton3 = ' &nbsp;<a href="#" '.$cadena1.'><img title="Verificar Saldos Disponibles a la fecha" src="../../kimages/02_.png"/></a>';
+         
                 
                 
-                $this->set->div_labelmin(12,'<h6> Detalle de Reforma<h6>'.$cboton1.$cboton2);
+                $this->set->div_labelmin(12,'<h6> Detalle de Reforma<h6>'.$cboton1.$cboton2. $cboton3 );
                 
                 echo '<div class="col-md-12">
                              	<div class="alert al1ert-info fade in">

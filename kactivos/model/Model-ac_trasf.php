@@ -318,37 +318,87 @@ class proceso{
     //--------------------------------------------------------------------------------
     //--- eliminar de registros
     //--------------------------------------------------------------------------------
-    function eliminar($id ){
+    function Reversion( $id ){
         
+
+        $x = $this->bd->query_array('activo.ac_movimiento',
+        '*',
+        'id_acta='.$this->bd->sqlvalue_inyeccion($id,true)
+        );
+     
         
-        $estado =  $_POST["estado"];
+
+        $clase_documento =  $x["clase_documento"];
+        $idprov_entrega  =  $x["idprov_entrega"];
         
-        if (trim($estado) == 'digitado') {
-            
-            $sql = 'delete from inv_movimiento  where id_movimiento='.$this->bd->sqlvalue_inyeccion($id, true);
-            $this->bd->ejecutar($sql);
-            
-            
-            $sql = 'delete from inv_movimiento_det  where id_movimiento='.$this->bd->sqlvalue_inyeccion($id, true);
-            $this->bd->ejecutar($sql);
-            
-            $result = $this->div_limpiar();
-            
-        }else {
-            
-            $sql = 'update inv_movimiento
-                       set estado = '.$this->bd->sqlvalue_inyeccion('anulado', true).'
-                    where id_movimiento='.$this->bd->sqlvalue_inyeccion($id, true);
-            
-            
-            $this->bd->ejecutar($sql);
-            
-            $result = '<img src="../../kimages/kdel.png" align="absmiddle" />&nbsp;<b>REGISTRO ANULADO </b>';
-            
-            
+        $result = " NO VALIDO ".$clase_documento;
+        //idprov ,idprov_entrega
+
+
+        $sql_det = "SELECT estado, id_acta_det, id_acta, id_bien, sesion, creacion 
+        FROM activo.ac_movimiento_det
+        where id_acta = ".$this->bd->sqlvalue_inyeccion( $id ,true);
+        
+         $stmt1 = $this->bd->ejecutar($sql_det);
+
+
+        if (  trim($clase_documento) == 'Acta Trasferencia de Bienes'){
+                          
+                                while ($x=$this->bd->obtener_fila($stmt1)){
+                                    
+                                           $id_bien = $x['id_bien']; 
+                                    
+                                          $sql = 'update activo.ac_bienes_custodio
+                                                    set idprov = '.$this->bd->sqlvalue_inyeccion($idprov_entrega, true).'
+                                                  where id_bien='.$this->bd->sqlvalue_inyeccion($id_bien, true);
+
+                                          $this->bd->ejecutar($sql);
+                                       
+                                }
+
+                                $sql = "update activo.ac_movimiento
+                                          set   estado = 'X',
+                                                clase_documento = ".$this->bd->sqlvalue_inyeccion('REVERSION DE ACTA', true).'
+                                        where id_acta ='.$this->bd->sqlvalue_inyeccion($id, true);
+
+                             $this->bd->ejecutar($sql);      
+                             
+                            
+                             
+                             $result = " PROCESO EJECUTADO CON EXITO";
+
         }
+
         
-        
+        if (  trim($clase_documento) == 'Acta de Entrega - Recepcion'){
+
+
+
+            while ($x=$this->bd->obtener_fila($stmt1)){
+                                    
+                $id_bien = $x['id_bien']; 
+         
+               $sql = 'update activo.ac_bienes_custodio
+                         set tiene_acta = '.$this->bd->sqlvalue_inyeccion('N', true).'
+                       where id_bien='.$this->bd->sqlvalue_inyeccion($id_bien, true);
+
+               $this->bd->ejecutar($sql);
+            
+     }
+
+                    $sql = "update activo.ac_movimiento
+                            set   estado = 'X',
+                                    clase_documento = ".$this->bd->sqlvalue_inyeccion('REVERSION DE ACTA INICIAL', true).'
+                            where id_acta ='.$this->bd->sqlvalue_inyeccion($id, true);
+
+                $this->bd->ejecutar($sql);      
+                
+               
+                
+                $result = " PROCESO EJECUTADO CON EXITO";
+                
+        }
+ 
         
         echo $result;
         
@@ -492,18 +542,24 @@ if (isset($_GET['accion']))	{
     
     $id        = $_GET['id'];
     
-    $gestion->consultaId($accion,$id);
     
-    
-    
+    if ( trim($accion) == 'reversion'){
+
+        $gestion->Reversion($id);
+
+    }else{
+        $gestion->consultaId($accion,$id);
+    }
+   
+
 }
 
 //------ grud de datos insercion
 if (isset($_POST["action"]))	{
     
-    $action = @$_POST["action"];
+    $action = $_POST["action"];
     
-    $id =     @$_POST["id_acta"];
+    $id =     $_POST["id_acta"];
     
     $gestion->xcrud(trim($action),$id);
     

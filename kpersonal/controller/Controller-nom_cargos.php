@@ -64,7 +64,7 @@
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
-                $this->sesion 	 =  $_SESSION['email'];
+                $this->sesion 	 =  trim($_SESSION['email']);
                 
                 $this->hoy 	     =  $this->bd->hoy();
         
@@ -111,17 +111,39 @@
                 $MATRIZ = array(
                     '-'    => 'No Aplica',
                     'C'    => 'Movilidad/Trasporte (Chofer,Operador)',
+                    'G'    => 'Bienes/Inventarios',
                     'T'    => 'Tecnico/Mecanica',
                     'A'    => 'Administrativo/Financiero',
                     'B'    => 'Bomberos',
                 );
-                
+
+            
                 $this->obj->list->lista('Naturaleza',$MATRIZ,'tipo',$datos,'required','','div-2-4');
 
-                $this->obj->text->text_blue('Siglas',"texto",'siglas',65,65,$datos,'required','','div-2-4') ; 
+                $this->obj->text->text_blue('Siglas',"texto",'sigla',65,65,$datos,'required','','div-2-4') ; 
+
+
+                $this->set->div_label(12,'VARIABLES DIA DESCUENTO PARA VACACIONES'); 
+
+
+                $this->obj->text->text_blue('Descuento días vacaciones (1 - 1.63)',"number",'dia_vaca',20,15,$datos,'required','','div-8-4') ; 
+                $this->obj->text->text_blue('Descuento días permiso (1 - 1.63)',"number",'dia_permiso',20,15,$datos,'required','','div-8-4') ; 
 
                 
+
+                $this->set->div_label(12,'VARIABLES PERMISOS Y VACACIONES'); 
+
+             
+                      $this->obj->text->text_blue('Max.Permiso Dia (1-15)',"entero",'dia_max',20,15,$datos,'required','','div-2-4') ; 
+                      $this->obj->text->text_blue('Max.Permiso Hora (1-8)',"entero",'hora_max',20,15,$datos,'required','','div-2-4') ; 
                       
+
+                      $this->obj->text->text_yellow('Dias Vacaciones (15-30)',"entero",'dias_vacacion',20,15,$datos,'required','','div-2-4') ; 
+
+                      $this->obj->text->text_blue('Dias Acumula (60)',"entero",'dias_acumula',20,15,$datos,'required','','div-2-4') ; 
+
+
+                       
          $this->obj->text->texto_oculto("action",$datos); 
          
          $this->set->_formulario('-','fin'); 

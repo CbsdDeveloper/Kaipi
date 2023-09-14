@@ -36,6 +36,7 @@ class proceso{
 		
 		$this->anio       =  $_SESSION['anio'];
 		
+
 	}
    
 	//--- calcula libro diario
@@ -276,7 +277,10 @@ class proceso{
 	   	 
 	   	    if ( $consigno == '1')	   {
 	   	        
-	   	        $select = 'SELECT sum(haber) as monto ';
+	   	       
+
+				$select = 'SELECT sum(haber)  as monto ';
+
 	   	        
 	   	        if ( $len == 3) {
 	   	            $where = ' mayor  like ' .$this->bd->sqlvalue_inyeccion( $subgrupo   ,true).$cadena2;
@@ -287,7 +291,7 @@ class proceso{
 	   	    
 	   	    if ( $consigno == '-1')	   {
 	   	        
-	   	        $select = 'SELECT sum(debe) as monto ';
+	   	        $select = 'SELECT sum(debe)  as monto ';
 	   	        
 	   	        if ( $len == 3) {
 	   	            $where = ' mayor  like ' .$this->bd->sqlvalue_inyeccion( $subgrupo   ,true).$cadena2;
@@ -298,7 +302,10 @@ class proceso{
 	   	    
 	   	    //-----------------------------------------------------------------------------
 	   	    
-	   	    $SQL = $select. ' FROM view_diario_esigef   where '.$where;
+	   	    $SQL = $select. ' FROM view_diario_flujo   where '.$where;
+
+
+ 
 	   	    
 	   	    if ( $cadena == '112') {
 	   	        
@@ -324,7 +331,7 @@ class proceso{
 	   	    if ( $cadena == '212') {
 	   	        
 	   	        $select = 'SELECT (sum(debe)  - sum(haber)) as monto ';
-	   	        $SQL = $select. ' FROM view_diario_esigef   where '.$where;
+	   	        $SQL = $select. ' FROM view_diario_flujo   where '.$where;
 	   	        $resultado1  = $this->bd->ejecutar($SQL);
 	   	        $datos_sql   = $this->bd->obtener_array( $resultado1);
 	   	        $saldo       =  $datos_sql['monto']  ;
@@ -344,7 +351,7 @@ class proceso{
 	   	    if ( $cadena == '111') {
 	   	        
 	   	        $select = 'SELECT (sum(debe)  - sum(haber)) as monto ';
-	   	        $SQL = $select. ' FROM view_diario_esigef   where '.$where;
+	   	        $SQL = $select. ' FROM view_diario_flujo   where '.$where;
 	   	        
 	   	        $resultado1  = $this->bd->ejecutar($SQL);
 	   	        $datos_sql   = $this->bd->obtener_array( $resultado1);
@@ -466,6 +473,8 @@ class proceso{
                            orden1='.$this->bd->sqlvalue_inyeccion( $orden1 ,true) .' and
                           orden2='.$this->bd->sqlvalue_inyeccion( $orden2 ,true) .' order by orden3 ';
 	    
+
+					 
 	    
 	    $stmt = $this->bd->ejecutar($sql);
 	    

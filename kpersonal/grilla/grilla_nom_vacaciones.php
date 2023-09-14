@@ -47,12 +47,12 @@
         $output = array();
       	
 		if ( $qunidad == '-'){
-			$where = ' anio = '.$this->bd->sqlvalue_inyeccion($this->anio,true) ;
+			$where = ' periodo = '.$this->bd->sqlvalue_inyeccion($this->anio,true) ;
  	  	}else {
- 			$where = ' anio = '.$this->bd->sqlvalue_inyeccion($this->anio,true)  .' and id_departamento = '.$qunidad ;
+ 			$where = ' periodo = '.$this->bd->sqlvalue_inyeccion($this->anio,true)  .' and id_departamento = '.$qunidad ;
 	  	}
 			
- 
+ /*
 	   if ( $qambito == '-'){
 			$where = ' anio = '.$this->bd->sqlvalue_inyeccion($this->anio,true) ;
 	  	}else {
@@ -62,11 +62,11 @@
 				$where = ' anio = '.$this->bd->sqlvalue_inyeccion($this->anio,true)  .' and ambito <>'."'".trim($qambito)."'" ;
 		   } 
 	  	}
-
+*/
  
 
 		 $sql = 'SELECT *
-						      FROM view_nomina_vacacion_resumen 
+						      FROM view_nomina_vaca 
 							 WHERE '. $where. ' order by razon';
 
 
@@ -78,18 +78,13 @@
        
       	while ($fetch=$this->bd->obtener_fila($resultado)){
       		 
-
-			$x = $this->bd->query_array('nom_cvacaciones',
-			'saldo_anterior, dias_derecho, dias_tomados, dias_pendientes,horas_tomadas, horas_dias, dias', 
-			'idprov='.$this->bd->sqlvalue_inyeccion(trim($fetch['idprov'] ),true) .' and 
- 			 periodo ='.$this->bd->sqlvalue_inyeccion($this->anio,true)  
-           );
+ 
 
 
 		   $y= $this->bd->query_array('nom_vacaciones',
 		   'count(*) as nn', 
 		   'idprov='.$this->bd->sqlvalue_inyeccion(trim($fetch['idprov'] ),true) .' and 
-		    estado='.$this->bd->sqlvalue_inyeccion('4',true) .' and 
+		    estado in ('."'1','4','2'".') and
 		    anio ='.$this->bd->sqlvalue_inyeccion($this->anio,true)  
 		  );
  
@@ -105,15 +100,15 @@
 			}
 
       		$output[] = array (
-						    $fetch['unidad'],
-							$cimagen. $nombre,
-      		                $fetch['cargo'],
+						    trim($fetch['unidad']),
+							$cimagen. trim($nombre),
+							trim($fetch['cargo']),
       		                $fetch['fecha_ingreso'],
-      		                $x['dias_derecho'],
-                  		    $x['saldo_anterior'],
-                  		    $x['dias_tomados'],
-                  		    $x['horas_tomadas'],
-      		                $x['dias_pendientes'] ,
+      		                $fetch['dias_derecho'],
+                  		    $fetch['saldo_anterior'],
+                  		    $fetch['dias_tomados'],
+							$fetch['ajuste']+ $fetch['dias'] .'/'. $fetch['horas_dias'],
+      		                $fetch['dias_pendientes'] ,
       		                $fetch['idprov'] 
        		);
        

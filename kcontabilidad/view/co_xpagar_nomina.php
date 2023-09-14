@@ -137,14 +137,23 @@
 										   <div class="panel-body" > 
 											   <div class="col-md-12" style="padding-top: 10px;padding-bottom: 10px">												   
 												       <div class="col-md-3">
+														   
+														  <b> SELECCIONE PROCESOS ROLES DE PAGO </b>
 															<select  onChange=" BusquedaGrillaTramite(oTableTramite,this.value)" class="form-control" id="estado_tipo" name="estado_tipo">
 															  <option value="5">En Tramite</option>
 															  <option value="6">Generadas</option>
 															</select>
-														</div>  
-														
-											   </div>   
+  											  			 </div>   
 											   
+ 												     		 <div class="col-md-3" style="padding: 13px">
+ 														 			<a href="co_xpagar_nomina_enlace" class="btn btn-danger btn-sm" role="button">verificar enlaces </a>
+ 														 	</div> 
+												   
+												   	 </div>   
+												   
+												 
+												   
+												   
 											    <div class="col-md-12">
 										   
 											  <div class="table-responsive" id="mployee_table1">  

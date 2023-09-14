@@ -285,7 +285,7 @@ class proceso{
             array( campo => 'partida',valor => trim($partida),filtro => 'S', visor => 'N'),
             array( campo => 'partida_enlace',valor => 'gasto',filtro => 'S', visor => 'N')
         );
-        // SELECT id_tramite,id_asiento,fecha,cuenta,detalle_cuenta,detalle_tramite,razon,monto,anio,partida,partida_enlace from view_diario_presupuesto where partida='111730701002002' and anio = 2023
+        
  
         $this->bd->_order_by('fecha');
         

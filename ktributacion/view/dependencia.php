@@ -63,7 +63,11 @@
                   		</li>
 			
 			 			<li><a href="#tab3" data-toggle="tab">
-                  			<span class="glyphicon glyphicon-download-alt"></span> RESUMEN </a>
+                  			<span class="glyphicon glyphicon-download-alt"></span> RESUMEN GENERAL</a>
+                  		</li>
+			
+						<li><a href="#tab4" data-toggle="tab">
+                  			<span class="glyphicon glyphicon-asterisk"></span> DETALLE ENLACE NOMINA</a>
                   		</li>
 			
 			
@@ -73,6 +77,7 @@
                    <!-- ------------------------------------------------------ -->
                    <div class="tab-content">
                    <!-- Tab 1 -->
+					   
                    <div class="tab-pane fade in active" id="tab1" style="padding-top: 3px">
 					   
                       <div class="panel panel-default">
@@ -134,6 +139,7 @@ box-shadow: 5px 20px 21px -24px rgba(10,10,10,1);">
                 	  </div>
                   </div>
 					   
+					   
 				  <!-- Tab 3 -->	   
 				  <div class="tab-pane fade in" id="tab3"  style="padding-top: 3px">
                       <div class="panel panel-default">
@@ -175,13 +181,79 @@ box-shadow: 5px 20px 21px -24px rgba(10,10,10,1);">
 						  </div>
                 	  </div>
                  </div>		
+					   
+					   
+				 <div class="tab-pane fade in" id="tab4"  style="padding-top: 3px">
+						
+                      <div class="panel panel-default">
+						
+					        <div class="panel-body" > 
+								
+								<div class="col-md-12"> 
+									
+										<div id="ViewForm"> </div>
+									
+									   <button type="button" onClick="ProcesoInformacion()" class="btn btn-success">Procesar Informacion</button>
+					 	       </div>
+								
+								<div class="col-md-12"> 
+								
+									<div class="col-md-12" style="padding: 10px"> 
+								 			<div class="panel panel-info">
+												  <div class="panel-heading">Roles Generados</div>
+													<div class="panel-body"> 
+														<div id="Viewrol"> </div>
+													</div>
+												  </div>
+										  </div>
+									
+									<div class="col-md-12" style="padding: 10px"> 
+						  		  
+												 <div class="panel panel-info">
+													  <div class="panel-heading">Resumen de Ingreso/Gastos</div>
+														<div class="panel-body"> 
+															<div id="ViewResumen"> </div>
+														</div>
+												 </div>
+									 </div>
+								  </div>
+               		       </div>
+                	  </div>
+             	 </div>
                      
         </div>
 			 </div>	  
  		</div>
     </div>
  
+   <div class="container"> 
+	  <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+  	  <div class="modal-dialog" id="mdialTamanio">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h5 class="modal-title"> <b>ROL DE PERSONAL</b></h5>
+		  </div>
+				  <div class="modal-body">
+ 			          <div class="panel panel-default">
+  				         <div class="panel-body">
+							   <div class="row">
+								   <div class="col-md-12" style="padding: 10px"> 
+										 <div id="ViewFormRolPersona"> var</div> 
+								  </div>	   
+ 							   </div>	   
+					     </div>
+   					 </div>
+				  </div>
+ 				  <div class="modal-footer">
+					<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Salir</button>
+				  </div>
+		</div><!-- /.modal-content --> 
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+   </div> 
    
+	
   	<!-- Page Footer-->
     <div id="FormPie"></div>  
  </div>   

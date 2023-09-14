@@ -118,8 +118,8 @@
  											<th width="7%">Ingreso</th>    
 											<th width="7%">Nro.Dias</th>
 										    <th width="7%">Acumulados Anterior</th>
-											<th width="7%">Dias Tomados</th>
-										    <th width="7%">Horas Tomados</th>
+											<th width="7%">Dias Contabilizados</th>
+										    <th width="7%">Dia/Hora</th>
 										    <th width="7%">Dias Pendientes</th>
 											<th width="7%">Acciones</th>
 									   </tr>

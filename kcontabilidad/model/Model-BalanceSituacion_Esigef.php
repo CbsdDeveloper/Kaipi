@@ -5,6 +5,8 @@ require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
 
 require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
 
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 class proceso{
 	
@@ -45,7 +47,7 @@ class proceso{
 	}
    
 	//--- calcula libro diario
-	function grilla( $f1,$f2,$tipo,$nivel,$auxiliares,$com1){
+	function grilla( $f1,$f2,$tipo,$nivel,$auxiliares,$com1,$reporte){
 		
  
 		if ( $nivel > 7 ){
@@ -66,22 +68,22 @@ class proceso{
 		echo '<h5><b>ACTIVO</b></h5>';
 		
 		$this->cabecera('CORRIENTE',$com1);
-		$suma1 = $this->Bloque_Activo($f1,$f2,1,1);
+		$suma1 = $this->Bloque_Activo($f1,$f2,1,1,$reporte);
  		
 		$this->cabecera('INVERSIONES',$com1);
-		$suma2 = $this->Bloque_Activo($f1,$f2,1,2);
+		$suma2 = $this->Bloque_Activo($f1,$f2,1,2,$reporte);
 		
 		$this->cabecera('DEUDORES FINANCIEROS',$com1);
-		$suma3 = $this->Bloque_Activo($f1,$f2,1,3);
+		$suma3 = $this->Bloque_Activo($f1,$f2,1,3,$reporte);
 		
 		$this->cabecera('INVERSIONES EN BIENES DE LARGA DURACION',$com1);
-		$suma4 = $this->Bloque_Activo($f1,$f2,1,4);
+		$suma4 = $this->Bloque_Activo($f1,$f2,1,4,$reporte);
 		
 		$this->cabecera('OTROS ACTIVOS FINANCIEROS',$com1);
-		$suma5 = $this->Bloque_Activo($f1,$f2,1,5);
+		$suma5 = $this->Bloque_Activo($f1,$f2,1,5,$reporte);
 		
 		$this->cabecera('INVERSIONES EN PROYECTOS Y PROGRAMAS',$com1);
-		$suma6 = $this->Bloque_Activo($f1,$f2,1,6);
+		$suma6 = $this->Bloque_Activo($f1,$f2,1,6,$reporte);
 		
 		
 		
@@ -93,13 +95,13 @@ class proceso{
 		echo '<h5><b>PASIVO</b></h5>';
 		
 		$this->cabecera('CORRIENTE',$com1);
-		$suma1 = $this->Bloque_Pasivo($f1,$f2,2,1);
+		$suma1 = $this->Bloque_Pasivo($f1,$f2,2,1,$reporte);
 		
 		$this->cabecera('LARGO PLAZO',$com1);
-		$suma2 = $this->Bloque_Pasivo($f1,$f2,2,2);
+		$suma2 = $this->Bloque_Pasivo($f1,$f2,2,2,$reporte);
 		
 		$this->cabecera('PROVISIONES',$com1);
-		$suma3 = $this->Bloque_Pasivo($f1,$f2,2,3);
+		$suma3 = $this->Bloque_Pasivo($f1,$f2,2,3,$reporte);
 		
 		$pasivo = $suma1  + $suma2  + $suma3 ;
 		
@@ -108,7 +110,7 @@ class proceso{
 		echo '<h5><b>PATRIMONIO</b></h5>';
 		
 		$this->cabecera('OTROS',$com1);
-		$patrimonio = $this->Bloque_Patrimonio($f1,$f2,3,1);
+		$patrimonio = $this->Bloque_Patrimonio($f1,$f2,3,1,$reporte);
 		
 		echo '<h5 align="right" style="background-color: #F4F1C4;padding: 5px"><b>PATRIMONIO '.number_format($patrimonio  ,2).'</b></h5>';
 		
@@ -116,12 +118,12 @@ class proceso{
 		echo '<h5><b>CUENTAS ORDEN </b></h5>';
 		
 		$this->cabecera('CUENTAS DE ORDEN (+)',$com1);
-		$orden1 = $this->Bloque_Patrimonio($f1,$f2,5,1);
+		$orden1 = $this->Bloque_Patrimonio($f1,$f2,5,1,$reporte);
 		
 		echo '<h5 align="right" style="background-color: #F4F1C4;padding: 5px"><b>ORDEN (+) '.number_format($orden1 ,2).'</b></h5>';
 		
 		$this->cabecera('CUENTAS DE ORDEN (-)',$com1);
-		$orden2= $this->Bloque_Patrimonio($f1,$f2,5,2);
+		$orden2= $this->Bloque_Patrimonio($f1,$f2,5,2,$reporte);
 		
 		echo '<h5 align="right" style="background-color: #F4F1C4;padding: 5px"><b>ORDEN (-) '.number_format($orden2 ,2).'</b></h5>';
 	
@@ -140,6 +142,95 @@ class proceso{
 		 
  
 	}
+//-----------------------
+function _suma_saldos($wheref,$cuenta){
+
+
+		$datos_saldos = array();
+
+	   $datos_saldos = $this->bd->query_array('co_diario',
+												'sum(debe) as debe, sum(haber) as haber',
+												'anio='.$this->bd->sqlvalue_inyeccion($this->anio,true). ' and
+												cuenta like '.$this->bd->sqlvalue_inyeccion($cuenta.'%',true). ' and  '.$wheref
+		);
+
+		$datos_saldos['saldo'] = $datos_saldos['debe'] - $datos_saldos['haber'];
+
+
+		return $datos_saldos;
+
+
+}
+//--------------------------
+function _detalle_cuenta($cuenta, $f1,$f2,$cuenta1,$cuenta2){
+
+	$wheref = ' and ( fecha BETWEEN '.$this->bd->sqlvalue_inyeccion(trim($f1),true)." and ".
+		                             $this->bd->sqlvalue_inyeccion(trim($f2),true)." ) ";
+		
+ 
+	$tipo 		     = $this->bd->retorna_tipo(); // TIPO DE CONEXION DE BASE DE DATOS ... POSTGRES
+	
+	$font ="10";
+	$background="#ececec";
+	
+
+	$longitud = strlen($cuenta1);
+
+	// 149.99
+	$longitud0 = strlen($cuenta);
+
+	
+
+	if ( $longitud  > 2 ){
+
+		$dato = substr($cuenta1,4,2) - 1; 
+
+		$sql22 = "select cuenta,detalle,   sum(debe) - sum(haber) as saldo
+		from view_diario_balance
+		where anio =".$this->bd->sqlvalue_inyeccion($this->anio, true)." and
+			   trim(mayor) = ".$this->bd->sqlvalue_inyeccion($cuenta, true).$wheref." and
+			   trim(mayor)|| '.' || trim(grupo) between ".$this->bd->sqlvalue_inyeccion($cuenta.'.01', true)." and 
+			   ".$this->bd->sqlvalue_inyeccion($cuenta.'.'.$dato, true)." 
+			  group by cuenta,detalle";
+ 
+
+	}
+	else{
+					if ( $longitud0 == 3){
+
+							$sql22 = "select cuenta,detalle,   sum(debe) - sum(haber) as saldo
+										from view_diario_balance
+										where anio =".$this->bd->sqlvalue_inyeccion($this->anio, true)." and
+											mayor = ".$this->bd->sqlvalue_inyeccion($cuenta, true).$wheref."
+										group by cuenta,detalle";
+					 }	else
+					 {
+						$sql22 = "select cuenta,detalle,   sum(debe) - sum(haber) as saldo
+									from view_diario_balance
+									where anio =".$this->bd->sqlvalue_inyeccion($this->anio, true)." and
+									cuenta like ".$this->bd->sqlvalue_inyeccion($cuenta.'%', true).$wheref."
+									group by cuenta,detalle";
+				   }	
+			}			
+	 
+				$evento = '';
+				$edita    = '';
+				$del      = '';			
+ 
+	  
+	$resultado22  = $this->bd->ejecutar($sql22); // EJECUTA SENTENCIA SQL  RETORNA RESULTADO
+	
+	$cabecera =  "Cuenta,Detalle,Saldo"; // CABECERA DE TABLAR GRILLA HA VISUALIZAR
+
+  
+ 
+	// $this->obj->table->tabla_visor($resultado22,$tipo,$edita,$del,$evento ,$cabecera,$font,$background,"1");
+	$this->obj->table->table_basic_js($resultado22,$tipo,$edita,$del,$evento ,$cabecera,$font);
+
+
+
+}
+	//--------------------------------------------
  
 	function BuscaTotal($f1,$f2,$cuenta,$cuenta1='',$cuenta2=''){
 		
@@ -149,180 +240,187 @@ class proceso{
 		                             $this->bd->sqlvalue_inyeccion(trim($f2),true)." ) ";
 		
 
-	$datos = $this->bd->query_array('view_diario_conta',
-									 'sum(debe) as debe, sum(haber) as haber',
-									 'anio='.$this->bd->sqlvalue_inyeccion($this->anio,true). ' and
-																	cuenta like '.$this->bd->sqlvalue_inyeccion($cuenta.'%',true). ' and  '.$wheref
-	);
-								 
-	$saldo = $datos["debe"] -  $datos["haber"] ;
-		                             
-	 if ( trim($cuenta) == '618.03'){
-	     
-	     $ingreso = $this->bd->query_array('view_diario_conta',
-	         'sum(debe) as debe, sum(haber) as haber',
-	         'anio='.$this->bd->sqlvalue_inyeccion($this->anio,true). ' and
-                                            trim(cuenta) like '.$this->bd->sqlvalue_inyeccion('62%',true). ' and  '.$wheref
-	         );
-  	     
-	     $gasto = $this->bd->query_array('view_diario_conta',
-	         'sum(debe) as debe, sum(haber) as haber',
-	         'anio='.$this->bd->sqlvalue_inyeccion($this->anio,true). ' and
-                                            trim(cuenta) like '.$this->bd->sqlvalue_inyeccion('63%',true). ' and  '.$wheref
-	         );
-	     
-	     $saldo =  ($gasto["debe"]  -  $ingreso["haber"]  )  ;
-	     
-	     
-	 } 
-	 
-	 if ( $cuenta == '151'){
+			$datos = $this->_suma_saldos($wheref,$cuenta);
+ 										
+			$saldo = $datos["debe"] -  $datos["haber"] ;
+		 
+			
 
- 
-	     
-	     $datos = $this->bd->query_array('co_diario',
-			 'sum(debe) - sum(haber) as saldo',
-	         'anio='.$this->bd->sqlvalue_inyeccion($this->anio,true). ' and
-                                            cuenta like '.$this->bd->sqlvalue_inyeccion($cuenta.'%',true). ' and  '.$wheref
-	         );
-	     
-			 $datose = $this->bd->query_array('co_diario',
-	         'sum(debe) - sum(haber) as saldo',
-	         'anio='.$this->bd->sqlvalue_inyeccion($this->anio,true). ' and
-                   cuenta like '.$this->bd->sqlvalue_inyeccion($cuenta1.'%',true). ' and  '.$wheref
-	         );
- 	     
-	     $saldo = $datos["saldo"] -  $datose["saldo"] ;
-	     
-	     
-	 }
-	 
-	 if ( $cuenta == '152'){
-	     
- 	     
-	     $datos = $this->bd->query_array('co_diario',
-	         'sum(debe) - sum(haber) as saldo',
-	         'anio='.$this->bd->sqlvalue_inyeccion($this->anio,true). ' and
-                   cuenta like '.$this->bd->sqlvalue_inyeccion($cuenta.'%',true). ' and  '.$wheref
-	         );
-	     
-	     $datose = $this->bd->query_array('co_diario',
-	         'sum(debe) - sum(haber) as saldo',
-	         'anio='.$this->bd->sqlvalue_inyeccion($this->anio,true). ' and
-                   cuenta like '.$this->bd->sqlvalue_inyeccion($cuenta1.'%',true). ' and  '.$wheref
-	         );
-	     
-	     
-	     $saldo = $datos["saldo"] -  $datose["saldo"] ;
-	     
-	     
-	 }
- 		           
+			if ( trim($cuenta) == '611'){
+				
+				$datos = $this->_suma_saldos($wheref,$cuenta);
+			
+				$saldo = $datos["debe"] - $datos["haber"]  ;
+				
+			} 
+
+			if ( trim($cuenta) == '213'){
+				
+				$datos = $this->_suma_saldos($wheref,$cuenta);
+			
+				$saldo = $datos["debe"]  -  $datos["haber"];
+				
+			} 
+
+			if ( trim($cuenta) == '212'){
+				
+				$datos = $this->_suma_saldos($wheref,$cuenta);
+			
+				$saldo = $datos["debe"]  -  $datos["haber"];
+				
+			} 
+
+
+
+			if ( trim($cuenta) == '618.03'){
+				
+				$ingreso = $this->_suma_saldos($wheref,'62%');
 		
-	 if ( $cuenta == '141.99'){
-	     
-	     $datos = $this->bd->query_array('co_diario',
-	         'sum(debe) as debe, sum(haber) as haber',
-	         'anio='.$this->bd->sqlvalue_inyeccion($this->anio,true). ' and
-                                            cuenta like '.$this->bd->sqlvalue_inyeccion($cuenta.'%',true). ' and  '.$wheref
-	         );
-	     
-	     $saldo = $datos["haber"] * -1;
-	 }
+				$gasto   = $this->_suma_saldos($wheref,'63%');
+				
+ 				$saldo =   $ingreso["saldo"]  +  $gasto["saldo"]     ;
+				
+				
+			} 
+
+		if ( $cuenta == '151'){
+
+	
+			$datos = $this->_suma_saldos($wheref,$cuenta);
+			
+			$datose = $this->_suma_saldos($wheref,$cuenta1);
+			
+			$saldo = $datos["saldo"] -  $datose["saldo"] ;
+			
+			
+		}
+
+		if ( $cuenta == '152'){
+			
+			$datos = $this->_suma_saldos($wheref,$cuenta);
+			
+			$datose = $this->_suma_saldos($wheref,$cuenta1);
+			
+			
+			$saldo = $datos["saldo"] -  $datose["saldo"] ;
+			
+			
+		}
+			
+		if ( $cuenta == '141.99'){
+			
+			$datos = $this->_suma_saldos($wheref,$cuenta);
+			
+			$saldo = $datos["debe"]  -  $datos["haber"];
+
+		}
+				
+		if ( $cuenta == '141'){
+	
+			$datos 		= $this->_suma_saldos($wheref,$cuenta);
+			$saldo_activo  = $datos["saldo"] ;
+
+			$depreciacion  	  = $this->_suma_saldos($wheref,'141.99');
+			$saldo_depreciacion  = $depreciacion["saldo"] ;
+				
+			$saldo =  $saldo_activo - $saldo_depreciacion ;
+
+		}
+
+
+		if ( $cuenta == '142.99'){
+			
+			$datos = $this->_suma_saldos($wheref,$cuenta);
+			
+			$saldo = $datos["debe"]  -  $datos["haber"];
+
+		}
+				
+		if ( $cuenta == '142'){
+	
+			$datos 		= $this->_suma_saldos($wheref,$cuenta);
+			$saldo_activo  = $datos["saldo"] ;
+
+			$depreciacion  	  = $this->_suma_saldos($wheref,'142.99');
+			$saldo_depreciacion  = $depreciacion["saldo"] ;
+				
+			$saldo =  $saldo_activo - $saldo_depreciacion ;
+
+		}
+
+
+		if ( $cuenta == '143.99'){
+			
+			$datos = $this->_suma_saldos($wheref,$cuenta);
+			
+			$saldo = $datos["debe"]  -  $datos["haber"];
+
+		}
+				
+		if ( $cuenta == '143'){
+	
+			$datos 		= $this->_suma_saldos($wheref,$cuenta);
+			$saldo_activo  = $datos["saldo"] ;
+
+			$depreciacion  	  = $this->_suma_saldos($wheref,'143.99');
+			$saldo_depreciacion  = $depreciacion["saldo"] ;
+				
+			$saldo =  $saldo_activo - $saldo_depreciacion ;
+
+		}
+
+
 		
-	 if ( $cuenta == '142.99'){
-	     
-	     $datos = $this->bd->query_array('co_diario',
-	         'sum(debe) as debe, sum(haber) as haber',
-	         'anio='.$this->bd->sqlvalue_inyeccion($this->anio,true). ' and
-                                            cuenta like '.$this->bd->sqlvalue_inyeccion($cuenta.'%',true). ' and  '.$wheref
-	         );
-	     
-	     $saldo = $datos["haber"] * -1;
-	 }
-	 
-	 if ( $cuenta == '143.99'){
-	     
-	     $datos = $this->bd->query_array('co_diario',
-	         'sum(debe) as debe, sum(haber) as haber',
-	         'anio='.$this->bd->sqlvalue_inyeccion($this->anio,true). ' and
-                                            cuenta like '.$this->bd->sqlvalue_inyeccion($cuenta.'%',true). ' and  '.$wheref
-	         );
-	     
-	     $saldo = $datos["haber"] * -1;
-	 }
-	 
-	 if ( $cuenta == '141'){
-	     
-	     $datos = $this->bd->query_array('co_diario',
-	         'sum(debe) as debe, sum(haber) as haber',
-	         'anio='.$this->bd->sqlvalue_inyeccion($this->anio,true). ' and
-                                            cuenta like '.$this->bd->sqlvalue_inyeccion($cuenta.'%',true). ' and  '.$wheref
-	         );
-	     
-	     $saldo = $datos["debe"] ;
-	 }
-	 
-	 
-	 if ( $cuenta == '142'){
-	     
-	     $datos = $this->bd->query_array('co_diario',
-	         'sum(debe) as debe, sum(haber) as haber',
-	         'anio='.$this->bd->sqlvalue_inyeccion($this->anio,true). ' and
-                                            cuenta like '.$this->bd->sqlvalue_inyeccion($cuenta.'%',true). ' and  '.$wheref
-	         );
-	     
-	     $saldo = $datos["debe"] ;
-	 }
-	 
-	 if ( $cuenta == '143'){
-	     
-	     $datos = $this->bd->query_array('co_diario',
-	         'sum(debe) as debe, sum(haber) as haber',
-	         'anio='.$this->bd->sqlvalue_inyeccion($this->anio,true). ' and
-                                            cuenta like '.$this->bd->sqlvalue_inyeccion($cuenta.'%',true). ' and  '.$wheref
-	         );
-	     
-	     $saldo = $datos["debe"] ;
-	 }
-	 
-	 //---------------------------------------------------------------------
-	 if ( $cuenta == '126.99'){
-	     
-	     $datos = $this->bd->query_array('co_diario',
-	         'sum(debe) as debe, sum(haber) as haber',
-	         'anio='.$this->bd->sqlvalue_inyeccion($this->anio,true). ' and
-                                            cuenta like '.$this->bd->sqlvalue_inyeccion($cuenta.'%',true). ' and  '.$wheref
-	         );
-	     
-	     $saldo = ($datos["haber"] - $datos["debe"]) * -1;
-	 }
-	 
-	 if ( $cuenta == '126'){
-	     
-	     $cuenta1 = '126.07';
-	     
-	     $datos1 = $this->bd->query_array('co_diario',
-	         'sum(debe)- sum(haber) as saldo',
-	         'anio='.$this->bd->sqlvalue_inyeccion($this->anio,true). ' and
-                                            cuenta like '.$this->bd->sqlvalue_inyeccion($cuenta1.'%',true). ' and  '.$wheref
-	         );
-	     
-	     $saldo1 = $datos1["saldo"] ;
-	     
-	     $cuenta1 = '126.06';
-	     
-	     $datos2 = $this->bd->query_array('co_diario',
-	         'sum(debe)- sum(haber) as saldo',
-	         'anio='.$this->bd->sqlvalue_inyeccion($this->anio,true). ' and
-                                            cuenta like '.$this->bd->sqlvalue_inyeccion($cuenta1.'%',true). ' and  '.$wheref
-	         );
-	     
-	     $saldo2 = $datos2["saldo"] ;
-	     
-	     $saldo = $saldo1 + $saldo2 ;
-	 }
-	 
+		if ( $cuenta == '144.99'){
+			
+			$datos = $this->_suma_saldos($wheref,$cuenta);
+			
+			$saldo = $datos["debe"]  -  $datos["haber"];
+
+		}
+				
+		if ( $cuenta == '144'){
+	
+			$datos 		= $this->_suma_saldos($wheref,$cuenta);
+			$saldo_activo  = $datos["saldo"] ;
+
+			$depreciacion  	  = $this->_suma_saldos($wheref,'144.99');
+			$saldo_depreciacion  = $depreciacion["saldo"] ;
+				
+			$saldo =  $saldo_activo - $saldo_depreciacion ;
+
+		}
+
+
+
+
+		if ( $cuenta == '126.99'){
+			
+			$datos = $this->_suma_saldos($wheref,$cuenta);
+			
+			$saldo = ($datos["haber"] - $datos["debe"]) * -1;
+
+		}
+
+		if ( $cuenta == '126'){
+
+			$cuenta1 = '126.07';
+			
+			$datos1 = $this->_suma_saldos($wheref,$cuenta1);
+			
+			$saldo1 = $datos1["saldo"] ;
+
+			$cuenta1 = '126.06';
+			
+			$datos2 = $this->_suma_saldos($wheref,$cuenta1);
+			
+			$saldo2 = $datos2["saldo"] ;
+
+			$saldo = $saldo1 + $saldo2 ;
+
+		}
+
+	  
 		return  $saldo;
 	 
 	}
@@ -442,7 +540,7 @@ class proceso{
  
 	}
 	//--------------------
-	public function Bloque_Activo( $f1,$f2,$orden1,$orden2 ){
+	public function Bloque_Activo( $f1,$f2,$orden1,$orden2,$reporte ){
 	    
 	 
 	    $sql = 'SELECT    grupo2, grupo3, cuenta, sinsigno, consigno, excepcion_cuenta_desde, excepcion_cuenta_hasta, anio
@@ -452,6 +550,7 @@ class proceso{
                           anio='.$this->bd->sqlvalue_inyeccion($this->anio ,true).' order by orden3';
  
 	    
+
 	    $stmt = $this->bd->ejecutar($sql);
 	    
 	    $inicial_debe = 0;
@@ -467,24 +566,33 @@ class proceso{
 	        
 	        $saldo = $this->BuscaTotal($f1,$f2,$cuenta,$cuenta1,$cuenta2);
 	        
-	      
-	        
 	        echo "<tr>";
 	        echo "<td><b>".'SG '.$x['cuenta']."</b></td>";
-	        echo "<td> ".$x['grupo3']." </td>";
+	        echo "<td>".$x['grupo3']. "</td>";
+
 	        echo "<td align='right'>".number_format($saldo,2)."</td>";
 	        
 	        if (   $this->compa == 'S'){
 	            $saldo_anterior = $this->BuscaTotal_anterior($f1,$f2,$cuenta);
 	            echo "<td bgcolor='#f9f9f9' style='color: #474747' align='right'>".number_format($saldo_anterior,2)."</td></tr>";
-	        
-	            $inicial_debea =  $inicial_debea + $saldo_anterior;
+ 	            $inicial_debea =  $inicial_debea + $saldo_anterior;
 	            
 	        }else{
 	            echo "</tr>";
 	        }
  	        
-	        
+		 	if (trim($reporte)  == '1'){
+
+				if (abs($saldo) > 0  ){
+						echo '<tr>
+						<td></td>
+						<td colspan="2">';
+								$this->_detalle_cuenta($x['cuenta'], $f1,$f2,$cuenta1,$cuenta2);
+						echo '</td>
+						</tr>';
+				 }
+ 		   }
+	      
 	        $inicial_debe = $inicial_debe + $saldo;
 	        
 	      
@@ -507,7 +615,7 @@ class proceso{
 	  return $inicial_debe;
 	}
 	//--- ultimo nivel
-	public function Bloque_Pasivo( $f1,$f2,$orden1,$orden2 ){
+	public function Bloque_Pasivo( $f1,$f2,$orden1,$orden2,$reporte ){
 	    
      
 	    
@@ -546,7 +654,19 @@ class proceso{
 	            echo "</tr>";
 	        }
 	        
-	        
+			if (trim($reporte)  == '1'){
+
+				if (abs($saldo) > 0  ){
+						echo '<tr>
+						<td></td>
+						<td colspan="2">';
+								$this->_detalle_cuenta($x['cuenta'], $f1,$f2,$cuenta1,$cuenta2);
+						echo '</td>
+						</tr>';
+				 }
+ 		   }
+	      
+
 	        $inicial_debe = $inicial_debe + $saldo;
 	        
 	       
@@ -572,7 +692,7 @@ class proceso{
  
 	}
 	//--- ultimo nivel
-	public function Bloque_Patrimonio( $f1,$f2,$orden1,$orden2 ){
+	public function Bloque_Patrimonio( $f1,$f2,$orden1,$orden2 ,$reporte){
  
   
 	    
@@ -609,7 +729,17 @@ class proceso{
 	            echo "</tr>";
 	        }
 	      
-	        
+	        if (trim($reporte)  == '1'){
+
+				if (abs($saldo) > 0  ){
+						echo '<tr>
+						<td></td>
+						<td colspan="2">';
+								$this->_detalle_cuenta($x['cuenta'], $f1,$f2,$cuenta1,$cuenta2);
+						echo '</td>
+						</tr>';
+				 }
+ 		   }
  	        
 	        $inicial_debe = $inicial_debe + $saldo;
 	        
@@ -643,7 +773,7 @@ class proceso{
 	    
 	    
 	    
-	    $imagen = '<img src="../../kimages/'.trim($_SESSION['logo']).'" width="200" height="120">';
+	    $imagen = '<img src="../../kimages/'.trim($_SESSION['logo']).'" width="200" height="200">';
 	    
 	    echo '<table width="100%" border="0" cellpadding="0" cellspacing="0" style="font-size: 14px;table-layout: auto">
               <tr>
@@ -716,8 +846,9 @@ if (isset($_POST["bgfecha1"]))	{
 	
 	$com1			    =     $_POST["com1"];
 	
+	$reporte			=     $_POST["reporte"];
  
-	$gestion->grilla( $f1,$f2,$tipo,$nivel,$auxiliares,$com1);
+	$gestion->grilla( $f1,$f2,$tipo,$nivel,$auxiliares,$com1,$reporte	);
  
  
 	

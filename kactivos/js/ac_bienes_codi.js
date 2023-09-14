@@ -114,7 +114,71 @@ function imprimir(){
  	   	    	 
 
   }
+//-------------------------------------
+  function imprimir2(){
 
+  	
+    cod    =$("#cod").val();
+    nom    =$("#nom").val();
+
+    var cadena 	= 'cod=' + cod +'&nom=' + nom;
+    var ancho = 1000; 
+	var alto = 400; 
+	var posicion_x ; 
+	var posicion_y ; 
+	var enlace; 
+	
+
+    enlace= "../view/imprimir_v1.php?"+cadena;
+    
+    window.open(enlace, '#','width='+ancho+',height='+alto+',toolbar=0,scrollbars=no,resizable=no,left='+posicion_x+',top='+posicion_y+'');
+ 	   	    	 
+
+  }
+
+  //-------------------------------------
+  function imprimir3(){
+
+  	
+    cod    =$("#cod").val();
+    nom    =$("#nom").val();
+
+    var cadena 	= 'cod=' + cod +'&nom=' + nom;
+    var ancho = 1000; 
+	var alto = 400; 
+	var posicion_x ; 
+	var posicion_y ; 
+	var enlace; 
+	
+
+    enlace= "../view/imprimir_v2.php?"+cadena;
+    
+    window.open(enlace, '#','width='+ancho+',height='+alto+',toolbar=0,scrollbars=no,resizable=no,left='+posicion_x+',top='+posicion_y+'');
+ 	   	    	 
+
+  }
+
+    //-------------------------------------
+	function imprimir4(){
+
+  	
+		cod    =$("#cod").val();
+		nom    =$("#nom").val();
+	
+		var cadena 	= 'cod=' + cod +'&nom=' + nom;
+		var ancho = 1000; 
+		var alto = 400; 
+		var posicion_x ; 
+		var posicion_y ; 
+		var enlace; 
+		
+	
+		enlace= "../view/imprimir_v3.php?"+cadena;
+		
+		window.open(enlace, '#','width='+ancho+',height='+alto+',toolbar=0,scrollbars=no,resizable=no,left='+posicion_x+',top='+posicion_y+'');
+						 
+	
+	  }
 // ir a la opcion de editar
 function goToURL(accion,id,nom) {
 
@@ -213,7 +277,7 @@ function goToURL(accion,id,nom) {
 						s[i][4],
 						s[i][5],
 						s[i][6],
-  					'<button title="Genere codigo de Barra" class="btn btn-xs" onClick="javascript:goToURL('+"'barra'"+','+"'"+ s[i][4]  + "'"+','+"'"+ s[i][3]  + "'"+')"><i class="glyphicon glyphicon-barcode"></i></button>&nbsp;' 
+  					'<button title="Genere codigo de Barra" class="btn btn-xs" onClick="goToURL('+"'barra'"+','+"'"+ s[i][4]  + "'"+','+"'"+ s[i][3]  + "'"+')"><i class="glyphicon glyphicon-barcode"></i></button>&nbsp;' 
 				]);										
 			} // End For
 		  } 						

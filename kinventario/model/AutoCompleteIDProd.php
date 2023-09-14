@@ -37,7 +37,7 @@ session_start( );
     
     }
     
-    echo $idproducto;
+    echo trim($idproducto);
      
     
 ?>

@@ -1447,12 +1447,20 @@ function RolNomina($idprov,$id_rol){
 			   </tr>
 			   <tr>';
 	  
+			   if (  trim($datos['sifondo']) == 'N') {
 				  $sql = 'SELECT sum(ingreso) as ingreso,sum(descuento) as egreso
 							 FROM view_rol_personal
 							where idprov = '.$this->bd->sqlvalue_inyeccion($idprov ,true)." and 
 								  id_rol = ".$this->bd->sqlvalue_inyeccion($id_rol,true)." and 
 							   id_periodo =".$this->bd->sqlvalue_inyeccion($id_periodo ,true);
-				  
+			   } else {
+				$sql = 'SELECT sum(ingreso) as ingreso,sum(descuento) as egreso
+						FROM view_rol_personal
+						where idprov = '.$this->bd->sqlvalue_inyeccion($idprov ,true)." and 
+						id_rol = ".$this->bd->sqlvalue_inyeccion($id_rol,true)." and 
+						id_periodo =".$this->bd->sqlvalue_inyeccion($id_periodo ,true). " and id_config_matriz <> '11' and id_config_matriz <> '2'";
+			   }
+
 				  $resultado = $this->bd->ejecutar($sql);
 				  $datos1 = $this->bd->obtener_array( $resultado);
 				  $total = $datos1['ingreso'] -  $datos1['egreso'];

@@ -12,7 +12,7 @@ $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
 
  
 $idaux     = $_GET['idaux'] ;
-$accion    = $_GET['accion'] ;
+$accion    = trim($_GET['accion']) ;
 $id_spi    = $_GET['id_spi'] ;
  
 $sesion 	 =     trim($_SESSION['email']);
@@ -74,10 +74,29 @@ if ( $accion == 'eliminar'){
     $bd->ejecutar($sql);
 }
 
+if ( $accion == 'cambio'){
+    
+    $estado_ciu    = $_GET['estado_ciu'] ;
+    $id_spi_det   = $_GET['id_spi_det'] ;
+    
+     if (  $estado_ciu == 0 ){
+        $sql = "update tesoreria.spi_mov_det set ciu = 1  where id_spi_det =".$bd->sqlvalue_inyeccion($id_spi_det,true);
+     }else{
+        $sql = "update tesoreria.spi_mov_det set ciu = 0  where id_spi_det =".$bd->sqlvalue_inyeccion($id_spi_det,true);
+
+    }  
+    
+     
+    
+    $bd->ejecutar($sql);
+}
+
+
+
  
 
 
-$sql = 'SELECT id_spi_det,idprov,razon,codigo_banco,nro_cuenta,tipo_cuenta,monto_pagar,detalle,id_spi,gasto_spi,id_asiento_aux
+$sql = 'SELECT id_spi_det,idprov,razon,codigo_banco,nro_cuenta,tipo_cuenta,monto_pagar,detalle,id_spi,gasto_spi,id_asiento_aux,ciu
         FROM tesoreria.view_spi_detalle
         where id_spi = '.$bd->sqlvalue_inyeccion($id_spi, true) ;
 
@@ -104,30 +123,47 @@ echo '<table id="jsontableDetalleSpi" class="table  table-hover table-bordered" 
             
             $funcion1  = ' onClick="goToSpiCiu('."'".trim($y['idprov'])."'".')" ';
             $title1    = 'data-toggle="modal" data-target="#myModalciu" title="Actualizar Datos beneficiarios"';
-            $boton_gas = '<button   class="btn btn-xs" '.$title1.$funcion1.' ><i class="glyphicon glyphicon-user"></i></button>&nbsp;';
+            $boton_gas = '<button   class="btn btn-xs btn-warning" '.$title1.$funcion1.' ><i class="glyphicon glyphicon-user"></i></button>&nbsp;';
             
             
             
             $funcion1  = ' onClick="goToSpiAnula('.$y['id_spi_det'].','.$y['id_asiento_aux'].')" ';
             $title1    = '  title="Anular registro del beneficiario"';
-            $boton_anula = '<button   class="btn btn-xs" '.$title1.$funcion1.' ><i class="glyphicon glyphicon-trash"></i></button>&nbsp;';
+            $boton_anula = '<button   class="btn btn-xs btn-danger" '.$title1.$funcion1.' ><i class="glyphicon glyphicon-trash"></i></button>&nbsp;';
+
+
+                  
+            $funcion1  = ' onClick="goToSpiCambio('.$y['id_spi_det'].','.$y['ciu'].')" ';
+            $title1    = '  title="Generar con cedula pago a beneficiarios"';
+            $boton_ciu = '<button   class="btn btn-xs btn-info" '.$title1.$funcion1.' ><i class="glyphicon glyphicon-erase"></i></button>&nbsp;';
             
+
+            if ( $y['ciu'] == '1') {
+                $razon = '<b> '.$y['razon'].'(*) </b>';
+            }    
+            else {
+                $razon = $y['razon'];
+            }    
+
             echo ' <tr>
               	<td>'.$y['idprov'].'</td>
 				<td>'.$y['id_spi_det'].'</td>
-				<td>'.$y['razon'].'</td>
+				<td>'.  $razon.'</td>
                 <td>'.$y['codigo_banco'].'</td>
                 <td>'.$y['nro_cuenta'].'</td>
                 <td>'.$y['tipo_cuenta'].'</td>
                 <td>'.$y['monto_pagar'].'</td>
                 <td>'.$y['gasto_spi'].'</td>
-                <td>'.$boton_gas.$boton_anula.'</td>
+                <td>'.$boton_gas.$boton_anula.$boton_ciu.'</td>
                  </tr>';
             
         }
         
         echo	'</table> ';
  
+        echo '<div class="alert alert-warning">
+        <strong>Advertencia!</strong> (*) Se va a generar con numero de cedula de identidad el pago!!!.
+      </div>';
 ?>
 <script>
  jQuery.noConflict(); 

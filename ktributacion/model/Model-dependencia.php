@@ -3,6 +3,8 @@ session_start( );
 require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
 require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
 
+require '../../kpersonal/model/Formulas-roles_nomina.php';
+
 class proceso{
 
     private $obj;
@@ -17,6 +19,7 @@ class proceso{
     private $ATabla;
     private $tabla ;
     private $secuencia;
+    private $formula;
     
     //-----------------------------------------------------------------------------------------------------------
     //Constructor de la clase
@@ -34,6 +37,10 @@ class proceso{
         $this->hoy 	     =  $this->bd->hoy();
         
         $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+
+        
+        $this->formula     = 	new Formula_rol(  $this->obj,  $this->bd);
+
         
         $this->ATabla = array(
             array( campo => 'id_redep',tipo => 'NUMBER',id => '0',add => 'N', edit => 'N', valor => '-', key => 'S'),
@@ -80,8 +87,13 @@ class proceso{
             array( campo => 'valretasuotrosempls',tipo => 'NUMBER',id => '41',add => 'S', edit => 'S', valor => '-', key => 'N'),
             array( campo => 'valimpasuesteempl',tipo => 'NUMBER',id => '42',add => 'S', edit => 'S', valor => '-', key => 'N'),
             array( campo => 'valret',tipo => 'NUMBER',id => '43',add => 'S', edit => 'S', valor => '-', key => 'N'),
+            array( campo => 'rebajagapersona',tipo => 'NUMBER',id => '44',add => 'S', edit => 'S', valor => '-', key => 'N'),
+            array( campo => 'imprebajagapersona',tipo => 'NUMBER',id => '45',add => 'S', edit => 'S', valor => '-', key => 'N'),
+            array( campo => 'deduturismo',tipo => 'NUMBER',id => '46',add => 'S', edit => 'S', valor => '-', key => 'N')
         );
       
+
+     
     
         $this->tabla 	  	  = 'nom_redep';
         
@@ -158,8 +170,17 @@ class proceso{
             array( campo => 'imprentcaus',valor => '-',filtro => 'N', visor => 'S'),
             array( campo => 'valretasuotrosempls',valor => '-',filtro => 'N', visor => 'S'),
             array( campo => 'valimpasuesteempl',valor => '-',filtro => 'N', visor => 'S'),
-            array( campo => 'valret',valor => '-',filtro => 'N', visor => 'S')
+            array( campo => 'valret',valor => '-',filtro => 'N', visor => 'S'),
+            array( campo => 'rebajagapersona',valor => '-',filtro => 'N', visor => 'S'),
+            array( campo => 'imprebajagapersona',valor => '-',filtro => 'N', visor => 'S'),
+            array( campo => 'deduturismo',valor => '-',filtro => 'N', visor => 'S')
         );
+
+        
+
+
+        
+
         
         $estado = '';
         
@@ -212,7 +233,69 @@ class proceso{
 										        
     }
     //--------------------------------------------------------------------------------
-    
+    function rebaja_ir($accion,$idprov,$anio){
+
+
+        $mes = '11';
+
+        $rol = $this->bd->query_array('nom_rol_pago',
+        'id_periodo, mes, anio, registro,tipo,id_rol',
+        'anio='.$this->bd->sqlvalue_inyeccion($anio,true).' and 
+         mes='.$this->bd->sqlvalue_inyeccion($mes,true)
+       );
+
+       $anio       = $rol["anio"];
+       $mes        = $rol["mes"];
+       $id_periodo = $rol["id_periodo"];
+       $id_rol     = $rol["id_rol"];
+
+
+        $sql_opcion = "SELECT    *
+        FROM nom_redep
+        where suelsal > 10000 and anio= ".$this->bd->sqlvalue_inyeccion($anio,true);
+
+ 
+
+            $stmt = $this->bd->ejecutar($sql_opcion);
+
+            $i = 1;
+
+            while ($x=$this->bd->obtener_fila($stmt)){
+
+                    $idprov     = $x["idret"] ;
+
+                    $ingreso    =  $this->formula->_n_rebaja_renta( $id_periodo , $id_rol,  $idprov  ,$anio, $mes,'N');
+
+                    $sqlwhere = "update nom_redep 
+                                      set rebajagapersona =".$this->bd->sqlvalue_inyeccion($ingreso,true)."
+                                    where idret=".$this->bd->sqlvalue_inyeccion( trim($idprov),true)." and 
+                                          anio= ".$this->bd->sqlvalue_inyeccion($anio,true);
+
+                                    //      echo  $sqlwhere.'<br>';
+
+                    $this->bd->ejecutar($sqlwhere);
+                    
+                    $i++;
+
+            }
+
+            $sqlwhere = "update nom_redep 
+            set valret =".$this->bd->sqlvalue_inyeccion(0,true).",
+                    valretasuotrosempls = 0, valimpasuesteempl= 0
+          where anio= ".$this->bd->sqlvalue_inyeccion($anio,true);
+
+                $this->bd->ejecutar($sqlwhere);
+
+            
+
+
+$result = 'Registros procesados...'.$i.' verifique por favor la informacion';
+
+echo $result;
+
+
+    }
+    //-----------------
     function proceso_tthh($anio){
         
         
@@ -316,11 +399,13 @@ class proceso{
                 coalesce(deducsalud,0) as salud ,
                 coalesce(deduceducartcult,0) as educacion,
                 coalesce(deducaliement,0) as alimentacion,
+                coalesce(deduturismo,0) as turismo,
                 coalesce(deducvestim,0) as vestimenta',
                 'anio='.$this->bd->sqlvalue_inyeccion($anio,true). ' and 
                  idret='.$this->bd->sqlvalue_inyeccion(trim($idprov),true)
                 );
             
+                
         }else{
             
             $y = $this->bd->query_array('view_nomina_rol',
@@ -328,6 +413,7 @@ class proceso{
             coalesce(vivienda,0) as vivienda,
             coalesce(salud,0) as salud ,
             coalesce(educacion,0) as educacion,
+            coalesce(turismo,0) as turismo,
             coalesce(alimentacion,0) as alimentacion,
             coalesce(vestimenta,0) as vestimenta,
             discapacidad',
@@ -342,12 +428,12 @@ class proceso{
         $deduceducartcult = $y['educacion'];
         $deducaliement    = $y['alimentacion'];
         $deducvestim      = $y['vestimenta'];
-        
+        $turismo          = $y['turismo'];
  
         $inggravconesteempl = $salario + $sobsuelcomremu;
         
         
-        $descuentos = ( $deducvivienda+$deducsalud+$deduceducartcult+$deducaliement+$deducvestim+$apoperiess) ;
+        $descuentos = ( $deducvivienda+$deducsalud+ $turismo +$deduceducartcult+$deducaliement+$deducvestim+$apoperiess) ;
     
         // BASE
         $base  = $inggravconesteempl - $descuentos;
@@ -441,6 +527,12 @@ class proceso{
                 
             }
             
+            if ( trim($row_p['tipoformula']) == 'EE'  ){
+                $sobsuelcomremu = $sobsuelcomremu + $row_p['ingreso'];
+                
+            }
+
+            
           
         }
 
@@ -449,6 +541,7 @@ class proceso{
             coalesce(vivienda,0) as vivienda,
             coalesce(salud,0) as salud ,
             coalesce(educacion,0) as educacion,
+            coalesce(turismo,0) as turismo,
             coalesce(alimentacion,0) as alimentacion,
             coalesce(vestimenta,0) as vestimenta,discapacidad',
             'idprov='.$this->bd->sqlvalue_inyeccion(trim($idprov),true)
@@ -459,6 +552,7 @@ class proceso{
         $deducsalud       = $y['salud'];
         $deduceducartcult = $y['educacion'];
         $deducaliement    = $y['alimentacion'];
+        $turismo          = $y['turismo'];
         $deducvestim      = $y['vestimenta'];
  
         if (empty($deducvivienda)){
@@ -485,7 +579,10 @@ class proceso{
         $this->ATabla[34][valor]        =   $deduceducartcult;
         $this->ATabla[35][valor]        =   $deducaliement;
         $this->ATabla[36][valor]        =   $deducvestim;
+
+        $this->ATabla[46][valor]        =   $turismo;
         
+  
          
         $this->ATabla[3][valor]         =   $anio;
         $this->ATabla[7][valor]         =   $idprov;
@@ -520,7 +617,7 @@ class proceso{
         $inggravconesteempl = $salario + $sobsuelcomremu;
         
         // BASE
-        $base  = $inggravconesteempl - ( $deducvivienda+$deducsalud+$deduceducartcult+$deducaliement+$deducvestim+$apoperiess) ;
+        $base  = $inggravconesteempl - ( $deducvivienda+$deducsalud+$turismo+$deduceducartcult+$deducaliement+$deducvestim+$apoperiess) ;
         $this->ATabla[39][valor]        =   $base;
         
         
@@ -662,13 +759,20 @@ if (isset($_GET['accion']))	{
     }else{
         
         if ( $accion == '1'){
-            $anio            	= $_GET['anio'];
+            $anio            	    = $_GET['anio'];
             $idprov            		= $_GET['idret'];
             $gestion->poner_ir( $accion,$idprov,$anio);
+
         }elseif ($accion == '2'){
-            $anio            	= $_GET['anio'];
+            $anio            	    = $_GET['anio'];
             $idprov            		= $_GET['idret'];
             $gestion->poner_ir( $accion,$idprov,$anio);
+
+        }elseif ($accion == '3'){
+                $anio            	    = $_GET['anio'];
+                $idprov            		= $_GET['idret'];
+                $gestion->rebaja_ir( $accion,$idprov,$anio);
+ 
         }else{
             $gestion->consultaId($accion,$id);
         }

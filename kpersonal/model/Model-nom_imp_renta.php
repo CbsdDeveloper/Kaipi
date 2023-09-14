@@ -41,19 +41,13 @@ class proceso{
 		
 		$this->ATabla = array( 
 		array( campo  => 'id',tipo  => 'NUMBER',id  => '0',add  => 'S',edit => 'N',valor => '-',key  => 'S'),
-
 		array( campo  => 'anio',tipo  => 'NUMBER',id  => '1',add  => 'S',edit => 'S',valor => '-',key  => 'N'),
-
 		array( campo  => 'tipo',tipo  => 'NUMBER',id  => '2',add  => 'S',edit => 'S',valor => '-',key  => 'N'),
-
 		array( campo  => 'fracbasica',tipo  => 'NUMBER',id  => '3',add  => 'S',edit => 'S',valor => '-',key  => 'N'),
-
 		array( campo  => 'excehasta',tipo  => 'NUMBER',id  => '4',add  => 'S',edit => 'S',valor => '-',key  => 'N'),
-
 		array( campo  => 'impubasico',tipo  => 'NUMBER',id  => '5',add  => 'S',edit => 'S',valor => '-',key  => 'N'),
-
 		array( campo  => 'impuexcedente',tipo  => 'NUMBER',id  => '6',add  => 'S',edit => 'S',valor => '-',key  => 'N')
- ); 
+ 		); 
 			
 			
 		 
@@ -202,6 +196,73 @@ inicializamos la clase para conectarnos a la bd
 		
  
 	}
+	//-------------
+	function cambio_anio( $banio ){
+		
+	 
+		$anio  =  $banio  - 1;
+
+		$datos = $this->bd->query_array('nom_imp_renta',
+								  'max(id) as id', 
+								  '1='.$this->bd->sqlvalue_inyeccion(1,true)
+		);
+
+
+		$datos_periodo = $this->bd->query_array('nom_imp_renta',
+								  'count(*) as nn', 
+								  'anio='.$this->bd->sqlvalue_inyeccion( $banio ,true)
+		);
+
+
+
+		$contador = $datos['id'] + 2;
+
+		$sql1 = 'SELECT id, anio, tipo, fracbasica, excehasta, impubasico, impuexcedente
+				   FROM nom_imp_renta
+				  where anio = '. $this->bd->sqlvalue_inyeccion($anio,true).' order by 2' ;
+ 
+  		$stmt1 =  $this->bd->ejecutar($sql1);
+
+ 
+		$tabla 	  		    = 'nom_imp_renta';
+				
+		$secuencia 	        = '-';
+
+		if ( $datos_periodo['nn'] > 0 ){
+			$result = 'DATOS YA ACTUALIZADOS...';
+
+		}else 	{
+
+					while ($fila= $this->bd->obtener_fila($stmt1)){
+							
+						$ATabla = array( 
+							array( campo  => 'id',tipo  => 'NUMBER',id  => '0',add  => 'S',edit => 'N',valor =>$contador,key  => 'S'),
+							array( campo  => 'anio',tipo  => 'NUMBER',id  => '1',add  => 'S',edit => 'S',valor => $banio,key  => 'N'),
+							array( campo  => 'tipo',tipo  => 'NUMBER',id  => '2',add  => 'S',edit => 'S',valor => $fila['tipo'],key  => 'N'),
+							array( campo  => 'fracbasica',tipo  => 'NUMBER',id  => '3',add  => 'S',edit => 'S',valor => $fila['fracbasica'],key  => 'N'),
+							array( campo  => 'excehasta',tipo  => 'NUMBER',id  => '4',add  => 'S',edit => 'S',valor => $fila['excehasta'],key  => 'N'),
+							array( campo  => 'impubasico',tipo  => 'NUMBER',id  => '5',add  => 'S',edit => 'S',valor => $fila['impubasico'],key  => 'N'),
+							array( campo  => 'impuexcedente',tipo  => 'NUMBER',id  => '6',add  => 'S',edit => 'S',valor => $fila['impuexcedente'],key  => 'N')
+							); 
+								
+								
+							$this->bd->_InsertSQL($tabla,$ATabla,$contador);
+
+							$contador = $contador + 1;
+							
+							
+					}
+					$result = 'DATOS ACTUALIZADOS CORRECTAMENTE';
+		 }
+
+				
+	
+
+		 echo $result;
+					
+	  
+
+  }
 	
 }
 ///------------------------------------------------------------------------
@@ -221,7 +282,20 @@ if (isset($_GET['accion']))	{
 	
 	$id        = $_GET['id'];
 	
+	if ( trim($accion)  == 'cambio'){
+
+		$banio        = $_GET['banio'];
+		
+		$gestion->cambio_anio( $banio  );
+
+	}else{
+		
 	$gestion->consultaId($accion,$id);
+
+	}
+
+
+
 }
 
 //------ grud de datos insercion

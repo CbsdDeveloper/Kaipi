@@ -46,7 +46,8 @@ session_start( );
                     array( campo => 'activo',   tipo => 'VARCHAR2',   id => '4',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
                     array( campo => 'afecta',   tipo => 'VARCHAR2',   id => '5',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
                     array( campo => 'tiempo',   tipo => 'VARCHAR2',   id => '6',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
-                    array( campo => 'responsable',   tipo => 'VARCHAR2',   id => '7',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N')
+                    array( campo => 'responsable',   tipo => 'VARCHAR2',   id => '7',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
+                    array( campo => 'monto',   tipo => 'NUMBER',   id => '8',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N')
                 );
                 
                 
@@ -117,6 +118,7 @@ session_start( );
          array( campo => 'afecta',   valor => '-',  filtro => 'N',   visor => 'S'),
          array( campo => 'tiempo',   valor => '-',  filtro => 'N',   visor => 'S'),
          array( campo => 'responsable',   valor => '-',  filtro => 'N',   visor => 'S'),
+         array( campo => 'monto',   valor => '-',  filtro => 'N',   visor => 'S'),
             );
      
          

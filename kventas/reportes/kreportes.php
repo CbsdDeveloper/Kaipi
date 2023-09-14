@@ -456,7 +456,7 @@ function GrillaEnlaces($id_asiento){
 	        $tipo_mov = 'COMPROBANTE DE INGRESO';
 	    }
 	    else{
-	        $tipo_mov = 'COMPROBANTE DE EGRESO ';
+	        $tipo_mov = 'COMPROBANTE DE PAGO ';
 	    }
 	    
 	    

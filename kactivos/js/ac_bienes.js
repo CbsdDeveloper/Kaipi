@@ -961,6 +961,14 @@ function VerVariables( str ) {
 		   $("#vida_util").val('5');
 	}
 
+	if (cuenta == '144.01.05' ){
+		$("#elemento_gen").hide();
+		$("#elemento_veh").show();
+		$("#elemento_inm").hide();
+		$("#elemento_inf").hide();
+		  $("#vida_util").val('5');
+   }
+
  
 	if (cuenta == '145.01.05' ){
 		 $("#elemento_gen").hide();
@@ -1043,6 +1051,16 @@ function VerVariables( str ) {
 		 $("#elemento_inf").hide();
 		  $("#vida_util").val('0');
 	} 	
+
+		  
+	if (subcuenta == '634' ){
+		$("#elemento_gen").show();
+		$("#elemento_veh").hide();
+		$("#elemento_inm").hide();
+		$("#elemento_inf").hide();
+		 $("#vida_util").val('0');
+   } 	
+   
 	
  	if (subcuenta == '151' ){
 		 $("#elemento_gen").show();

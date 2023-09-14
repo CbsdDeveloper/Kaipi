@@ -1,0 +1,18 @@
+    // Prepare signed properties
+    $signTime = is_null($this->signTime) ? time() : $this->signTime;
+    $certData = openssl_x509_parse($this->publicKey);
+
+    if(is_array($certData['issuer'])){
+        $certIssuerArray = array();
+        foreach ($certData['issuer'] as $item=>$value) {
+            if(in_array(strtoupper((string) $item),['', 'OID','UNDEF','ORGANIZATIONIDENTIFIER'])){
+                if($value=='VATES-A66721499') $item='OID.2.5.4.97';
+                else if(in_array($value,['#0c0f56415445532d413636373231343939','#130f56415445532d413636373231343939'])) $item='2.5.4.97';
+            }
+            $certIssuerArray[] = $item . '=' . $value;
+        }
+        $certIssuer = implode(',', array_reverse($certIssuerArray));
+    }else
+        $certIssuer = $certData['issuer'];
+
+    // Generate signed properties

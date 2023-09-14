@@ -176,12 +176,22 @@
 				  </div>
 				
 		  <div class="modal-footer" >
-		   	 <button type="button" class="btn btn-sm btn-success" onclick="imprimir()" >Imprimir</button>
+		   	 
+			  <button type="button" class="btn btn-sm btn-warning" onclick="imprimir2()" >Formato QR / Barras</button>
+			  
+			  <button type="button" class="btn btn-sm btn-success" onclick="imprimir()" >Formato Grafico Barras </button>
+			  
+			   <button type="button" class="btn btn-sm btn-info" onclick="imprimir3()" >Formato Lineal Barras </button>
+			  
+			     <button type="button" class="btn btn-sm btn-primary" onclick="imprimir4()" >Formato QR </button>
+			  
 			<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Salir</button>
  		  </div>
 		</div><!-- /.modal-content --> 
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
    </div>  
+
+
  </body>
 </html>

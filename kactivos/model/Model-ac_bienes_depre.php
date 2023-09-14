@@ -302,6 +302,28 @@ class proceso{
         
         
     }
+    //------------
+    function anulabien($id ,$idbien){
+        
+             
+ 
+        
+        $sql = "delete from activo.ac_bienes_ddep
+             WHERE id_bien_dep=".$this->bd->sqlvalue_inyeccion($id,true).' and 
+                   id_bien='.$this->bd->sqlvalue_inyeccion($idbien,true);
+        
+        $this->bd->ejecutar($sql);
+        
+        
+        $result = '<img src="../../kimages/kdel.png" align="absmiddle" />&nbsp;<b>REGISTRO ANULADO </b>';
+        
+   
+    
+    
+    echo $result;
+    
+    
+}
     //---------------------------------------
     function actualiza_bien($idbien){
         
@@ -401,12 +423,17 @@ if (isset($_GET['accion']))	{
     }elseif ( $accion == 'del')  {
         $gestion->anula($id);
     }
+    elseif ( $accion == 'anula_bien')  {
+        
+        $idbien        = $_GET['idbien'];
+       $gestion->anulabien($id,$idbien);
+   }
     else{
             $gestion->consultaId($accion,$id);
         }
         
   
-   
+        
     
     
     

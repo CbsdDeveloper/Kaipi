@@ -26,8 +26,11 @@
       function componente( ){
    
                 $this->obj     = 	new objects;
+
                 $this->set     = 	new ItemsController;
-             	$this->bd	   =	new Db;
+ 
+                $this->bd	   =	new Db;
+ 
                 $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
 
                 $this->ruc       =  $_SESSION['ruc_registro'];
@@ -55,6 +58,7 @@ Formulario de registro de datos
 
         $MATRIZ_transaccion = array(
             'compra'    => 'Compra',
+            'Despacho'    => 'Despacho',
             'traslado bodega'    => 'Traslado Bodega',
             'salida mercaderia'    => 'salida mercaderia',
             'devolucion'    => 'devolucion',

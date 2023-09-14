@@ -42,7 +42,9 @@
       
         $datos = array();
    
-		    $this->obj->text->text_blue('Anio',"number",'banio',15,15,$datos,'','','div-3-9');
+        $datos['banio'] = date('Y');
+
+		    $this->obj->text->text_blue('<b>Periodo</b>',"number",'banio',15,15,$datos,'','','div-3-9');
 
       
       

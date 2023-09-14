@@ -406,8 +406,16 @@ class proceso{
 	        
 		 
 			$tipo_patronal = 0;
+			$genera = 0;
 
-	        if ( $tipoformula == 'RS'){
+			if ( $tipoformula == 'RS'){
+				$genera = 1;
+			}	
+			if ( $tipoformula == 'AA'){
+				$genera = 0;
+			}	
+
+	        if ( $genera == 1){
 	            
 	            $tipo_salario = 1;
  	         

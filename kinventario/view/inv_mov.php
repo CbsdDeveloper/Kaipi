@@ -171,8 +171,8 @@
 													<li><a data-toggle="tab" href="#menu1">Movimiento Articulos Periodo</a></li>
 													<li><a data-toggle="tab" href="#menu2">Resumen Proveedor/Unidad</a></li>
 													<li><a data-toggle="tab" href="#menu3">Resumen Anual Movimientos</a></li>
-													<li><a data-toggle="tab" href="#menu4">Resumen Periodo Contable</a></li>
-													<li><a data-toggle="tab" href="#menu5">Resumen Saldos Periodo</a></li>
+													<li><a data-toggle="tab" href="#menu4"><b>Resumen Periodo Contable</b></a></li>
+													<li><a data-toggle="tab" href="#menu5"><b>Resumen Saldos Periodo</b></a></li>
   												</ul>
 
 												  <div class="tab-content">
@@ -221,9 +221,26 @@
 																
 																<div class="col-md-12"  style="padding-top: 10px;padding-bottom: 5px">
 
-																  <button type="button"  onClick="goToURL(2,'ViewForm3')" class="btn btn-primary"> <span class="glyphicon glyphicon-search"></span></button>
-																  <button  id="printButton3" type="button" class="btn btn-default"> <span class="glyphicon glyphicon-print"></span> </button>
-																  <button  id="ExcelButton3" type="button" class="btn btn-default"> <span class="glyphicon glyphicon-download-alt"></span></button>
+																     <div class="col-md-4">
+																	 
+																		  <button type="button" title="RESUMEN GENERAL POR UNIDADES"  onClick="goToURL(2,'ViewForm3')" class="btn btn-primary"> <span class="glyphicon glyphicon-search"></span></button>
+
+																		  <button type="button" title="RESUMEN DETALLE CONSUMO POR UNIDADES"   onClick="goToURL(201,'ViewForm3')" class="btn btn-info"> <span class="glyphicon glyphicon-th-list"></span></button>
+
+																		 <button type="button" title="RESUMEN GENERAL POR UNIDADES - FINANCIERO"   onClick="goToURL(202,'ViewForm3')" class="btn btn-warning"> <span class="glyphicon glyphicon-usd"></span></button>
+
+ 																		 <button type="button" title="RESUMEN GENERAL POR PRODUCTOS"   onClick="goToURL(205,'ViewForm3')" class="btn btn-success"> <span class="glyphicon glyphicon-th-list"></span></button>
+																		 
+																		  <button  id="printButton3" type="button" class="btn btn-default"> <span class="glyphicon glyphicon-print"></span> </button>
+																		  <button  id="ExcelButton3" type="button" class="btn btn-default"> <span class="glyphicon glyphicon-download-alt"></span></button>
+																	
+																	  <hr>
+																	
+																			<input type="text" placeholder="Digite producto/articulo" id='producto_busca' class="form-control" name="producto_busca" >	
+																		  
+																	    </div>	  
+																	
+																	 
 
 															      </div>
 																
@@ -243,7 +260,12 @@
 																<div class="col-md-12"  style="padding-top: 10px;padding-bottom: 5px">
 
 																  <button type="button"  onClick="goToURL(3,'ViewForm4')" class="btn btn-primary"> <span class="glyphicon glyphicon-search"></span></button>
+																	
+																 <button type="button" title="RESUMEN ROTACION DE PRODUCTOS"  onClick="goToURL(301,'ViewForm4')" class="btn btn-info"> <span class="glyphicon glyphicon-alert"></span></button>
+																	
+																	
 																  <button  id="printButton4" type="button" class="btn btn-default"> <span class="glyphicon glyphicon-print"></span> </button>
+																	
 																  <button  id="ExcelButton4" type="button" class="btn btn-default"> <span class="glyphicon glyphicon-download-alt"></span></button>
 
 															      </div>

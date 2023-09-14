@@ -116,7 +116,13 @@
 
                 $this->obj->list->lista('Firma Responsable de Area?',$MATRIZ,'responsable',$datos,'required','','div-2-4');
                 
+
+                $this->set->div_label(12,'Aplica Monto descuento');	 
                       
+
+                $this->obj->text->text_blue('Monto Aplica',"number",'monto',20,15,$datos,'required','','div-2-4') ; 
+
+
          $this->obj->text->texto_oculto("action",$datos); 
          
          $this->set->_formulario('-','fin'); 

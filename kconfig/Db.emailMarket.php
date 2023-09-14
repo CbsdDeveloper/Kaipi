@@ -142,7 +142,7 @@ class EmailEnvio{
         $this->mail->CharSet = 'UTF-8';
         $this->mail->setLanguage('es');
         $this->mail->IsSMTP();
-        $this->mail->SMTPDebug  = 3;
+        $this->mail->SMTPDebug  = 0; // 0 = no debug || 3 = debug con mensajes
         // Configurar parámetros de correo
         $this->mail->SMTPAuth = true;
         $this->mail->SMTPSecure = 'tls';

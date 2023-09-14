@@ -58,12 +58,29 @@
       
       	while ($fetch=$this->bd->obtener_fila($resultado)){
       		 
+
+               $legal = 'NO';
+
+               if (   trim($fetch['afecta']) == 'S'){
+                    $legal = 'SI';
+               }
+
+
+               $imagen_activo = ' <img src="../../kimages/activo_no.png"   align="absmiddle" /> ';
+
+               if (   trim($fetch['activo']) == 'S'){
+                    $imagen_activo = ' <img src="../../kimages/activo_si.png"  align="absmiddle" /> ';
+               }
+
+              
+
+
+
       		$output[] = array (
-      							$fetch['id_accionl'],
-                                $fetch['nombre'],
-                                $fetch['legal'],
-      		                    $fetch['sesion'] , 
-                                $fetch['activo'] 
+      					$fetch['id_accionl'],
+                                '<b>'.trim($fetch['nombre']).'</b>',
+                                 $imagen_activo.$fetch['legal'],
+                                $legal
        					);
       	}	
       

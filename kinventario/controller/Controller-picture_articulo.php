@@ -47,9 +47,15 @@
        //-----------------------------------------------------------------------------------------------------------
       //Constructor de la clase
       //-----------------------------------------------------------------------------------------------------------
-      function FiltroFormulario( $tipourl, $url,$id ){
+      function FiltroFormulario( $tipourl, $url,$id,$id_movimiento ){
       
       
+        $datos  = $this->bd->query_array('web_producto',
+        '*',
+        'idproducto='.$this->bd->sqlvalue_inyeccion($id, true)
+        ); 
+
+
           $ACarpeta = $this->bd->query_array('wk_config',
               'carpetasub',
               'tipo='.$this->bd->sqlvalue_inyeccion($tipourl,true)
@@ -70,10 +76,13 @@
           
           echo $VisorArticulo;
           
-          $datos  = $this->bd->query_array('web_producto',
-              'producto, referencia,    cuenta_inv,   costo,  saldo,   lifo, cuenta_gas,  partida , promedio, fifo',
-              'idproducto='.$this->bd->sqlvalue_inyeccion($id,true)
+          $datos_caduca  = $this->bd->query_array('inv_movimiento_det',
+              'fcaducidad',
+              'id_movimiento='.$this->bd->sqlvalue_inyeccion($id_movimiento,true). ' and 
+               idproducto='.$this->bd->sqlvalue_inyeccion($id, true)
               ); 
+
+ 
       
           echo '<h5>'.$datos['producto'].'<br>' .'Costo '.$datos['costo'].'<br>' .'Saldo '.$datos['saldo'].'<br>' .'</h5>';
           
@@ -105,9 +114,21 @@
           $this->obj->list->listadb($resultado,$tipo,'Cuenta Costo','cuenta_gas',$datos,'','','div-3-9');
           
           
+          $this->set->div_label(12,'Registro Lote fecha de caducidad ');	 
+
+         $fcaducidad =  $datos_caduca['fcaducidad'];
+
+         if (empty( $fcaducidad  )){
+            $datos['fcaducidad'] = date('Y-m-d');
+         }else{
+            $datos['fcaducidad'] = $fcaducidad;
+         }
          
+          $this->obj->text->text_blue('Lote Caducidad',"date",'fcaducidad',40,45,$datos,'','','div-3-3') ;       
           
           $this->obj->text->texto_oculto("idproductop",$datos); 
+
+          $this->set->div_label(12,' ');
       
       }
 ///------------------------------------------------------------------------
@@ -118,13 +139,15 @@
  
    if (isset($_GET['id']))	{
        
+    
        
+       $id_movimiento        = $_GET['id_movimiento'];
        $tipourl        = $_GET['tipourl'];
        $url            = $_GET['url'];
        
        $id            = $_GET['id'];
        
-       $gestion->FiltroFormulario( $tipourl, $url,$id);
+       $gestion->FiltroFormulario( $tipourl, $url,$id,$id_movimiento );
        
    }
  

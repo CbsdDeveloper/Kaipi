@@ -41,6 +41,11 @@ $(document).ready(function(){
 	  		  Libro_grupo_flujo();
  		});   
 
+		 $('#financiero_flujo1').on('click',function(){
+			Libro_grupo_flujo1();
+	 	});   
+
+
 
 		  $('#financiero_mayor').on('click',function(){
 			  Libro_grupo_mayor();
@@ -394,6 +399,58 @@ function BusquedaInicial()
  	$.ajax({
 			data:  parametros,
 			url:   '../model/Model-libro_flujo.php',
+			type:  'POST' ,
+			cache: false,
+			beforeSend: function () { 
+
+						$("#Viewlibro").html('Procesando');
+
+				},
+
+			success:  function (data) {
+
+					 $("#Viewlibro").html(data); 
+
+				     
+
+				} 
+
+	});
+
+      
+
+ }
+ //----------------------------
+ function Libro_grupo_flujo1()
+
+ {
+
+   
+	  var ffecha1 = $("#ffecha1").val();
+	  var ffecha2 = $("#ffecha2").val();
+	  var id_asiento =     $("#id_asiento").val();
+	  var cuentat    =     $("#cuentat").val();
+	  var cuenta     =     $("#cuenta").val();
+	  var auxiliares =     $("#auxiliares").val();
+	  
+ 
+
+ 	 var parametros = {
+			    'brfecha1' : ffecha1, 
+			    'brfecha2' : ffecha2,
+			    'id_asiento' : id_asiento ,
+			    'cuentat'    : cuentat,
+			    'auxiliares' : auxiliares,
+			    'cuenta'     : cuenta
+    };
+
+ 	 
+
+ 	 
+
+ 	$.ajax({
+			data:  parametros,
+			url:   '../model/Model-FlujoEsigef.php',
 			type:  'POST' ,
 			cache: false,
 			beforeSend: function () { 
@@ -1167,10 +1224,38 @@ function ValidaCuenta( )
    });
 
 }	
+//-------------------------------------------------------------------------
+function irAsientoPago(idasiento){        
+ 	
+     
+	var posicion_x; 
+	var posicion_y; 
+  
+	var enlace = '../view/co_validacion_asiento_pago?codigo=' + idasiento  ;
+  
+  
+	
+	
+	var ancho = 1000;
+	
+	var alto = 475;
+	
+   
+	
+	posicion_x=(screen.width/2)-(ancho/2); 
+	posicion_y=(screen.height/2)-(alto/2); 
+	
+	 window.open(enlace,'#','width='+ancho+',height='+alto+',left='+posicion_x+',top='+posicion_y+'');
+ 
+ }
 //------------------------------------------------------------------------- 
 function revisa_flujo(celda, codigo)
 {
 
+
+	$('#myModalAsientos').modal('show');
+
+ 
 
 	var ffecha1 = $("#ffecha1").val();
 	var ffecha2 = $("#ffecha2").val();
@@ -1178,8 +1263,8 @@ function revisa_flujo(celda, codigo)
 	var parametros = {
 		'ffecha1' : ffecha1, 
 		'ffecha2' : ffecha2,
- 		'tipo'     : 'asiento',
-		 'codigo' : codigo
+ 		 'codigo' : codigo,
+		 'accion':1
 };
  	
 		$.ajax({
@@ -1188,21 +1273,12 @@ function revisa_flujo(celda, codigo)
 		    type:  'POST' ,
 		  cache: false,
 		success:  function (data) {
-
-			var str  = data;
-				data =  $.trim(str);
-
-					 if (data == '0'){
-						celda.style.backgroundColor="#ffffff";
-					} 
-					else {
-						alert(data + ' ' + codigo);
-						celda.style.backgroundColor="#66ff33";
-					} 
+			$("#FiltroPresupuesto").html(data); 
+		 
 			} 
 
 		});
-
+ 
 
 
 
