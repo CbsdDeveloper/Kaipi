@@ -136,8 +136,9 @@ class ReportePdf{
   		
  
 		$usuarios = $this->bd->__user($this->sesion);
+		// $usuarios = $this->bd->__user(trim($datos["sesion"]));
 		
-		$datos['elaborado'] =  $usuarios['completo'] ;  
+		$datos['elaborado'] =  trim($datos["sesion"]); //$usuarios['completo'] ;  
 		
 		
 		return $datos;

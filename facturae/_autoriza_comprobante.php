@@ -112,6 +112,8 @@ try{
                          if($echo) echo 'SRI Sending ----> <b>Correctamente</b>!</br>';
                          
                          // AUTORIZACION DEL SRI
+                         // ESPERAMOS 2 SEGUNDOS ANTES DE OBTENER LA AUTORIZACIÓN DEL SRI
+                         sleep(2);
                          $sri_aut = $signer->autorizarSri(); // no lleva argumentos, xq ya los cogio del config
                          if($sri_aut['success']==false)
                              throw new Exception($sri_aut['message'].(isset($sri_aut['informacionAdicional'])?' - '.$sri_aut['informacionAdicional']:'')); // error autorizacion SRI

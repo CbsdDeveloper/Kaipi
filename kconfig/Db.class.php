@@ -1122,12 +1122,12 @@ class Db {
 		$this->servidor = $this->_refd($_SESSION['ip']);
         
     }
-    $this->servidor = '192.168.1.3';
-    // $this->servidor = '127.0.0.1';
+    // $this->servidor = '192.168.1.3';
+    $this->servidor = '127.0.0.1';
     $this->base_datos = 'db_kaipi';
     $this->usuario = 'postgres';
-    $this->password = 'Cbsd2019';
-    // $this->password = 'root';
+    // $this->password = 'Cbsd2019';
+    $this->password = 'root';
 
     // echo $this->servidor;
     // echo $this->base_datos;
