@@ -112,18 +112,18 @@
       function _verifica_partidas( $id_rol1,$regimen,$programa ){
             
           
-          $sql1 = "SELECT  programa, clasificador, patronal as monto
+          $sql1 = "SELECT  programa,programa, clasificador, patronal as monto
                 FROM  view_rol_patronal
                 where id_rol= ".$this->bd->sqlvalue_inyeccion($id_rol1, true)." and 
                       regimen = ".$this->bd->sqlvalue_inyeccion($regimen, true).' union ';
  
           
-          $sql = $sql1. 'SELECT programa  ,clasificador,sum(ingreso) as monto
+          $sql = $sql1. 'SELECT programa,programa_original,clasificador,sum(ingreso) as monto
                   FROM view_rol_cer
                   where id_rol='.$this->bd->sqlvalue_inyeccion($id_rol1, true)." and
                         tipo = 'Ingresos' and 
                         regimen =".$this->bd->sqlvalue_inyeccion($regimen, true)."
-                group by programa,clasificador,nombre";
+                group by programa,programa_original,clasificador,nombre";
           
            
           $stmt = $this->bd->ejecutar($sql);
@@ -135,7 +135,7 @@
           
           while ($x=$this->bd->obtener_fila($stmt)){
               
-              $programa     = trim($x["programa"]);
+              $programa     = trim($x["programa_original"]);
               $clasificador = trim($x["clasificador"]);
               $monto        = $x["monto"];
               
@@ -250,16 +250,16 @@
       //--------------------------------------------------------------------------------        
      function certificacion_detalle(  $idtramite, $id_rol1,$regimen,$programa  ){
      	
-         $sql1 = "SELECT  programa, clasificador, patronal as monto
+         $sql1 = "SELECT  programa,programa, clasificador, patronal as monto
                 FROM  view_rol_patronal
                 where id_rol= ".$this->bd->sqlvalue_inyeccion($id_rol1, true)." and
                       regimen = ".$this->bd->sqlvalue_inyeccion($regimen, true).' union ';
          
-         $sql = $sql1.'SELECT programa  ,clasificador,sum(ingreso) as monto
+         $sql = $sql1.'SELECT programa,programa_original,clasificador,sum(ingreso) as monto
                   FROM view_rol_cer
                   where id_rol='.$this->bd->sqlvalue_inyeccion($id_rol1, true)." and
                         tipo = 'Ingresos' and regimen =".$this->bd->sqlvalue_inyeccion($regimen, true)."
-                group by programa,clasificador,nombre";
+                group by programa,programa_original,clasificador,nombre";
     
          $stmt = $this->bd->ejecutar($sql);
          
@@ -271,7 +271,7 @@
           
          while ($x=$this->bd->obtener_fila($stmt)){
              
-             $programa     = trim($x["programa"]);
+             $programa     = trim($x["programa_original"]);
              $clasificador = trim($x["clasificador"]);
              $monto        = $x["monto"];
               
