@@ -1026,6 +1026,9 @@ class ReportePdf{
                   <tr>
 				     <td colspan="4" style="font-weight: normal;font-size: 11px;padding: 5px"><b>'.$datos['descripcion'].'</b></td>
 			      </tr>
+                  <tr>
+				     <td colspan="4" style="font-weight: normal;font-size: 9px;padding: 1px;padding-left: 5px"><b>Caracteristicas Adicionales:</b> '.$datos['detalle'].'</td>
+			      </tr>
 				 <tr>
     				   <td '.$estilo.' width="10%">'.$marca.'</td>
     				   <td '.$estilo.' width="50%">'.trim($datos['marca']).'</td>
@@ -1060,6 +1063,30 @@ class ReportePdf{
     				   <td '.$estilo.' >Fecha Comprobante  </td>
     				   <td '.$estilo.' > '.$datos['fecha_comprobante'].' </td>
 			      </tr>
+
+				  <tr>
+				      <td colspan="4"   bgcolor="#EDEDED" style="font-weight: normal;font-size: 11px;padding: 6px">4. VALORIZACIÓN</td>
+			       </tr>
+				   <tr>
+    				   <td '.$estilo.' >Depreciación?</td>
+    				   <td '.$estilo.' >'.trim($datos['depreciacion']).'</td>
+    				   <td '.$estilo.' >Vida Útil</td>
+    				   <td '.$estilo.' >'.trim($datos['vida_util']).'</td>
+			      </tr> 
+                   <tr>
+    				   <td '.$estilo.' >% Depreciación</td>
+    				   <td '.$estilo.' >'.trim($datos['razon']).'</td>
+    				   <td '.$estilo.' >Valor Depreciación</td>
+    				   <td '.$estilo.' >'.trim($datos['valor_depreciacion']).'</td>
+			       </tr>
+                   <tr>
+    				   <td '.$estilo.' >Última Depreciación</td>
+    				   <td '.$estilo.' >'.trim($datos['anio_depre']).'</td>
+    				   <td '.$estilo.' >Valor en Libros</td>
+    				   <td '.$estilo.' >'.trim($datos['valor_libros']?:'0.00').'</td>
+			       </tr>
+                  
+
 				  <tr>
 				      <td colspan="4"   bgcolor="#EDEDED" style="font-weight: normal;font-size: 11px;padding: 6px">4. IDENTIFICACION RESPONSABLE</td>
 			       </tr> 

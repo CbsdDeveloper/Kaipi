@@ -28,7 +28,7 @@ $dia  = $array[2] ;
 
 $fecha = $dia.'/'.$mes.'/'.$anio ;
 
-$cadena = $fecha.sp().trim($x['cuenta_bce']).sp().trim($x['empresa']);
+$cadena = $fecha.sp().trim($x['cuenta_bce']).sp().substr(trim($x['empresa']), 0, 30);
  
 
 $fh = fopen("proveedor.txt", 'w') or die("Se produjo un error al crear el archivo");
@@ -75,7 +75,21 @@ while ($xx=$bd->obtener_fila($stmt1)){
  
 fclose($fh);
 
- 
+require 'pclzip.lib.php';
+$archivo = new PclZip( "spi-proveedor.zip" );
+// Podemos especificar los archivos pasandolos como un arreglo
+$nuevos_archivos = array( "proveedor.txt" );
+$agregar = $archivo->create($nuevos_archivos );
+
+// Gestionar error ocurrido (si $archivo->add() retorna cero a $agregar)
+if ( !$agregar ) {
+    echo "ERROR. Codigo: ".$archivo->errorCode()." ";
+    echo "Nombre: ".$archivo->errorName()." ";
+    echo "Descripcion: ".$archivo->errorInfo();
+} else {
+    echo "Archivos agregados exitosamente!";
+}
+
  
  $achivo = '<div class="col-md-12" style="padding-top: 10px;padding-bottom: 10px"> <h4>
              REPORTE DE CONTROL  *** DETALLE DE PAGO A PROVEEDORES *** <br>

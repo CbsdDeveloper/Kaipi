@@ -48,7 +48,7 @@ $fecha = $dia.'/'.$mes.'/'.$anio.' 00:00:00,' ;
 $input = str_pad(trim($x['referencia_pago']), 5, "0", STR_PAD_LEFT).','.$y['nn'].',1,'.$y['total'].',' ;
 
 $codigobce = $x['cuenta_bce']; 
-$empresa   = ','.trim($x['empresa']).','.trim($x['localidad']).','.trim($x['mes_pago']);
+$empresa   = ','.substr(trim($x['empresa']), 0, 30).','.trim($x['localidad']).','.trim($x['mes_pago']);
 
 
 

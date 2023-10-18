@@ -217,6 +217,7 @@
 											  <li><a  href="../../spi/spi-sp.md5" download="spi-sp.md5">Descargar MD5</a></li>
 											  <li><a href="../../spi/spi-sp.zip" download="spi-sp.zip">Descargar ZIP</a></li>
 											  <li><a href="../../spi/proveedor.txt" download="proveedor.txt">Descargar Proveedor</a></li>	
+											  <li><a href="../../spi/spi-proveedor.zip" download="spi-proveedor.zip">Descargar Proveedor ZIP</a></li>	
 											</ul>
 									      </div>
 										 
