@@ -127,7 +127,7 @@
                         
                         $this->obj->text->text('Fecha',"date" ,'fecha' ,80,80, $datos ,'required','','div-1-3') ;
  
-                        $this->obj->text->editor('Detalle','detalle',2,45,350,$datos,'required','','div-1-7') ;
+                        $this->obj->text->editor('Detalle','detalle',2,45,250,$datos,'required','','div-1-7') ;
                         
                         $this->obj->text->text('Envio',"date" ,'fecha_envio' ,80,80, $datos ,'required','readonly','div-1-3') ;
                      

@@ -847,7 +847,8 @@ class proceso{
 	    $secuencia = $this->bd->query_array('co_asiento',
 	        'id_asiento',
 	         'registro='.$this->bd->sqlvalue_inyeccion($this->ruc,true).' and
-             id_tramite='.$this->bd->sqlvalue_inyeccion($id_tramite,true)
+             id_tramite='.$this->bd->sqlvalue_inyeccion($id_tramite,true).' and
+			 estado <> '.$this->bd->sqlvalue_inyeccion('aprobado',true)
 	        );
 	    
 	    

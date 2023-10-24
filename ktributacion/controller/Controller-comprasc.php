@@ -94,7 +94,7 @@
                 $this->obj->text->text('Fecha',"date",'fecharegistro',15,15,$datos,'required','','div-2-4');
                 
            
-                $this->obj->text->editor('Detalle','detalle',2,45,300,$datos,'required','','div-2-10') ;
+                $this->obj->text->editor('Detalle','detalle',2,45,250,$datos,'required','','div-2-10') ;
                 
         
                 
