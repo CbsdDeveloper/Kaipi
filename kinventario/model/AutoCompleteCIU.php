@@ -16,7 +16,7 @@ session_start( );
 	
     
     	
-		    $sql = "SELECT  razon 
+		    $sql = "SELECT  idprov,razon 
 					  FROM  par_ciu
 					  WHERE estado = 'S' AND upper(razon) like ".$query." order by razon";
 					    
@@ -25,7 +25,7 @@ session_start( );
 		    
 		    while ($x=$bd->obtener_fila($stmt)){
 		        
-		    	$cnombre =  trim($x['razon']);
+		    	$cnombre =  trim($x['idprov']) .' '. trim($x['razon']);
 		    	
 		    	$razon[] =  $cnombre ;
 		    

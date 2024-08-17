@@ -711,11 +711,12 @@ reporte de mes de especies mensual
     while ($x=$this->bd->obtener_fila($resultado)){
         
         $total = $x['total']  ;
+        $final = intval(trim($x['d1'])) + intval($x['nn']) - 1;
         
         echo '<tr>
                 <td   width="10%" align="center">'.$x['fecha'].'</td>
                 <td   width="20%" align="center"  >'.trim($x['d1']).'</td>
-                <td   width="20%" align="center" >'.trim($x['d2']).'</td>
+                <td   width="20%" align="center" >'.trim($final).'</td>
                 <td   width="10%" align="center" >'.intval($x['nn']).'</td>
                 <td   width="10%" align="right" >'.number_format($total,2,",",".").'</td>
               </tr>';

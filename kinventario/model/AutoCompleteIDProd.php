@@ -26,7 +26,7 @@ session_start( );
         				  FROM web_producto
         				  where producto  = ".$bd->sqlvalue_inyeccion(trim($detalle), true) ." AND
                                 registro = ".$bd->sqlvalue_inyeccion($registro,true)." AND
-                                idbodega = ".$bd->sqlvalue_inyeccion($idbodega,true);
+                                idbodega = ".$bd->sqlvalue_inyeccion($idbodega,true)." AND saldo > 0";
             
             
             $resultado1 = $bd->ejecutar($sql);

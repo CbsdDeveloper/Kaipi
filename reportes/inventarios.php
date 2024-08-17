@@ -350,7 +350,7 @@ where 	registro = ".$this->bd->sqlvalue_inyeccion($this->ruc ,true)." and
 				  <td width="50%" >'.$x['producto'].'</td>
 				  <td width="10%" >'.$x['unidad'].'</td>
 				  <td width="10%" align="right" >'.$x['cantidad'].'</td>
-				  <td width="10%" align="right" >'.number_format( $sub ,4,",",".").'</td>
+				  <td width="10%" align="right" >'.number_format( $x['costo'] ,4,",",".").'</td>
 				   <td width="10%" align="right" >'.number_format($x['monto_iva'],2,",",".").'</td>
 				  <td width="10%" align="right" >'.number_format($x['total'],2,",",".").'</td>
 				</tr>';
@@ -369,7 +369,7 @@ where 	registro = ".$this->bd->sqlvalue_inyeccion($this->ruc ,true)." and
     
  
 
-      $monto_iva = $n4 * (12/100);
+      $monto_iva = $n3; //$n4 * (12/100);
 
       $total =  $monto_iva + $n4  +  $n5;
 

@@ -181,8 +181,9 @@ $datos = $g->FirmasPie();
           <td align="center" valign="middle">Detalle</td>
           <td align="center" valign="middle">Unidad</td>
           <td align="center" valign="middle">Cantidad</td>
+          <td align="center" valign="middle">Costo Unitario</td>
           <td align="right" valign="middle">Subtotal</td>
-		  <td align="right" valign="middle">Monto IVA</td>	
+		  <!-- <td align="right" valign="middle">Monto IVA</td>	 -->
           <td align="right" valign="middle">Total</td>
         </tr>
 		  <?php      $g->_getDetalle($codigo) ;   ?>
@@ -238,7 +239,8 @@ $pdf = $dompdf->output(); // Obtener el PDF generado
 //$dompdf->stream(); // Enviar el PDF generado al navegador
  
 //$filename = "Anexo".time().'.pdf';
-$filename = "ComprobanteInventarios".'.pdf';
+$d=strtotime($g->_getSolicita('fecha'));
+$filename = "PDF/ComprobanteIngreso-".trim($g->_getSolicita('comprobante')).'-'.date("Y", $d).'.pdf';
 
 file_put_contents($filename, $pdf);
  

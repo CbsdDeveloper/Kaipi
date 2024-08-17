@@ -43,7 +43,7 @@ if ( $id_tramite > 0 ) {
             a.estado in ('3','4','5','6') and 
             a.anio = ".$bd->sqlvalue_inyeccion($anio, true)." and a.id_tramite in( SELECT  b.id_tramite 
                                                                         FROM presupuesto.view_dettramites b
-                                                                        where b.subgrupo in ('5308','7308','6308','6310','6311','7314')
+                                                                        where b.subgrupo in ('5308','7308','6308','6310','6311','7314','7304')
             ) order by fecha desc";
 }
  

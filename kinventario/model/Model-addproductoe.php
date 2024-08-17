@@ -60,7 +60,7 @@
  	    
  	    $AProducto = $bd->query_array( 'web_producto',
  	        'costo,tributo,saldo',
- 	        'idproducto='.$bd->sqlvalue_inyeccion($idproducto,true)
+ 	        'saldo> 0 and idproducto='.$bd->sqlvalue_inyeccion($idproducto,true)
  	        );
  	    
  	    //----------------------------------------------------

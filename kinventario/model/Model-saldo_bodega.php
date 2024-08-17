@@ -131,7 +131,7 @@ class proceso{
 	    
 	    $sql_det = 'SELECT registro,   idproducto, producto, 
                           sum(cantidad) as cantidad, 
-                          avg(costo) as costo, 
+                          min(costo) as costo, 
                           sum(total) as total, 
                           sum(ingreso) as ingreso, 
                           sum(egreso) as egreso
@@ -154,6 +154,11 @@ class proceso{
 	        
 	        $saldo = $ingreso - $egreso;
 	       
+			// $yy= $this->bd->query_array('public.inv_movimiento_det',
+            //           'costo', 
+            //           "id_movimiento in (select id_movimiento from public.inv_movimiento where tipo='I' and estado='aprobado' and (fecha between '2023-01-01' and '2023-12-31')) and idproducto=".$this->bd->sqlvalue_inyeccion($idproducto,true)
+            //         );
+			// 		$costo             = round($yy['costo'],4);
 	            
 	            $sql = 'UPDATE web_producto
 						  SET  	saldo   =   '.$this->bd->sqlvalue_inyeccion($saldo, true).',

@@ -219,7 +219,8 @@ $pdf = $dompdf->output(); // Obtener el PDF generado
 //$dompdf->stream(); // Enviar el PDF generado al navegador
  
 //$filename = "Anexo".time().'.pdf';
-$filename = "ComprobanteInventarios".'.pdf';
+$d=strtotime($g->_getSolicita('fecha'));
+$filename = "PDF/ComprobanteEgreso-".trim($g->_getSolicita('comprobante')).'-'.date("Y", $d).'.pdf';
 
 file_put_contents($filename, $pdf);
  
