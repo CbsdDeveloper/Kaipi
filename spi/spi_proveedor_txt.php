@@ -47,7 +47,7 @@ $stmt1 = $bd->ejecutar($sql);
 
 while ($xx=$bd->obtener_fila($stmt1)){
       
-    $string = substr(trim($xx['razon']),0,29).' ';
+    $string = substr(trim($xx['razon']),0,29);
     
     
     $micadena = utf8_decode($string);
@@ -62,7 +62,7 @@ while ($xx=$bd->obtener_fila($stmt1)){
 
     }
 
-    $cadena = trim($idprov).sp().$str_nombre.sp().
+    $cadena = trim($idprov).sp().trim($str_nombre).sp().
               trim($xx['nro_cuenta']).sp().($xx['monto_pagar']).sp().
               trim($xx['codigo_banco']).sp().trim($xx['tipo_cuenta'])  ;
         

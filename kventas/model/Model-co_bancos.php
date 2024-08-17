@@ -129,7 +129,7 @@ class proceso{
 		echo  $result;
 	}
 	//--------------------------------------------------------------------------------------
-	//aprobación de asientos
+	//aprobaciï¿½n de asientos
 	function aprobacion( $id  ){
 	    
 	    
@@ -173,7 +173,7 @@ class proceso{
 		}
 		// ------------------  eliminar
 		if ($action == 'del'){
-			
+			echo 'eliminar';
 			$this->eliminar($id );
 			
 		}
@@ -287,7 +287,11 @@ class proceso{
 	function eliminar($id ){
 		
  
- 		
+		$sql = "DELETE FROM co_conciliad where id_concilia=".$this->bd->sqlvalue_inyeccion($id,true);
+		$this->bd->ejecutar($sql);
+		
+		$sql1 = "DELETE FROM co_concilia where id_concilia=".$this->bd->sqlvalue_inyeccion($id,true);
+		$this->bd->ejecutar($sql1);
 	 
 		
 		
@@ -391,7 +395,13 @@ if (isset($_GET['accion']))	{
 	$accion    		= $_GET['accion'];
 	$id            		= $_GET['id'];
 	  
+	if ($accion == 'del') {
+		// echo 'eliminar';
+		// $gestion->xcrud(trim($action) ,  $id  );
+		$gestion->eliminar(  $id  );
+	} else {
 		$gestion->consultaId($accion,$id);
+	}
   
 	
 }

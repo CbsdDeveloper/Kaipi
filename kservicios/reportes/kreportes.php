@@ -819,7 +819,7 @@ class ReportePdf{
 	    $hoy = date("Y-m-d H:i:s");
 	    
 	    // we building raw data
-	    $codeContents .= 'GENERADO POR:'.$nombre."\n";
+	    $codeContents = 'GENERADO POR:'.$nombre."\n";
 	    $codeContents .= 'FECHA: '.$hoy."\n";
 	    $codeContents .= 'DOCUMENTO: '.$elaborador."\n";
 	    $codeContents .= 'INSTITUCION :'.$name."\n";
@@ -863,8 +863,35 @@ class ReportePdf{
     $datos["idprov"] = $xx["idprov"];
     $datos["razon"] = $xx["razon"];
     $datos["direccion"] = $xx["direccion"];
-    
-    
+
+
+	$bdExterno=new Db;
+
+	$servidor ='192.168.1.3';
+	$base_datos = 'db_cbsd';
+	$usuario = 'postgres';
+	$password = 'Cbsd2019';
+
+	$x = $bdExterno->conectar_sesion_externo($servidor, $base_datos, $usuario, $password) ;
+	$datosExterno = $bdExterno->query_array('permisos.vw_autoinspecciones',   // TABLA
+	'*',                        // CAMPOS
+	'autoinspeccion_codigo='.$bdExterno->sqlvalue_inyeccion($datos["autorizacion"],true));// CONDICION
+
+		// print_r($x);
+		// print_r($datosExterno);
+
+	if ($datosExterno) { // procede a buscacr la autoinspeccion
+		$datos["local_nombrecomercial"] = $datosExterno["local_nombrecomercial"];
+		$datos["local_parroquia"] = $datosExterno["local_parroquia"];
+		$datos["ciiu_codigo"] = $datosExterno["ciiu_codigo"];
+		$datos["ciiu_nombre"] = $datosExterno["ciiu_nombre"];
+		if ($datosExterno["fk_local_id"]) {// OBTENIENDO DATOS DEL ESTABLECIMIENTO
+			$datosEstablecimiento = $bdExterno->query_array('permisos.tb_locales',   // TABLA
+			'*',                        // CAMPOS
+			'local_id='.$bdExterno->sqlvalue_inyeccion($datosExterno["fk_local_id"],true));// CONDICION
+			$datos["local_numeroestablecimiento"] = $datosEstablecimiento["local_numeroestablecimiento"];
+		}
+	}
     
     return $datos;
 
@@ -888,15 +915,15 @@ class ReportePdf{
 	$hoy = date("Y-m-d H:i:s");
 	
 	// we building raw data
-	$codeContents .= 'GENERADO POR:'.$nombre."\n";
+	$codeContents = 'GENERADO POR:'.$nombre."\n";
 	$codeContents .= 'FECHA: '.$hoy."\n";
 	$codeContents .= 'DOCUMENTO: '.$codigo."\n";
 	$codeContents .= 'INSTITUCION :'.$name."\n";
 	$codeContents .= 'SOLICITA :'.$solicita."\n";
 	$codeContents .= 'PERIODO :'.$anio."\n";
-	$codeContents .= '2.4.1'."\n";
+	$codeContents .= '3.0.2'."\n";
 	
-	$tempDir = EXAMPLE_TMP_SERVERPATH;
+	// $tempDir = EXAMPLE_TMP_SERVERPATH;
 	
 	QRcode::png($codeContents,  'logo_qr.png', QR_ECLEVEL_L, 3);
 }

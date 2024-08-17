@@ -943,7 +943,7 @@ function movimiento_compras_diario( $f1,$f2,$cajero,$anio){
 
         $this->obj->grid->KP_with("10,43,7,5,5,5,5,5,5,5,5");
         
-        $this->obj->grid->KP_GRID_CTA_visor($stmt,$tipo,'12px');
+        $this->obj->grid->KP_GRID_CTA_visor($stmt,$tipo);
         
          
     }
@@ -976,7 +976,7 @@ function movimiento_compras_diario( $f1,$f2,$cajero,$anio){
 
         $this->obj->grid->KP_with("7,53,5,5,5,5,5,5,5,5");
         
-        $this->obj->grid->KP_GRID_CTA_visor($stmt,$tipo,'12px');
+        $this->obj->grid->KP_GRID_CTA_visor($stmt,$tipo);
         
          
     }

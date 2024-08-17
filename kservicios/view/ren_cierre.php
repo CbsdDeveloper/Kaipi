@@ -119,7 +119,8 @@
                                                          <th width="10%">Id</th>
                                                          <th width="10%">Pagado</th>
 													    <th width="10%">Emitido</th>
-                                                         <th width="10%">Nro.Factura</th>
+                                                         <th width="5%">Nro.Factura</th>
+                                                         <th width="5%">Nro. Doc.</th>
                                                          <th width="10%">Identificacion</th>
                                                          <th width="20%">Cliente</th>
                                                           <th width="10%">Total</th>

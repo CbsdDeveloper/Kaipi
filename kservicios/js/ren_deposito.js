@@ -299,7 +299,23 @@ function impresion_caja(){
 	
 	posicion_y=(screen.height/2)-(alto/2); 
 	
-	window.open(enlace,'#','width='+ancho+',height='+alto+',left='+posicion_x+',top='+posicion_y+'');
+	// window.open(enlace,'#','width='+ancho+',height='+alto+',left='+posicion_x+',top='+posicion_y+'');
+
+	
+	// Utilizando expresiones regulares para extraer solo los números
+	var texto     = $("#result").html();
+	var numeros = texto.match(/\d+/g);
+
+	id_asiento = '0';
+	// Si hay números, imprímelos
+	if (numeros !== null) {
+		id_asiento = numeros[0];
+	} else {
+		console.log("No se encontraron números en el texto");
+		id_asiento = '0';
+	}
+	enlace = '../../kcontabilidad/reportes/ficheropago?a=' +id_asiento;
+	window.open(enlace,'#','width=750,height=480,left=30,top=20');
   
   } 
 

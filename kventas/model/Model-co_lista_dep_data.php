@@ -42,7 +42,7 @@ $Aconciliacion = $bd->query_array('co_concilia',
                     mes    <= ".$bd->sqlvalue_inyeccion($Aconciliacion["mes"],true)  ;
     
                 
-              
+              echo $sql1;
                 
                 $stmt = $bd->ejecutar($sql1);
                 
@@ -124,6 +124,7 @@ $sql = 'SELECT  id_asiento_aux as "Asiento",
                               tipo = '. $bd->sqlvalue_inyeccion('deposito' , true).' and
                               registro = '. $bd->sqlvalue_inyeccion($registro , true);
 
+                              echo $sql;
 
 $resultado  = $bd->ejecutar($sql);
 

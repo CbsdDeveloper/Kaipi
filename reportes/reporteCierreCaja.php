@@ -143,7 +143,7 @@ table, th, td {
 		USUARIO <?php echo $g->_get_cajero('completo') ; ?><br><br>
 		
 		NRO.TRANSACCION: <?php echo $parte ; ?><br>
-		HORA : <?php echo $datos_parte["hora"] ; ?><br>
+		<!-- HORA : <?php //echo $datos_parte["hora"] ; ?><br> -->
 		
 			 
 		

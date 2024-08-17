@@ -90,7 +90,7 @@
 	   // tabla par_ciu 
 	   // campo modulo = 'C' contribuyentes, 'P' proveedores 'N' nomina
        
-      	$resultado = $this->bd->JqueryCursorVisor('par_ciu',$qquery );
+      	$resultado = $this->bd->JqueryCursorVisor('par_ciu',$qquery, '1' );
       	
       	while ($fetch=$this->bd->obtener_fila($resultado)){
       		

@@ -132,7 +132,7 @@ class proceso{
             'autoinspeccion_id='.$this->bd_externo->sqlvalue_inyeccion($GET['id'],true) // CONDICION
             );
         
-
+            // print_r($x_tramite);
           $idprov =  trim($x_tramite["entidad_ruc"]);
 
           $id_par_ciu =  $this->buscarCius( $idprov,  $x_tramite  );
@@ -260,13 +260,13 @@ class proceso{
             array( campo => 'razon',   tipo => 'VARCHAR2',   id => '1',  add => 'S',   edit => 'S',   valor => $nombre,   filtro => 'N',   key => 'N'),
             array( campo => 'tipo',   tipo => 'VARCHAR2',   id => '2',  add => 'N',   edit => 'N',   valor => 'N',   filtro => 'N',   key => 'N'),
             array( campo => 'direccion',   tipo => 'VARCHAR2',   id => '3',  add => 'S',   edit => 'S',   valor => $pro_direccion,   filtro => 'N',   key => 'N'),
-            array( campo => 'telefono',   tipo => 'VARCHAR2',   id => '4',  add => 'S',   edit => 'S',   valor =>$telefono,   filtro => 'N',   key => 'N'),
-            array( campo => 'correo',   tipo => 'VARCHAR2',   id => '5',  add => 'S',   edit => 'S',   valor => $ccorreo,   filtro => 'N',   key => 'N'),
-            array( campo => 'movil',   tipo => 'VARCHAR2',   id => '6',  add => 'S',   edit => 'S',   valor => $telefono,   filtro => 'N',   key => 'N'),
+            array( campo => 'telefono',   tipo => 'VARCHAR2',   id => '4',  add => 'S',   edit => 'S',   valor =>substr($telefono,0,30),   filtro => 'N',   key => 'N'),
+            array( campo => 'correo',   tipo => 'VARCHAR2',   id => '5',  add => 'S',   edit => 'S',   valor => substr($ccorreo,0,50),   filtro => 'N',   key => 'N'),
+            array( campo => 'movil',   tipo => 'VARCHAR2',   id => '6',  add => 'S',   edit => 'S',   valor => substr($telefono,0,30),   filtro => 'N',   key => 'N'),
             array( campo => 'idciudad',   tipo => 'NUMBER',   id => '7',  add => 'S',   edit => 'S',   valor => '18',   filtro => 'N',   key => 'N'),
             array( campo => 'contacto',   tipo => 'VARCHAR2',   id => '8',  add => 'N',   edit => 'N',   valor => $contacto,   filtro => 'N',   key => 'N'),
             array( campo => 'ctelefono',   tipo => 'VARCHAR2',   id => '9',  add => 'N',   edit => 'N',   valor => $telefono,   filtro => 'N',   key => 'N'),
-            array( campo => 'ccorreo',   tipo => 'VARCHAR2',   id => '10',  add => 'N',   edit => 'N',   valor => $ccorreo,   filtro => 'N',   key => 'N'),
+            array( campo => 'ccorreo',   tipo => 'VARCHAR2',   id => '10',  add => 'N',   edit => 'N',   valor => substr($ccorreo,0,50),   filtro => 'N',   key => 'N'),
             array( campo => 'estado',   tipo => 'VARCHAR2',   id => '11',  add => 'S',   edit => 'S',   valor => 'S',   filtro => 'N',   key => 'N'),
             array( campo => 'tpidprov',   tipo => 'VARCHAR2',   id => '12',  add => 'S',   edit => 'S',   valor => '01',   filtro => 'N',   key => 'N'),
             array( campo => 'modulo',   tipo => 'VARCHAR2',   id => '13',  add => 'S',   edit => 'N',   valor => 'C',   filtro => 'N',   key => 'N'),

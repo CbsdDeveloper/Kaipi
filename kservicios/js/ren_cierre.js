@@ -146,12 +146,13 @@ return today;
                                 s[i][6],
                                 s[i][7],
                                 s[i][8],
-								'<button title ="REVERSAR TITULO EMITIDO DE PAGO"    class="btn btn-xs btn-danger" onClick="goToURLDel('+"'del'"+','+ s[i][9] +')"><i class="glyphicon glyphicon-remove"></i></button> &nbsp;' +
-								'<button title ="DESCARGAR IMPRIMIR TITULO DE PAGO"  class="btn btn-xs btn-info" onClick="goToURreporte('+s[i][10]+','+ s[i][9] +')">' +
+                                s[i][9],
+								'<button title ="REVERSAR TITULO EMITIDO DE PAGO"    class="btn btn-xs btn-danger" onClick="goToURLDel('+"'del'"+','+ s[i][10] +')"><i class="glyphicon glyphicon-remove"></i></button> &nbsp;' +
+								'<button title ="DESCARGAR IMPRIMIR TITULO DE PAGO"  class="btn btn-xs btn-info" onClick="goToURreporte('+s[i][11]+','+ s[i][10] +')">' +
 							   '<i class="glyphicon glyphicon-download-alt"></i></button> &nbsp;'  +
-							   '<button title ="EMITIR COMPROBANTES ELECTRONICOS"  data-toggle="modal" data-target="#myModalFac_view" class="btn btn-xs btn-success" onClick="goToLista('+ s[i][9] +')">' +
+							   '<button title ="EMITIR COMPROBANTES ELECTRONICOS"  data-toggle="modal" data-target="#myModalFac_view" class="btn btn-xs btn-success" onClick="goToLista('+ s[i][10] +')">' +
 							   '<i class="icon-globe icon-white"></i></button> &nbsp;' +
-							  ' <button title ="ACTUALIZAR DATOS..."  class="btn btn-xs btn-info" onClick="goToex('+ s[i][9] +')">' +
+							  ' <button title ="ACTUALIZAR DATOS..."  class="btn btn-xs btn-info" onClick="goToex('+ s[i][10] +')">' +
 			 				   '<i class="icon-globe icon-white"></i></button> &nbsp;'
 							]);										
 						} // End For

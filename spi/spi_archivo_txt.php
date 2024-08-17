@@ -72,7 +72,7 @@ fwrite($fh, $cadena. PHP_EOL) or die("No se pudo escribir en el archivo");
  
 while ($xx=$bd->obtener_fila($stmt1)){
     
-    $string = substr(trim($xx['razon']),0,29).' ';
+    $string = substr(trim($xx['razon']),0,29);
   
     
     $micadena = utf8_decode($string);
@@ -90,7 +90,7 @@ while ($xx=$bd->obtener_fila($stmt1)){
     
     $cadena = abs($xx['id_spi_det']).','.$xx['monto_pagar'].','.
               trim($xx['gasto_spi']).','.trim($xx['codigo_banco']).','.
-              trim($xx['nro_cuenta']).','.trim($xx['tipo_cuenta']).','.$str_nombre.','.
+              trim($xx['nro_cuenta']).','.trim($xx['tipo_cuenta']).','.trim($str_nombre).','.
               strtoupper(trim(eliminar_simbolos($xx['detalle']))).','.$idprov ;
     
               if (!empty($cadena)) {

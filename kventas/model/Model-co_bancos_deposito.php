@@ -43,7 +43,7 @@ where 	registro = ".$bd->sqlvalue_inyeccion($registro,true)." and
         mes   < ".$bd->sqlvalue_inyeccion($Aconciliacion["mes"],true)."  order by 5 asc";		
 
  
- 
+ echo $sql;
         
     
     echo ' <table id="table_deposito" class="table table-hover datatable" cellspacing="0" width="100%" style="font-size: 11px"  >

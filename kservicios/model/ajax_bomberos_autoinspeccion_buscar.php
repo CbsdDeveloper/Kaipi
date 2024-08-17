@@ -49,7 +49,7 @@ if ( empty($_GET['codigo_ex'])) {
                         autoinspeccion_codigo,
                         autoinspeccion_fecha
                             FROM permisos.vw_autoinspecciones 
-                            where autoinspeccion_anio = '2023' and 
+                            where autoinspeccion_anio = '2024' and 
                                   ( entidad_ruc = ".$bd->sqlvalue_inyeccion(trim($ruc_ex)  ,true). " or 
                                      autoinspeccion_codigo=".$bd->sqlvalue_inyeccion(trim($codigo_ex)  ,true). " or 
                                      entidad_razonsocial like ".$bd->sqlvalue_inyeccion(trim($nombre_ex)  ,true) .') order by entidad_razonsocial ';

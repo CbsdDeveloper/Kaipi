@@ -114,6 +114,8 @@
 													 
 													<div style="padding: 10px">
 														  <button type="button" class="btn btn-info btn-lg" onClick="BuscaExterno()" data-toggle="modal" data-target="#myModalExterno">Tramites Pendientes</button>
+														  <!-- <button type="button" class="btn btn-primary btn-lg" onClick="BuscaCapacitacionesExterno()" data-toggle="modal" data-target="#myModalCapacitacionesExterno">Capacitaciones Pendientes</button> -->
+														  <button type="button" class="btn btn-secondary btn-lg" onClick="limpiarCampos()" data-toggle="modal" data-target="#myModalTramiteNuevo">Trámite Nuevo</button>
 												   </div>  
 													
 												</div>
@@ -331,6 +333,146 @@
                              </div>
      </div>
 	
+	 <div class="modal fade" id="myModalCapacitacionesExterno" role="dialog">
+                             <div class="modal-dialog" id="mdialTamanio_externo">
+                                 <!-- Modal content-->
+										 <div class="modal-content">
+											<div class="modal-header">
+											  <button type="button" class="close"  data-dismiss="modal">&times;</button>
+											  <h4 class="modal-title">Capacitaciones Pendientes</h4>
+											</div>
+											<div class="modal-body">
+												 
+													<div class="row">
+														
+														<div class="col-md-12"> 
+															
+														 <table id="jsontablecapacitaciones_externo" class="display table table-condensed table-hover datatable" cellspacing="0" width="100%">
+																				 <thead>
+																					   <tr>   
+																						     <th width="5%">Referencia</th>
+																							 <th width="10%">Orden</th>
+																						     <th width="10%">Identificacion</th>
+																						     <th width="30">Solicita/Nombre Contribuyente/Beneficiario</th>
+  																							 <th width="25%">Detalle (Concepto/Descripcion/Novedad)</th>
+ 																							 <th width="10%">A pagar</th>
+																							 <th width="10%">Accion</th>
+																					   </tr> 
+																				</thead>
+																 </table>
+														 
+														</div>	
+														
+														 <div align="center" id="Resultado_facturae_id"> </div>	
+													</div>	
+												 
+											</div>
+											<div class="modal-footer">
+  												
+ 											     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											</div>
+									   </div>
+                             </div>
+     </div>
+	 
+	 
+	<div class="modal fade" id="myModalTramiteNuevo" role="dialog">
+		<div class="modal-dialog" id="mdialTamanio_externo">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close"  data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Trámite Nuevo</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class="row">
+
+						<div class="col-md-4"> 
+							<div class="form-group">
+								<label class="control-label col-sm-3" style="padding-bottom:3px;">Orden de Cobro:</label>
+								<div class="col-sm-9" style="padding-bottom:3px;">
+									<input type="text" class="form-control input-lg" style="background-color:#337ab7;color:#ffffff;" id="capacitacion_codigo" placeholder="Ej: CBSD24CAP00015" name="capacitacion_codigo">
+								</div>
+							</div> 
+						</div>	
+						<div class="col-md-4"> 
+							<div class="form-group">
+								<label class="control-label col-sm-3" style="padding-bottom:3px;">Cedula/RUC:</label>
+								<div class="col-sm-9" style="padding-bottom:3px;">
+									<input type="text" class="form-control" id="persona_cedula" placeholder="Ej: 9999999999" name="persona_cedula">
+								</div>
+							</div> 
+						</div>	
+
+					</div>
+
+					<div class="row">
+
+						<!-- <div class="col-md-4"> 
+							<div class="form-group">
+								<label class="control-label col-sm-3" style="padding-bottom:3px;">Apellidos:</label>
+								<div class="col-sm-9" style="padding-bottom:3px;">
+									<input type="text" class="form-control" id="persona_apellidos" placeholder="Ej: Ramirez Lopez" name="persona_apellidos">
+								</div>
+							</div> 
+						</div>	
+						<div class="col-md-4"> 
+							<div class="form-group">
+								<label class="control-label col-sm-3" style="padding-bottom:3px;">Nombres:</label>
+								<div class="col-sm-9" style="padding-bottom:3px;">
+									<input type="text" class="form-control" id="persona_nombres" placeholder="Ej: Rafael Arturo" name="persona_nombres">
+								</div>
+							</div> 
+						</div>	 -->
+						<div class="col-md-4"> 
+							<div class="form-group">
+								<label class="control-label col-sm-3" style="padding-bottom:3px;">Razón Social:</label>
+								<div class="col-sm-9" style="padding-bottom:3px;">
+									<input type="text" class="form-control" id="persona_razon" placeholder="Ej: Pronaca Cia. Ltda." name="persona_razon">
+								</div>
+							</div> 
+						</div>	
+						
+						<div class="col-md-12"> 
+							<div class="form-group">
+								<label class="control-label col-sm-1" style="padding-bottom:3px;">Concepto/Motivo:</label>
+								<div class="col-sm-11" style="padding-bottom:3px;">
+									<input type="text" class="form-control" id="capacitacion_motivo" placeholder="Ej: Capacitacion para el dia 20 de julio a 30 personas" name="capacitacion_motivo">
+								</div>
+							</div> 
+						</div>	
+						<div class="col-md-12"> 
+							<div class="form-group">
+								<label class="control-label col-sm-1" style="padding-bottom:3px;">Dirección:</label>
+								<div class="col-sm-11" style="padding-bottom:3px;">
+									<input type="text" class="form-control" id="persona_direccion" placeholder="Ej: Coop. Santa Martha Sector 3" name="persona_direccion">
+								</div>
+							</div> 
+						</div>	
+
+						<div class="col-md-4"> 
+							<div class="form-group">
+								<label class="control-label col-sm-3" style="padding-bottom:3px;">Monto:</label>
+								<div class="col-sm-9" style="padding-bottom:3px;">
+									<input type="number" step="0.01" min="0" class="form-control input-lg" style="background-color:#ff0945;color:#ffffff" id="orden_monto" placeholder="Ej: 30.00" name="orden_monto">
+								</div>
+							</div> 
+						</div>	
+
+					</div>	
+
+					<div align="center" id="Resultado_facturae_id"> </div>	
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" onClick="GuardarRecaudacionManual()">Guardar</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	
 	 <!-- Modal -->

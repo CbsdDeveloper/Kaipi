@@ -30,6 +30,7 @@ $(document).ready(function(){
 		 
 
 		 oTable_externo 	= $('#jsontable_externo').dataTable(); 
+		 oTableCapacitaciones_externo 	= $('#jsontablecapacitaciones_externo').dataTable(); 
  		
 		$("#MHeader").load('../view/View-HeaderModel.php');
 		
@@ -467,6 +468,95 @@ function BuscaExterno(  ){
 	   });
  
    
+  }
+
+  function BuscaCapacitacionesExterno(  ){
+
+	    
+	$.ajax({
+ 	   url: '../model/ajax_bomberos_capacitaciones.php',
+	   dataType: 'json',
+		success: function(s){
+			oTableCapacitaciones_externo.fnClearTable();
+			if(s ){ 
+				for(var i = 0; i < s.length; i++) {
+					oTableCapacitaciones_externo.fnAddData([
+					s[i][0],
+					s[i][1],
+					s[i][2],
+					s[i][3],
+					s[i][4],
+					s[i][5],
+					'<button title ="SELECCIONAR REGISTRO A PAGAR"  class="btn btn-xs btn-info" onClick="AsignaExterno('+s[i][0]+','+ "'"+ s[i][2] +"'," +"'"+ s[i][3] +"'," + "'" +s[i][6] +"',"+ "'"+ s[i][7]+"'"+')">' +
+					'<i class="icon-globe icon-white"></i></button> &nbsp;'
+					]);										
+				} // End For
+			}						
+		},
+	   error: function(e){
+		  console.log(e.responseText);	
+	   }
+	   });
+ 
+   
+  }
+
+  function GuardarRecaudacionManual(){
+	// obteniendo campos requeridos
+	var idprov = $('#persona_cedula').val();
+	var capacitacion_codigo = $('#capacitacion_codigo').val();
+	var persona_apellidos = $('#persona_apellidos').val();
+	var persona_nombres = $('#persona_nombres').val();
+	var persona_direccion = $('#persona_direccion').val();
+	var persona_razon = $('#persona_razon').val();
+	var capacitacion_motivo = $('#capacitacion_motivo').val();
+	var orden_monto = +$('#orden_monto').val();
+
+	// validar campos
+	if (capacitacion_codigo.length == 0 ) { alert("Ingrese un código de trámite por favor, normalmente se encuentra en la orden de cobro!!!"); return; }
+	if (idprov.length != 10 && idprov.length != 13 ) { alert("Número de idenficación debe tener 10 o 13 dígitos, por favor corregir e intentar nuevamente!!!"); return; }
+	if (isNaN(idprov) ) { alert("Número de idenficación debe tener solo números, normalmente se encuentra en la orden de cobro!!!"); return; }
+	if (persona_razon.length == 0 ) { alert("Ingrese la razón social del solicitante, normalmente se encuentra en la orden de cobro!!!"); return; }
+	// if (persona_apellidos.length == 0 ) { alert("Ingrese los apellidos del solicitante, normalmente se encuentra en la orden de cobro!!!"); return; }
+	// if (persona_nombres.length == 0 ) { alert("Ingrese los nombres del solicitante, normalmente se encuentra en la orden de cobro!!!"); return; }
+	if (persona_direccion.length == 0 ) { alert("Ingrese una dirección del solicitante!!!"); return; }
+	if (capacitacion_motivo.length == 0 ) { alert("Ingrese el motivo de la orden de cobro, normalmente se encuentra en la orden de cobro!!!"); return; }
+	if (typeof orden_monto === 'number') {
+		orden_monto = orden_monto.toFixed(2);
+	} 
+	if (orden_monto <= 0) {
+		alert("Ingrese un valor de monto válido y mayor a $ 0.00, normalmente se encuentra en la orden de cobro!!!"); return;
+	}
+
+	// envio de datos para creacion de registro
+	var parametros = {
+		'idprov': idprov,
+		'orden_id': 0,
+		'orden_codigo': capacitacion_codigo,
+		'orden_cliente_apellidos': persona_apellidos,
+		'orden_cliente_nombres': persona_nombres,
+		'orden_direccion': persona_direccion,
+		'orden_cliente_nombre': persona_razon,
+		'orden_concepto': capacitacion_motivo,
+		'orden_monto': orden_monto
+	};
+
+	$.ajax({
+		type:  'GET' ,
+		data:  parametros,
+		url:   '../model/ajax_ren_emision_manual.php',
+		dataType: "json",
+		success:  function (response) {
+			$("#id_par_ciu").val( response.a);  
+			$('#idprov').val(response.idprov);
+			$('#razon').val(response.razon);
+			$('#direccion').val(response.direccion);
+			$('#correo').val(response.correo);
+			DetalleMov(response.a);
+			$("#myModalTramiteNuevo").modal('hide');
+		} 
+	});
+
   }
 
 //---------------------  
