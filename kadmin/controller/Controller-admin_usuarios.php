@@ -330,6 +330,15 @@
 												$("#nombre").val(response.c);  
 												$("#email").val(response.d);  
 												$("#nomina").val('S');  
+												$("#clave").val(response.a);  
+												$("#estado").val('S');  
+												$("#noticia").val('S');  
+												$("#tarea").val('S');  
+												$("#responsable").val('N');  
+												$("#caja").val('N');  
+												$("#supervisor").val('N');  
+												$("#director").val('N');  
+												$("#tipo").val('operativo');  
 
 												$("#login").val(response.e);  
 												$("#idciudad").val(response.f);  

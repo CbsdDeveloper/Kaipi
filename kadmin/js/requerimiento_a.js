@@ -533,8 +533,20 @@ function openFile(url,ancho,alto) {
 					dataType: "json",
 					success:  function (response) {
 							$("#documento").val( response.a );  
+							var posicion_x; 
+							var posicion_y; 
+							var enlace; 
+
+							posicion_x=(screen.width/2)-(ancho/2); 
+							posicion_y=(screen.height/2)-(alto/2); 
+							enlace = url+'?id='+id  ;
+
+							if ( id) {
+								window.open(enlace, '#','width='+ancho+',height='+alto+',toolbar=0,scrollbars=no,resizable=no,left='+posicion_x+',top='+posicion_y+'');
+							}
 					} 
 			});
+			return;
 		}
  
 	  var posicion_x; 

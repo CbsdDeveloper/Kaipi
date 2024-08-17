@@ -165,7 +165,7 @@
                 
                 $this->obj->text->text_blue('Cuota',"number" ,'mensual' ,80,80, $datos ,'required','readonly','div-2-4') ;
 
-                $this->obj->list->lista('Rige',$MATRIZ_D,'rige',$datos,'required','','div-2-4');
+                $this->obj->list->lista('Rige',$MATRIZ_D,'rige',$datos,'required','disabled','div-2-4');
 
 
                 $this->set->div_panel6('fin');

@@ -64,6 +64,8 @@
       		       array( campo => 'documento',   valor => '-',  filtro => 'N',   visor => 'S'),
                 array( campo => 'detalle',   valor => '-',  filtro => 'N',   visor => 'S'),
                 array( campo => 'solicita',   valor => '-',  filtro => 'N',   visor => 'S'),
+                array( campo => 'idprov_ga',   valor => '-',  filtro => 'N',   visor => 'S'),
+                array( campo => 'razon_g',   valor => '-',  filtro => 'N',   visor => 'S'),
                 array( campo => 'razon',   valor => '-',  filtro => 'N',   visor => 'S'),
       		      array( campo => 'plazo',   valor => '-',  filtro => 'N',   visor => 'S'),
                 array( campo => 'mensual',   valor => '-',  filtro => 'N',   visor => 'S'),
@@ -83,7 +85,7 @@
 
           if ( $estado  == 'tthh'){
             $array   = $this->bd->__user($this->sesion ) ;
-            $detalle = '<b>'.trim($fetch['razon']).'</b> '.$detalle ;
+            $detalle = '<b>'.trim($fetch['razon']).'</b> '.$detalle . ' <br> <b>Garante:</b>  ' . trim($fetch['razon_g']) ;
 
 
           }

@@ -18,6 +18,7 @@
       private $hoy;
       private $POST;
       private $ATabla;
+      private $ATablaE;
       private $tabla ;
       private $secuencia;
       private $anio;
@@ -56,6 +57,27 @@
                     array( campo => 'creacion',tipo => 'DATE',id => '5',add => 'S', edit => 'N', valor => $this->hoy, key => 'N'),
                     array( campo => 'estado',tipo => 'VARCHAR2',id => '6',add => 'S', edit => 'N', valor => 'solicitado', key => 'N'),
                     array( campo => 'documento',tipo => 'VARCHAR2',id => '7',add => 'S', edit => 'S', valor => '00000-0000', key => 'N'),
+                    array( campo => 'idprov',tipo => 'VARCHAR2',id => '8',add => 'S', edit => 'S', valor => '-', key => 'N'),
+                    array( campo => 'idprov_ga',tipo => 'VARCHAR2',id => '9',add => 'S', edit => 'S', valor => '-', key => 'N'),
+                    array( campo => 'estado_pago',tipo => 'VARCHAR2',id => '10',add => 'S', edit => 'S', valor => 'N', key => 'N'),
+                    array( campo => 'solicita',tipo => 'NUMBER',id => '11',add => 'S', edit => 'S', valor => '-', key => 'N'),
+                    array( campo => 'mensual',tipo => 'NUMBER',id => '12',add => 'S', edit => 'S', valor => '-', key => 'N'),
+                    array( campo => 'plazo',tipo => 'NUMBER',id => '13',add => 'S', edit => 'S', valor => '-', key => 'N'),
+                    array( campo => 'rige',tipo => 'NUMBER',id => '14',add => 'S', edit => 'S', valor => '-', key => 'N'),
+                    array( campo => 'id_asiento',tipo => 'NUMBER',id => '15',add => 'S', edit => 'S', valor => '0', key => 'N'),
+                    array( campo => 'sesionm',tipo => 'VARCHAR2',id => '16',add => 'S', edit => 'S', valor =>$this->sesion, key => 'N'),
+                    array( campo => 'modificacion',tipo => 'DATE',id => '17',add => 'S', edit => 'S', valor => $this->hoy, key => 'N'),
+                    array( campo => 'novedad',tipo => 'VARCHAR2',id => '18',add => 'N', edit => 'N', valor => '-', key => 'N') 
+                );
+
+                $this->ATablaE = array(
+                    array( campo => 'id_anticipo',tipo => 'NUMBER',id => '1',add => 'N', edit => 'N', valor => '-', key => 'S'),
+                    array( campo => 'fecha',tipo => 'DATE',id => '1',add => 'S', edit => 'S', valor => '-', key => 'N'),
+                    array( campo => 'anio',tipo => 'NUMBER',id => '2',add => 'S', edit => 'S', valor => $this->anio, key => 'N'),
+                    array( campo => 'detalle',tipo => 'VARCHAR2',id => '3',add => 'S', edit => 'S', valor => '-', key => 'N'),
+                    array( campo => 'sesion',tipo => 'VARCHAR2',id => '4',add => 'S', edit => 'N', valor => $this->sesion, key => 'N'),
+                    array( campo => 'creacion',tipo => 'DATE',id => '5',add => 'S', edit => 'N', valor => $this->hoy, key => 'N'),
+                    array( campo => 'estado',tipo => 'VARCHAR2',id => '6',add => 'S', edit => 'N', valor => 'solicitado', key => 'N'),
                     array( campo => 'idprov',tipo => 'VARCHAR2',id => '8',add => 'S', edit => 'S', valor => '-', key => 'N'),
                     array( campo => 'idprov_ga',tipo => 'VARCHAR2',id => '9',add => 'S', edit => 'S', valor => '-', key => 'N'),
                     array( campo => 'estado_pago',tipo => 'VARCHAR2',id => '10',add => 'S', edit => 'S', valor => 'N', key => 'N'),
@@ -199,7 +221,8 @@
             $solicita 			= $_POST["solicita"];
             $rige    			= $_POST["rige"];
             $mes                = intval(  date("m") ) ;
-            
+            $rige                = intval(  date("m") ) ;
+            $_POST["rige"] = intval(  date("m") ) ;
             $bandera =  0 ;
             $tope_mes =  13 -   $rige   ;
 
@@ -209,7 +232,7 @@
             }
           
 
-            if ( $sueldo  >  $sueldo_g  ){
+            if ( ($sueldo  >  $sueldo_g)  && ( $idprov_ga != '0802225946' || $idprov != '1711022416') ){
                 $bandera = 1 ;
                 $result = '<img src="../../kimages/kedit.png" align="absmiddle" />&nbsp;<b>VERIFIQUE LA INFORMACION GARANTE  MONTO NO VALIDO ? NO SE OLVIDE QUE SU ANTICIPO VALIDO DICIEMBRE</b>'; 
             }	
@@ -232,6 +255,15 @@
                 $result = '<img src="../../kimages/kedit.png" align="absmiddle" />&nbsp;<b>02. VERIFIQUE LA INFORMACION DE LOS PLAZOS?</b>'. $tope_mes .' '.$plazo. ' NO SE OLVIDE QUE SU ANTICIPO VALIDO DICIEMBRE'; 
             }
           
+            $garanteRepetido = $this->bd->query_array( $this->tabla,
+            'id_anticipo',
+            'anio='.$this->bd->sqlvalue_inyeccion( $this->anio ,true)  . ' and idprov_ga='.$this->bd->sqlvalue_inyeccion( $idprov_ga ,true). ' and (estado <>'.$this->bd->sqlvalue_inyeccion( 'anulados' ,true) . ' or estado <> '.$this->bd->sqlvalue_inyeccion( 'contabilizado' ,true).' ) '
+            );
+
+            // if ($garanteRepetido["id_anticipo"]){
+            //     $bandera = 1 ;
+            //     $result = '<img src="../../kimages/kedit.png" align="absmiddle" />&nbsp;<b>VERIFIQUE LA INFORMACION GARANTE  |  NO SE PUEDE REPETIR GARANTE</b>'; 
+            // }
             
             
             if ($bandera == 0 ) {
@@ -268,11 +300,13 @@
         $solicita 			= $_POST["solicita"];
         $rige    			= $_POST["rige"];
         $mes                = intval(  date("m") ) ;
+        $rige                = intval(  date("m") ) ;
+        $_POST["rige"] = intval(  date("m") ) ;
         
         $bandera =  0 ;
         $tope_mes =  (13  -   $rige)  ;
 
-      
+        //TODO: VALIDAR QUE NO SE REPITAN LOS GARANTES
         if ( $idprov == $idprov_ga  ){
             $bandera = 1 ;
             $result = '<img src="../../kimages/kedit.png" align="absmiddle" />&nbsp;<b>VERIFIQUE LA INFORMACION GARANTE  Y SOLICITANTE ?</b>'; 
@@ -301,11 +335,21 @@
             $result = '<img src="../../kimages/kedit.png" align="absmiddle" />&nbsp;<b>02. VERIFIQUE LA INFORMACION DE LOS PLAZOS?</b>'.$tope_mes .' - '.  $plazo ; 
         }
 
+        $garanteRepetido = $this->bd->query_array( $this->tabla,
+        'id_anticipo',
+        'anio='.$this->bd->sqlvalue_inyeccion( $this->anio ,true)  . ' and idprov_ga='.$this->bd->sqlvalue_inyeccion( $idprov_ga ,true) . ' and id_anticipo <> '.$this->bd->sqlvalue_inyeccion( $id ,true) . ' and estado <>'.$this->bd->sqlvalue_inyeccion( 'anulados' ,true) 
+        );
+
+        if ($garanteRepetido["id_anticipo"]){
+            $bandera = 1 ;
+            $result = '<img src="../../kimages/kedit.png" align="absmiddle" />&nbsp;<b>VERIFIQUE LA INFORMACION GARANTE  |  NO SE PUEDE REPETIR GARANTE</b>'; 
+        }
+
         if (   trim($estado) 	== 'solicitado') {
 
             if ($bandera == 0 ) {
 
-                $this->bd->_UpdateSQL($this->tabla,$this->ATabla,$id);
+                $this->bd->_UpdateSQL($this->tabla,$this->ATablaE,$id);
           	
                 $result = $this->div_resultado('editar',$id,1) ;
 

@@ -13,7 +13,7 @@ require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos
 
    $sesion 	=  trim($_SESSION['email']);
 
-   $array   = $bd->__user($sesion) ;
+   $array   = $bd->__user(str_replace('@cbsd.gob.ec','',$sesion)) ;
 
    
   
