@@ -64,7 +64,7 @@ class grilla_requerimiento_b{
               $estado = 'anulado';
           }
           
-          $datos = $this->bd->__user( $this->sesion);
+          $datos = $this->bd->__user( str_replace('@cbsd.gob.ec','',$this->sesion) );
           
           $idprov = trim($datos['cedula']);
           
