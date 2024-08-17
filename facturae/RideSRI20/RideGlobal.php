@@ -5,7 +5,7 @@
 * @author Erik Niebla
 * @mail ep_niebla@hotmail.com, ep.niebla@gmail.com
 * @version 1.0
-* Fecha de creación  2018-02-27
+* Fecha de creaciï¿½n  2018-02-27
 * http://ensystems.ddns.net
 */
 require_once(dirname(__file__).'/libs/fpdf/barCode_2.0.php');
@@ -49,19 +49,19 @@ class RideGlobal extends PDF_Code128{
         $this->SetTextColor(194,8,8);
         $this->setField(141,34,"$infTrib[estab]-$infTrib[ptoEmi]-$infTrib[secuencial]",'',9);
         $this->SetTextColor(0,0,0);
-        $this->setField(121,41,"NÚMERO DE AUTORIZACIÓN:",'B');
+        $this->setField(121,41,"Nï¿½MERO DE AUTORIZACIï¿½N:",'B');
         if($array['numeroAutorizacion']=='PENDIENTE')$this->SetTextColor(194,8,8);
         $this->setField(121,46,$array['numeroAutorizacion'],'',(isset($offline)&&$offline==true?8.34:9));
         $this->SetTextColor(0,0,0);
         if(!empty($array['fechaAutorizacion'])){
-            $this->setField(121,54,"FECHA Y HORA DE AUTORIZACIÓN:",'B');
+            $this->setField(121,54,"FECHA Y HORA DE AUTORIZACIï¿½N:",'B');
             if($array['fechaAutorizacion']=='PENDIENTE')$this->SetTextColor(194,8,8);
             $this->setField(121,59,$array['fechaAutorizacion']);
             $this->SetTextColor(0,0,0);
         }
         $this->setField(121,67,"AMBIENTE:",'B');
-        $this->setField(141,67,$infTrib['ambiente']*1==1?'PRUEBAS':'PRODUCCIÓN');
-        $this->setField(121,72,"EMISIÓN:",'B');
+        $this->setField(141,67,$infTrib['ambiente']*1==1?'PRUEBAS':'PRODUCCIï¿½N');
+        $this->setField(121,72,"EMISIï¿½N:",'B');
         $this->setField(141,72,$infTrib['tipoEmision']*1==1?'NORMAL':'INDISPONIBILIDAD DEL SISTEMA');
         $this->setField(121,80,"CLAVE DE ACCESO:",'B');
 
@@ -75,21 +75,21 @@ class RideGlobal extends PDF_Code128{
         $this->SetCHeight(3);
         $this->Row(array($infTrib['razonSocial']),false,true);
         $this->setField(11,$this->getY()+3,$this->issetText($infTrib,'nombreComercial'),'',8.5,null,100);
-        $this->setField(13,78,"DIRECCIÓN:",'B',8);
+        $this->setField(13,78,"DIRECCIï¿½N:",'B',8);
         $this->setField(38,78,$infTrib['dirMatriz'],'',8,null,78);
         $this->setField(13,81,"DIR. SUCURSAL:",'B',8);
         $this->setField(13,84,"CONTRIBUYENTE ESPECIAL Nro.:",'B',8);
         $this->setField(13,87,"OBLIGADO A LLEVAR CONTABILIDAD:",'B',8);
         
         if(!empty($this->issetText($infTrib,'regimenMicroempresas','')))
-            $this->setField(13,92,"CONTRIBUYENTE RÉGIMEN MICROEMPRESAS",'B',8);
+            $this->setField(13,92,"CONTRIBUYENTE Rï¿½GIMEN MICROEMPRESAS",'B',8);
         if(!empty($this->issetText($infTrib,'agenteRetencion'))){
             $line=!empty($this->issetText($infTrib,'regimenMicroempresas',''))?95:92;
-            $this->setField(13,$line,"AGENTE DE RETÉNCION RES. No.: ",'B',8);
+            $this->setField(13,$line,"AGENTE DE RETï¿½NCION RES. No.: ",'B',8);
             $this->setField(70,$line, $this->issetText($infTrib,'agenteRetencion','') ,'',8);
         }
         if(!empty($this->issetText($infTrib,'contribuyenteRimpe','')))
-            $this->setField(13,95,"CONTRIBUYENTE RÉGIMEN RIMPE",'B',8);
+            $this->setField(13,95,"CONTRIBUYENTE Rï¿½GIMEN RIMPE",'B',8);
 
         // NOTA: En los if controlar las versiones, en caso de que el xml haya cambiado
         switch($array['documento']){
@@ -130,7 +130,7 @@ class RideGlobal extends PDF_Code128{
         return $this;
     }
     private function createLiquidacion($datoXml){
-        $documento="LIQUIDACIÓN DE COMPRA DE BIENES Y PRESTACIÓN DE SERVICIOS";
+        $documento="LIQUIDACIï¿½N DE COMPRA DE BIENES Y PRESTACIï¿½N DE SERVICIOS";
         /* Inicio Datos Dedicados */
         $infoFact=$datoXml['infoLiquidacionCompra'];
         $this->SetY(19);
@@ -146,14 +146,14 @@ class RideGlobal extends PDF_Code128{
 
         /* RECTANGULO INFO PROVEEDOR */
         //$this->RoundedRect(10, 98, 194, 13, 0, '');
-        $this->setField(13,103,"RAZÓN SOCIAL:",'B',8);
+        $this->setField(13,103,"RAZï¿½N SOCIAL:",'B',8);
         $this->setField(40,103,$infoFact['razonSocialProveedor'],null,null,null,160);
         $this->setField(13,108,"RUC / CI:",'B',8);
         $this->setField(30,108,$infoFact['identificacionProveedor']);
-        $this->setField(75,108,"FECHA DE EMISIÓN:",'B',8);
+        $this->setField(75,108,"FECHA DE EMISIï¿½N:",'B',8);
         $this->setField(108,108,$infoFact['fechaEmision']);
         if(strlen($this->issetText($infoFact,"direccionProveedor"))>0){
-            $this->setField(13,113,"DIRECCIÓN:","B",8);
+            $this->setField(13,113,"DIRECCIï¿½N:","B",8);
             $this->setField(40,113,$this->issetText($infoFact,"direccionProveedor"),null,8,null,160);
             $this->RoundedRect(10, 98, 194, 18, 0, "", "");
             $this->SetY(118);
@@ -173,16 +173,16 @@ class RideGlobal extends PDF_Code128{
         $this->setField(70,87, $this->issetText($infoFact,'obligadoContabilidad','NO') ,'',8);
 
         /* RECTANGULO INFO CLIENTE */
-        $this->setField(13,103,"RAZÓN SOCIAL:",'B',8);
+        $this->setField(13,103,"RAZï¿½N SOCIAL:",'B',8);
         $this->setField(40,103,$infoFact['razonSocialComprador'],null,null,null,160);
         $this->setField(13,108,"RUC / CI:",'B',8);
         $this->setField(30,108,$infoFact['identificacionComprador']);
-        $this->setField(75,108,"FECHA DE EMISIÓN:",'B',8);
+        $this->setField(75,108,"FECHA DE EMISIï¿½N:",'B',8);
         $this->setField(108,108,$infoFact['fechaEmision']);
-        $this->setField(142,108,"GUÍA DE REMISIÓN:",'B',8);
+        $this->setField(142,108,"GUï¿½A DE REMISIï¿½N:",'B',8);
         $this->setField(172,108, $this->issetText($infoFact, 'guiaRemision'));
         if(strlen($this->issetText($infoFact,"direccionComprador"))>0){
-            $this->setField(13,113,"DIRECCIÓN:","B",8);
+            $this->setField(13,113,"DIRECCIï¿½N:","B",8);
             $this->setField(40,113,$this->issetText($infoFact,"direccionComprador"),null,8,null,160);
             $this->RoundedRect(10, 98, 194, 18, 0, "", "");
             $this->SetY(118);
@@ -200,7 +200,7 @@ class RideGlobal extends PDF_Code128{
         $this->SetCAligns('C');
         $this->SetFont('Arial','B',8);
         $this->SetCWidths(array(7,17,16,100,21,13,20));
-        $this->Row(array('No.','CÓDIGO','CANTIDAD','DESCRIPCIÓN','PRECIO U.','DESC.','TOTAL'),true,false);
+        $this->Row(array('No.','Cï¿½DIGO','CANTIDAD','DESCRIPCIï¿½N','PRECIO U.','DESC.','TOTAL'),true,false);
         $this->SetFont('Arial','',8);
         $this->SetCFonts(array(array('Arial','',6.5),array('Arial','',6)));
         $this->SetCAligns(array('L','C','C','L','R','R','R'));
@@ -403,7 +403,7 @@ class RideGlobal extends PDF_Code128{
         }
     }
     private function createRetencion($datoXml){
-        $documento="COMPROBANTE DE RETENCIÓN";
+        $documento="COMPROBANTE DE RETENCIÃ“N";
         /* Inicio Datos Dedicados */
         $infoCompRet=$datoXml['infoCompRetencion'];
         $this->setField(121,25,$documento,'B',12);
@@ -414,11 +414,11 @@ class RideGlobal extends PDF_Code128{
         /*RECTANGULO INFO CLIENTE*/
         $this->SetFont('Arial','B',8);
         $this->RoundedRect(10, 98, 194, 13, 0, '');
-        $this->setField(13,103,"RAZÓN SOCIAL:",'B',8);
+        $this->setField(13,103,"RAZÃ“N SOCIAL:",'B',8);
         $this->setField(40,103,$infoCompRet['razonSocialSujetoRetenido'],null,null,null,160);
         $this->setField(13,108,"RUC / CI:",'B',8);
         $this->setField(30,108,$infoCompRet['identificacionSujetoRetenido']);
-        $this->setField(75,108,"FECHA DE EMISIÓN:",'B',8);
+        $this->setField(75,108,"FECHA DE EMISIÃ“N:",'B',8);
         $this->setField(110,108,$infoCompRet['fechaEmision']);
 
         /*T A B L A */
@@ -427,7 +427,7 @@ class RideGlobal extends PDF_Code128{
         $this->SetCAligns('C');
         $this->SetFont('Arial','B',8);
         $this->SetCWidths(array(30,28,22,23,22,22,22,25));
-        $this->Row(array('Comprobante','Número','Fecha Emisión','Ejercicio Fiscal','Base Imponible','Impuesto','Porcentaje %','Valor Retenido'),true,false);
+        $this->Row(array('Comprobante','NÃºmero','Fecha EmisiÃ³n','Ejercicio Fiscal','Base Imponible','Impuesto','Porcentaje %','Valor Retenido'),true,false);
         $this->SetFont('Arial','',8);
         $this->SetCAligns(array('C','C','C','C','R','L','C','R'));
         $this->SetCHeight(5);
@@ -454,7 +454,7 @@ class RideGlobal extends PDF_Code128{
         }
     }
     private function createRetencion2($datoXml){
-        $documento="COMPROBANTE DE RETENCIÓN";
+        $documento="COMPROBANTE DE RETENCIÃ“N";
         /* Inicio Datos Dedicados */
         $infoCompRet=$datoXml['infoCompRetencion'];
         $this->setField(121,25,$documento,'B',12);
@@ -465,11 +465,11 @@ class RideGlobal extends PDF_Code128{
         /*RECTANGULO INFO CLIENTE*/
         $this->SetFont('Arial','B',8);
         $this->RoundedRect(10, 98, 194, 13, 0, '');
-        $this->setField(13,103,"RAZÓN SOCIAL:",'B',8);
+        $this->setField(13,103,"RAZÃ“N SOCIAL:",'B',8);
         $this->setField(40,103,$infoCompRet['razonSocialSujetoRetenido'],null,null,null,160);
         $this->setField(13,108,"RUC / CI:",'B',8);
         $this->setField(30,108,$infoCompRet['identificacionSujetoRetenido']);
-        $this->setField(75,108,"FECHA DE EMISIÓN:",'B',8);
+        $this->setField(75,108,"FECHA DE EMISIÃ“N:",'B',8);
         $this->setField(110,108,$infoCompRet['fechaEmision']);
 
         /*T A B L A */
@@ -478,14 +478,15 @@ class RideGlobal extends PDF_Code128{
         $this->SetCAligns('C');
         $this->SetFont('Arial','B',8);
         $this->SetCWidths(array(30,28,22,23,22,22,22,25));
-        $this->Row(array('Comprobante','Número','Fecha Emisión','Ejercicio Fiscal','Base Imponible','Impuesto','Porcentaje %','Valor Retenido'),true,false);
+        $this->Row(array('Comprobante','NÃºmero','Fecha EmisiÃ³n','Ejercicio Fiscal','Base Imponible','Impuesto','Porcentaje %','Valor Retenido'),true,false);
         $this->SetFont('Arial','',8);
         $this->SetCAligns(array('C','C','C','C','R','L','C','R'));
         $this->SetCHeight(5);
         $sumaTotal=0;
         foreach ($this->formatArray($datoXml['docsSustento']['docSustento'])AS $doc){
             foreach ($this->formatArray($doc['retenciones']['retencion'])AS $impu){
-                $sumaTotal+=round(((float)$impu['baseImponible']*(float)$impu['porcentajeRetener'])/100,2);
+                // $sumaTotal+=round(((float)$impu['baseImponible']*(float)$impu['porcentajeRetener'])/100,2);
+                $sumaTotal+=round((float)$impu['valorRetenido'],2);
                 $this->Row(array(
                     $this->selectDoc($doc['codDocSustento']),$doc['numDocSustento'],$doc['fechaEmisionDocSustento'],$infoCompRet['periodoFiscal'],
                     number_format((float)$impu['baseImponible'],2),
@@ -507,7 +508,7 @@ class RideGlobal extends PDF_Code128{
         }
     }
     private function createNotaCredito($datoXml){
-        $documento="N O T A       DE       C R É D I T O";
+        $documento="N O T A       DE       C R ï¿½ D I T O";
         /* Inicio Datos Dedicados */
         $infoNCred=$datoXml['infoNotaCredito'];
         $this->setField(121,25,$documento,'B',12);
@@ -517,11 +518,11 @@ class RideGlobal extends PDF_Code128{
 
         /* RECTANGULO INFO CLIENTE */
         $this->RoundedRect(10, 98, 194, 30, 0, '');
-        $this->setField(13,103,"RAZÓN SOCIAL:",'B',8);
+        $this->setField(13,103,"RAZï¿½N SOCIAL:",'B',8);
         $this->setField(40,103,$infoNCred['razonSocialComprador'],null,null,null,160);
         $this->setField(13,108,"RUC / CI:",'B',8);
         $this->setField(30,108,$infoNCred['identificacionComprador']);
-        $this->setField(75,108,"FECHA DE EMISIÓN:",'B',8);
+        $this->setField(75,108,"FECHA DE EMISIï¿½N:",'B',8);
         $this->setField(110,108,$infoNCred['fechaEmision']);
 
         //(inicio X, inicio Y,fin X, fin Y)
@@ -529,9 +530,9 @@ class RideGlobal extends PDF_Code128{
 
         $this->setField(13,115,"COMPROBANTE QUE SE MODIFICA:",'B');
         $this->setField(95,115, $this->selectDoc($infoNCred['codDocModificado']).' - '.$infoNCred['numDocModificado']);
-        $this->setField(13,120,"FECHA DE EMISIÓN (Comprobante a modificar):",'B');
+        $this->setField(13,120,"FECHA DE EMISIï¿½N (Comprobante a modificar):",'B');
         $this->setField(95,120,$infoNCred['fechaEmisionDocSustento']);
-        $this->setField(13,125,"RAZON DE MODIFICACIÓN:",'B');
+        $this->setField(13,125,"RAZON DE MODIFICACIï¿½N:",'B');
         $this->setField(58,125,$infoNCred['motivo'],null,null,null,140);
 
         /*T A B L A */
@@ -540,7 +541,7 @@ class RideGlobal extends PDF_Code128{
         $this->SetCAligns('C');
         $this->SetFont('Arial','B',8);
         $this->SetCWidths(array(8,15,106,20,23,22));
-        $this->Row(array('No.','CÓDIGO','DESCRIPCIÓN','CANTIDAD','PRECIO U.','TOTAL'),true,false);
+        $this->Row(array('No.','Cï¿½DIGO','DESCRIPCIï¿½N','CANTIDAD','PRECIO U.','TOTAL'),true,false);
         $this->SetFont('Arial','',8);
         $this->SetCAligns(array('L','C','L','C','R','R'));
         $this->SetCHeight(5);
@@ -604,7 +605,7 @@ class RideGlobal extends PDF_Code128{
         }
     }
     private function createNotaDebito($datoXml){
-        $documento="N O T A        DE        D É B I T O";
+        $documento="N O T A        DE        D ï¿½ B I T O";
         /* Inicio Datos Dedicados */
         $infoNDeb=$datoXml['infoNotaDebito'];
         $this->setField(121,25,$documento,'B',12);
@@ -614,11 +615,11 @@ class RideGlobal extends PDF_Code128{
 
         /* RECTANGULO INFO CLIENTE */
         $this->RoundedRect(10, 98, 194, 25, 0, '');
-        $this->setField(13,103,"RAZÓN SOCIAL:",'B',8);
+        $this->setField(13,103,"RAZï¿½N SOCIAL:",'B',8);
         $this->setField(40,103,$infoNDeb['razonSocialComprador'],null,null,null,160);
         $this->setField(13,108,"RUC / CI:",'B',8);
         $this->setField(30,108,$infoNDeb['identificacionComprador']);
-        $this->setField(75,108,"FECHA DE EMISIÓN:",'B',8);
+        $this->setField(75,108,"FECHA DE EMISIï¿½N:",'B',8);
         $this->setField(110,108,$infoNDeb['fechaEmision']);
 
         //(inicio X, inicio Y,fin X, fin Y)
@@ -626,7 +627,7 @@ class RideGlobal extends PDF_Code128{
 
         $this->setField(13,115,"COMPROBANTE QUE SE MODIFICA:",'B');
         $this->setField(95,115,$this->selectDoc($infoNDeb['codDocModificado']).' - '.$infoNDeb['numDocModificado']);
-        $this->setField(13,120,"FECHA DE EMISIÓN (Comprobante a modificar):",'B');
+        $this->setField(13,120,"FECHA DE EMISIï¿½N (Comprobante a modificar):",'B');
         $this->setField(95,120,$infoNDeb['fechaEmisionDocSustento']);
 
 
@@ -636,7 +637,7 @@ class RideGlobal extends PDF_Code128{
         $this->SetCAligns('C');
         $this->SetFont('Arial','B',9);
         $this->SetCWidths(array(8,136,50));
-        $this->Row(array('No.','RAZON DE LA MODIFICACION','VALOR DE LA MODIFICACIÓN'),true,false);
+        $this->Row(array('No.','RAZON DE LA MODIFICACION','VALOR DE LA MODIFICACIï¿½N'),true,false);
         $this->SetFont('Arial','',8);
         $this->SetCAligns(array('L','L','R'));
         $this->SetCHeight(5);
@@ -711,7 +712,7 @@ class RideGlobal extends PDF_Code128{
 
     }
     private function createGuiaRemi($datoXml){
-        $documento="GUIA  DE  REMISIÓN";
+        $documento="GUIA  DE  REMISIï¿½N";
         /* Inicio Datos Dedicados */
         $infoGuia=$datoXml['infoGuiaRemision'];
         $this->setField(121,25,$documento,'B',12);
@@ -722,9 +723,9 @@ class RideGlobal extends PDF_Code128{
         /* RECTANGULO INFO TRANSPORTISTA*/
         $this->RoundedRect(10, 98, 194, 27, 0, '');
         /* DATOS INFO TRANSPORTISTA */
-        $this->setField(13,103,"IDENTIFICACIÓN (TRANSPORTÍSTA):",'B',8);
+        $this->setField(13,103,"IDENTIFICACIï¿½N (TRANSPORTï¿½STA):",'B',8);
         $this->setField(75,103,$infoGuia['rucTransportista'],'',8);
-        $this->setField(13,108,"RAZÓN SOCIAL / NOMBRES Y APELLIDOS:",'B',8);
+        $this->setField(13,108,"RAZï¿½N SOCIAL / NOMBRES Y APELLIDOS:",'B',8);
         $this->setField(75,108,$infoGuia['razonSocialTransportista'],'',8);
         $this->setField(13,113,"PLACA:",'B',8);
         $this->setField(75,113,$infoGuia['placa'],'',8);
@@ -748,8 +749,8 @@ class RideGlobal extends PDF_Code128{
             ///$this->RoundedRect(10, $iapos-2 , 194, 53+$intemPos, 0, '');
 
             $this->setField(13,$iapos+2,"COMPROBANTE DE VENTA:",'B',8);
-            $this->setField(132,$iapos+2,"FECHA DE EMISIÓN:",'B',8);
-            $this->setField(13,$iapos+7,"NÓMERO DE AUTORIZACIÓN:",'B',8);
+            $this->setField(132,$iapos+2,"FECHA DE EMISIï¿½N:",'B',8);
+            $this->setField(13,$iapos+7,"Nï¿½MERO DE AUTORIZACIï¿½N:",'B',8);
 
             $this->setField(75,$iapos+2, (!isset($desti['numDocSustento'])||empty($desti['numDocSustento']))?'': $this->selectDoc($desti['codDocSustento'])." - ".$desti['numDocSustento'],'',8);
             $this->setField(166,$iapos+2, $this->issetText($desti,'fechaEmisionDocSustento'));
@@ -761,16 +762,16 @@ class RideGlobal extends PDF_Code128{
             $this->setField(13,$iapos+17,"DESTINO (PUNTO DE LLEGADA):",'B',8);
             $this->setField(75,$iapos+17,strtoupper($desti['dirDestinatario']),'',8,null,127);
 
-            $this->setField(13,$iapos+22,"IDENTIFICACIÓN (DESTINATARIO):",'B',8);
+            $this->setField(13,$iapos+22,"IDENTIFICACIï¿½N (DESTINATARIO):",'B',8);
             $this->setField(75,$iapos+22,strtoupper($desti['identificacionDestinatario']),'',8);
 
-            $this->setField(13,$iapos+27,"RAZÓN SOCIAL / NOMBRES Y APELLIDOS:",'B',8);
+            $this->setField(13,$iapos+27,"RAZï¿½N SOCIAL / NOMBRES Y APELLIDOS:",'B',8);
             $this->setField(75,$iapos+27,strtoupper($desti['razonSocialDestinatario']),'',8);
 
             $this->setField(13,$iapos+32,"DOCUMENTO ADUANERO:",'B',8);
             $this->setField(75,$iapos+32,strtoupper($this->issetText($desti,'docAduaneroUnico')),'',8);
 
-            $this->setField(13,$iapos+37,"CÓDIGO ESTABLECIMIENTO DESTINO:",'B',8);
+            $this->setField(13,$iapos+37,"Cï¿½DIGO ESTABLECIMIENTO DESTINO:",'B',8);
             $this->setField(75,$iapos+37,strtoupper($this->issetText($desti,'codEstabDestino')),'',8);
 
             $this->setField(13,$iapos+42,"RUTA:",'B',8);
@@ -782,7 +783,7 @@ class RideGlobal extends PDF_Code128{
             $this->SetFont('Arial','B',8);
             $this->SetCWidths(array(8,22,28,132));
             $this->SetCAligns(array());
-            $this->Row(array('No','CÓD. PRINCIPAL','CANTIDAD','DESCRIPCIÓN'),true,false);
+            $this->Row(array('No','Cï¿½D. PRINCIPAL','CANTIDAD','DESCRIPCIï¿½N'),true,false);
             $this->SetCAligns(array(null,'C','R',null));
             $this->SetFont('Arial','',8);
             /* recorro los items */
@@ -808,7 +809,7 @@ class RideGlobal extends PDF_Code128{
     private function infoAddi($pos,$dato){
         if($pos<12) $pos=12;
         $this->setY($pos+2);
-        $this->setField(14,null,"INFORMACIÓN ADICIONAL",'B',9,3);
+        $this->setField(14,null,"INFORMACIï¿½N ADICIONAL",'B',9,3);
         $this->RoundedRect(10, $this->getY()-7 , 125, 6, 0, '');
         $this->SetCHeight(3);
         $this->SetCWidths(array(35,90));
@@ -826,13 +827,13 @@ class RideGlobal extends PDF_Code128{
     private function pagosDoc($pos,$dato){
         $tipos=array(
             '01'=>"SIN UTILIZACION DEL SISTEMA FINANCIERO",
-            '15'=>"COMPENSACIÓN DE DEUDAS",
-            '16'=>"TARJETA DE DÉBITO",
-            '17'=>"DINERO ELECTRÓNICO",
+            '15'=>"COMPENSACIï¿½N DE DEUDAS",
+            '16'=>"TARJETA DE Dï¿½BITO",
+            '17'=>"DINERO ELECTRï¿½NICO",
             '18'=>"TARJETA PREPAGO",
-            '19'=>"TARJETA DE CRÉDITO",
+            '19'=>"TARJETA DE CRï¿½DITO",
             '20'=>"OTROS CON UTILIZACION DEL SISTEMA FINANCIERO",
-            '21'=>"ENDOSO DE TÍTULOS"
+            '21'=>"ENDOSO DE Tï¿½TULOS"
         );
         if($pos<12) $pos=12;
         $this->setY($pos+2);

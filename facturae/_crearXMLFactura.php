@@ -160,6 +160,7 @@ function K_comprobante(  ){
      function genera_archivo( $id,$data){
 
         // echo $this->valida;
+        $this->valida = 0;
        if ( $this->valida == 0){
             $this->xml_creacion( $id,$data);
        }
@@ -289,7 +290,7 @@ function K_comprobante(  ){
                     'campoAdicional'=>array(
                         array( '@attributes' => array('nombre' => "Direccion"), '@value' => trim($Array_Cabecera['direccion'])),
                         array( '@attributes' => array('nombre' => "Email"), '@value' => trim($Array_Cabecera['correo'])),
-                        array( '@attributes' => array('nombre' => "Observacion"), '@value' =>$detalle )  
+                        array( '@attributes' => array('nombre' => "Observacion"), '@value' =>substr($detalle , 0, 299) )  
                     )
                 );
       
@@ -357,10 +358,10 @@ function K_comprobante(  ){
 
                  //-----------------------------------------------------
                 if( trim($x['tributo']) ==  'I' ){
-                    $codigoporcentaje       = '2';
+                    $codigoporcentaje       = '4';
                     $baseimponible          = $base;
                     $valor                  = round($monto_iva  ,2);
-                    $tarifa                 = 12;
+                    $tarifa                 = 15;
                 }
                 if(  trim($x['tributo'])  == 'T' ){
                     $codigoporcentaje       = '0';
@@ -441,10 +442,10 @@ function K_comprobante(  ){
                      
                         //-----------------------------------------------------
                         if( trim($x['tributo']) ==  'I' ){
-                            $codigoporcentaje1 = '2';
+                            $codigoporcentaje1 = '4';
                             $baseimponible1  = round($base,2);
                             $valor1          = round($monto_iva,2);
-                            $tarifa          = 12;
+                            $tarifa          = 15;
                         }    
                         if(  trim($x['tributo'])  == 'T' ){
                             $codigoporcentaje1   = '0';

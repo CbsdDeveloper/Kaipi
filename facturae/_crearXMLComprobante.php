@@ -406,14 +406,14 @@ function _query_fuente( $estado, $id){
                         ));
 
                         $impuestosiva       = array("impuestoDocSustento"=>array());
-                        $codigoPorcentaje   = '2';
+                        $codigoPorcentaje   = '4';
                         
                         array_push($impuestosiva['impuestoDocSustento'],
                             array(
                                 'codImpuestoDocSustento' => '2',
                                 'codigoPorcentaje' => $codigoPorcentaje ,
                                 'baseImponible' =>$base_iva,
-                                'tarifa' => '12',
+                                'tarifa' => '15',
                                 'valorImpuesto' => $montoiva,
                             ));   
 
@@ -479,14 +479,14 @@ function _query_fuente( $estado, $id){
                   
 
                      $impuestosiva       = array("impuestoDocSustento"=>array());
-                     $codigoPorcentaje   = '2';
+                     $codigoPorcentaje   = '4';
                      
                      array_push($impuestosiva['impuestoDocSustento'],
                          array(
                              'codImpuestoDocSustento' => '2',
                              'codigoPorcentaje' => $codigoPorcentaje ,
                              'baseImponible' =>$base_iva,
-                             'tarifa' => '12',
+                             'tarifa' => '15',
                              'valorImpuesto' => $montoiva,
                          ));
 

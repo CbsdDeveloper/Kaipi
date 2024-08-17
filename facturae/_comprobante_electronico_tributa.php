@@ -71,6 +71,7 @@ $ADatos = $bd->query_array(
         }catch (Exception $e) {
             echo '<br/><b>ERROR AL EJECUTAR EL SCRIPT</b><br/>';
             echo '<b>Excepción Capturada[</b> ',  $e->getMessage(), "]\n";
+            echo '<br/><b>Revise que exista el número de autorización del SRI!!!</b> ';
         } 
         
    // }
