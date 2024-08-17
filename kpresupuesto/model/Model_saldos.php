@@ -174,8 +174,12 @@ class saldo_presupuesto{
         $this->bd->ejecutar($sqlEditPre);
         
         //----------------------------------------------------------------
+        // $sqlEdit = "UPDATE presupuesto.pre_gestion
+        //                      SET disponible = codificado - (certificado  + compromiso )
+        //                    where tipo = 'G' and 
+        //                          anio = ".$this->bd->sqlvalue_inyeccion($anio,true) ;
         $sqlEdit = "UPDATE presupuesto.pre_gestion
-                             SET disponible = codificado - (certificado  + compromiso )
+                             SET disponible = codificado - compromiso
                            where tipo = 'G' and 
                                  anio = ".$this->bd->sqlvalue_inyeccion($anio,true) ;
         

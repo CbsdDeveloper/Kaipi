@@ -125,7 +125,8 @@
         
         $MATRIZ = array(
             ''  => '-',
-            'I'  => 'Aplica Iva',
+            'I'  => 'Aplica Iva 12',
+            'I-15'  => 'Aplica Iva 15',
             'T'  => 'Aplica Tarifa Cero',
             '-'  => 'No Aplica'
         );

@@ -94,11 +94,11 @@ $sql1 = "SELECT   id_tramite,  partida, certificado ,coalesce(compromiso,0) as c
 function compromiso_parcial($bd,$idtramite,$fcertifica,$anio,$compro,$ruc ){
          
     
-    $sql1 = "UPDATE presupuesto.pre_tramite
-                SET  idprov= ".$bd->sqlvalue_inyeccion(trim(''),true) ."
-              WHERE id_tramite = ".$bd->sqlvalue_inyeccion($idtramite,true) ;
+    // $sql1 = "UPDATE presupuesto.pre_tramite
+    //             SET  idprov= ".$bd->sqlvalue_inyeccion(trim(''),true) ."
+    //           WHERE id_tramite = ".$bd->sqlvalue_inyeccion($idtramite,true) ;
     
-    $bd->ejecutar($sql1);
+    // $bd->ejecutar($sql1);
     
     //-- certificacion 
     $x = $bd->query_array('presupuesto.pre_tramite',
@@ -148,7 +148,11 @@ function compromiso_parcial($bd,$idtramite,$fcertifica,$anio,$compro,$ruc ){
     
     while ($fila1=$bd->obtener_fila($stmt1_valida)){
         
-        $monto = $fila1['monto'] - $fila1['iva'];
+        // $monto = $fila1['monto'] - $fila1['iva'];
+        $monto = $fila1['monto'];
+        if ($fila1['iva'] > 0){
+            $fila1['iva'] = round($monto * 0.15,2);
+        }
      
         $saldo =  $fila1['monto'] ;
         
@@ -197,6 +201,13 @@ function compromiso_parcial($bd,$idtramite,$fcertifica,$anio,$compro,$ruc ){
         
         
         $bd->ejecutar($sqlEdit);
+
+        // DEJA EL TRÁMITE ORIGINAL SIN BENEFICIARIO
+        $sql1 = "UPDATE presupuesto.pre_tramite
+                SET  idprov= ".$bd->sqlvalue_inyeccion(trim(''),true) ."
+              WHERE id_tramite = ".$bd->sqlvalue_inyeccion($idtramite,true) ;
+    
+        $bd->ejecutar($sql1);
     }
     
 }

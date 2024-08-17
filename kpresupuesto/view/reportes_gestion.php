@@ -281,7 +281,7 @@
 														<input type="date" name="fechacc" id="fechacc" required="required" autocomplete="offS" class="form-control" placeholder="requerido" size="80" maxlength="80" value="">
 												    </div>
 												  
-												    <label style="padding-top: 12px;text-align: right;" class="col-md-3">Estado</label>
+												    <!-- <label style="padding-top: 12px;text-align: right;" class="col-md-3">Estado</label>
 												  	<div  style="padding-top: 5px;" class="col-md-9">
 												  	<select name="festado"  id="festado" class="form-control">
 														<option value="1">1. Requerimiento Solicitado</option>
@@ -291,7 +291,7 @@
 														<option value="6">6. Tramites Devengado</option>
 														<option value="0">Anulada transaccion</option>
 														</select>
-												  </div>
+												  </div> -->
 											 </div>
   											<div align="center"  style="font-size: 13px"id="guardarProducto" ></div> 
 							   </div> 

@@ -384,7 +384,7 @@ class proceso{
                 	   sum(compromiso) as compromiso, 
                 	   sum(devengado) as devengado,
                        sum(pagado) as pagado
-                FROM presupuesto.view_pre_gestion_periodo
+                FROM presupuesto.pre_gestion
                 where tipo= ".$this->bd->sqlvalue_inyeccion($tipo,true)." and 
                       anio = ".$this->bd->sqlvalue_inyeccion($fanio,true)."
                 group by titulo order by titulo";
@@ -540,7 +540,7 @@ class proceso{
                 	   sum(compromiso) as compromiso,
                 	   sum(devengado) as devengado,
                        sum(pagado) as pagado
-                FROM presupuesto.view_pre_gestion_periodo
+                FROM presupuesto.pre_gestion
                 where tipo=  ".$this->bd->sqlvalue_inyeccion($tipo,true)." and 
                       titulo =  ".$this->bd->sqlvalue_inyeccion($titulo,true)." and
                       anio = ".$this->bd->sqlvalue_inyeccion($fanio,true)."
@@ -682,7 +682,7 @@ class proceso{
                    sum(compromiso) as compromiso,
                    sum(devengado) as devengado,
                    sum(pagado) as pagado
-            FROM presupuesto.view_pre_gestion_periodo
+            FROM presupuesto.pre_gestion
             where tipo= ".$this->bd->sqlvalue_inyeccion($tipo,true)." and 
                   grupo =  ".$this->bd->sqlvalue_inyeccion($item,true)." and
                   anio = ".$this->bd->sqlvalue_inyeccion($fanio,true)."

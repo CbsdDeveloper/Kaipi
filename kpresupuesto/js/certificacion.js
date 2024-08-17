@@ -936,21 +936,33 @@ function LimpiaOrden() {
  	  
  	  var totalBase 	= 0;
 
-	  var flotante = parseFloat(valor)    *  (12/100);
+	//   var flotante = parseFloat(valor)    *  (12/100);
 
 	  totalBase 	=   parseFloat(valor)  ;
 
 	  if ( tipo == 'I'){
-
+		var flotante = parseFloat(valor)    *  (12/100);
 		  var valorIva = parseFloat(flotante).toFixed(2)  ;
  
 		  $('#iva').val(valorIva);
 
 		  totalBase 	= parseFloat(valorIva)  + parseFloat(valor)  ;
 		    
-		  $("#certificado").val(totalBase.toFixed(2) );
+		//   $("#certificado").val(totalBase.toFixed(2) );
+		  $("#certificado").val(parseFloat(valor).toFixed(2) );
 		  
-	  }else{
+	  }else if ( tipo == 'I-15'){
+		var flotante = parseFloat(valor)    *  (15/100);
+		var valorIva = parseFloat(flotante).toFixed(2)  ;
+
+		$('#iva').val(valorIva);
+
+		totalBase 	= parseFloat(valorIva)  + parseFloat(valor)  ;
+		  
+		// $("#certificado").val(totalBase.toFixed(2) );
+		$("#certificado").val(parseFloat(valor).toFixed(2) );
+		
+	}else{
 
 
 		  $('#iva').val(0); 

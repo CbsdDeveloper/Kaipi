@@ -50,9 +50,15 @@
         
         if ( trim($festado) <> '6' ){
             
-            $sql = 'update presupuesto.pre_tramite
+            // $sql = 'update presupuesto.pre_tramite
+            //            set fecha ='.$bd->sqlvalue_inyeccion($fecha,true).',
+            //                estado='.$bd->sqlvalue_inyeccion($festado,true).',
+            //                fcertifica='.$bd->sqlvalue_inyeccion($fechac,true).',
+            //                fcompromiso='.$bd->sqlvalue_inyeccion($fechacc,true).'
+            //          WHERE id_tramite='.$bd->sqlvalue_inyeccion($idtramite,true);
+            
+                     $sql = 'update presupuesto.pre_tramite
                        set fecha ='.$bd->sqlvalue_inyeccion($fecha,true).',
-                           estado='.$bd->sqlvalue_inyeccion($festado,true).',
                            fcertifica='.$bd->sqlvalue_inyeccion($fechac,true).',
                            fcompromiso='.$bd->sqlvalue_inyeccion($fechacc,true).'
                      WHERE id_tramite='.$bd->sqlvalue_inyeccion($idtramite,true);

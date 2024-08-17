@@ -47,12 +47,16 @@ while ($fila=$bd->obtener_fila($stmt1)){
 $anio = $_SESSION['anio'];
 
 $yy= $bd->query_array('presupuesto.pre_gestion',
-                      'count(*) as nn', 
+                      'max(subitem) as nn', 
                       'anio = '.$bd->sqlvalue_inyeccion($anio,true).' and clasificador='.$bd->sqlvalue_inyeccion($clasificador,true)
                     );
 
-
-$id = $yy['nn']  + 1 ;
+if ($yy['nn']){
+    $id = $yy['nn']  + 1 ;
+    $clasificador = '';
+} else {
+    $id = 1 ;
+}
 
 $input = str_pad($id, 3, "0", STR_PAD_LEFT);
 

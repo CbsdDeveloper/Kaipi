@@ -214,7 +214,7 @@ class proceso{
 	    $this->login     =  trim($_SESSION['login']);
 	    
 	    
-	    $imagen = '<img src="../../kimages/'.trim($_SESSION['logo']).'">';
+	    $imagen = '<img width="100" height="100" src="../../kimages/'.trim($_SESSION['logo']).'">';
 	    
 	    echo '<table width="100%" border="0" cellpadding="0" cellspacing="0"  style="font-size: 14px;table-layout: auto">
               <tr>

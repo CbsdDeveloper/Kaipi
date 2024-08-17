@@ -568,7 +568,7 @@ if (isset($_GET["tipo"]))	{
                		    ]
                     } );
              } 
-
+*/
  
 </script> 
 

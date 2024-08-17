@@ -171,12 +171,20 @@ $(document).ready(function(){
 	  
  
 
-	var parametros = {
+	// var parametros = {
+	// 		"idtramite" : idtramite ,
+	// 		"fecha" :  fecha,
+	// 		"fechac" : fechac,
+	// 		"fechacc" : fechacc,
+	// 		"festado" :festado,
+	// 		"accion" : 'edit'
+	// 	};
+	
+		var parametros = {
 			"idtramite" : idtramite ,
 			"fecha" :  fecha,
 			"fechac" : fechac,
 			"fechacc" : fechacc,
-			"festado" :festado,
 			"accion" : 'edit'
 		};
 

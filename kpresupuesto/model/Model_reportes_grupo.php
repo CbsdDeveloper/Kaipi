@@ -54,7 +54,7 @@ class proceso{
         $sql = "SELECT anio,sum(inicial) as inicial,  sum(codificado) as codificado,  
             	   sum(devengado) as devengado,
             	   (sum(devengado) / sum(codificado)) * 100 as p1
-            FROM presupuesto.view_pre_gestion_periodo
+            FROM presupuesto.pre_gestion
             where tipo = 'G' and anio =".$this->bd->sqlvalue_inyeccion($fanio,true)."
             group by anio
             union
@@ -147,7 +147,7 @@ class proceso{
         $sql = "SELECT anio,sum(inicial) as inicial,  sum(codificado) as codificado,
             	   sum(devengado) as devengado,
             	   (sum(devengado) / sum(codificado)) * 100 as p1
-            FROM presupuesto.view_pre_gestion_periodo
+            FROM presupuesto.pre_gestion
             where tipo = 'I' and anio =".$this->bd->sqlvalue_inyeccion($fanio,true)."
             group by anio
             union
@@ -245,7 +245,7 @@ class proceso{
                 	   sum(compromiso) as compromiso,
                 	   sum(devengado) as devengado,
                        sum(pagado) as pagado
-                FROM presupuesto.view_pre_gestion_periodo
+                FROM presupuesto.pre_gestion
                 where tipo= 'G' and anio = ".$this->bd->sqlvalue_inyeccion($fanio,true)."
                 group by funcion order by funcion";
         
@@ -389,7 +389,7 @@ class proceso{
                 	   sum(compromiso) as compromiso,
                 	   sum(devengado) as devengado,
                        sum(pagado) as pagado
-                FROM presupuesto.view_pre_gestion_periodo
+                FROM presupuesto.pre_gestion
                 where tipo= 'G' and anio = ".$this->bd->sqlvalue_inyeccion($fanio,true)." and grupo in ('51','71')
                 group by funcion order by funcion";
         
@@ -574,7 +574,7 @@ class proceso{
             	   devengado  ,
             	   pagado  ,
             	   ejecutado 
-            FROM presupuesto.view_pre_gestion_periodo
+            FROM presupuesto.pre_gestion
             where tipo = '. $this->bd->sqlvalue_inyeccion('G' , true).' and
                   anio = '. $this->bd->sqlvalue_inyeccion($fanio , true) .
                   $programa_where.
@@ -619,7 +619,7 @@ class proceso{
             	   sum(compromiso) compromiso,
             	   sum(devengado)  devengado,
             	   sum(pagado)  pagado
-            FROM presupuesto.view_pre_gestion_periodo
+            FROM presupuesto.pre_gestion
             where tipo = '. $this->bd->sqlvalue_inyeccion('G' , true).' and
                   anio = '. $this->bd->sqlvalue_inyeccion($fanio , true);
         
@@ -710,7 +710,7 @@ class proceso{
                 	   sum(compromiso) as compromiso,
                 	   sum(devengado) as devengado,
                        sum(pagado) as pagado
-                FROM presupuesto.view_pre_gestion_periodo
+                FROM presupuesto.pre_gestion
                 where tipo= 'I' and anio = ".$this->bd->sqlvalue_inyeccion($fanio,true)."
                 group by grupo order by grupo";
         
@@ -850,7 +850,7 @@ class proceso{
                 	   sum(codificado) as codificado, sum(certificado) as certificado,
                 	   sum(compromiso) as compromiso,
                 	   sum(devengado) as devengado
-                FROM presupuesto.view_pre_gestion_periodo
+                FROM presupuesto.pre_gestion
                 where tipo= 'I' and anio = ".$this->bd->sqlvalue_inyeccion($fanio,true)."
                 group by titulo order by titulo";
         
@@ -1381,7 +1381,7 @@ class proceso{
                 	   sum(compromiso) as compromiso, 
                 	   sum(devengado) as devengado,
                        sum(pagado) as pagado
-                FROM presupuesto.view_pre_gestion_periodo
+                FROM presupuesto.pre_gestion
                 where tipo= 'G' and anio = ".$this->bd->sqlvalue_inyeccion($fanio,true)."
                 group by titulo order by titulo";
 
@@ -1522,7 +1522,7 @@ class proceso{
                 	   sum(compromiso) as compromiso,
                 	   sum(devengado) as devengado,
                        sum(pagado) as pagado
-                FROM presupuesto.view_pre_gestion_periodo
+                FROM presupuesto.pre_gestion
                 where tipo= 'G' and anio = ".$this->bd->sqlvalue_inyeccion($fanio,true)."
                 group by grupo order by grupo";
         

@@ -289,7 +289,7 @@ class proceso{
  
         $this->bd->_order_by('fecha');
         
-        $resultado = $this->bd->JqueryCursorVisor('view_diario_presupuesto',$qquery );
+        $resultado = $this->bd->JqueryCursorVisor('view_diario_presupuesto',$qquery, 1 );
         
         $total = 0;
         
@@ -364,7 +364,7 @@ class proceso{
         
         $this->bd->_order_by('fecha');
         
-        $resultado = $this->bd->JqueryCursorVisor('view_diario_presupuesto',$qquery );
+        $resultado = $this->bd->JqueryCursorVisor('view_diario_presupuesto',$qquery,1 );
         
         $totald = 0;
         $totalh = 0;
@@ -520,7 +520,7 @@ class proceso{
         
         $this->bd->_order_by('fecha');
         
-        $resultado = $this->bd->JqueryCursorVisor('view_diario_presupuesto',$qquery );
+        $resultado = $this->bd->JqueryCursorVisor('view_diario_presupuesto',$qquery, '1' );
         
         $totald = 0;
         $totalh = 0;

@@ -467,6 +467,7 @@ class Model_reportes_presupuesto{
            echo '<th width="6%">Inicial</th>';
            echo '<th width="6%">Reformas</th>';
            echo '<th width="6%">Codificado</th>';
+           echo '<th width="6%">Certificado</th>';
            echo '<th width="6%">Compromiso</th>';
            echo '<th width="6%">Devengado</th>';
            echo '<th width="6%">Pagado</th>';
@@ -520,7 +521,7 @@ class Model_reportes_presupuesto{
                         $cimagen ='<img src="../../kimages/m_verde.png" title="'.$porcentaje.' %'.'"/>';
                     }
                         
-                    $c1 = $row["codificado"] - $row['compromiso'];
+                    $c1 = $row["codificado"] - $row['compromiso'] ; //- $row['certificado'];
                     $c2 = $row["codificado"] - $row['devengado'];
      
     
@@ -532,15 +533,20 @@ class Model_reportes_presupuesto{
                         $porcentaje = '-';
                     }
                         
+                    $color_alerta_devengado="";
+                    $color_alerta_comprometido="";
                     
-                      
+                    // if ($row['devengado'] < $row['pagado']) $color_alerta_devengado="bgcolor='lightcoral'";
+                    if ($row['devengado'] < $row['pagado']) $color_alerta_devengado="bgcolor='lightcoral' style='font-weight:bold'";
+                    if ($row['compromiso'] < $row['devengado']) $color_alerta_comprometido="bgcolor='#FFCCCB' style='font-weight:bold'";
                     
                     echo "<td align='right'>".number_format($row['inicial'],2).'</td>';
                     echo "<td align='right'>".number_format($row['reformas'],2).'</td>';
                     echo "<td align='right'>".number_format($row['codificado'],2).'</td>';
-                    echo "<td align='right'>".number_format($row['compromiso'],2).'</td>';
-                    echo "<td align='right'>".number_format($row['devengado'],2).'</td>';
-                    echo "<td align='right'>".number_format($row['pagado'],2).'</td>';
+                    echo "<td align='right'>".number_format($row['certificado'],2).'</td>';
+                    echo "<td align='right' ".$color_alerta_comprometido.">".number_format($row['compromiso'],2).'</td>';
+                    echo "<td align='right' ".$color_alerta_devengado.">".number_format($row['devengado'],2).'</td>';
+                    echo "<td align='right' ".$color_alerta_devengado.">".number_format($row['pagado'],2).'</td>';
                     echo "<td align='right'>".number_format($c1,2).'</td>';
                     echo "<td align='right'>".number_format($c2,2).'</td>';
                     echo "<td align='center'>".$porcentaje.'</td>';
