@@ -99,6 +99,7 @@
                             $this->tab_1_datos_bienes( );
                    
          	              $this->obj->text->texto_oculto("action",$datos); 
+         	              $this->obj->text->texto_oculto("bandera",$datos); 
          
  
          
@@ -121,6 +122,8 @@
        $evento1 = "goToURL_acta()";
 
        $evento2 = "BuscaFuncionario()";
+       
+       $evento3 = "EnviaCorreoFuncionario()";
 
  
     $ToolArray = array( 
@@ -128,6 +131,7 @@
                 array( boton => 'Buscar Funcionario', evento =>$evento2, grafico => 'glyphicon glyphicon-user' ,  type=>"button_danger"),
                 array( boton => 'Generar el Acta Entrega Recepcion', evento =>$evento, grafico => 'glyphicon glyphicon-floppy-saved' ,  type=>"submit"), 
                 array( boton => 'Impresion de Acta Entrega Recepcion', evento =>$evento1, grafico => 'glyphicon glyphicon-print' ,  type=>"boton"),
+                array( boton => 'Envío de Correo Notificatorio a Custodio', evento =>$evento3, grafico => 'glyphicon glyphicon-envelope' ,  type=>"boton"),
                  );
                   
     $this->obj->boton->ToolMenuDivSet($ToolArray); 
@@ -183,9 +187,9 @@
        
       $this->set->div_label(12,'<b>Referencia de activos</b>');
       
-      
+      //<input type="text" id="bandera"> 
      echo ' <div class="col-md-12" style="padding: 1px">
-
+            
             <div class="btn-group">
 
                <button type="button" onClick="DetalleActivosNoAsignados()" class="btn btn-danger btn-sm">Actualizar Bienes Asignados</button>
@@ -200,6 +204,16 @@
                 <ul class="dropdown-menu" role="menu">
                   <li><a onClick="MarcarTodo(1)"  href="#">Marcar todos los bienes</a></li>
                   <li><a onClick="MarcarTodo(0)" href="#">Desmarcar todos los bienes</a></li>
+                </ul>
+
+               <button type="button" onClick="DetalleActivosTodos()" class="btn btn-success btn-sm">Todos los bienes</button>
+               <button type="button" class="btn btn-secondary btn-sm">Seleccion de informacion (Todos los bienes)</button>
+                <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a onClick="MarcarTodos(1)" href="#">Marcar todos los bienes</a></li>
+                  <li><a onClick="MarcarTodos(0)" href="#">Desmarcar todos los bienes</a></li>
                 </ul>
 
               

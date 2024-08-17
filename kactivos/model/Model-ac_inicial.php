@@ -5,6 +5,8 @@ require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
 
 require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
 
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 class proceso{
     
@@ -244,6 +246,7 @@ class proceso{
         $comprobante            = $this->K_comprobante( $clase_documento );
         
         $idprov                 = trim($_POST["idprov"]);
+        $bandera = trim($_POST["bandera"]);
         
         $this->ATabla[2][valor] =  $comprobante;
         
@@ -251,7 +254,7 @@ class proceso{
         $id = $this->bd->_InsertSQL($this->tabla,$this->ATabla, $this->secuencia );
    
      
-        $this->detalle_bienes_asignados($id , $idprov );
+        $this->detalle_bienes_asignados($id , $idprov, $bandera );
          
         
         $datos = $this->div_resultado('editar',$id, 1,'digitado',$comprobante) ;
@@ -334,11 +337,95 @@ class proceso{
          
        
    }
+
+   function actualiza_custodio($idbien, $idprov){
+
+    $ATabla_custodio = array(
+        array( "campo" => 'id_bien_custodio',"tipo" => 'NUMBER',"id" => '0',"add" => 'N', "edit" => 'N', "valor" => '-', "key" => 'S'),
+        array( "campo" => 'id_bien',"tipo" => 'NUMBER',"id" => '1',"add" => 'S', "edit" => 'N', "valor" => '-', "key" => 'N'),
+        array( "campo" => 'idprov',"tipo" => 'VARCHAR2',"id" => '2',"add" => 'S', "edit" => 'S', "valor" => $idprov, "key" => 'N'),
+        array( "campo" => 'id_departamento',"tipo" => 'NUMBER',"id" => '3',"add" => 'S', "edit" => 'S', "valor" => '-', "key" => 'N'),
+        array( "campo" => 'creacion',"tipo" => 'DATE',"id" => '4',"add" => 'S', "edit" => 'N', "valor" =>  $this->hoy, "key" => 'N'),
+        array( "campo" => 'sesion',"tipo" => 'VARCHAR2',"id" => '5',"add" => 'S', "edit" => 'N', "valor" =>$this->sesion , "key" => 'N'),
+        array( "campo" => 'modificacion',"tipo" => 'DATE',"id" => '6',"add" => 'S', "edit" => 'S', "valor" =>  $this->hoy, "key" => 'N'),
+        array( "campo" => 'sesionm',"tipo" => 'VARCHAR2',"id" => '7',"add" => 'S', "edit" => 'S', "valor" => $this->sesion , "key" => 'N'),
+        array( "campo" => 'tipo_ubicacion',"tipo" => 'VARCHAR2',"id" => '8',"add" => 'S', "edit" => 'S', "valor" => '-', "key" => 'N'),
+        array( "campo" => 'tiene_acta',"tipo" => 'VARCHAR2',"id" => '9',"add" => 'S', "edit" => 'N', "valor" => 'N', "key" => 'N'),
+        array( "campo" => 'ubicacion_fisica',"tipo" => 'VARCHAR2',"id" => '10',"add" => 'S', "edit" => 'S', "valor" => 'N', "key" => 'N')
+    );
+
+    $valida = $this->BuscaCustodio($idbien);
+
+    if ( $valida == 0 ) {
+        $ATabla_custodio[1]["valor"] =  $idbien;
+        $this->bd->_InsertSQL('activo.ac_bienes_custodio',$ATabla_custodio, 'activo.ac_bienes_custodio_id_bien_custodio_seq');
+    }else {
+        $id_bien_custodio = $this->id_custodio($idbien);
+        $uso =   $this->estado_activo($idbien);
+        $ATabla_custodio[0]["valor"] =  $id_bien_custodio;
+        $ATabla_custodio[1]["valor"] =  $idbien;
+        $ATabla_custodio[8]["valor"] =  'Institucion';
+        $this->bd->_UpdateSQL('activo.ac_bienes_custodio',$ATabla_custodio,$id_bien_custodio);
+        // if ( $uso =='Libre') {
+        //     $this->bd->_UpdateSQL('activo.ac_bienes_custodio',$ATabla_custodio,$id_bien_custodio);
+        // }else{
+        //     if ($tiene_acta == 'S'){
+        //     }else{
+        //     $ATabla_custodio[2]["edit"] =  'N';
+        //     $ATabla_custodio[3]["edit"] =  'N';
+        //     $this->bd->_UpdateSQL('activo.ac_bienes_custodio',$ATabla_custodio,$id_bien_custodio);
+        //     }
+        // }
+    }
+        
+    $sql = "UPDATE activo.ac_bienes 
+               SET uso= ".$this->bd->sqlvalue_inyeccion('Asignado',true) .'
+             WHERE id_bien='.$this->bd->sqlvalue_inyeccion($idbien,true);
+                 
+     $this->bd->ejecutar($sql);
+     
+     
+     $sql = "UPDATE activo.ac_bienes_custodio
+               SET tiene_acta= ".$this->bd->sqlvalue_inyeccion('S',true).'
+             WHERE id_bien='.$this->bd->sqlvalue_inyeccion($idbien,true);
+     
+     $this->bd->ejecutar($sql);
+     
+   
+}
     //-------------
     
+    function estado_activo($id ){
+        
+        
+        $x = $this->bd->query_array('activo.ac_bienes',
+            'uso',
+            'id_bien='.$this->bd->sqlvalue_inyeccion($id,true)
+            );
+        
+        
+        
+        return $x['uso'];
+        
+        
+    }
+    //------------------------------
+    function id_custodio($id ){
+        
+        
+        $x = $this->bd->query_array('activo.ac_bienes_custodio',
+            'id_bien_custodio',
+            'id_bien='.$this->bd->sqlvalue_inyeccion($id,true)
+            );
+        
+        
+        
+        return $x['id_bien_custodio'];
+    }
+
     //--------------------------------------------
     //----------------------------
-    function detalle_bienes_asignados($id,$idprov ){
+    function detalle_bienes_asignados($id,$idprov,$bandera){
         
         
         $sql_det = "SELECT  id_bien,tipo_bien,cuenta,clase,descripcion,costo_adquisicion,bandera
@@ -348,7 +435,13 @@ class proceso{
                         bandera = ".$this->bd->sqlvalue_inyeccion('S',true)." and
                         idprov = ".$this->bd->sqlvalue_inyeccion($idprov,true)." order by descripcion";
         
-        
+        if ($bandera=='todos'){
+            $sql_det = "SELECT  id_bien,tipo_bien,cuenta,clase,descripcion,costo_adquisicion,bandera
+            FROM activo.view_bienes
+            where   bandera = ".$this->bd->sqlvalue_inyeccion('S',true)." order by descripcion";
+        }
+
+
         $stmt1 = $this->bd->ejecutar($sql_det);
         
         
@@ -361,10 +454,17 @@ class proceso{
           
             $this->bd->_InsertSQL('activo.ac_movimiento_det',$this->ATabla_acta , 'activo.ac_movimiento_det_id_acta_det_seq');
             
-            $this->actualiza_bien($idbien);
-            
+            if ($bandera !='todos'){
+                $this->actualiza_bien($idbien);
+            } else {
+                $this->actualiza_custodio($idbien,$idprov);
+            }
             
         }
+
+        // DESMARCAR TODOS LOS BIENES PARA LA PRÓXIMA ACTA
+        $sql = "UPDATE activo.ac_bienes SET bandera= 'N' where 1=1";
+        $this->bd->ejecutar($sql);
  
         
     }

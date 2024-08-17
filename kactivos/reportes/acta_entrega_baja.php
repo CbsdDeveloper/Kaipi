@@ -37,6 +37,13 @@ $datos 			= $gestion->Acta_entrega($id);
 </div>
 	
 <div id="content">
+
+	<table style="border-collapse: collapse; border: 1px solid #AAAAAA;font-weight: normal;font-size: 10px; padding-left:60px;padding-right:60px;text-align: center;" border="0" width="95%" cellspacing="0" cellpadding="0">
+		<tr>
+			<td colspan="4" style="font-weight:bold;font-size: 12px;padding: 3px">Baja de Bienes N° 
+			<?php   echo  $id  ; ?>  </td>
+		</tr>
+	</table>
 	
 	  <div  style="padding-left:60px;padding-right:60px;">
 				 <?php      $gestion->firma_baja('AC-BB',$datos); ?>

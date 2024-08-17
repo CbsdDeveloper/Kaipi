@@ -98,6 +98,7 @@
               array( campo => 'id_bien',valor => $vcodigo,filtro => $filtro6, visor => 'S'),
               array( campo => 'sede',valor => '-',filtro => 'N', visor => 'S'),
               array( campo => 'unidad',valor => '-',filtro => 'N', visor => 'S'),
+              array( campo => 'detalle_ubica',valor => '-',filtro => 'N', visor => 'S'),
               array( campo => 'descripcion',valor => '-',filtro => 'N', visor => 'S'),
               array( campo => 'razon',valor => '-',filtro => 'N', visor => 'S'),
               array( campo => 'busqueda',valor => $variable,filtro => $filtro5, visor => 'S'),
@@ -135,7 +136,7 @@
 
 		 	$output[] = array (
 		      				    $fetch['id_bien'],
-		 						$fetch['unidad'],
+		 						$fetch['detalle_ubica'],
 		      				    $fetch['razon'],
 		      				    $descripcion,
                                   $fetch['serie'],

@@ -48,6 +48,7 @@
               array( campo => 'id_bien',valor => $vcodigo,filtro => 'N', visor => 'S'),
               array( campo => 'sede',valor => '-',filtro => 'N', visor => 'S'),
               array( campo => 'unidad',valor => '-',filtro => 'N', visor => 'S'),
+              array( campo => 'detalle_ubica',valor => '-',filtro => 'N', visor => 'S'),
               array( campo => 'razon',valor => '-',filtro => 'N', visor => 'S'),
               array( campo => 'descripcion',valor => $variable,filtro => 'N', visor => 'S'),
               array( campo => 'fecha',valor => '-',filtro => 'N', visor => 'S'),
@@ -69,7 +70,7 @@
           );
 
           $fecha2 = date('Y-m-d');
-          $fecha1 = date("Y-m-d",strtotime($fecha2."- 45 days")); 
+          $fecha1 = date("Y-m-d",strtotime($fecha2."- 90 days")); 
   
           $this->bd->__between('fecha_adquisicion',$fecha1,$fecha2);
            
@@ -86,7 +87,7 @@
 
                     $output[] = array (
                         $fetch['id_bien'],
-                       $fetch['unidad'],
+                       $fetch['detalle_ubica'],
                         $fetch['razon'],
                         $descripcion,
                         $fetch['serie'],

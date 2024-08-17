@@ -64,7 +64,7 @@ session_start( );
 	
 	$bd     = 	new Db;
 	
-	$name       = $_SESSION['razon'] ;
+	$name       = 'CUERPO DE BOMBEROS DEL GADMSD'; //$_SESSION['razon'] ;
       
  
 	

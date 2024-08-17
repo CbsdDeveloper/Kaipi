@@ -134,7 +134,7 @@ session_start();
 
               
 
-              $cadena = trim( $fetch['descripcion']) .' ('.trim( $fetch['codigo_actual']).')';
+              $cadena = str_replace('"', '', trim( $fetch['descripcion']) .' ('.trim( $fetch['codigo_actual']).')');
 
 
       	    

@@ -144,7 +144,7 @@ header("Pragma: no-cache");
 																						<tr>
 																					    <th width="4%">Activo</th>
 																						<th width="7%">Cuenta</th>	
-																						<th width="15%">Unidad</th>
+																						<th width="15%">Ubicación</th>
 																						<th width="15%">Custodio</th>
 																						<th width="20%">Detalle</th>
 																						<th width="10%">Nro.Serie</th>	

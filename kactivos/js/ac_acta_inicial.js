@@ -266,7 +266,7 @@ function LimpiarPantalla() {
 function DetalleActivosNoAsignados( ) {
 	  
 	var idprov =	$("#idprov").val ();
-	
+	$("#bandera").val('custodio');
 
 	 var parametros = {
 				 'idprov'  : idprov  
@@ -275,6 +275,29 @@ function DetalleActivosNoAsignados( ) {
 		 $.ajax({
 			 data:  parametros,
 			 url: "../model/Model-_bien_noasignado.php",
+			 type: "GET",
+	       success: function(data)
+	       {
+	           $('#DetalleActivosNoAsignado').html(data);
+	       }
+		 });
+	 
+ 
+	 
+}
+//-------------
+function DetalleActivosTodos( ) {
+	  
+	var idprov =	$("#idprov").val ();
+	$("#bandera").val('todos');
+
+	 var parametros = {
+				 'idprov'  : idprov  
+	  };
+		 
+		 $.ajax({
+			 data:  parametros,
+			 url: "../model/Model-_bienes_todos.php",
 			 type: "GET",
 	       success: function(data)
 	       {
@@ -416,6 +439,37 @@ function myFunction(codigo,objeto ) {
 				}); 
 
   DetalleActivosNoAsignados( );
+}
+//-------------------
+  function MarcarTodos(codigo ) {
+		
+	    var  accion 		    =  'todo';
+ 	    var  idprov 		    =  $("#idprov").val();
+		
+ 
+	    var parametros = {
+             'accion' : accion ,
+             'codigo' : codigo ,
+             'idprov' : idprov
+
+	  };
+
+
+  $.ajax({
+						data:  parametros,
+						url:   '../model/Model-ac_listaCheckNoTodos.php',
+						type:  'GET' ,
+						cache: false,
+						beforeSend: function () { 
+									$("#GuardaDato").html('Procesando');
+							},
+						success:  function (data) {
+								 $("#GuardaDato").html(data);   
+							} 
+
+				}); 
+
+  DetalleActivosTodos( );
 }
   
 //---------------------------
@@ -840,3 +894,27 @@ function goToURL_acta(  ) {
 	 
 			 
 		} 
+
+	function EnviaCorreoFuncionario( codigo) {
+
+	var id_acta   = $("#id_acta").val ();
+
+	var parametros = {
+		'id_acta' : id_acta,
+	};
+
+	// alert(id_acta);
+	// return;
+
+	$.ajax({
+		data:  parametros,
+		url: "../model/acta_envio_correo_notificacion.php",
+		type: "GET",
+		success: function(response)
+		{
+			$('#Vid_departamento').html(response);
+		}
+	});
+
+
+	} 

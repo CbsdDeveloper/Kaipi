@@ -982,7 +982,7 @@ class ReportePdf{
 	        $titulo1 ='REFERENCIA DE LA ADQUISICION';
 	        
 	        $proveedor = 'Proveedor';
-	        $factura = 'Factura';
+	        $factura = 'N° Documento';
 	        $costo = 'Costo';
 	        
 	    }
@@ -1088,7 +1088,7 @@ class ReportePdf{
                   
 
 				  <tr>
-				      <td colspan="4"   bgcolor="#EDEDED" style="font-weight: normal;font-size: 11px;padding: 6px">4. IDENTIFICACION RESPONSABLE</td>
+				      <td colspan="4"   bgcolor="#EDEDED" style="font-weight: normal;font-size: 11px;padding: 6px">5. IDENTIFICACION RESPONSABLE</td>
 			       </tr> 
                    <tr>
     				   <td '.$estilo.' >Custodio</td>
@@ -1104,7 +1104,7 @@ class ReportePdf{
 			      </tr>
 
                    <tr>
-				      <td colspan="4"   bgcolor="#EDEDED" style="font-weight: normal;font-size: 11px;padding: 6px">5. GARANTIAS</td>
+				      <td colspan="4"   bgcolor="#EDEDED" style="font-weight: normal;font-size: 11px;padding: 6px">6. GARANTIAS</td>
 			       </tr> 
                    <tr>
     				   <td '.$estilo.' >Garantia?</td>
@@ -1123,11 +1123,11 @@ class ReportePdf{
 						descripcion, 
 						cuenta,
 						clasificador ,
-						marca ,count(*) as cantidad,sum(costo_adquisicion) total
+						marca ,count(*) as cantidad,sum(costo_adquisicion) total,id_bien
 				FROM activo.view_bienes
 				where trim(idproveedor) = '.$this->bd->sqlvalue_inyeccion($ruc,true) .' and 
 					  trim(factura) = '.$this->bd->sqlvalue_inyeccion($factura,true) .'
-				group by clase_esigef ,descripcion, cuenta,clasificador ,marca';
+				group by clase_esigef ,descripcion, cuenta,clasificador ,marca,id_bien';
 				
  
    
@@ -1135,12 +1135,12 @@ class ReportePdf{
 		echo ' <table id="table_detalle"  class="lado" cellspacing="0" width="90%" style="font-size: 9px"  >
 		 <thead>
 		  <tr>
+		  	 <th class="lado" width="10%">Codigo</th>
 			 <th class="lado" width="15%">Clase</th>
 			 <th class="lado" width="30%">Descripcion</th>
 			 <th class="lado" width="10%">Cuenta</th>
 			 <th class="lado" width="10%">Clasificador</th>
 			 <th class="lado" width="15%">Marca</th>
-			 <th class="lado" width="10%">Cantidad</th>
 			 <th class="lado" width="10%">Total</th>
 			  </tr>
 		 </thead>';
@@ -1157,12 +1157,12 @@ class ReportePdf{
 		 
  			
 			echo ' <tr>
+			<td class="lado" >'.trim($y['cuenta']).'-'.trim($y['id_bien']).'</td>
 			<td class="lado" >'.trim($y['clase_esigef']).'</td>
 			<td class="lado" >'.trim($y['descripcion']).'</td>
 			<td class="lado" >'.trim($y['cuenta']).'</td>
  			 <td class="lado" >'.$y['clasificador'].'</td>
 			 <td class="lado" >'.$y['marca'].'</td>
-			 <td class="lado" >'.$y['cantidad'].'</td>
 			   <td class="lado" >'.$y['total'].'</td>
 		</tr>';
 			
@@ -1183,24 +1183,25 @@ class ReportePdf{
 			<td class="lado" > </td>
 			 <td class="lado" >SubTotal </td>
 			   <td class="lado" >'.$total.'</td>
-		</tr>
-		<tr>
- 			  <td class="lado" > </td>
-			  <td class="lado" > </td>
-			 <td class="lado" > </td>
-			<td class="lado" > </td>
-			<td class="lado" > </td>
-			 <td class="lado" >IVA </td>
-			   <td class="lado" >'. round($IVA,2).'</td>
-			   <tr>
- 			  <td class="lado" > </td>
-			  <td class="lado" > </td>
-			 <td class="lado" > </td>
-			<td class="lado" > </td>
-			<td class="lado" > </td>
-			 <td class="lado" >Total </td>
-			   <td class="lado" >'. round($total1,2).'</td>
 		</tr></table>';
+
+		// echo '<tr>
+ 		// 	  <td class="lado" > </td>
+		// 	  <td class="lado" > </td>
+		// 	 <td class="lado" > </td>
+		// 	<td class="lado" > </td>
+		// 	<td class="lado" > </td>
+		// 	 <td class="lado" >IVA </td>
+		// 	   <td class="lado" >'. round($IVA,2).'</td>
+		// 	   <tr>
+ 		// 	  <td class="lado" > </td>
+		// 	  <td class="lado" > </td>
+		// 	 <td class="lado" > </td>
+		// 	<td class="lado" > </td>
+		// 	<td class="lado" > </td>
+		// 	 <td class="lado" >Total </td>
+		// 	   <td class="lado" >'. round($total1,2).'</td>
+		// </tr></table>';
    
  
  	  

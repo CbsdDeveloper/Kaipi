@@ -144,7 +144,7 @@ $pdf = $dompdf->output(); // Obtener el PDF generado
  
 $registro = trim($_SESSION['ruc_registro']);
 
-$filename = "DocMemo" . $registro . ".pdf";
+$filename = "ResumenBienesTramite-" . $tramite . ".pdf";
  
 $dompdf->stream($filename, array("Attachment" => false));
  

@@ -123,7 +123,7 @@ $firmas 		= $gestion->firmas();
  	
 	     <table style="border-collapse: collapse; border: 1px solid #AAAAAA;font-weight: normal;font-size: 10px" border="0" width="95%" cellspacing="0" cellpadding="0">
  			<tr>
-				<td colspan="2" bgcolor="#EDEDED" style="font-weight: normal;font-size: 11px;padding: 6px"> 6. INFORMACION COMPLEMENTARIA / COMPONENTES / NOVEDADES</td>
+				<td colspan="2" bgcolor="#EDEDED" style="font-weight: normal;font-size: 11px;padding: 6px"> 7. INFORMACION COMPLEMENTARIA / COMPONENTES / NOVEDADES</td>
 			</tr>
 			<tr>
 				<td width="35%" style="padding: 3px">Fotografia</td>

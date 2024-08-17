@@ -131,7 +131,7 @@ session_start();
       	    
       	    $codigo = trim($fetch['tipo_bien']).'-'.trim($fetch['cuenta']).'-'.$id;
       	    
-              $codigo =  trim($fetch['cuenta']).'-'.$id;
+              $codigo =  str_replace('"', '', trim($fetch['cuenta']).'-'.$id);
       	    //BLD.141.01.03-4386
       	    
 		 	$output[] = array (
