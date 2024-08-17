@@ -151,7 +151,7 @@ function BusquedaAux(){
      
      $.ajax({
 			data:  parametros,
-			url:   '../model/Model_listaAuxTotal.php',
+			url:   '../model/Model_listaAuxTotal_b.php',
 			type:  'GET' ,
 			beforeSend: function () { 
 

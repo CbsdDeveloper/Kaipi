@@ -147,7 +147,7 @@ $datos['cheque'] = $datosB['cheque'];
 </body>
 </html>
 <?php 
- 
+ // #FINANCIERO
 require_once 'dompdf/autoload.inc.php';
 
 use Dompdf\Dompdf;

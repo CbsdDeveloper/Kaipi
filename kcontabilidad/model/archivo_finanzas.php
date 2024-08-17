@@ -315,7 +315,7 @@ class archivo_finanzas{
  	    $separador = '|';
 	    
 	    //-------------- detalle balance  ----
-	    $sql = 'SELECT periodo, ruc, cuenta_1, nivel_11, nivel_12, sum(deudor_1) deudor_1, sum(acreedor_1) acreedor_1, 
+	    $sql = "SELECT periodo, ruc, cuenta_1, nivel_11, nivel_12, sum(deudor_1) deudor_1, sum(acreedor_1) acreedor_1, 
 		ruc1, nombre, grupo, subgrupo, item, 
 	   cuenta_2, nivel_21, nivel_22, 
 	   sum(deudor_2) deudor_2, 
@@ -323,11 +323,11 @@ class archivo_finanzas{
 	    asiento, 
 	   min(tramite) as tramite, 
 	   min(fecha) as fecha,  min(fecha_pago) as fecha_pago,  COALESCE(min(id_asiento_ref),0) as id_asiento_ref
- FROM  co_reciprocas
+ FROM  co_reciprocas WHERE anio='".$anio."' and mes ='".(round($mes))."'
  group by periodo, ruc, cuenta_1, nivel_11, nivel_12, ruc1, nombre, grupo, subgrupo, item,cuenta_2,nivel_21, nivel_22,asiento
- order by cuenta_1, nivel_11';
+ order by cuenta_1, nivel_11";
 	     
-	 
+	//  print_r($sql);
 	    
 	    $stmt1 = $this->bd->ejecutar($sql);
 	    $i = 1;

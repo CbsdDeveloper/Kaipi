@@ -762,18 +762,23 @@ function Reciprocas( tipo)
 
 	var fanio     =     $("#fanio").val();
 	var ffecha2   =     $("#ffecha2").val();
+	var id_asiento_reciproca = $("#id_asiento_reciproca").val();
 	var url = '';
 
  	 var parametros = {
 		    'fanio' : fanio ,
-			'ffecha2': ffecha2
+			'ffecha2': ffecha2,
+			'id_asiento': id_asiento_reciproca
 
     };
 
 	if ( tipo == 0) {
 		url = '../model/Model-reciprocas.php';
-	}else{
+	}else if ( tipo == 1){
 		url =  '../model/Model-reciprocas_q.php';
+	}else { // tipo == 2
+		if (id_asiento_reciproca.trim() == '') {alert('Ingrese un número de asiento'); return;}
+		url = '../model/Model-reciprocas.php';
 	}
  
 			$.ajax({
@@ -788,6 +793,7 @@ function Reciprocas( tipo)
 			  },
 				success:  function (data) {
 						$("#ViewBalance").html(data); 
+						$("#id_asiento_reciproca").val('')
 					
 				} 
  			});

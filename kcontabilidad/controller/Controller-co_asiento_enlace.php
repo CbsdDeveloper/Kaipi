@@ -78,7 +78,7 @@ session_start( );
                            $evento =  'onChange="BuscaPartida(this.value)"';
                            $this->obj->list->listadbe($resultado,$tipo,'ContraCuenta','cuenta1',$datos,'required','',$evento,'div-2-10');
                        
-                           if ( $aux_dato["bandera"] == '0'){
+                           if ( $aux_dato["bandera"] == '0' && trim($id_tramite) == ''){
                             
                                    $evento =  ' ';
                                    $resultado = $this->sql_cuenta_gasto( $grupo ,$id_asiento);
