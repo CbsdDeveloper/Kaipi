@@ -86,10 +86,13 @@ if(isset($_POST['submit']))
         //si es correcto, entonces damos permisos de lectura para subir
         
         $filename = $_FILES['sel_file']['tmp_name'];
+        echo 'Cargando nombre del archivo: '.$filename.' <br>';
 
         $handle = fopen($filename, "r");
         
         $i = 0;
+
+        echo ($handle);
 
         while (($data = fgetcsv($handle, 1000, ";")) !== FALSE)
         {
@@ -97,6 +100,7 @@ if(isset($_POST['submit']))
             
             $ruc         =   trim($data[0]) ;
             $valor       =   trim($data[1]) ;
+            echo ($ruc);
  
             $id =  trim($ruc);
             

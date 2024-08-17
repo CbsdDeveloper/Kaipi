@@ -135,9 +135,16 @@ class proceso{
             fondo,vivienda,salud, alimentacion,educacion,vestimenta,
             sifondo,sidecimo,sicuarto,sihoras,sisubrogacion,programa,fecha_salida
  FROM view_nomina_rol
-where    regimen='.$this->bd->sqlvalue_inyeccion($regimen ,true). ' and
+where    fecha_salida is NULL and regimen='.$this->bd->sqlvalue_inyeccion($regimen ,true). ' and
           programa='.$this->bd->sqlvalue_inyeccion(trim($programa) ,true). ' and
-          msale  = '.$this->bd->sqlvalue_inyeccion( '-1' ,true). ' or msale = '.  $this->bd->sqlvalue_inyeccion(  $mes ,true)  ;
+          (msale  = '.$this->bd->sqlvalue_inyeccion( '-1' ,true). ' or msale = '.  $this->bd->sqlvalue_inyeccion(  $mes ,true) .')' ;
+
+            $sql = 'SELECT idprov, id_departamento, id_cargo, regimen,  fecha, sueldo,
+            fondo,vivienda,salud, alimentacion,educacion,vestimenta,
+            sifondo,sidecimo,sicuarto,sihoras,sisubrogacion,programa,fecha_salida
+            FROM view_nomina_rol
+            where    fecha_salida is NULL and regimen='.$this->bd->sqlvalue_inyeccion($regimen ,true). ' and
+            programa='.$this->bd->sqlvalue_inyeccion(trim($programa) ,true);
             
             
         }

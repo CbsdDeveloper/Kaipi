@@ -37,7 +37,7 @@
      $datos_web     =   $mail->WebEnvio();
     //  print_r($datos_web);
      $pagina_web    =   trim($datos_web);
-     $pagina_web    =   trim('http://kaipi.cbsd.gob.ec/');
+     $pagina_web    =   trim('https://kaipi.cbsd.gob.ec/');
         
        
      $x         = $bd->query_array(  'view_nomina_rol', 'idprov,razon,emaile,correo',  'idprov='.$bd->sqlvalue_inyeccion(trim($idprov),true) );
@@ -50,7 +50,7 @@
      $id_periodo    = $datos['id_periodo'];
      $imagen        = $pagina_web.'kimages/'. trim($_SESSION['logo']) ;
  
-     $mail->_DeCRM( $sesion, $_SESSION['razon']);
+    //  $mail->_DeCRM( $sesion, $_SESSION['razon']);
 
 
      //---------------------------------------------------------------------

@@ -589,13 +589,13 @@ function BuscaPrograma( codigo,tipo) {
 	   
 	
 	if ( tipo == 1 ) {
-		
+		$("#loadC").prop('disabled', true);
 		var regimen   = $("#regimen").val();
 		var programa  = codigo;
 	}
  
 	if ( tipo == 0 ) {
-		
+		$("#loadC").prop('disabled', true);
 		var programa = '';
 		var regimen  = codigo
 	}
@@ -628,6 +628,8 @@ function BuscaPrograma( codigo,tipo) {
 	    	   BuscaRubro( regimen,programa );
 	    	   
 	    	   BuscaRubroQuery(regimen);
+
+				// $("#loadC").prop('disabled', false);
 	       }
 		 });
  
@@ -652,6 +654,7 @@ function BuscaRubro( codigo,programa) {
        {
  
     		   $('#id_config1').html(response);
+			   $("#loadC").prop('disabled', false);
     	   
 	 	        
        }

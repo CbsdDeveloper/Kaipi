@@ -97,6 +97,7 @@
                                                                                                 <th width="10%">Tipo</th>
 																								<th width="15%">Motivo</th>
 																								<th width="10%">Rige</th>
+																								<th width="10%">Finaliza</th>
  																								<th width="30%">Novedad</th>
                                                                                                 <th width="5%">Acción</th>
                                                                                                 </tr>

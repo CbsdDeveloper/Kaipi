@@ -321,7 +321,7 @@ class proceso{
 
         $sql = "SELECT max(comprobante::int) as secuencia
 			      FROM nom_accion
-			      where modulo = 'S' and estado =".$this->bd->sqlvalue_inyeccion('S' ,true);
+			      where modulo = 'S' and estado =".$this->bd->sqlvalue_inyeccion('S' ,true) . " and anio = " .$this->bd->sqlvalue_inyeccion($this->anio ,true);
         
         $parametros 			= $this->bd->ejecutar($sql);
         $secuencia 				= $this->bd->obtener_array($parametros);
@@ -418,7 +418,7 @@ class proceso{
         if ( $motivo == 'SALIDA') {
             $salida = 1;
         }
-        if ( $motivo == 'REINGRESO') {
+        if ( $motivo == 'REINGRESO' || $motivo == 'INGRESO' ) {
             $salida = 2;
         }
         

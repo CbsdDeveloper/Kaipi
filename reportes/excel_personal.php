@@ -13,9 +13,10 @@ $bd	   =	new Db ;
 $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
  
 			$sql ="SELECT programa,regimen,fecha,idprov as identificacion, 
-						  razon as funcionario,cargo,genero,direccion, telefono, fechan as fecha_nacimiento,
-						  correo,sueldo
+						  razon as funcionario,cargo,genero,direccion, telefono, fechan as fecha_nacimiento, tsangre as tipo_sangre,
+						  correo,emaile as correo_institucional,sueldo
 					FROM view_nomina_rol
+					WHERE estado='S'
 					order by programa,regimen,razon" ;
 
  

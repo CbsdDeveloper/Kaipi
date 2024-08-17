@@ -1,6 +1,7 @@
 <?php 
 session_start( );   
-  
+//   error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 /*
  CLASE CALCULO DE FORMULAS DE IESS
  VERSION 1.1
@@ -423,7 +424,7 @@ function _n_decimo_tercero( $id_periodo, $id_rol,$idprov ,$anio,$mes,$simula="N"
     $dias = floor($dias);
     
     $meses = round(($dias * 12) / 365);*/
-    
+    //TODO: ARREGALAR CALCULO DE DECIMO TERCERO PARA CONTRATO OCASIONAL (11 MESES O MENOS)
     $parcial   = $User['suma'] + $User_a['suma'];
     $numero    = $User['nn'] + $User_a['nn'];
 
@@ -549,12 +550,12 @@ function _n_decimo_tercero( $id_periodo, $id_rol,$idprov ,$anio,$mes,$simula="N"
    
     $dias_valor     =     $parcial/ $udia ;
      
-    $region = 'S';
+    $region = 'C';
     
     if ($region=='C')
     {
     //    $fecha_inicia =  $anio_anterior .'-03-01';
-        $fecha_final  =  $anio  .'-02-28';
+        $fecha_final  =  $anio  .'-02-29';
   //     $fecha_base   =  $anio  .'-01-01';
   //      $fecha_tope   =  $anio_anterior  .'-12-31';
      }else  {
@@ -566,7 +567,7 @@ function _n_decimo_tercero( $id_periodo, $id_rol,$idprov ,$anio,$mes,$simula="N"
      // (Salario b�sico x Dias Laborados/Total d�as)
 
 
-     $dias01         =    $this->_dias($fecha_final,$xxx['fecha']);
+     $dias01         =    $this->_dias($fecha_final,$xxx['fecha']) +1;
 
      $meses01        =    $this->meses($xxx['fecha'],$fecha_final);
  
@@ -576,14 +577,22 @@ function _n_decimo_tercero( $id_periodo, $id_rol,$idprov ,$anio,$mes,$simula="N"
         $parcial        = $salaria;
 
    }else{
-        $dias01      =   $meses01  * 30 ;
+        $dias02      =   $meses01  * 30 ;
         
-        if ( $meses01 == 0 ){
+        if ( $meses01 == 0 && $dias01 == 0 ){
             $parcial = 0;
-        }else {
+        } else if ($meses01 == 0 && $dias01 != 0 ) {
+            // echo 'CONDICION 1';
+            // echo '<br>';
             $parcial_dia =   31 - intval( $dia_regitro );
-            $dias01      =   $dias01 + $parcial_dia;
-            $parcial     =    $dias_valor  * $dias01   ;
+            $dias02      =   $dias02 + $parcial_dia;
+            $parcial     =    $dias_valor  * $dias02   ;
+        } else {
+            // echo 'CONDICION 2';
+            // echo '<br>';
+            $parcial_dia =   31 - intval( $dia_regitro );
+            $dias02      =   $dias02 + $parcial_dia;
+            $parcial     =    $dias_valor  * $dias02   ;
         }
         
     }   
@@ -591,6 +600,28 @@ function _n_decimo_tercero( $id_periodo, $id_rol,$idprov ,$anio,$mes,$simula="N"
 
     if ( $simula == 'S'){
  
+        print_r($xxx);
+        echo '<br>';
+
+        echo 'mes_regitro: '.$mes_regitro;
+        echo '<br>';
+        echo 'dia_regitro: '.$dia_regitro;
+        echo '<br>';
+
+        echo 'salaria: '.$salaria;
+        echo '<br>';
+         echo 'region: '.$region;
+        echo '<br>';
+        echo 'fecha_final: '.$fecha_final;
+        echo '<br>';
+
+        echo 'dias01: '.$dias01;
+        echo '<br>';
+        echo 'meses01: '.$meses01;
+        echo '<br>';
+        echo 'parcial_dia: '.$parcial_dia;
+        echo '<br>';
+
         echo 'Fecha  Ingreso :'. $xxx['fecha'].' mes '. $mes_regitro .' dia: '. $dia_regitro  .'<br>';
         echo 'Fecha Decimo   :'. $fecha_final .' <br>';
         echo 'Nro dias       :'.  $dias01  .'<br><br>';
@@ -598,6 +629,8 @@ function _n_decimo_tercero( $id_periodo, $id_rol,$idprov ,$anio,$mes,$simula="N"
         echo 'Valor dia :'.  $dias_valor .'<br>';
         echo 'Nro dias  :'.  $dias01 .'<br>';
         echo 'A pagar   :'.   $dias_valor *  $dias01    .'<br>';
+        
+        echo 'Si paga?   :'.   $xxx['sicuarto']    .'<br>';
     }
 
  
@@ -800,6 +833,10 @@ function _monto_Aporte_IESS( $monto_iess  ){
     if (!empty($User['suma'])){
          
         $valor_hora = ( $User['suma'] * ($this->monto_iess  / 100) );
+        // Medida temporal hasta agregar el campo identificativo de relacion de jubilados | Caso Eco. Larrea
+        if (trim($idprov) == '1703040699'){
+            $valor_hora = $User['suma']  *   (9.45/100) ;
+        }
         
         $valor_parcial =  $valor_hora    ;
         
@@ -884,13 +921,14 @@ function _monto_Aporte_IESS( $monto_iess  ){
         $sueldo_anual   = $sueldo_mes * 12 ;
 
         if ( $simula == 'S'){
+            echo '_n_impuesto_renta_2022<br>';
             echo 'Sueldo y Salario Mes:'.  $sueldo_mes .'<br>';
         }
 
 
 
         $xxx = $this->bd->query_array('view_nomina_rol',
-            'fecha,sueldo,
+            'fecha,sueldo,coalesce(cargas_familiares,0) as cargas_familiares,
              coalesce(vivienda,0) + coalesce(vestimenta,0) +coalesce(salud,0) + coalesce(educacion,0)  + coalesce(turismo,0) +coalesce(alimentacion,0) as saldo',
             'idprov='.$this->bd->sqlvalue_inyeccion(trim($idprov),true));
         
@@ -963,11 +1001,74 @@ function _monto_Aporte_IESS( $monto_iess  ){
             $rebaja =    $base_calculo *(20/100)  ;
         }
 
+        // $canasta    =  5344.08 ;  // canasta del 2023
+        $canasta_basica    =  789.57 ;  // canasta basica del 2024
+        $canasta    =  5526.99 ;  // 7 canastas basicas del 2024
+
+
+
+
+        if (  $gastos_personales > $canasta ){
+                $base_calculo = $canasta ;
+        }else{
+            $base_calculo = $gastos_personales ;
+        }
+
+        $ingresos_brutos = $ingresos_excento +   $sueldo_anual;
+
+        if ( $simula == 'S'){
+
+            echo ' INGRESOS BRUTOS : '.$ingresos_brutos.'<br>';
+
+        }
+
+        $rebaja  = 0;
+
+        // if ($ingresos_brutos >  $indice  ){
+        //     $rebaja =    $base_calculo *(10/100)  ;
+        // }else{
+        //     $rebaja =    $base_calculo *(20/100)  ;
+        // }
+
+        // Menor entre (CFB * 7 y TGP) * 0,18
+
+        $numero_canastas = 0;
+        if ($xxx['cargas_familiares'] == 0){
+            $numero_canastas = 7;
+        }
+        if ($xxx['cargas_familiares'] == 1){
+            $numero_canastas = 9;
+        }
+        if ($xxx['cargas_familiares'] == 2){
+            $numero_canastas = 11;
+        }
+        if ($xxx['cargas_familiares'] == 3){
+            $numero_canastas = 14;
+        }
+        if ($xxx['cargas_familiares'] == 4){
+            $numero_canastas = 17;
+        }
+        if ($xxx['cargas_familiares'] >= 5){
+            $numero_canastas = 20;
+        }
+
+        $canasta= round($canasta_basica * $numero_canastas,2);
+
+        $rebaja = min($gastos_personales,$canasta ) * 0.18;
+
+        if ( $simula == 'S'){
+
+            echo ' REBAJA: '.$rebaja.'<br>';
+            echo ' IMPUESTO CAUSADO: '.$IR.'<br>';
+
+        }
+   
+
 
         $impuesto =   $IR -  $rebaja;
 
 
-         $valor_mensual =  $impuesto / 12;
+         $valor_mensual =  $impuesto / 11;
 
  
         return  $valor_mensual ;
@@ -986,6 +1087,7 @@ function _monto_Aporte_IESS( $monto_iess  ){
                  tipoformula  in ('." 'RS','EE'".')'.' AND
                   mes  =  '.$this->bd->sqlvalue_inyeccion($mes,true).' and
                   anio = '.$this->bd->sqlvalue_inyeccion($anio,true).' and
+                  id_rol='.$this->bd->sqlvalue_inyeccion($id_rol,true).' and
                   formula='.$this->bd->sqlvalue_inyeccion( 'I',true)
             );
         
@@ -1005,6 +1107,7 @@ function _monto_Aporte_IESS( $monto_iess  ){
         $sueldo_anual   = $sueldo_mes * 12 ;
 
         if ( $simula == 'S'){
+            // echo '_n_impuesto_renta<br>';
             echo 'Empleado:'.  $idprov .'++++++++++++++++++++<br>';
             echo 'Sueldo y Salario Mes:'.  $sueldo_mes .'<br>';
         }
@@ -1012,7 +1115,7 @@ function _monto_Aporte_IESS( $monto_iess  ){
  
 
         $xxx = $this->bd->query_array('view_nomina_rol',
-            'fecha,sueldo,regimen,
+            'fecha,sueldo,regimen,coalesce(cargas_familiares,0) as cargas_familiares,
              coalesce(vivienda,0) + coalesce(vestimenta,0) +coalesce(salud,0) + coalesce(educacion,0)  + coalesce(turismo,0) +coalesce(alimentacion,0) as saldo',
             'idprov='.$this->bd->sqlvalue_inyeccion(trim($idprov),true));
         
@@ -1039,10 +1142,32 @@ function _monto_Aporte_IESS( $monto_iess  ){
         ///$this->_n_Aporte_personal_IESS_renta( $id_periodo, $id_rol,$idprov ,$anio,$mes,   $sueldo_mes );
 
         if ( $simula == 'S'){
-            echo 'Aporte Iess mensual:'.  round(  $iess_parcial) .'<br>';
+            echo 'Aporte Iess mensual:'.  round(  $iess_parcial, 2) .'<br>';
         }
         
-        $base1 = ( $sueldo_mes   * 12 ) - (   $iess_parcial  * 12) ;
+        $meses_trabajados = 12;
+
+        if ($idprov == '0804613305'){
+            $meses_trabajados = 11;
+        }
+        if ($idprov == '1711886059'){
+            $meses_trabajados = 7;
+        }
+        if ($idprov == '1723274740'){
+            $meses_trabajados = 4;
+        }
+        if ($idprov == '2300419591'){
+            $meses_trabajados = 4;
+        }
+        
+        if ($idprov == '1712087665'){ // ESCUDERO, TODO: ELIMINAR MAS ADELANTE
+            $meses_trabajados = 4;
+        }
+        // if ($idprov == '2300069032'){
+        //     $meses_trabajados = 11;
+        // }
+
+        $base1 = ( $sueldo_mes   * $meses_trabajados ) - (   $iess_parcial  * $meses_trabajados ) ;
          
         if ( $simula == 'S'){
             echo ' Base Imponible:'.  round($base1,2) .'<br>';
@@ -1061,11 +1186,11 @@ function _monto_Aporte_IESS( $monto_iess  ){
 
         $ingresos_adicionales    = ( $ingresos_fondo['suma'] * 12)  ;  
  
-        $ingresos_excento =  $decimo_tercero +  $dec4 +    $ingresos_adicionales  ;
+        $ingresos_excento =  0; //$decimo_tercero +  $dec4 +    $ingresos_adicionales  ;
 
         if ( $simula == 'S'){
 
-            echo ' INGRESOS excento:'.$decimo_tercero.'+'.$dec4 .'+'. $ingresos_adicionales .'='.$ingresos_excento .'<br>';
+            // echo ' INGRESOS excento:'.$decimo_tercero.'+'.$dec4 .'+'. $ingresos_adicionales .'='.$ingresos_excento .'<br>';
 
         }
 
@@ -1090,26 +1215,82 @@ function _monto_Aporte_IESS( $monto_iess  ){
 
         if ( $simula == 'S'){
 
-            echo ' INDICE : '.$indice.'<br>';
-            echo ' CANASTA : '.$canasta.'<br>';
-            echo ' BASE CALCULO : '.$base_calculo.'<br>';
-            echo ' INGRESOS BRUTOS : '.$ingresos_brutos.'<br>';
+            // echo ' INDICE : '.$indice.'<br>';
+            // echo ' CANASTA : '.$canasta.'<br>';
+            // echo ' BASE CALCULO : '.$base_calculo.'<br>';
+            // echo ' INGRESOS BRUTOS : '.$ingresos_brutos.'<br>';
 
         }
 
-        if ($ingresos_brutos >  $indice  ){
-            $rebaja =    $base_calculo *(10/100)  ;
-        }else{
-            $rebaja =    $base_calculo *(20/100)  ;
+        // if ($ingresos_brutos >  $indice  ){
+        //     $rebaja =    $base_calculo *(10/100)  ;
+        // }else{
+        //     $rebaja =    $base_calculo *(20/100)  ;
+        // }
+
+        // $canasta    =  5344.08 ;  // canasta del 2023
+        $canasta_basica    =  789.57 ;  // canasta basica del 2024
+        $canasta    =  5526.99 ;  // 7 canastas basicas del 2024
+
+
+
+
+        // if (  $gastos_personales > $canasta ){
+        //         $base_calculo = $canasta ;
+        // }else{
+        //     $base_calculo = $gastos_personales ;
+        // }
+
+        $ingresos_brutos = $ingresos_excento +   $sueldo_anual;
+
+        if ( $simula == 'S'){
+
+            // echo ' INGRESOS BRUTOS : '.$ingresos_brutos.'<br>';
+
         }
 
-        $impuesto =   $IR -  $rebaja;
+        $rebaja  = 0;
+
+        // if ($ingresos_brutos >  $indice  ){
+        //     $rebaja =    $base_calculo *(10/100)  ;
+        // }else{
+        //     $rebaja =    $base_calculo *(20/100)  ;
+        // }
+
+        // Menor entre (CFB * 7 y TGP) * 0,18
+
+        $numero_canastas = 0;
+        if ($xxx['cargas_familiares'] == 0){
+            $numero_canastas = 7;
+        }
+        if ($xxx['cargas_familiares'] == 1){
+            $numero_canastas = 9;
+        }
+        if ($xxx['cargas_familiares'] == 2){
+            $numero_canastas = 11;
+        }
+        if ($xxx['cargas_familiares'] == 3){
+            $numero_canastas = 14;
+        }
+        if ($xxx['cargas_familiares'] == 4){
+            $numero_canastas = 17;
+        }
+        if ($xxx['cargas_familiares'] >= 5){
+            $numero_canastas = 20;
+        }
+
+        $canasta= round($canasta_basica * $numero_canastas,2);
+
+        $rebaja = round(min($gastos_personales,$canasta ) * 0.18, 2);
+
+        $impuesto =   round($IR -  $rebaja,2);
 
 
-         $valor_mensual =  $impuesto / 12;
+         $valor_mensual =  round($impuesto / 11,2);
 
          if ( $simula == 'S'){
 
+            echo ' IMPUESTO CAUSADO: '.$IR.'<br>';
             echo ' REBAJA : '.$rebaja.'<br>';
             echo ' IMPUESTO : '.$impuesto.'<br>';
             echo ' VALOR MENSUAL : '.$valor_mensual.'<br>';
@@ -1155,13 +1336,14 @@ function _monto_Aporte_IESS( $monto_iess  ){
     $sueldo_anual   = $sueldo_mes * 12 ;
 
     if ( $simula == 'S'){
+        echo '_n_rebaja_renta<br>';
         echo 'Sueldo y Salario Mes:'.  $sueldo_mes .'<br>';
     }
 
 
 
     $xxx = $this->bd->query_array('view_nomina_rol',
-        'fecha,sueldo,regimen,
+        'fecha,sueldo,regimen,coalesce(cargas_familiares,0) as cargas_familiares,
          coalesce(vivienda,0) + coalesce(vestimenta,0) +coalesce(salud,0) + coalesce(educacion,0)  + coalesce(turismo,0) +coalesce(alimentacion,0) as saldo',
         'idprov='.$this->bd->sqlvalue_inyeccion(trim($idprov),true));
     
@@ -1224,11 +1406,13 @@ function _monto_Aporte_IESS( $monto_iess  ){
 
    // $indice     =  24090.30; 
 
-    //$canasta    =  5037.55 ; 
+    //$canasta    =  5037.55 ; // canasta del 2022
 
-    $indice     =  $this->indice; 
+    $indice     =  24967.86; 
 
-    $canasta    =   $this->canasta ; 
+    // $canasta    =  5344.08 ;  // canasta del 2023
+    $canasta_basica    =  789.57 ;  // canasta basica del 2024
+    $canasta    =  5526.99 ;  // 7 canastas basicas del 2024
 
 
 
@@ -1249,12 +1433,37 @@ function _monto_Aporte_IESS( $monto_iess  ){
 
     $rebaja  = 0;
 
-    if ($ingresos_brutos >  $indice  ){
-        $rebaja =    $base_calculo *(10/100)  ;
-    }else{
-        $rebaja =    $base_calculo *(20/100)  ;
+    // if ($ingresos_brutos >  $indice  ){
+    //     $rebaja =    $base_calculo *(10/100)  ;
+    // }else{
+    //     $rebaja =    $base_calculo *(20/100)  ;
+    // }
+
+    // Menor entre (CFB * 7 y TGP) * 0,18
+
+    $numero_canastas = 0;
+    if ($xxx['cargas_familiares'] == 0){
+        $numero_canastas = 7;
+    }
+    if ($xxx['cargas_familiares'] == 1){
+        $numero_canastas = 9;
+    }
+    if ($xxx['cargas_familiares'] == 2){
+        $numero_canastas = 11;
+    }
+    if ($xxx['cargas_familiares'] == 3){
+        $numero_canastas = 14;
+    }
+    if ($xxx['cargas_familiares'] == 4){
+        $numero_canastas = 17;
+    }
+    if ($xxx['cargas_familiares'] >= 5){
+        $numero_canastas = 20;
     }
 
+    $canasta= round($canasta_basica * $numero_canastas,2);
+
+    $rebaja = min($gastos_personales,$canasta ) * 0.18;
 
     if ( $simula == 'S'){
 

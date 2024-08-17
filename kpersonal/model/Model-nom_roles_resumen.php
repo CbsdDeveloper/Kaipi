@@ -291,6 +291,11 @@ function _patronal( $bd,$obj,$tipo,$id_rol ,$regimen){
         $idprov = trim($x['idprov']);
         
         $aporte = $x['ingreso'] *   $ab['monto']/100 ;
+
+        // Medida temporal hasta agregar el campo identificativo de relacion de jubilados | Caso Eco. Larrea
+        if (trim($x['idprov']) == '1703040699'){
+            $aporte = $x['ingreso'] *   11.15/100 ;
+        }
         
         $sql = 'UPDATE nom_rol_pagod
                 SET  patronal='.$bd->sqlvalue_inyeccion($aporte, true). '

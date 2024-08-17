@@ -54,7 +54,7 @@ $asunto = 'Solicitud de requerimiento de certificacion para el pago de roles de 
  
 
 
-$mail->_DeCRM( $sesion, $razon_social);
+// $mail->_DeCRM( $sesion, $razon_social);
 
 $nombre_de =  $apara['completo'];
 $correo_de =  trim($sesion_asigna);

@@ -420,7 +420,7 @@
 
        $this->obj->list->lista('¿Usted o alguna carga familiar padece una enfermedad catastrófica, rara y/o huérfana?',$MATRIZ,'de_enfer',$datos,'required','','div-8-4');
       
-       $this->obj->text->text('Número de cargas familiares (que no perciban ingresos gravados y sean dependientes del sujeto pasivo)',"number",'de_carga',40,45,$datos,'required','','div-8-4') ;
+       $this->obj->text->text('Número de cargas familiares (que no perciban ingresos gravados y sean dependientes del sujeto pasivo)',"number",'cargas_familiares',40,45,$datos,'required','','div-8-4') ;
 
 
 

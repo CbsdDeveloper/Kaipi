@@ -139,9 +139,18 @@ class proceso{
                            fondo,vivienda,salud, alimentacion,educacion,vestimenta,
                            sifondo,sidecimo,sicuarto,sihoras,sisubrogacion,programa,fecha_salida
      	       FROM view_nomina_rol
-			   where    regimen='.$this->bd->sqlvalue_inyeccion($regimen ,true). ' and
-                         programa='.$this->bd->sqlvalue_inyeccion(trim($programa) ,true). ' and
-                         msale  = '.$this->bd->sqlvalue_inyeccion( '-1' ,true). ' or msale = '.  $this->bd->sqlvalue_inyeccion(  $mes ,true)  ;
+			   where    fecha_salida is NULL and
+                        regimen='.$this->bd->sqlvalue_inyeccion($regimen ,true). ' and
+                        programa='.$this->bd->sqlvalue_inyeccion(trim($programa) ,true). ' and
+                        (msale  = '.$this->bd->sqlvalue_inyeccion( '-1' ,true). ' or msale = '.  $this->bd->sqlvalue_inyeccion(  $mes ,true) .')' ;
+            
+            $sql = 'SELECT idprov, id_departamento, id_cargo, regimen,  fecha, sueldo,
+            fondo,vivienda,salud, alimentacion,educacion,vestimenta,
+            sifondo,sidecimo,sicuarto,sihoras,sisubrogacion,programa,fecha_salida
+            FROM view_nomina_rol
+            where    fecha_salida is NULL and
+            regimen='.$this->bd->sqlvalue_inyeccion($regimen ,true). ' and
+            programa='.$this->bd->sqlvalue_inyeccion(trim($programa) ,true);
         }
           
         $stmt = $this->bd->ejecutar($sql);
@@ -159,7 +168,10 @@ class proceso{
 								   idprov= "	.$this->bd->sqlvalue_inyeccion(trim($x['idprov']),true)." and
 								   id_config ="	.$this->bd->sqlvalue_inyeccion($id_config ,true);
             
-            
+            // echo '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++';
+            // echo '<br>';
+            // echo 'Empleado: '.trim($x['idprov']);
+            // echo '<br>';
 
             // verifica los datos para no duplica la generacoin
             $resultado2 = $this->bd->ejecutar($sql_valida);
@@ -185,12 +197,24 @@ class proceso{
                 }
             }
 
+            // echo 'fecha_salida: '.$fecha_salida;
+            // echo '<br>';
+            // echo 'rol_valida: '.$rol_valida["numero"];
+            // echo '<br>';
+
             
             if ($rol_valida["numero"] == 0){
                 
                 $dias         = $this->formula->_n_sueldo_dias($x['fecha'],$rol["mes"],$rol["anio"], $x['fecha_salida'] );
                 
-              
+                // echo 'dias: '.$dias;
+                // echo '<br>';
+                // echo 'tipoformula: '.$tipoformula;
+                // echo '<br>';
+                // echo 'rol["tipo"]: '.$rol["tipo"];
+                // echo '<br>';
+                // echo 'rol["anio"]: '.$rol["anio"];
+                // echo '<br>';
 
  
                 $nbandera = 0;
@@ -249,7 +273,7 @@ class proceso{
                     
                     if ( $tipoformula == 'DC'){
                         if ( $rol["tipo"] == 1 ){
-                            $ingreso = $this->formula->_n_decimo_cuarto_acumulado( $rol["id_periodo"], $id_rol, trim($x['idprov']) ,$rol["anio"], $rol["mes"] );
+                            $ingreso = $this->formula->_n_decimo_cuarto_acumulado( $rol["id_periodo"], $id_rol, trim($x['idprov']) ,$rol["anio"], $rol["mes"] ,'N');
                         }
                         if ( $rol["tipo"] == 0 ){
                             $ingreso = $this->formula->_n_decimo_cuarto( $rol["id_periodo"], $id_rol,trim($x['idprov']) ,$rol["anio"],$rol["mes"]);

@@ -112,7 +112,7 @@
       function _verifica_partidas( $id_rol1,$regimen,$programa ){
             
           
-          $sql1 = "SELECT  programa,programa, clasificador, patronal as monto
+          $sql1 = "SELECT  programa,programa as programa_original, clasificador, patronal as monto
                 FROM  view_rol_patronal
                 where id_rol= ".$this->bd->sqlvalue_inyeccion($id_rol1, true)." and 
                       regimen = ".$this->bd->sqlvalue_inyeccion($regimen, true).' union ';
@@ -145,7 +145,11 @@
                    $bandera = $programa.' '. $clasificador;
               }else{
                   if ($monto > $datos_partida["disponible"] ){
-                      $bandera = $monto .' - '.$datos_partida["disponible"].'<br>'.$programa.' '. $clasificador. ' No hay saldo!!!';
+                      $datos_clasificador = $this->bd->query_array('presupuesto.pre_catalogo', 'detalle', 'codigo='.$this->bd->sqlvalue_inyeccion($clasificador,true));
+                      $datos_programa = $this->bd->query_array('presupuesto.pre_catalogo', 'detalle', 'codigo='.$this->bd->sqlvalue_inyeccion($programa,true));
+
+                      $bandera = '<br>* <b>Saldo insuficiente</b> en el programa <b>'. trim($datos_programa['detalle']). '</b>, dentro de la partida con clasificador <b>'. trim($clasificador) . ' ' . trim($datos_clasificador['detalle']) . '</b> => Monto solicitado $ ' . $monto . ' es mayor al saldo disponible $ '. $datos_partida["disponible"] . ' (Diferencia de <b> '.($datos_partida["disponible"]-$monto).' </b>)';
+                    //   $bandera = $monto .' - '.$datos_partida["disponible"].'<br>'.$programa.' '. $clasificador. ' No hay saldo!!!';
                       echo $bandera.'<br>';
                   }
                   
@@ -224,7 +228,7 @@
               
           }else{
               
-              $result = 'No se puede emitir la certificacion  '.$regimen.'( Verifique saldos en las partidas ) '.$valida;
+              $result = '<br><b>No se puede emitir la certificacion  '.$regimen.'( Verifique saldos en las partidas ) </b>'; //.$valida;
           } 
          
      
@@ -250,7 +254,7 @@
       //--------------------------------------------------------------------------------        
      function certificacion_detalle(  $idtramite, $id_rol1,$regimen,$programa  ){
      	
-         $sql1 = "SELECT  programa,programa, clasificador, patronal as monto
+         $sql1 = "SELECT  programa,programa as programa_original, clasificador, patronal as monto
                 FROM  view_rol_patronal
                 where id_rol= ".$this->bd->sqlvalue_inyeccion($id_rol1, true)." and
                       regimen = ".$this->bd->sqlvalue_inyeccion($regimen, true).' union ';

@@ -88,6 +88,7 @@ class proceso{
                                $fetch['tipo'],
                                 $fetch['motivo'],
                                 $fetch['fecha_rige'],
+                                $fetch['ffinalizacion'],
                                 $fetch['novedad'] 
              );
             

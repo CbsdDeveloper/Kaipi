@@ -78,10 +78,11 @@ class Model_listaAuxq_total{
 	        
 	        $sql = 'SELECT idprov as identificacion,
 	        			   funcionario,
-						  round(plazo/anticipo,0) as plazo, 
-				      round(monto_solicitado/anticipo,2) solicitado, 
+				      		round(monto_solicitado/anticipo,2) solicitado, 
+						  	round(plazo/anticipo,0) as plazo, 
+							round(monto_solicitado /plazo,2) as cuota ,
 							round(pagado /anticipo,2) as pagado,
-							round((monto_solicitado - pagado)/anticipo,2) as saldo 
+							round((monto_solicitado - pagado)/anticipo,2) as saldo
 					FROM view_anticipo_ciu
              where   (monto_solicitado - pagado) >0 and
              		 anio = '. $this->bd->sqlvalue_inyeccion( $anio , true).'   order by funcionario';

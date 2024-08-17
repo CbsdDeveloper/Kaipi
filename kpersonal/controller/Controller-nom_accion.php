@@ -122,7 +122,7 @@
                             $this->obj->text->text('Hasta',"date" ,'ffinalizacion' ,80,80, $datos ,'','','div-2-4') ;
                         
                             
-                            $this->obj->text->editor('Explicación','novedad',6,175,730,$datos,'required','','div-2-10') ;
+                            $this->obj->text->editor('Explicación','novedad',6,175,1900,$datos,'required','','div-2-10') ;
                             
          
         $this->set->div_panel6('fin');
@@ -177,7 +177,7 @@
                     $datos['baselegal'] = '- ART. 16.- ATRIBUCIONES DEL DIRECTOR GENERAL NUMERAL 13./ ORDENANZA MUNICIPAL - ART. 17.- CLASES DE NOMBRAMIENTO.-LITERAL C) DE LIBRE NOMBRAMIENTO Y REMOCIÓN /LOSEP - ART. 17.- CLASES DE NOMBRAMIENTO.-LITERAL C) DE LIBRE NOMBRAMIENTO Y REMOCIÓN / REGLAMENTO GENERAL DE LA LOSEP';
 
 
-                    $this->obj->text->editor('Base Legal','baselegal',5,1000,1000,$datos,'required','','div-2-10') ;
+                    $this->obj->text->editor('Base Legal','baselegal',5,5500,5500,$datos,'required','','div-2-10') ;
                 
                 
         $this->set->div_panel6('fin');

@@ -22,7 +22,7 @@ $(document).ready(function(){
            aoColumnDefs: [
   		      { "sClass": "ye", "aTargets": [ 0 ] },
  		      { "sClass": "highlight", "aTargets": [ 2 ] },
-			   { "sClass": "de", "aTargets": [ 6 ] }  
+			   { "sClass": "de", "aTargets": [ 7 ] }  
  		    ] 
 	  } );
 	  
@@ -487,6 +487,7 @@ function BusquedaGrilla(oTable){
 						s[i][4],
 						s[i][5],
 						s[i][6],
+						s[i][7],
    					'<button class="btn btn-xs btn-warning" title="EDITAR TRANSACCION..." onClick="goToURL('+"'editar'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-edit"></i></button>&nbsp;&nbsp;' + 
 
 					'<button class="btn btn-xs btn-danger" title="ANULAR TRANSACCION..." onClick="goToURL('+"'del'"+','+ s[i][0] +')"><i class="glyphicon glyphicon-remove"></i></button>' 

@@ -21,7 +21,7 @@ session_start( );
                      solicitado, 
                      coalesce(pagado,0) as pagado,
                      solicitado - coalesce(pagado,0) saldo, 
-                     mensual
+                     mensual,mes as MES_SOLICITA,plazo
      from view_anticipo_res
      where solicitado - coalesce(pagado,0) > 0 and
            anio = '.$bd->sqlvalue_inyeccion( $anio , true).' order by funcionario';
