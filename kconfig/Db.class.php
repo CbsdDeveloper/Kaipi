@@ -1125,6 +1125,7 @@ class Db {
     // $this->servidor = '192.168.1.3';
     $this->servidor = '127.0.0.1';
     $this->base_datos = 'db_kaipi';
+    // $this->base_datos = 'db_kaipi';
     $this->usuario = 'postgres';
     // $this->password = 'Cbsd2019';
     $this->password = 'root';
@@ -3103,6 +3104,51 @@ public function conectar_sesion_externo($servidor, $base_datos, $usuario, $passw
 		 }
       
    } 
+    /*MÃƒÂ©todo para obtener una fila de resultados de la sentencia sql*/
+   public function query_array_all($tabla,$campo,$where,$debug='0',$order='',$limit=''){
+    
+      
+    $sql = 'select '.$campo.' from '.$tabla.' where '.$where.$order.$limit;
+ 
+    if( $debug == '1'){
+        echo $sql;
+    }
+ 
+ 
+    switch ($this->tipo){
+		
+	     case 'mysql':     {
+			 			   $this->stmt = mysql_query($sql,$this->link);
+                           $this->array=mysql_fetch_array($this->stmt);
+                           return $this->array;
+		 				   break ;
+                           }
+ 		 case 'postgress': {
+  						   $this->stmt  = pg_query($this->link, $sql);
+                           $this->array = pg_fetch_all($this->stmt);
+                           return $this->array;
+						   break;
+ 		                   }
+		 case 'oracle':    {
+		  
+                           $this->stmt = oci_parse($this->link, $sql  );
+						   
+                           oci_execute($this->stmt); 
+                           
+                           $this->array = oci_fetch_array($this->stmt);
+                           
+                           oci_free_statement($this->stmt);
+                          
+                           return $this->array;
+                           
+                           break;
+                         }
+      					   
+		 break;
+		 
+		 }
+      
+   } 
       /*MÃƒÂ©todo para obtener una fila de resultados de la sentencia sql*/ 
    public function query_cursor($tabla,$campo,$where,$grupo='',$order="",$limit="",$ofset="",$debug=0){
        
@@ -4885,12 +4931,11 @@ function combodb($sql,$variable,$datos){
  			}
  			
  		  
- 			
  			if($UpdateQuery[$row][tipo] == 'VARCHAR2') {
  				
  				$cadenav = $this->sqlvalue_inyeccion(trim($valor), true);
  				
- 				$valorDato = $cadena.'='.$cadenav.',';
+ 				$valorDato = $cadena.'= '.$cadenav.',';
  				
  			}
  			
@@ -5204,6 +5249,18 @@ function combodb($sql,$variable,$datos){
      
      $string = trim($string);
      
+     $string = str_replace(
+        array('Á', 'É', 'Í', 'Ó', 'Ú'),
+        array('A', 'E', 'I', 'O', 'U'),
+        $string
+        );
+        
+        $string = str_replace(
+        array('á', 'é', 'í', 'ó', 'ú'),
+        array('a', 'e', 'i', 'o', 'u'),
+        $string
+        );
+
      $string = str_replace(
          array('Ã¡', 'Ã ', 'Ã¤', 'Ã¢', 'Âª', 'Ã�', 'Ã€', 'Ã‚', 'Ã„'),
          array('a', 'a', 'a', 'a', 'a', 'A', 'A', 'A', 'A'),

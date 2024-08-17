@@ -152,7 +152,7 @@ class EmailEnvio{
         $this->mail->Username = 'no-replay@cbsd.gob.ec';
         $this->mail->Password = 'ZUu3YyLLLvv';
         // Parámetros de remitente
-        $this->mail->FromName = 'Cuerpo de Bomberos Santo Domingo | Roles';
+        $this->mail->FromName = 'Cuerpo de Bomberos Santo Domingo | Notificaciones';
         $this->mail->From = 'no-replay@cbsd.gob.ec';
 
         $this->mail->SMTPOptions = array(
@@ -441,7 +441,7 @@ function _EnviarElectronica(  ){
             }else{
                 
                 $this->email_envio  =  "no-replay@cbsd.gob.ec";
-                $this->Host         =  "190.152.212.248";
+                $this->Host         =  "190.152.212.251";
                 $this->SMTPSecure   =  'tls' ;
                 $this->clave        =  "ZUu3YyLLLvv";
                 $this->puerto       =  '587';

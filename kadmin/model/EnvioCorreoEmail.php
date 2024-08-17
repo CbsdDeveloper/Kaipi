@@ -15,7 +15,7 @@ $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
  
 $mail->_DBconexion( $obj, $bd );
 
-$mail->_smtp_tramites( );
+$mail->_smtp_factura_electronica( );
 
 $login				=   $_GET["id"];
 
@@ -59,7 +59,7 @@ if (!empty($content)){
     
     
     
-    $mail->_DeCRM( $sesion,$datos_empresa['razon']);
+    // $mail->_DeCRM( $sesion,$datos_empresa['razon']);
     
     $mail->_ParaCRM($datos_usuario['email'],$datos_usuario['completo']);
     

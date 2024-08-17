@@ -18,7 +18,7 @@
     
    
     
-    $sql = "SELECT    idprov, razon, direccion, telefono, correo, movil,
+    $sql = "SELECT    idprov, razon, direccion, telefono, emaile as correo, movil,
                       idciudad, nombre, apellido, id_departamento
 				  FROM view_nomina_rol
 				  where upper(razon) =".$bd->sqlvalue_inyeccion($txtcodigo,true) ;
