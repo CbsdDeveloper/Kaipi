@@ -5,6 +5,8 @@ require '../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
 
 require '../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
 
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 class proceso{
 	
@@ -49,17 +51,19 @@ class proceso{
          $myfile = fopen(  $file , "r") or die("Unable to open file!");
 	
 	     $i = 0;
+
+		 $cadena_xml='';
           
         while(!feof($myfile)) {
 	 	
 	           // $linea = fgets($myfile) ;
 	           
             $linea = fgets($myfile);
-	
+			
  	         //  if ( $i <= 300 ){
  	 	
 		    $linea = htmlspecialchars_decode($linea);
-		            
+		    $cadena_xml.=$linea;
 		 
  			 
                     $sql = "INSERT INTO xml_sesion ( sesion, etiqueta) values (".
@@ -75,6 +79,59 @@ class proceso{
         fclose($myfile);
 
         $this->_VariablesAnexo();
+
+		///
+		$base0 = 0;
+		$base12 = 0;
+		$base14 = 0;
+		$base15 = 0;
+
+		$impuesto_base0 = 0;
+		$impuesto_base12 = 0;
+		$impuesto_base14 = 0;
+		$impuesto_base15 = 0;
+
+		// print_r(str_replace('&','',$cadena_xml));
+		$xml_compra = new SimpleXMLElement(str_replace('&','',$cadena_xml));
+
+		$datos_compra = new SimpleXMLElement($xml_compra->comprobante[0]);
+		
+		foreach ($datos_compra->infoFactura->totalConImpuestos as $impuestos) {
+			foreach ($impuestos->totalImpuesto as $impuesto) {
+				if ($impuesto->codigo == '2') { // IVA
+					switch ($impuesto->codigoPorcentaje) {
+						case '0': // SIN IVA
+							$base0 += (float)$impuesto->baseImponible;
+							$impuesto_base0 += (float)$impuesto->valor;
+							break;
+						case '2': // IVA 12 %
+							$base12 += (float)$impuesto->baseImponible;
+							$impuesto_base12 += (float)$impuesto->valor;
+							break;
+						case '3': // IVA 14 %
+							$base14 += (float)$impuesto->baseImponible;
+							$impuesto_base14 += (float)$impuesto->valor;
+							break;
+						case '4': // IVA 15 %
+							$base15 += (float)$impuesto->baseImponible;
+							$impuesto_base15 += (float)$impuesto->valor;
+							break;
+						
+						default:
+							# code...
+							break;
+					}
+				} 
+				// echo $impuesto->codigo, ' % ', $impuesto->codigoPorcentaje, ' % ', $impuesto->baseImponible, PHP_EOL;
+				// echo 'base0 '.$base0 .' <br>'.' base12 '.$base12 .' <br>'.' base14 '.$base14 .' <br>'.' base15 '.$base15 .' <br>' ;
+				// echo 'impuesto_base0 '.$impuesto_base0 .' <br>'.' impuesto_base12 '.$impuesto_base12 .' <br>'.' impuesto_base14 '.$impuesto_base14 .' <br>'.' impuesto_base15 '.$impuesto_base15 .' <br>' ;
+			}
+		}
+
+		$this->datos['baseimponible'] = $base0;
+		$this->datos['baseimpgrav'] = $base12 + $base14 + $base15;
+		$this->datos['valor'] = $impuesto_base0 + $impuesto_base12 + $impuesto_base14 + $impuesto_base15;
+		///
         
         $existe_proveedor = $this->existe_proveedor(  trim($this->datos['ruc'] )   );
         
@@ -120,6 +177,17 @@ class proceso{
        
        echo $procesado;
 	
+	}
+
+	function printXML($xml, $level = 0) {
+		// Iterar sobre todos los nodos hijos
+		foreach ($xml->children() as $node) {
+			// Imprimir el nombre del nodo con indentación para mostrar la jerarquía
+			echo str_repeat('  ', $level) . $node->getName() . ": " . (string)$node . '<br>' . PHP_EOL;
+			
+			// Llamar a la función recursivamente para imprimir los subnodos
+			$this->printXML($node, $level + 1);
+		}
 	}
 //---------------------------------------------------------
 	function _VariablesAnexo(  ){
@@ -350,7 +418,7 @@ class proceso{
                     autorizacion, basenograiva, baseimponible, baseimpgrav, montoice,
                     montoiva, valorretbienes, valorretservicios, valretserv100, porcentaje_iva,baseimpair,
 					formadepago,serie1,pagolocext,paisefecpago,faplicconvdobtrib,fpagextsujretnorLeg,detalle,
-					registro)
+					bservicios,bbienes,registro)
             VALUES (".
             $this->bd->sqlvalue_inyeccion($id_asiento, true).",".
             $this->bd->sqlvalue_inyeccion('01', true).",".
@@ -365,8 +433,8 @@ class proceso{
             $fechaemision.",".
             $this->bd->sqlvalue_inyeccion($this->datos['claveAcceso'], true).",".
             $this->bd->sqlvalue_inyeccion('0', true).",".
-            $this->bd->sqlvalue_inyeccion('0', true).",".
-            $this->bd->sqlvalue_inyeccion($this->datos['baseImponible'], true).",".
+            $this->bd->sqlvalue_inyeccion($this->datos['baseimponible'], true).",".
+            $this->bd->sqlvalue_inyeccion($this->datos['baseimpgrav'], true).",".
             $this->bd->sqlvalue_inyeccion('0', true).",".
             $this->bd->sqlvalue_inyeccion($this->datos['valor'], true).",".
             $this->bd->sqlvalue_inyeccion('0', true).",".
@@ -381,6 +449,8 @@ class proceso{
 				$this->bd->sqlvalue_inyeccion('NA', true).",".
 				$this->bd->sqlvalue_inyeccion('NA', true).",".
 				$this->bd->sqlvalue_inyeccion('Adquisicion', true).",".
+				$this->bd->sqlvalue_inyeccion('0', true).",".
+				$this->bd->sqlvalue_inyeccion('0', true).",".
             $this->bd->sqlvalue_inyeccion($this->ruc, true).")";
             
             

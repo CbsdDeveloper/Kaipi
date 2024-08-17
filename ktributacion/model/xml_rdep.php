@@ -80,6 +80,8 @@ class proceso{
         print '<rdep>';
         print '<numRuc>'.trim($this->ruc).'</numRuc>';
         print '<anio>'.trim($anio).'</anio>';
+        print '<tipoEmpleador>PUBLICO</tipoEmpleador>';
+        print '<enteSegSocial>IESS</enteSegSocial>';
         print '<retRelDep>';
         while ($x=$this->bd->obtener_fila($stmt)){
             $nombre           = $this->bd->eliminar_simbolos(trim($x['nombretrab']));
@@ -109,6 +111,7 @@ class proceso{
             print  '<empleado>';
                     print  '<benGalpg>'.trim($x['bengalpg']).'</benGalpg>';
                     print  '<enfcatastro>'.trim($x['enfcatastro']).'</enfcatastro>';
+                    print  '<numCargRebGastPers>0</numCargRebGastPers>';
                     print  '<tipIdRet>'.trim($x['tipidret']).'</tipIdRet>';
                     print  '<idRet>'.trim($x['idret']).'</idRet>';
                     print  '<apellidoTrab>'.trim($apellido).'</apellidoTrab>';
@@ -117,7 +120,7 @@ class proceso{
                     print  '<residenciaTrab>'.trim($x['residenciatrab']).'</residenciaTrab>';
                     print  '<paisResidencia>'.trim($x['paisresidencia']).'</paisResidencia>';
                     print  '<aplicaConvenio>'.trim($x['aplicaconvenio']).'</aplicaConvenio>';
-                    print  '<tipoTrabajDiscap>'.trim($x['tipotrabajdiscap']).'</tipoTrabajDiscap>';
+                    print  '<tipoTrabajDiscap>04</tipoTrabajDiscap>';
                     print  '<porcentajeDiscap>'.trim($x['porcentajediscap']).'</porcentajeDiscap>';
                     print  '<tipIdDiscap>'.trim($x['tipiddiscap']).'</tipIdDiscap>';
                     print  '<idDiscap>'.trim($x['iddiscap']).'</idDiscap>';
@@ -147,8 +150,8 @@ class proceso{
              print  '<exoTerEd>'.trim(str_replace(',','.',$x['exotered'])).'</exoTerEd>';
              print  '<basImp>'.trim(str_replace(',','.',$x['basimp'])).'</basImp>';
              print  '<impRentCaus>'.trim(str_replace(',','.',$x['imprentcaus'])).'</impRentCaus>';
-             print  '<rebajaGastosPersonales>'.trim(str_replace(',','.',$x['rebajagapersona'])).'</rebajaGastosPersonales>';
-             print  '<impuestoRentaRebajaGastosPersonales>'.trim(str_replace(',','.',$x['imprebajagapersona'])).'</impuestoRentaRebajaGastosPersonales>';
+             print  '<rebajaGastosPersonales>'.trim(str_replace(',','.',$x['rebajagapersona'] ?: 0)).'</rebajaGastosPersonales>';
+             print  '<impuestoRentaRebajaGastosPersonales>'.trim(str_replace(',','.',$x['imprebajagapersona'] ?: 0)).'</impuestoRentaRebajaGastosPersonales>';
 
              print  '<valRetAsuOtrosEmpls>'.trim(str_replace(',','.','0.00')).'</valRetAsuOtrosEmpls>';
              print  '<valImpAsuEsteEmpl>'.trim(str_replace(',','.',$x['valimpasuesteempl'])).'</valImpAsuEsteEmpl>';

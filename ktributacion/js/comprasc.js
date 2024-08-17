@@ -450,7 +450,7 @@ function LimpiarPantalla() {
  function monto_iva_calcula(valor_base){
 	 
  
-	  var flotante = parseFloat(valor_base)    * (12/100);
+	  var flotante = parseFloat(valor_base)    * (15/100);
 	  
 	  if (valor_base > 0){
 		  

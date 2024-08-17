@@ -14,30 +14,44 @@ $(document).ready(function(){
 });  
 //-----------------------------------------------------------------
 function BusquedaVisor(){        
-	  
+	// genera_resumen_ventas();
 	"use strict";
 	  
     var mes =  $("#mesc").val();
     var anio = $("#anioc").val();
-			
+	
+	var parametros_ajuste = {
+		'mes' : mes,
+		'anio' : anio 
+	};
+
+	$.ajax({
+		data:  parametros_ajuste,
+		url:   '../model/xml_ajuste.php',
+		type:  'GET' ,
+		cache: false,
+		beforeSend: function () { 
+			$("#ViewModulo").html('Procesando');
+		},
+		success:  function (data) {
+			var parametros = {
+				'mes' : mes ,
+				'anio' : anio 
+			};
+			$.ajax({
+				data:  parametros,
+				url:   '../model/xml_resumen.php',
+				type:  'GET' ,
+				beforeSend: function () { 
+					$("#ResumenDatos").html('Procesando');
+				},
+				success:  function (data) {
+					$("#ResumenDatos").html(data);  // $("#cuenta").html(response);
+				} 
+			});  
+		} 
+	});
  		
-    var parametros = {
-					'mes' : mes ,
-                    'anio' : anio 
- 	 };
-	  $.ajax({
-					data:  parametros,
-					url:   '../model/xml_resumen.php',
-					type:  'GET' ,
- 					beforeSend: function () { 
- 							$("#ResumenDatos").html('Procesando');
-  					},
-					success:  function (data) {
-							 $("#ResumenDatos").html(data);  // $("#cuenta").html(response);
-						     
-  					} 
-			}); 
- 	
  } 
 //-------------------------------------------------------------
 function genera_xml()
@@ -158,6 +172,32 @@ function genera_resumen()
   
             
 } 
+ 
+function genera_resumen_ventas()
+{
+	var MES   = document.getElementById("mesc").value; 
+ 	var ANIO  = document.getElementById("anioc").value;
+
+	var parametros = {
+		'mes' : MES,
+		'anio' : ANIO 
+	};
+
+	$.ajax({
+		data:  parametros,
+		url:   '../model/xml_ajuste.php',
+		type:  'GET' ,
+		cache: false,
+		beforeSend: function () { 
+			$("#ViewModulo").html('Procesando');
+		},
+		success:  function (data) {
+			alert(data);
+			// BusquedaVisor()
+			// $("#ViewModulo").html(data);  
+		} 
+	});
+}
  
 /*
 

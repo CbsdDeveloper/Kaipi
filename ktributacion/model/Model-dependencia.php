@@ -252,9 +252,12 @@ class proceso{
 
         $sql_opcion = "SELECT    *
         FROM nom_redep
-        where suelsal > 10000 and anio= ".$this->bd->sqlvalue_inyeccion($anio,true);
+        where suelsal > 1000 and anio= ".$this->bd->sqlvalue_inyeccion($anio,true);
 
- 
+        $sqlwhere = "update nom_redep 
+        set rebajagapersona =0
+        where anio= ".$this->bd->sqlvalue_inyeccion($anio,true);
+        $this->bd->ejecutar($sqlwhere);
 
             $stmt = $this->bd->ejecutar($sql_opcion);
 
@@ -264,8 +267,12 @@ class proceso{
 
                     $idprov     = $x["idret"] ;
 
-                    $ingreso    =  $this->formula->_n_rebaja_renta( $id_periodo , $id_rol,  $idprov  ,$anio, $mes,'N');
+                    $ingreso    =  $this->formula->_n_rebaja_renta( $id_periodo , $id_rol,  $idprov  ,$anio, $mes,'S');
 
+                    print_r($idprov);
+                    print_r('-');
+                    print_r($ingreso);
+                    print_r('<br>');
                     $sqlwhere = "update nom_redep 
                                       set rebajagapersona =".$this->bd->sqlvalue_inyeccion($ingreso,true)."
                                     where idret=".$this->bd->sqlvalue_inyeccion( trim($idprov),true)." and 
@@ -433,7 +440,8 @@ echo $result;
         $inggravconesteempl = $salario + $sobsuelcomremu;
         
         
-        $descuentos = ( $deducvivienda+$deducsalud+ $turismo +$deduceducartcult+$deducaliement+$deducvestim+$apoperiess) ;
+        // $descuentos = ( $deducvivienda+$deducsalud+ $turismo +$deduceducartcult+$deducaliement+$deducvestim+$apoperiess) ;
+        $descuentos = $apoperiess;
     
         // BASE
         $base  = $inggravconesteempl - $descuentos;
@@ -617,7 +625,8 @@ echo $result;
         $inggravconesteempl = $salario + $sobsuelcomremu;
         
         // BASE
-        $base  = $inggravconesteempl - ( $deducvivienda+$deducsalud+$turismo+$deduceducartcult+$deducaliement+$deducvestim+$apoperiess) ;
+        // $base  = $inggravconesteempl - ( $deducvivienda+$deducsalud+$turismo+$deduceducartcult+$deducaliement+$deducvestim+$apoperiess) ;
+        $base  = $inggravconesteempl - ( $apoperiess) ;
         $this->ATabla[39][valor]        =   $base;
         
         
@@ -697,7 +706,7 @@ echo $result;
         $valor_mensual = round($IR,2);
          
         
-        RETURN  $valor_mensual;
+        return  $valor_mensual;
     }
     //--------------------------------------------------------------------------------
     function edicion($id){
