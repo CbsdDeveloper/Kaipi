@@ -523,7 +523,13 @@ function agregarActivos($bd,$registro,$anio,$id,$id_periodo,$mes,$sesion,$fecha)
 								$fecha.",".
 								$bd->sqlvalue_inyeccion( $registro, true).")";
 								
-								$bd->ejecutar($sql_inserta);
+		$bd->ejecutar($sql_inserta);
+
+        $id_asientod =  $bd->ultima_secuencia('co_asientod');
+        
+        if ( $aux == 'S'){
+            agregar_detalle_aux($bd,$id,$id_asientod,$cuenta,$registro,$debe,$anio,$mes,$id_periodo,$sesion,$fecha);
+        }
         
     }
 
@@ -587,7 +593,13 @@ function agregarPasivos($bd,$registro,$anio,$id,$id_periodo,$mes,$sesion,$fecha)
 								$fecha.",".
 								$bd->sqlvalue_inyeccion( $registro, true).")";
 								
-								$bd->ejecutar($sql_inserta);
+		$bd->ejecutar($sql_inserta);
+
+        $id_asientod =  $bd->ultima_secuencia('co_asientod');
+        
+        if ( $aux == 'S'){
+            agregar_detalle_aux($bd,$id,$id_asientod,$cuenta,$registro,$debe,$anio,$mes,$id_periodo,$sesion,$fecha);
+        }
         
         
         
@@ -653,7 +665,13 @@ function agregarPatrimonio($bd,$registro,$anio,$id,$id_periodo,$mes,$sesion,$fec
 								$fecha.",".
 								$bd->sqlvalue_inyeccion( $registro, true).")";
 								
-								$bd->ejecutar($sql_inserta);
+		$bd->ejecutar($sql_inserta);
+
+        $id_asientod =  $bd->ultima_secuencia('co_asientod');
+        
+        if ( $aux == 'S'){
+            agregar_detalle_aux($bd,$id,$id_asientod,$cuenta,$registro,$debe,$anio,$mes,$id_periodo,$sesion,$fecha);
+        }
         
     }
     

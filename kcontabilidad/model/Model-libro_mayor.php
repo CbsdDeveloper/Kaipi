@@ -63,6 +63,8 @@ class proceso{
 		
          echo '<div class="col-md-12" style="padding-bottom:20;padding-top:20px"> <ul class="list-group">';
 
+		// print_r($sql);
+
          $stmt = $this->bd->ejecutar($sql);
 
          while ($x=$this->bd->obtener_fila($stmt)){

@@ -5,8 +5,6 @@ require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
 
 require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
 
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
 
 class proceso{
 	
@@ -270,8 +268,7 @@ function _detalle_cuenta($cuenta, $tipo_mov,$f1,$f2){
 
   
  
-	// $this->obj->table->table_pdf_js($resultado22,$tipo,$edita,$del,$evento ,$cabecera,$font,$background,"1");
-	$this->obj->table->table_pdf_js($resultado22,$tipo,$cabecera);
+	$this->obj->table->tabla_visor($resultado22,$tipo,$edita,$del,$evento ,$cabecera,$font,$background,"1");
 
  
 

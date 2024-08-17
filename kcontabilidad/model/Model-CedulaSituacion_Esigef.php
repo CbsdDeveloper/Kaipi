@@ -116,7 +116,7 @@ class proceso{
     	    group by grupo
     	    order by grupo';
  	    
-	    
+	    echo $sql;
 	    $stmt = $this->bd->ejecutar($sql);
 	    
 	    $inicial_debe1 = 0;

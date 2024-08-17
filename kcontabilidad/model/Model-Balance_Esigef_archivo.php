@@ -198,16 +198,26 @@ class proceso{
         			    }
         			    
         			    
-        			    
+        			    $color_negativo = ' style="color: #FF0000;font-weight: 900" ';
         			    
         			    if ( $deudor <> 0 ){
-        			        echo "<td  ".$nivel_color." align='right'>".number_format($deudor,2)."</td>";
+							if ($deudor < 0) {
+								echo "<td  ".$color_negativo." align='right'>".number_format($deudor,2)."</td>";
+							} else {
+								echo "<td  ".$nivel_color." align='right'>".number_format($deudor,2)."</td>";
+							}
+        			        // echo "<td  ".$nivel_color." align='right'>".number_format($deudor,2)."</td>";
         			     }else {
         			         echo "<td ".$nivel_color1." align='right' > 0.00 </td>";
         			    }
         			    
         			    if ($acreedor <> 0 ){
-        			        echo "<td  ".$nivel_color." align='right'>".number_format(abs($acreedor),2)."</td>";
+							if ($deudor < 0) {
+								echo "<td  ".$color_negativo." align='right'>".number_format(abs($acreedor),2)."</td>";
+							} else {
+								echo "<td  ".$nivel_color." align='right'>".number_format(abs($acreedor),2)."</td>";
+							}
+        			        // echo "<td  ".$nivel_color." align='right'>".number_format(abs($acreedor),2)."</td>";
         			     }else {
         			         echo "<td ".$nivel_color1." align='right' > 0.00 </td>";
         			      }

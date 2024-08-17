@@ -14,13 +14,14 @@ session_start();
      
     $fecha     = $_GET['fecha'] ;
     $anio      = $_GET['anio'] ;
-     
+    $periodo_consulta  = explode('-',$fecha);
+    // $anio			 = $periodo_genera[0];
+    $mes  			 = intval($periodo_consulta[1]);
 
-    $sql = 'SELECT cuenta_1, nivel_11, sum(deudor_1) as deudor,sum(acreedor_1) as acreedor
-            FROM  co_reciprocas
+    $sql = "SELECT cuenta_1, nivel_11, sum(deudor_1) as deudor,sum(acreedor_1) as acreedor
+            FROM  co_reciprocas WHERE anio='".$anio."' and mes ='".$mes."'
             group by cuenta_1 ,nivel_11 
-            order by cuenta_1 ,nivel_11';
-
+            order by cuenta_1 ,nivel_11";
 
 echo ' <div class="col-md-12" style="padding: 40px">  <h4>RESUMEN TRANSACCIONES RECIPROCAS</h4>';
 
@@ -62,10 +63,10 @@ echo ' <div class="col-md-12" style="padding: 40px">  <h4>RESUMEN TRANSACCIONES 
       echo '<h4>Resumen cuentas de cierre archivo <span class="label label-default"></span></h4>';
    
     
-      $sql2 = 'SELECT cuenta_2, nivel_21, sum(deudor_2) as deudor,sum(acreedor_2) as acreedor
-      FROM  co_reciprocas
+      $sql2 = "SELECT cuenta_2, nivel_21, sum(deudor_2) as deudor,sum(acreedor_2) as acreedor
+      FROM  co_reciprocas WHERE anio='".$anio."' and mes ='".(round($mes))."'
       group by cuenta_2 ,nivel_21 
-      order by cuenta_2 ,nivel_21';
+      order by cuenta_2 ,nivel_21";
 
         
         cabecera_tabla( 'jsontableSegundo') ;

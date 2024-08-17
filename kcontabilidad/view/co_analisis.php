@@ -155,13 +155,13 @@
 									  
 									  <div class="panel-body" > 
 
-									    <div class="col-md-12" style="padding-bottom:15;padding-top: 10px"> 
+									    <div class="col-md-9" style="padding-bottom:15;padding-top: 10px"> 
 
 												  <button type="button" class="btn btn-sm btn-success" id="financiero3">
 												 <span class="glyphicon glyphicon-cog"></span> Balance Comprobacion</button>
  
 												
-											  	  <div class="btn-group">
+											  	<div class="btn-group">
 													  
 													<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
 													Resumen ESIGEF  &nbsp;&nbsp; <span class="caret"></span></button>
@@ -186,10 +186,10 @@
  														
  													</ul>
 													  
-												  </div>
+												</div>
 											
 											
-												   <div class="btn-group">
+												<div class="btn-group">
 												   
 													<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown">
 													Transacciones Reciprocas <span class="caret"></span></button>
@@ -204,7 +204,7 @@
 														
 											 				
  													</ul>
-												  </div>
+												</div>
 											
 											
 										  	    <button type="button" class="btn btn-sm btn-info" id="financiero_inicial">
@@ -219,8 +219,23 @@
  
 										  		 <button type="button" class="btn btn-sm btn-default" id="excelButtonBalance">
 												 <span class="glyphicon glyphicon-print"></span> Excel</button>
+										  		 
+												<!-- <button type="button" class="btn btn-sm btn-default" id="reciprocaAsientoButton"><span class="glyphicon glyphicon-cog"></span> Recíproca por Número de Asiento</button> -->
+												 
+										</div>   
 
-										 </div>   
+										<!-- <div class="row"> -->
+											<div class="col-md-3" > 
+												<label for="id_asiento_reciproca" class="form-label">N° Asiento:</label>
+												<input type="tel" class="form-control form-control-sm" style="width: 30%;" name="id_asiento_reciproca" id="id_asiento_reciproca">
+												<button type="button" class="btn btn-sm btn-default" id="reciprocaAsientoButton" onClick="Reciprocas(2)"><span class="glyphicon glyphicon-cog"></span>Generar Recíproca por Número de Asiento</button>
+											</div> 
+											<!-- <div class="col-md-3" > 
+												<input type="text" class="form-control form-control-sm" name="id_asiento_reciproca" id="id_asiento_reciproca">
+												<button type="button" class="btn btn-sm btn-default" id="reciprocaAsientoButton"><span class="glyphicon glyphicon-cog"></span>Generar Recíproca por Número de Asiento</button>
+											</div>  -->
+										<!-- </div> -->
+										
 										  
 									    <div class="col-md-12" style="padding-bottom:5;padding-top:5px"> 
 											  

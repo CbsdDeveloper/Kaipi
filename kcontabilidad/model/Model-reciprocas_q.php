@@ -70,7 +70,7 @@ class proceso{
                        $this->cabecera();
              
                        $sql = "SELECT *   
-					   		     FROM  co_reciprocas   
+					   		     FROM  co_reciprocas WHERE anio='".$anio."' and mes ='".(round($mes))."'
  								order by cuenta_1 desc, fecha asc";
 
                         $stmt = $this->bd->ejecutar($sql);

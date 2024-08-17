@@ -56,14 +56,14 @@ class proceso{
         $anio			 = $periodo_genera[0];
         $mes  			 = intval($periodo_genera[1]);
 
-		$this->bd->JqueryDeleteSQL('co_reciprocas','1=1');	
+		$this->bd->JqueryDeleteSQL('co_reciprocas',"anio='".$anio."' and mes='".$mes."'");	
  
  
 		$this->_cuenta_cobrar($anio,$mes);
 	
 		$this->_cuenta_cobrar28($anio,$mes);
 		
-		$this->_cuenta_anticipo($anio,$mes);
+		// $this->_cuenta_anticipo($anio,$mes);
 		 
  
 		 $this->_cuenta_pagar($anio,$mes);
@@ -82,7 +82,7 @@ class proceso{
                        $this->cabecera();
              
                        $sql = "SELECT *   
-					   		     FROM  co_reciprocas   
+					   		     FROM  co_reciprocas WHERE anio='".$anio."' and mes ='".(round($mes))."'
  								order by cuenta_1 desc, fecha asc";
 
                         $stmt = $this->bd->ejecutar($sql);
@@ -271,7 +271,230 @@ class proceso{
 			pg_free_result ($stmt) ; 
 	}
  
-	 
+	function reciporcaPorAsiento(  $fecha, $id_asiento ){
+
+ 
+		$this->_valida_fecha();
+
+		
+        $periodo_genera  = explode('-',$fecha);
+        $anio			 = $periodo_genera[0];
+        $mes  			 = intval($periodo_genera[1]);
+
+		// $this->bd->JqueryDeleteSQL('co_reciprocas',"anio='".$anio."' and mes='".$mes."'");	
+ 
+ 
+		$this->_cuenta_cobrar($anio,$mes, $id_asiento);
+	
+		$this->_cuenta_cobrar28($anio,$mes, $id_asiento);
+		
+		// $this->_cuenta_anticipo($anio,$mes);
+		 
+ 
+		 $this->_cuenta_pagar($anio,$mes, $id_asiento);
+	
+     
+			
+			echo '<div class="col-md-12" align="center" style="padding-bottom:10;padding-top:15px"> ';
+		
+		 $this->titulo( $fecha ) ; 
+
+			echo '</div> ';
+ 
+ 
+            echo '<div class="col-md-12" style="padding-bottom:20;padding-top:20px;overflow-x:scroll;white-space: nowrap;">   ';
+         
+                       $this->cabecera();
+             
+                       $sql = "SELECT *   
+					   		     FROM  co_reciprocas WHERE anio='".$anio."' and mes ='".(round($mes))."'
+ 								order by cuenta_1 desc, fecha asc";
+
+                        $stmt = $this->bd->ejecutar($sql);
+
+
+                        while ($x=$this->bd->obtener_fila($stmt)){
+
+                            echo "<tr>";
+
+							$cuenta      = $x['cuenta_1'];
+							$idasiento   = $x['asiento'];
+							$partida     = $x['partida'] ;
+							$debe        = $x['deudor_1'] ;
+							$haber       = $x['acreedor_1'] ;
+							$idtramite   = $x['tramite'] ;
+							$id_reciproco= $x['id_reciproco'] ;
+
+							$impresion		= $x['impresion'] ;
+							$id_asiento_ref = $x['id_asiento_ref'];
+
+							$tipo_tra  = $x['tipo'] ;
+
+							$cadena_cuenta = 	$x['cuenta_1'].'.'.$x['nivel_11'];
+			 
+							$cadena_cuenta = '<a href="#" onClick="VerReciprocas('.$id_reciproco.')">'.$cadena_cuenta.'</a>';
+
+							echo "<td bgcolor='#FF8D8F'><b>".$cadena_cuenta."</b></td>";
+                            echo "<td bgcolor='#FF8D8F'><b>".$x['cuenta_1']."</b></td>";
+                            echo "<td bgcolor='#FF8D8F'><b>".$x['nivel_11']."</b></td>";
+
+							$aux_nivel = '00';
+							$acreedor_2 = $x['acreedor_2'];
+
+							$nivel_11 = $x['nivel_11'];
+							$nivel_12 = $x['nivel_12'];
+
+							if ( $tipo_tra == 1 ) {
+								
+								$datos = $this->verifica_aux_1( $cuenta, $idasiento, $partida, $debe, $haber,$idtramite,
+																$id_reciproco,$tipo_tra,$impresion ,$aux_nivel,$id_asiento_ref  ,$nivel_11,	$nivel_12 );
+ 							 
+									
+								if ( $nivel_11  == '83')	{
+									$bandera_nivel_11 = 1;
+								}
+								if ( $nivel_11  == '85')	{
+									$bandera_nivel_11 = 1;
+								}
+								
+								if ( $bandera_nivel_11  == 0)	{
+									echo "<td>".'00'."</td>";
+								}else{
+									echo "<td>".$nivel_12 ."</td>";
+								}
+								
+
+								echo "<td>".$x['deudor_1']."</td>";
+								echo "<td>".$x['acreedor_1']."</td>";
+
+								if ( $debe > 0 ) {
+									$acreedor_2 = $datos['pago'];
+								}
+								 
+
+								echo "<td>".$x['ruc1']."</td>";
+								echo "<td>".$x['nombre']."</td>";
+
+								if ( $id_asiento_ref == 0 ){
+									$id_asiento_ref  = $x['asiento'];
+								}
+ 								
+							}
+
+							$bandera_nivel_11 = 0;
+
+							if ( $tipo_tra == 2 ) {
+
+								echo "<td>".'00'."</td>";
+								
+					    		//$datos = $this->verifica_aux_2( $cuenta, $idasiento, $partida, $debe, $haber,$idtramite,$id_reciproco,$tipo_tra,$impresion ,$aux_nivel  );
+
+								$datos['c1']     =   trim($x['cuenta_2']);
+								$datos['c2']     =   $x['nivel_21'];
+								$datos['c3']     =   $x['nivel_22'];
+								$datos['ruc1']   =   $x['ruc1'];
+								$datos['nombre'] =   $x['nombre'];
+								
+								echo "<td>".$x['deudor_1']."</td>";
+								echo "<td>".$x['acreedor_1']."</td>";
+
+								echo "<td>".$datos['ruc1']."</td>";
+								echo "<td>".$datos['nombre']."</td>";
+								$id_asiento_ref  = $x['asiento']; 
+					  	}
+
+ 
+							
+							if ( $tipo_tra == 3 ) {
+
+						 		if ( $impresion == 0){
+									echo "<td bgcolor='#FF8D8F'><b>00</b></td>";
+									$aux_nivel = '00';
+								}else{
+									echo "<td bgcolor='#FF8D8F'><b>".$x['nivel_12']."</b></td>";
+									$aux_nivel = $x['nivel_12'];
+ 								}
+
+								$datos = $this->verifica_aux_3( $cuenta, $idasiento, $partida, $debe, $haber,$idtramite,$id_reciproco,$tipo_tra,$impresion ,$aux_nivel  );
+
+							
+
+								echo "<td>".$x['deudor_1']."</td>";
+								echo "<td>".$x['acreedor_1']."</td>";
+								echo "<td>".$x['ruc1']."</td>";
+								echo "<td>".$x['nombre']."</td>";
+
+								$id_asiento_ref  = $x['asiento'];
+
+						 
+							} 
+
+							if ( $tipo_tra == 5 ) {
+								 
+								$datos = $this->verifica_aux_4( $cuenta, $idasiento, $partida, $debe, $haber,$idtramite,$id_reciproco,$tipo_tra,$impresion ,$aux_nivel  );
+ 							 
+								echo "<td>".'00'."</td>";
+								echo "<td>".$x['deudor_1']."</td>";
+								echo "<td>".$x['acreedor_1']."</td>";
+
+								echo "<td>".$x['ruc1']."</td>";
+								echo "<td>".$x['nombre']."</td>";
+
+								if ( $id_asiento_ref == 0 ){
+									$id_asiento_ref  = $x['asiento'];
+								} 
+ 								
+							}
+							
+
+                            echo "<td><b>".$x['grupo']."</b></td>";
+                            echo "<td><b>".$x['subgrupo']."</b></td>";
+                            echo "<td><b>".$x['item']."</b></td>";
+ 
+                            echo "<td bgcolor='#FBC0FF'><b>".$datos['c1']."</b></td>";
+                            echo "<td bgcolor='#FBC0FF'><b>".$datos['c2']."</b></td>";
+                            echo "<td bgcolor='#FBC0FF'><b>".$datos['c3']."</b></td>";
+
+                            echo "<td>".$x['deudor_2']."</td>";
+                            echo "<td>".$acreedor_2."</td>";
+                            echo "<td>".$x['asiento']."</td>";
+
+                            echo "<td>".$id_asiento_ref ."</td>";
+                            echo "<td>".$x['fecha']."</td>";
+                            echo "<td>".$x['fecha_pago']."</td>";
+                
+
+                            echo "</tr>";
+
+                        }
+
+						$this->actualiza_cuenta_antipo();
+
+          echo "</table>";
+			echo '</div> ';
+
+			echo '<script>
+			jQuery.noConflict();
+			 jQuery(document).ready(function() {
+			  jQuery("#tabla_bal_02").DataTable( {
+				"paging":   true,
+				"ordering": true,
+				"aLengthMenu": [[10,30, 50, 100,250,500,2500], [10,30, 50,100,250,500,2500]],
+				"info":     true,
+				"aoColumnDefs": [
+						{ "sClass": "highlight", "aTargets": [ 5] },
+						{ "sClass": "de", "aTargets": [ 6 ] },
+						{ "sClass": "highlight", "aTargets": [ 7 ] },
+						 { "sClass": "ye", "aTargets": [ 8 ] },
+						 { "sClass": "highlight", "aTargets": [ 9 ] },
+						 { "sClass": "ye", "aTargets": [ 10 ] }
+						]
+			} ); } );  </script>';
+			
+			unset($x); //eliminamos la fila para evitar sobrecargar la memoria
+			
+			pg_free_result ($stmt) ; 
+	}
 	
 	//----------------------------------------------------------
 	function cabecera(){
@@ -318,11 +541,11 @@ class proceso{
 		$sql_genera = "INSERT INTO co_reciprocas (periodo, ruc, cuenta_1, nivel_11, nivel_12, deudor_1,   acreedor_1, 
 					ruc1, nombre, grupo, subgrupo,  item, 
 					cuenta_2, nivel_21, nivel_22, deudor_2, 
-					acreedor_2, asiento, tramite, fecha, fecha_pago, id_asiento_ref,tipo,partida,impresion)
+					acreedor_2, asiento, tramite, fecha, fecha_pago, id_asiento_ref,tipo,partida,impresion,anio,mes)
 					SELECT mes,registro,  grupo_es, subgrupo_es, nivel_es, debe, haber,
 					idprov , razon ,'00' as grupoi,  '00' as subgrupoi, '00' as itemi,
 					'000' as a,'00' as b,'00' as c,haber,debe,
-					id_asiento, 0 as id_tramite,fecha,fecha,0 as id_asiento_ref,3 as tipo,partida,esigef
+					id_asiento, 0 as id_tramite,fecha,fecha,0 as id_asiento_ref,3 as tipo,partida,esigef,".$anio.",".$mes."
 					FROM  view_aux_esigef_an
 					where anio = ".$this->bd->sqlvalue_inyeccion($this->anio , true)." and 
 					mes = ".$this->bd->sqlvalue_inyeccion($mes  , true)."
@@ -336,20 +559,25 @@ class proceso{
 	/*
 	carga de actualizar cuenta x pagar
 	*/
-	public function _cuenta_pagar($anio,$mes){
- 
+	public function _cuenta_pagar($anio,$mes, $id_asiento = null){
+
+		$sql_extra_where = '';
+		
+		if ($id_asiento != null) {
+			$sql_extra_where = ' and id_asiento = '.$id_asiento;
+		}
 
         $sql_genera = "INSERT INTO co_reciprocas (periodo, ruc, cuenta_1, nivel_11, nivel_12, deudor_1,   acreedor_1, 
                                                 ruc1, nombre, grupo, subgrupo, 
                                                 item, cuenta_2, nivel_21, nivel_22, deudor_2, 
-                                                acreedor_2, asiento, tramite, fecha, fecha_pago, id_asiento_ref,tipo,partida,impresion)
+                                                acreedor_2, asiento, tramite, fecha, fecha_pago, id_asiento_ref,tipo,partida,impresion,anio,mes)
                     SELECT mes,registro,  grupo_es, subgrupo_es,nivel_es,sum(debe) debe, sum(haber) haber,
                             idprov,razon,grupoi,  subgrupoi, itemi,'000' as a,'00' as b,'00' as c,sum(haber) ,sum(debe),
                             id_asiento,COALESCE(id_tramite,0) as tramite,fecha,fecha,coalesce(id_asiento_ref,0) as id_asiento_ref,1 as tipo,
-                            COALESCE(partida,'-') as partida,impresion
+                            COALESCE(partida,'-') as partida,impresion,".$anio.",".$mes."
                     FROM  view_aux_esigef
                         where anio = ".$this->bd->sqlvalue_inyeccion($this->anio , true)." and 
-                            mes = ".$this->bd->sqlvalue_inyeccion($mes  , true)."
+                            mes = ".$this->bd->sqlvalue_inyeccion($mes  , true). $sql_extra_where ." 
 					 group by id_asiento, idprov, cuenta, cuenta_es,grupo_es, subgrupo_es,nivel_es,razon, registro, 
 							  fecha, comprobante, id_asiento_ref, id_tramite, grupoi, subgrupoi, itemi, anio, mes, 
 							  partida, impresion,tipo_dato
@@ -407,10 +635,10 @@ class proceso{
         $sql_genera = "INSERT INTO co_reciprocas (periodo, ruc, cuenta_1, nivel_11, nivel_12, deudor_1,   acreedor_1, 
                                                 ruc1, nombre, grupo, subgrupo, 
                                                 item, cuenta_2, nivel_21, nivel_22, deudor_2, 
-                                                acreedor_2, asiento, tramite, fecha, fecha_pago, id_asiento_ref,tipo,partida,impresion)
+                                                acreedor_2, asiento, tramite, fecha, fecha_pago, id_asiento_ref,tipo,partida,impresion,anio,mes)
                     SELECT mes,registro,  grupo_es, subgrupo_es,nivel_es,debe, haber,
                             idprov,razon,grupoi,  subgrupoi, itemi,'000' as a,'00' as b,'00' as c,haber,debe,
-                            id_asiento,id_tramite,fecha,fecha,coalesce(id_asiento_ref,0) as id_asiento_ref, 5 as tipo,partida,impresion
+                            id_asiento,id_tramite,fecha,fecha,coalesce(id_asiento_ref,0) as id_asiento_ref, 5 as tipo,partida,impresion,".$anio.",".$mes."
                     FROM  view_aux_esigef_tr
                         where anio = ".$this->bd->sqlvalue_inyeccion($this->anio , true)." and 
                             mes = ".$this->bd->sqlvalue_inyeccion($mes  , true)."
@@ -429,15 +657,20 @@ class proceso{
 		/*
 	carga de actualizar cuenta x pagar
 	*/
-	public function _cuenta_cobrar($anio,$mes){
+	public function _cuenta_cobrar($anio,$mes, $id_asiento = null ){
  
- 
+
+		$sql_extra_where = '';
+		
+		if ($id_asiento != null) {
+			$sql_extra_where = ' and id_asiento = '.$id_asiento;
+		}
 
 				$sql_genera = "INSERT INTO co_reciprocas (periodo, ruc, cuenta_1, nivel_11, nivel_12, 
                                                           deudor_1,   acreedor_1,  ruc1, nombre, grupo, 
                                                          subgrupo,  item,  cuenta_2, nivel_21, nivel_22, 
                                                          deudor_2,  acreedor_2, asiento, tramite, fecha, 
-                                                        fecha_pago, id_asiento_ref,tipo,partida,impresion)
+                                                        fecha_pago, id_asiento_ref,tipo,partida,impresion,anio,mes)
             					select  mes,registro,grupo_es,grupo,'00' as nivel_12,
                                         debe, haber,  ruc, nombre ,grupo, 
                                         subgrupo, item_p,  substring(cuenta_esigef,1,3) as a, substring(cuenta_esigef,5,2) as b,  
@@ -449,10 +682,10 @@ class proceso{
                                 	    id_asiento as id_asiento_ref,
                                 	    2 as tipo,
                                 	    item  ,
-                                	    0 as impresion
+                                	    0 as impresion,".$anio.",".$mes."
             					FROM  view_aux_esigef_cxc
 					where anio = ".$this->bd->sqlvalue_inyeccion($this->anio , true)." and 
-					mes= ".$this->bd->sqlvalue_inyeccion($mes  , true)."
+					mes= ".$this->bd->sqlvalue_inyeccion($mes  , true). $sql_extra_where ."
 					order by grupo_es,grupo";
  
 				
@@ -486,7 +719,7 @@ class proceso{
 							'id_asiento,cuenta,  substring(cuenta,1,3) as c1,  substring(cuenta,5,2) as c2, substring(cuenta,8,2) as c3',
 							'id_asiento='.$this->bd->sqlvalue_inyeccion($idasiento,true). ' and 
 							partida = '.$this->bd->sqlvalue_inyeccion($partida ,true) .' and 
-							debe > 0 '
+							debe > 0 ', ($idasiento == '3304' && $debe>0 )  ? '1' : ''
 							);
 
 					
@@ -507,10 +740,18 @@ class proceso{
 									cuenta like '.$this->bd->sqlvalue_inyeccion('224%' ,true) .' and 
 									debe > 0 '
 									);
+								} else if ( $nivel_11 =='85'){
+
+									$c1     = $this->bd->query_array('co_asientod',
+									'id_asiento,cuenta,  substring(cuenta,1,3) as c1,  substring(cuenta,5,2) as c2, substring(cuenta,8,2) as c3',
+									'id_asiento='.$this->bd->sqlvalue_inyeccion($idasiento,true). ' and 
+									cuenta like '.$this->bd->sqlvalue_inyeccion('224%' ,true) .' and 
+									debe > 0 '
+									);
 								}else{
-									$c1['c1'] =  '00';
+									$c1['c1'] =  '000';
 									$c1['c2'] =  '00';
-									$c1['c3'] =  '000' ;
+									$c1['c3'] =  '00' ;
 								}	
 								$c1['xidasiento']     =  $idasiento;
 								$c1['xidasiento_ref'] =  $id_asiento_ref ;
@@ -528,35 +769,39 @@ class proceso{
 
 							$c1_contador     = $this->bd->query_array('co_asientod', 'count(*) as nn',
 															'id_asiento='.$this->bd->sqlvalue_inyeccion($idasiento,true). " and 
-															  substring(cuenta,1,3) in ('111','112','124')" 
+															  substring(cuenta,1,3) in ('111','112','124')"
 							);
 
 							if ( $c1_contador['nn'] > 1 ){
 								
 								$c1     = $this->bd->query_array('co_asientod', 'cuenta,  substring(cuenta,1,3) as c1,  substring(cuenta,5,2) as c2,  substring(cuenta,8,2) as c3',
 								'id_asiento='.$this->bd->sqlvalue_inyeccion($idasiento,true). " and 
-								  substring(cuenta,1,3) in ('111')" 
+								  substring(cuenta,1,3) in ('111','112')" 
 								);
 
 								$c1_banco     = $this->bd->query_array('co_asientod', 'sum(haber) pagado',
 								'id_asiento='.$this->bd->sqlvalue_inyeccion($idasiento,true). " and 
-								  substring(cuenta,1,3) in ('111')" 
+								  substring(cuenta,1,3) in ('111','112')" 
 								);
 
 							}else{
 								$c1     = $this->bd->query_array('co_asientod', 'cuenta,  substring(cuenta,1,3) as c1,  substring(cuenta,5,2) as c2,  substring(cuenta,8,2) as c3',
 								'id_asiento='.$this->bd->sqlvalue_inyeccion($idasiento,true). " and 
-								  substring(cuenta,1,3) in ('111','112','124')" 
+								  substring(cuenta,1,3) in ('111','112','124','113','152')" 
 								);
 
 								$c1_banco     = $this->bd->query_array('co_asientod', 'sum(haber) pagado',
 								'id_asiento='.$this->bd->sqlvalue_inyeccion($idasiento,true). " and 
-								substring(cuenta,1,3) in ('111','112','124')" 
+								substring(cuenta,1,3) in ('111','112','124','113','152')" 
 								);
 							} 
 
 
-							$c1['c3'] = '00';
+							if ($c1['c1'] != '112') {
+								$c1['c3'] = '00';
+								// echo 'Modificado';
+								// echo '<br>';
+							}
 							$c1['pago'] =  $c1_banco['pagado'];
 
 							if ( $c1['pago'] > $debe ){
@@ -757,6 +1002,19 @@ public function verifica_aux_4( $cuenta, $idasiento, $partida, $debe, $haber,$id
 						nivel_22 = ".$this->bd->sqlvalue_inyeccion('00' , true).
 				    "where id_reciproco=".$this->bd->sqlvalue_inyeccion($id_reciproco , true);
 
+			if (trim($c1['c1'])=='112'){
+				$sql = "update co_reciprocas
+						set cuenta_2 = ".$this->bd->sqlvalue_inyeccion( trim($c1['c1']) , true).",
+							nivel_21 = ".$this->bd->sqlvalue_inyeccion( trim($c1['c2']) , true).",
+							acreedor_2 = ".$this->bd->sqlvalue_inyeccion(  $c1['pago'] , true).",
+							fecha_pago =".$this->bd->sqlvalue_inyeccion( $ArrayRazon['fecha']  , true).",
+							nivel_22 = ".$this->bd->sqlvalue_inyeccion( trim($c1['c3']) , true).
+						"where id_reciproco=".$this->bd->sqlvalue_inyeccion($id_reciproco , true);
+				// echo $sql;
+				// echo '<br>';
+
+			}
+
 					$this->bd->ejecutar($sql);
 		}
  				
@@ -900,9 +1158,19 @@ $gestion   = 	new proceso;
 
 //------ grud de datos insercion
 
-if (isset($_POST["ffecha2"]))	{
+if (isset($_POST["id_asiento"]) && trim($_POST["id_asiento"]) != '' )	{
+	// echo '1---';
+   
+	$id_asiento = $_POST["id_asiento"];
+	$f2 = $_POST["ffecha2"];
 	
  
+	$gestion->reciporcaPorAsiento($f2, $id_asiento );
+ 
+	
+} else if (isset($_POST["ffecha2"]))	{
+	
+	// echo '2---';
 	$f2 				=     $_POST["ffecha2"];
  
 	
@@ -911,5 +1179,6 @@ if (isset($_POST["ffecha2"]))	{
  
 	
 }
+
 
 ?>
