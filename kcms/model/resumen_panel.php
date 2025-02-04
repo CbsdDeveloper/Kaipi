@@ -41,7 +41,7 @@ class proceso{
         $this->font       =  '13px';
         
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         
         

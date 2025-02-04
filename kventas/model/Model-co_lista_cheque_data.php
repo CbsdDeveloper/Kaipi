@@ -15,7 +15,7 @@ $sesion 	 =  $_SESSION['email'];
 
 $hoy 	     =   date("Y-m-d");
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 
 $id_concilia	 =	$_GET["id_concilia"];

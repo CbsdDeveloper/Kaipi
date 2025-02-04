@@ -58,7 +58,7 @@ class Controller_liquidaciones{
                    
                 $this->bd	   =	     	new Db ;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 

@@ -29,7 +29,7 @@ class proceso{
         $this->sesion 	 =  $_SESSION['login'];
         $this->hoy 	     =  $this->bd->hoy();
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         
     }
@@ -71,7 +71,7 @@ class proceso{
     function _barra_unidad_resumen( ){
         
         
-        $sql = "SELECT unidad,SUM(costo_adquisicion) as total, count(*) as numero
+        $sql = "SELECT unidad,SUM(costo_adquisicion) as total, count(id_bien) as numero
                 FROM activo.view_bienes
                 where tipo_bien = 'BLD' and uso <> 'baja' and unidad is not null
                 group by unidad";

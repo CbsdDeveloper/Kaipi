@@ -61,7 +61,7 @@
                    
                 $this->bd	   =	new Db;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -101,12 +101,12 @@
                 $tipo = $this->bd->retorna_tipo();
                 
                 
-                $this->set->div_panel(utf8_encode  ('<b> CREAR CAMPAÑA </b>'));
+                $this->set->div_panel(utf8_encode  ('<b> CREAR CAMPAï¿½A </b>'));
                     
                     
                     
                  
-                $this->obj->text->text( ('Campaña'),"number" ,'id_campana' ,80,80, $datos ,'','readonly','div-2-10') ;
+                $this->obj->text->text( ('Campaï¿½a'),"number" ,'id_campana' ,80,80, $datos ,'','readonly','div-2-10') ;
                     
                     
                     $resultado =$this->bd->ejecutar("select '0' as codigo, 'Seleccionar Grupo' as nombre union

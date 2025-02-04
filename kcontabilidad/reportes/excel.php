@@ -10,7 +10,7 @@ $bd	   =	new Db ;
 
 $ruc     =  $_SESSION['ruc_registro'];
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 $festado= $_GET['festado'];
 $ffecha1= $_GET['ffecha1'];

@@ -10,7 +10,7 @@ require '../../kconfig/Db.emailMarket.php';
 $bd	   =	new Db;
 $obj     = 	new objects;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 
 

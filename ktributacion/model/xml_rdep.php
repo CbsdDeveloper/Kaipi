@@ -37,7 +37,7 @@ class proceso{
         
         $this->hoy 	     =  $this->bd->hoy();
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
         
     }
@@ -104,14 +104,14 @@ class proceso{
             $nombre = str_replace("Ó","O",$nombre);
             $nombre = str_replace("Ú","U",$nombre);
             $nombre = str_replace("É","E",$nombre);
-
+ 
             
 
             print  '<datRetRelDep>';
             print  '<empleado>';
                     print  '<benGalpg>'.trim($x['bengalpg']).'</benGalpg>';
                     print  '<enfcatastro>'.trim($x['enfcatastro']).'</enfcatastro>';
-                    print  '<numCargRebGastPers>0</numCargRebGastPers>';
+                    print  '<numCargRebGastPers>'.trim($x['numcargrebgastpers']).'</numCargRebGastPers>';
                     print  '<tipIdRet>'.trim($x['tipidret']).'</tipIdRet>';
                     print  '<idRet>'.trim($x['idret']).'</idRet>';
                     print  '<apellidoTrab>'.trim($apellido).'</apellidoTrab>';
@@ -120,7 +120,7 @@ class proceso{
                     print  '<residenciaTrab>'.trim($x['residenciatrab']).'</residenciaTrab>';
                     print  '<paisResidencia>'.trim($x['paisresidencia']).'</paisResidencia>';
                     print  '<aplicaConvenio>'.trim($x['aplicaconvenio']).'</aplicaConvenio>';
-                    print  '<tipoTrabajDiscap>04</tipoTrabajDiscap>';
+                    print  '<tipoTrabajDiscap>'.trim($x['tipotrabajdiscap']).'</tipoTrabajDiscap>';
                     print  '<porcentajeDiscap>'.trim($x['porcentajediscap']).'</porcentajeDiscap>';
                     print  '<tipIdDiscap>'.trim($x['tipiddiscap']).'</tipIdDiscap>';
                     print  '<idDiscap>'.trim($x['iddiscap']).'</idDiscap>';

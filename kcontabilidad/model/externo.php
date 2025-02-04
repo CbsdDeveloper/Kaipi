@@ -10,7 +10,7 @@
 	
  
 	
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	
     //--------------------------------------------------------------
     
@@ -62,10 +62,10 @@
         $data = 'Comprobante electronico por autorizado';
         
      
-          // abrimos la sesión cURL
+          // abrimos la sesiï¿½n cURL
             $ch = curl_init();
             
-            // definimos la URL a la que hacemos la petición  
+            // definimos la URL a la que hacemos la peticiï¿½n  
             
          //   $url = 'http://138.197.161.163/comprobante/autoriza_comprobante_externo.php';
             
@@ -81,7 +81,7 @@
             curl_setopt($ch, CURLOPT_URL,$url);
             
          //   curl_setopt($ch, CURLOPT_URL,"https://liderdoc.com/factura/autoriza_comprobante_externo.php");
-            // definimos el número de campos o parámetros que enviamos mediante POST
+            // definimos el nï¿½mero de campos o parï¿½metros que enviamos mediante POST
             curl_setopt($ch, CURLOPT_POST, 1);
          
             
@@ -89,7 +89,7 @@
             
             curl_setopt($ch, CURLOPT_POSTFIELDS, $enlace_post );
             
-            // definimos cada uno de los parámetros
+            // definimos cada uno de los parï¿½metros
              
             // recibimos la respuesta y la guardamos en una variable 
             
@@ -97,7 +97,7 @@
             
             $data = curl_exec ($ch);
             
-            // cerramos la sesión cURL
+            // cerramos la sesiï¿½n cURL
             curl_close ($ch);
             
             $valida = substr(trim($data), 0,2);

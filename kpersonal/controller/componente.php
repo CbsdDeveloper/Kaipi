@@ -66,7 +66,7 @@
                    
             	$this->bd	   =	new Db;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -147,7 +147,7 @@
 
                                 
                                     $this->obj->text->text_blue('Nro.dia(s)',"number" ,'dia_tomados' ,80,80, $datos ,'required','','div-3-9') ;
-                                    $this->obj->text->text_blue('Fracción dia/hora',"number" ,'hora_tomados' ,80,80, $datos ,'','readonly','div-3-9') ;
+                                    $this->obj->text->text_blue('Fracciï¿½n dia/hora',"number" ,'hora_tomados' ,80,80, $datos ,'','readonly','div-3-9') ;
                                     
                                     
                                     $this->obj->text->editor('Detalle','novedad',3,75,500,$datos,'required','','div-3-9') ;
@@ -161,7 +161,7 @@
                 
                 $this->obj->text->text_blue('Nro.dia(s)',"number" ,'dia_tomados' ,80,80, $datos ,'required','readonly','div-3-9') ;
                 
-                $this->obj->text->text_blue('Fracción dia/hora',"number" ,'hora_tomados' ,80,80, $datos ,'required','readonly','div-3-9') ;
+                $this->obj->text->text_blue('Fracciï¿½n dia/hora',"number" ,'hora_tomados' ,80,80, $datos ,'required','readonly','div-3-9') ;
                 
                 $this->obj->list->lista('Estado',$MATRIZ_ESTADO,'estado',$datos,'required','readonly','div-3-9');
                  

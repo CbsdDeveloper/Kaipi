@@ -38,7 +38,7 @@ class proceso{
         
         $this->hoy 	     =     date("Y-m-d");     
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         $this->ATabla = array(
             array( campo => 'ruc_registro',   tipo => 'VARCHAR2',   id => '0',  add => 'S',   edit => 'N',   valor => trim(  $this->ruc ),   filtro => 'N',   key => 'N'),

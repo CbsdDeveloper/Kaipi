@@ -15,7 +15,7 @@ session_start( );
 	
  	$bd    = new Db ;
  
-	//$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+	//$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	$bd->conectar('postgres','db_kaipi','Cbsd2019');
 	
  	if  (isset($_GET['status'])) {

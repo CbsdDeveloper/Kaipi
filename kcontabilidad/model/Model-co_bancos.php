@@ -39,7 +39,7 @@ class proceso{
 		
 		$this->hoy 	     =   date("Y-m-d");  
 		
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 		
  		
 		
@@ -130,7 +130,7 @@ class proceso{
 		echo  $result;
 	}
 	//--------------------------------------------------------------------------------------
-	//aprobación de asientos
+	//aprobaciï¿½n de asientos
 	function aprobacion( $id  ){
 	    
 	    

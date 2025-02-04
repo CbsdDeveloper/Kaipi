@@ -41,7 +41,7 @@ class proceso{
         $this->hoy 	     =     date("Y-m-d");     
         $this->anio      =     $_SESSION['anio'];
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         $this->ATabla_parametros = array(
             array( campo => 'id_ren_tramite_var',tipo => 'NUMBER',id => '0',add => 'N', edit => 'N', valor => '-', key => 'S'),

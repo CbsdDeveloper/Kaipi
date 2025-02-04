@@ -11,13 +11,13 @@ session_start( );
 	
  
 	
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	
       
     $txtcodigo = strtoupper($_GET['itemVariable']);
     
     
-    $sql1 = 'SELECT idprov as codigo,   razon as nombre, id_departamento,idciudad
+    $sql1 = 'SELECT idprov as codigo,   razon as nombre, id_departamento,idciudad,emaile
                 FROM view_nomina_rol
                 where  upper(razon) = '.$bd->sqlvalue_inyeccion($txtcodigo,true);
  
@@ -32,7 +32,8 @@ session_start( );
     echo json_encode( array(
                     "a"=>trim($dataProv['codigo']),
                     "b"=> trim($dataProv['id_departamento']) , 
-                    "c"=> $dataProv['idciudad']
+                    "c"=> $dataProv['idciudad'],
+                    "d"=> $dataProv['emaile']
              )
         );
     

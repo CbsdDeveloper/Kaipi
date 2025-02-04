@@ -13,7 +13,7 @@ setlocale (LC_TIME,"spanish");
  
  $bd	   =	new Db;
  
- $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+ $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
  //-------------------------------------------------
  // verifica sumatoria de facturas

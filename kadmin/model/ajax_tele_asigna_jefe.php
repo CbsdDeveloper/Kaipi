@@ -11,7 +11,7 @@ require '../../kconfig/Set.php';
  
 $bd	   =	new Db;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
  $idprov =  trim($_GET['id']);
  $accion =  trim($_GET['accion']);

@@ -5,7 +5,7 @@ require '../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
 
 $bd	   =	new Db;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
  
 require_once(dirname(__file__)."/RideSRI/RideSRI.php");
@@ -73,5 +73,5 @@ try{
     
 }catch (Exception $e) {
     echo '<br/><b>ERROR AL EJECUTAR EL SCRIPT</b><br/>';
-    echo '<b>Excepción Capturada[</b> ',  $e->getMessage(), "]\n";
+    echo '<b>Excepciï¿½n Capturada[</b> ',  $e->getMessage(), "]\n";
 }

@@ -14,7 +14,7 @@ session_start( );
  
 	
 	
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	
       
     $tipo_dias = trim($_GET['tipo']);

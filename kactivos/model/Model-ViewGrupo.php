@@ -35,7 +35,7 @@ class proceso{
         $this->sesion 	 =  $_SESSION['email'];
         $this->hoy 	     =  $this->bd->hoy();
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         
     }
@@ -50,14 +50,14 @@ class proceso{
         echo '<h5><b>Bienes Larga Duracion</b></h5>';
         
         $xx = $this->bd->query_array('activo.view_bienes',
-            'count(*) as nn',
+            'count(id_bien) as nn',
             'uso  <> '.$this->bd->sqlvalue_inyeccion( 'Baja',true)." and tipo_bien = 'BLD'"
             );
         
         
-        $sql = "select cuenta ,nombre_cuenta,count(*) as bienes,sum(costo_adquisicion) as total
+        $sql = "select cuenta ,nombre_cuenta,count(id_bien) as bienes,sum(costo_adquisicion) as total
 			from activo.view_bienes where uso <> 'Baja' and tipo_bien = 'BLD'
-			group by cuenta ,nombre_cuenta order by 3 desc"   ;
+			group by cuenta ,nombre_cuenta order by cuenta asc"   ;
 
  
         $resultado= $this->bd->ejecutar($sql);
@@ -103,14 +103,14 @@ class proceso{
         
         
         $xx = $this->bd->query_array('activo.view_bienes',
-            'count(*) as nn',
+            'count(id_bien) as nn',
             'uso  <> '.$this->bd->sqlvalue_inyeccion( 'Baja',true)." and tipo_bien = 'BCA'"
             );
         
         
-        $sql = "select cuenta ,nombre_cuenta,count(*) as bienes,sum(costo_adquisicion) as total
+        $sql = "select cuenta ,nombre_cuenta,count(id_bien) as bienes,sum(costo_adquisicion) as total
 			from activo.view_bienes where uso <> 'Baja' and tipo_bien = 'BCA'
-			group by cuenta ,nombre_cuenta order by 3 desc"   ;
+			group by cuenta ,nombre_cuenta order by cuenta asc"   ;
         
         
         $resultado1= $this->bd->ejecutar($sql);

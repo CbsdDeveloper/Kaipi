@@ -201,7 +201,10 @@
 
 													 </div>	
 
-
+													 <div class="col-md-4 mb-3">
+														<label for="searchInput" class="form-label">Busqueda en tabla de resultados:</label>
+														<input type="text" class="form-control" id="searchInput" onkeyup="filterTable()" placeholder="Buscar en el listado de partidas presupuestarias...">
+													</div>
 														
 
 														   <div class="col-md-12" style="padding: 1px">

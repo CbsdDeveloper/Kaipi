@@ -9,7 +9,7 @@ require '../../kconfig/Db.conf.php';   /*Incluimos el fichero de la clase Conf*/
 $bd	   =	new Db ;
 
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
    
 
 

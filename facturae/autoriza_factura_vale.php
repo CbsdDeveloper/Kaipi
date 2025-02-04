@@ -9,7 +9,7 @@ require '../kconfig/Obj.conf.php';
 
 $bd	   =	new Db;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
  
 $id          = $_GET['id'];
 
@@ -122,7 +122,7 @@ try{
                             }
 }catch (Exception $e) {
     $FacturaElectronica .= '<br/><b>ERROR AL EJECUTAR EL SCRIPT</b><br/>';
-    $FacturaElectronica .= '<b>Excepción Capturada[</b> '.  $e->getMessage(). "]";
+    $FacturaElectronica .= '<b>Excepciï¿½n Capturada[</b> '.  $e->getMessage(). "]";
 }
 
 }

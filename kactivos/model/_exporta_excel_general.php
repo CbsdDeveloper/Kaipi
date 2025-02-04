@@ -11,7 +11,7 @@ $bd	   =	new Db;
 
 $obj     = 	new objects;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 $sql =  'SELECT tipo, tipo_bien,sede, unidad,idprov as identificacion, razon as custodio,id_bien,fecha, forma_ingreso,  descripcion,  
 origen_ingreso,   clase_documento, tipo_comprobante, fecha_comprobante, 

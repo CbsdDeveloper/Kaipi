@@ -22,12 +22,12 @@ require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos
 $bd	     =	new Db ;
  
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 
  if(isset($_POST['submit']))
 {
-    //Aquí es donde seleccionamos nuestro csv
+    //Aquï¿½ es donde seleccionamos nuestro csv
     $fname                   = $_FILES['sel_file']['name'];
  
     

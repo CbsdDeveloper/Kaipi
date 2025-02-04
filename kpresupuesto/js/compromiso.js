@@ -738,12 +738,59 @@ function GenerarCompromiso(){
 																			var str = data;
  																			
 																			 if (str.trim() == '0' ){ 
+
+																				Swal.fire({
+																					title: 'Error!',
+																					html: 'No se pudo emitir el compromiso! <br> El año del compromiso no corresponde al periodo de ejecución',
+																					icon: 'error',
+																					confirmButtonText: 'Entendido'
+																				  })
 																				 
-																				  alert('COMPROBANTE NO EMITIDO VERIFIQUE PERIODO / ASIGNE MONTO COMPROMETIDO ' + str);
+																				//   alert('COMPROBANTE NO EMITIDO VERIFIQUE PERIODO / ASIGNE MONTO COMPROMETIDO ' + str);
 																				  
-																			 }else{
+																			 } else if (str.trim() == '2' ){ 
+
+																				Swal.fire({
+																					title: 'Error!',
+																					html: 'No se pudo emitir el compromiso! <br> No se ha establecido el Beneficiario',
+																					icon: 'error',
+																					confirmButtonText: 'Entendido'
+																				  })
 																				 
-																				   alert('Comprobante para generar el devengado! ' + str);
+																				//   alert('COMPROBANTE NO EMITIDO VERIFIQUE PERIODO / ASIGNE MONTO COMPROMETIDO ' + str);
+																				  
+																			 } else if (str.trim() == '3' ){ 
+
+																				Swal.fire({
+																					title: 'Error!',
+																					html: 'No se pudo emitir el compromiso! <br> No se ha establecido el Número de documento.',
+																					icon: 'error',
+																					confirmButtonText: 'Entendido'
+																				  })
+																				 
+																				//   alert('COMPROBANTE NO EMITIDO VERIFIQUE PERIODO / ASIGNE MONTO COMPROMETIDO ' + str);
+																				  
+																			 } else if (str.trim() == '4' ){ 
+
+																				Swal.fire({
+																					title: 'Error!',
+																					html: 'No se pudo emitir el compromiso! <br> No se ha asignado monto a comprometer en ninguna partida.',
+																					icon: 'error',
+																					confirmButtonText: 'Entendido'
+																				  })
+																				 
+																				//   alert('COMPROBANTE NO EMITIDO VERIFIQUE PERIODO / ASIGNE MONTO COMPROMETIDO ' + str);
+																				  
+																			 } else{
+																				 
+																				//    alert('Comprobante para generar el devengado! ' + str);
+
+																				   Swal.fire({
+																					title: 'Listo!',
+																					html: 'Compromiso Generado con Éxito! <br> Ahora puede imprimir el comprobante.',
+																					icon: 'success',
+																					confirmButtonText: 'Ok'
+																				  })
 																				 
 			 																 	    BusquedaProd(oTable,idtramite1); 
 																			 	    

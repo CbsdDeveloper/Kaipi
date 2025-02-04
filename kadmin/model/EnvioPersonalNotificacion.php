@@ -9,7 +9,7 @@
      $bd	   =	new Db;
      $mail  =	new EmailEnvio;
      
-     $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+     $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
      
      $sesion         =  trim($_SESSION['email']);
      $razon_social   =  $_SESSION['razon'] ;
@@ -86,8 +86,8 @@
          
 /*         $ruc  =  trim($_SESSION['ruc_registro']);
          $ruc  =  base64_encode($ruc);
-         $enlace1 = $pagina_web.'reportes/R9lnom?us='.$_SESSION['us'].'&rd='.$ruc.'&db='.$_SESSION['db'].'&ac='.$_SESSION['ac'].'&i='.$idprov.'&r=1';
-         $enlace2 = $pagina_web.'reportes/R9lnom?us='.$_SESSION['us'].'&rd='. $ruc.'&db='.$_SESSION['db'].'&ac='.$_SESSION['ac'].'&i='.$idprov.'&r=2';
+         $enlace1 = $pagina_web.'reportes/R9lnom?us='.$_SESSION['us'].'&rd='.$ruc.'&db='.''.'&ac='.$_SESSION['ac'].'&i='.$idprov.'&r=1';
+         $enlace2 = $pagina_web.'reportes/R9lnom?us='.$_SESSION['us'].'&rd='. $ruc.'&db='.''.'&ac='.$_SESSION['ac'].'&i='.$idprov.'&r=2';
          $content =  str_replace ( '#enlace1' , trim($enlace1) ,  $content);  
          $content =  str_replace ( '#enlace2' , trim($enlace2) ,  $content);  
          

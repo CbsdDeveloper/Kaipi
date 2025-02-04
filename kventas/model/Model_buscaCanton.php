@@ -10,7 +10,7 @@ $obj   = 	new objects;
 $set   = 	new ItemsController;
 $bd	   =	new Db;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 
 

@@ -37,7 +37,7 @@ class componente{
         $this->set     = 	new ItemsController;
         $this->bd	   =	new Db;
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         $this->ruc       =  $_SESSION['ruc_registro'];
         $this->sesion 	 =  $_SESSION['email'];

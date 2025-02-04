@@ -52,7 +52,7 @@ session_start();
                 
                 $this->usuario 	 =  trim($_SESSION['usuario']);
          
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
                 
                 $tiempo = date("H:i:s");
                 
@@ -274,7 +274,7 @@ session_start();
     
          if ( $bandera == 1 ) {
          
-                 $idcaso = $this->bd->_InsertSQL($this->tabla,$this->ATabla,$this->secuencia  );
+                 $idcaso = $this->bd->_InsertSQL($this->tabla,$this->ATabla,$this->secuencia ,1 );
                    
                  $result = $this->div_resultado('editar',$idcaso,1) ;
                  

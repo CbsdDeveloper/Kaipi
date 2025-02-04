@@ -40,31 +40,31 @@ class proceso{
 		$this->anio      =  $_SESSION['anio'];
 		
 		
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 		
 		$this->ATabla = array(
-		    array( campo => 'cuenta',   tipo => 'VARCHAR2',   id => '0',  add => 'S',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'S'),
-		    array( campo => 'cuentas',   tipo => 'VARCHAR2',   id => '1',  add => 'S',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'detalle',   tipo => 'VARCHAR2',   id => '2',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'nivel',   tipo => 'NUMBER',   id => '3',  add => 'S',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'tipo',   tipo => 'VARCHAR2',   id => '4',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'univel',   tipo => 'VARCHAR2',   id => '5',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'aux',   tipo => 'VARCHAR2',   id => '6',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'tipo_cuenta',   tipo => 'VARCHAR2',   id => '7',  add => 'S',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'estado',   tipo => 'VARCHAR2',   id => '8',  add => 'S',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'registro',   tipo => 'VARCHAR2',   id => '9',  add => 'S',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'debe',   tipo => 'numeric',   id => '10',  add => 'N',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'haber',   tipo => 'numeric',   id => '11',  add => 'N',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'saldo',   tipo => 'numeric',   id => '12',  add => 'N',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'impresion',   tipo => 'NUMBER',   id => '13',  add => 'S',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'documento',   tipo => 'NUMBER',   id => '14',  add => 'S',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'comprobante',   tipo => 'NUMBER',   id => '15',  add => 'S',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'idprov',   tipo => 'VARCHAR2',   id => '16',  add => 'S',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'debito',   tipo => 'VARCHAR2',   id => '17',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'credito',   tipo => 'VARCHAR2',   id => '18',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'partida_enlace',   tipo => 'VARCHAR2',   id => '19',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'deudor_acreedor',   tipo => 'VARCHAR2',   id => '20',  add => 'S',   edit => 'S',   valor => '-',   filtro => 'N',   key => 'N'),
-		    array( campo => 'anio',   tipo => 'VARCHAR2',   id => '21',  add => 'S',   edit => 'N',   valor => $this->anio   ,   filtro => 'N',   key => 'N')
+		    array( "campo" => 'cuenta',   "tipo" => 'VARCHAR2',   "id" => '0',  "add" => 'S',   "edit" => 'N',   "valor" => '-',   "filtro" => 'N',   "key" => 'S'),
+		    array( "campo" => 'cuentas',   "tipo" => 'VARCHAR2',   "id" => '1',  "add" => 'S',   "edit" => 'N',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'detalle',   "tipo" => 'VARCHAR2',   "id" => '2',  "add" => 'S',   "edit" => 'S',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'nivel',   "tipo" => 'NUMBER',   "id" => '3',  "add" => 'S',   "edit" => 'N',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'tipo',   "tipo" => 'VARCHAR2',   "id" => '4',  "add" => 'S',   "edit" => 'S',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'univel',   "tipo" => 'VARCHAR2',   "id" => '5',  "add" => 'S',   "edit" => 'S',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'aux',   "tipo" => 'VARCHAR2',   "id" => '6',  "add" => 'S',   "edit" => 'S',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'tipo_cuenta',   "tipo" => 'VARCHAR2',   "id" => '7',  "add" => 'S',   "edit" => 'N',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'estado',   "tipo" => 'VARCHAR2',   "id" => '8',  "add" => 'S',   "edit" => 'N',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'registro',   "tipo" => 'VARCHAR2',   "id" => '9',  "add" => 'S',   "edit" => 'N',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'debe',   "tipo" => 'numeric',   "id" => '10',  "add" => 'N',   "edit" => 'N',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'haber',   "tipo" => 'numeric',   "id" => '11',  "add" => 'N',   "edit" => 'N',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'saldo',   "tipo" => 'numeric',   "id" => '12',  "add" => 'N',   "edit" => 'N',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'impresion',   "tipo" => 'NUMBER',   "id" => '13',  "add" => 'S',   "edit" => 'N',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'documento',   "tipo" => 'NUMBER',   "id" => '14',  "add" => 'S',   "edit" => 'N',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'comprobante',   "tipo" => 'NUMBER',   "id" => '15',  "add" => 'S',   "edit" => 'N',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'idprov',   "tipo" => 'VARCHAR2',   "id" => '16',  "add" => 'S',   "edit" => 'N',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'debito',   "tipo" => 'VARCHAR2',   "id" => '17',  "add" => 'S',   "edit" => 'S',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'credito',   "tipo" => 'VARCHAR2',   "id" => '18',  "add" => 'S',   "edit" => 'S',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'partida_enlace',   "tipo" => 'VARCHAR2',   "id" => '19',  "add" => 'S',   "edit" => 'S',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'deudor_acreedor',   "tipo" => 'VARCHAR2',   "id" => '20',  "add" => 'S',   "edit" => 'S',   "valor" => '-',   "filtro" => 'N',   "key" => 'N'),
+		    array( "campo" => 'anio',   "tipo" => 'VARCHAR2',   "id" => '21',  "add" => 'S',   "edit" => 'N',   "valor" => $this->anio   ,   "filtro" => 'N',   "key" => 'N')
 		);
 		
 		
@@ -159,48 +159,48 @@ class proceso{
  	    
 	        
 	        if ( $valida == 0 ){
-	                $this->ATabla[0][valor] = $x['cuenta'];
-	                $this->ATabla[1][valor] = $x['cuentas'];
-	                $this->ATabla[2][valor] = $x['detalle'];
-	                $this->ATabla[3][valor] = $x['nivel'];
+	                $this->ATabla[0]["valor"] = $x['cuenta'];
+	                $this->ATabla[1]["valor"] = $x['cuentas'];
+	                $this->ATabla[2]["valor"] = $x['detalle'];
+	                $this->ATabla[3]["valor"] = $x['nivel'];
         	        
-	                $this->ATabla[4][valor] = $x['tipo'];
-	                $this->ATabla[5][valor] = $x['univel'];
-	                $this->ATabla[6][valor] = $x['aux'];
-	                $this->ATabla[7][valor] = $x['tipo_cuenta'];
+	                $this->ATabla[4]["valor"] = $x['tipo'];
+	                $this->ATabla[5]["valor"] = $x['univel'];
+	                $this->ATabla[6]["valor"] = $x['aux'];
+	                $this->ATabla[7]["valor"] = $x['tipo_cuenta'];
 	                
-	                $this->ATabla[8][valor] = $x['estado'];
-	                $this->ATabla[9][valor] = $this->ruc;
-	                $this->ATabla[10][valor] = 0;
-	                $this->ATabla[11][valor] = 0;
+	                $this->ATabla[8]["valor"] = $x['estado'];
+	                $this->ATabla[9]["valor"] = $this->ruc;
+	                $this->ATabla[10]["valor"] = 0;
+	                $this->ATabla[11]["valor"] = 0;
 	                
-	                $this->ATabla[12][valor] = 0;
-	                $this->ATabla[13][valor] = $x['impresion'];
-	                $this->ATabla[14][valor] = $x['documento'];
-	                $this->ATabla[15][valor] = $x['comprobante'];
-	                $this->ATabla[16][valor] = $x['idprov'];
+	                $this->ATabla[12]["valor"] = 0;
+	                $this->ATabla[13]["valor"] = $x['impresion'];
+	                $this->ATabla[14]["valor"] = $x['documento'];
+	                $this->ATabla[15]["valor"] = $x['comprobante'];
+	                $this->ATabla[16]["valor"] = $x['idprov'];
 	                
-	                $this->ATabla[17][valor] = $x['debito'];
-	                $this->ATabla[18][valor] = $x['credito'];
+	                $this->ATabla[17]["valor"] = $x['debito'];
+	                $this->ATabla[18]["valor"] = $x['credito'];
 	                
-	                $this->ATabla[19][valor] = $x['partida_enlace'];
-	                $this->ATabla[20][valor] = $x['deudor_acreedor'];
+	                $this->ATabla[19]["valor"] = $x['partida_enlace'];
+	                $this->ATabla[20]["valor"] = $x['deudor_acreedor'];
 	                
         	        $this->bd->_InsertSQL($this->tabla,$this->ATabla,'NO');
 	        }
 	        else {
 	            
  
-	            $this->ATabla[2][valor] = $x['detalle'];
- 	            $this->ATabla[17][valor] = $x['debito'];
-	            $this->ATabla[18][valor] = $x['credito'];
+	            $this->ATabla[2]["valor"] = $x['detalle'];
+ 	            $this->ATabla[17]["valor"] = $x['debito'];
+	            $this->ATabla[18]["valor"] = $x['credito'];
 	            
 	            
-	            $this->ATabla[4][valor] = $x['tipo'];
-	            $this->ATabla[5][valor] = $x['univel'];
-	            $this->ATabla[6][valor] = $x['aux'];
-	            $this->ATabla[19][valor] = $x['partida_enlace'];
-	            $this->ATabla[20][valor] = $x['deudor_acreedor'];
+	            $this->ATabla[4]["valor"] = $x['tipo'];
+	            $this->ATabla[5]["valor"] = $x['univel'];
+	            $this->ATabla[6]["valor"] = $x['aux'];
+	            $this->ATabla[19]["valor"] = $x['partida_enlace'];
+	            $this->ATabla[20]["valor"] = $x['deudor_acreedor'];
 	            
 	            $this->bd->_UpdateSQL($this->tabla,$this->ATabla,$cuenta);
 	        }

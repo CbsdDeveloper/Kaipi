@@ -11,7 +11,7 @@ $bd	   =	new Db;
 
 $obj     = 	new objects;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 
 
@@ -77,7 +77,7 @@ function movimiento_compras( $bd,$obj,$id,$cuenta,$tipo,$anio){
     '',			// icono de eliminar = 'del'
     '' ,        // evento funciones parametro Nombnre funcion - codigo primerio
     "Cuenta,Gasto, Codigo,Articulo,Unidad,Saldo, Costo, Total" , // nombre de cabecera de grill basica,
-    '12px',      // tamaño de letra
+    '12px',      // tamaï¿½o de letra
     'id'         // id
     );
     

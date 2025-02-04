@@ -38,7 +38,7 @@ class proceso{
 		
 		$this->hoy 	     =     date("Y-m-d");    	//$this->hoy 	     =  $this->bd->hoy();
 		
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 		
 		$this->ATabla = array(
 				array( campo => 'id_cmovimiento',   tipo => 'VARCHAR2',   id => '0',  add => 'N',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'S'),

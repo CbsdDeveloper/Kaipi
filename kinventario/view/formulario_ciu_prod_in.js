@@ -51,7 +51,8 @@ jQuery("#razon").focusout(function(){
 		var itemVariable = $("#articulo").val();  
 		
 				   var parametros = {
-											   "itemVariable" : itemVariable 
+											   "itemVariable" : itemVariable ,
+											   "modulo":"I"
 									   };
 										
 									   $.ajax({

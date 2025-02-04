@@ -41,7 +41,7 @@ class proceso{
         $this->ruc       =  $_SESSION['ruc_registro'];
         
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
     }
     //---retorna el valor del campo para impresion de pantalla ?articulo=' + articulo + '&id='+id_asiento,

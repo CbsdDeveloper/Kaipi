@@ -10,7 +10,7 @@ $id_rol             = $_GET["id_rol"];
 $regimen            = $_GET["regimen"];
 
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
          
         echo '<div class="col-md-12" align="center" style="padding-bottom:10;padding-top:15px"> ';

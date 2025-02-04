@@ -13,7 +13,7 @@
      $bd	   =	new Db;
      $mail     =	new EmailEnvio;
      
-     $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+     $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
      $idprov             = trim($_GET['id']) ;
      $id_rol             = $_GET['id_rol1'];
@@ -101,7 +101,7 @@
      
      $content =  str_replace ( '#imagen' , trim($imagen) ,  $content);
       
-      $enlace = $pagina_web.'reportes/R9lpxGq?us='.$_SESSION['us'].'&rd='. $_SESSION['ruc_registro'].'&db='.$_SESSION['db'].'&ac='.$_SESSION['ac'].'&i='.$idprov.'&r='.$id_rol;
+      $enlace = $pagina_web.'reportes/R9lpxGq?us='.$_SESSION['us'].'&rd='. $_SESSION['ruc_registro'].'&db='.''.'&ac='.$_SESSION['ac'].'&i='.$idprov.'&r='.$id_rol;
       
      $content =  str_replace ( '#enlace' , trim($enlace) ,  $content);  
      

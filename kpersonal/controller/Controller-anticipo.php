@@ -33,7 +33,7 @@ class componente{
         
         $this->bd	   =	new  Db ;
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         $this->ruc       =  $_SESSION['ruc_registro'];
         
@@ -137,7 +137,7 @@ class componente{
                        estado = '. $this->bd->sqlvalue_inyeccion('aprobado' , true).' and 
                        anio = '. $this->bd->sqlvalue_inyeccion( $anio , true).' and 
                        registro = '. $this->bd->sqlvalue_inyeccion(trim($this->ruc) , true).' and 
-                      cuenta = '. $this->bd->sqlvalue_inyeccion(trim($cuenta) , true);
+                      cuenta = '. $this->bd->sqlvalue_inyeccion(trim($cuenta) , true).' order by fecha asc';
 
 	   
       

@@ -19,6 +19,7 @@ echo '<option value="-">-----------------------------</option>';
 // echo '<option value="'.$year.'">Periodo '.$year.'</option>';
 // echo '<option value="'.$anio_ejecuta1.'">Periodo '.$anio_ejecuta1.'</option>';
 // echo '<option value="'.$anio_ejecuta2.'">Periodo '.$anio_ejecuta2.'</option>';
+echo '<option value="2025">Periodo 2025</option>';
 echo '<option value="2024">Periodo 2024</option>';
 echo '<option value="2023">Periodo 2023</option>';
 echo '<option value="2022">Periodo 2022</option>';

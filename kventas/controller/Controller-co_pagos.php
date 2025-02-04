@@ -62,7 +62,7 @@ class componente{
                    
                 $this->bd	   =	     	new Db ;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -104,7 +104,7 @@ class componente{
                 $this->obj->text->text('Nro.Comprobante',"texto",'comprobante',15,15,$datos,'required','readonly','div-2-4'); 
                 
                 
-                $this->obj->text->text('Fecha',"date",'fecha',15,15,$datos,'required','readonly','div-2-4');
+                $this->obj->text->text('Fecha',"date",'fecha',15,15,$datos,'required','','div-2-4');
                 
             
                 

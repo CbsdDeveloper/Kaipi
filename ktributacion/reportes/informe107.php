@@ -6,7 +6,7 @@ require '../../kconfig/Obj.conf.php';
 $obj    = 	new objects;
 $bd     = 	new Db;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 		 $txtcodigo = $_GET['id'];
 		 $sql1      	 = "SELECT *  FROM web_registro where ruc_registro = ".$bd->sqlvalue_inyeccion(trim($_SESSION['ruc_registro']), true);

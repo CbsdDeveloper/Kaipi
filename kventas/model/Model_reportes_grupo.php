@@ -36,7 +36,7 @@ class proceso{
         $this->sesion 	 =  $_SESSION['email'];
         $this->hoy 	     =  $this->bd->hoy();
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         $this->anio       =  $_SESSION['anio'];
         
@@ -275,9 +275,9 @@ class proceso{
         
         $pp1 =  round($p1,2) ;
         
-        echo utf8_encode( '<h5>El Presupuesto inicial del periódo <b>'.$fanio.'</b> es de $ <b>'.number_format($inicial,2).
-            ' </b> dólares; el porcentaje (%) de variación entre el monto inicial y codificado es del <b>'.$pp1.' </b>%<br><br>'.'
-          El porcentaje(%) de ejecucion de gasto correspondiente al periodo es del <b>'.$porcentaje.' </b>% '.$cimagen.' acontinuación se detalle los tramites emitidos por la unidad financiera</h5>');
+        echo utf8_encode( '<h5>El Presupuesto inicial del periï¿½do <b>'.$fanio.'</b> es de $ <b>'.number_format($inicial,2).
+            ' </b> dï¿½lares; el porcentaje (%) de variaciï¿½n entre el monto inicial y codificado es del <b>'.$pp1.' </b>%<br><br>'.'
+          El porcentaje(%) de ejecucion de gasto correspondiente al periodo es del <b>'.$porcentaje.' </b>% '.$cimagen.' acontinuaciï¿½n se detalle los tramites emitidos por la unidad financiera</h5>');
         
         
     }

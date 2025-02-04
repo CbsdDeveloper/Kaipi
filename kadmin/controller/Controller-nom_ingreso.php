@@ -64,7 +64,7 @@
                    
             	$this->bd	   =	new Db;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -369,7 +369,7 @@
        
        $this->obj->text->text('Salud',"number",'salud',40,45,$datos,'required','','div-2-4') ;
        
-       $this->obj->text->text('Alimentación',"number",'alimentacion',40,45,$datos,'required','','div-2-4') ;
+       $this->obj->text->text('Alimentaciï¿½n',"number",'alimentacion',40,45,$datos,'required','','div-2-4') ;
        
        $this->obj->text->text('Vestimenta',"number",'vestimenta',40,45,$datos,'required','','div-2-4') ;
        

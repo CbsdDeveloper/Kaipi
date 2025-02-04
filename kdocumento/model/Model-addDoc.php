@@ -18,7 +18,7 @@ require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos
     $anio 	     =     date("Y"); 
     
  
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
     
     
     $usuario 	 =  $_SESSION['usuario'];

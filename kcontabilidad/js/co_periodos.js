@@ -518,6 +518,7 @@ function AgregaCuenta_enlace()
 		 				},
 		 			success:  function (data) {
 		 					 $("#guardarIngreso").html(data);   
+							  AsientoAperturaq();
 		 				} 
 		 	});
 	   			

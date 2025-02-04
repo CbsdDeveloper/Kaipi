@@ -36,7 +36,7 @@
                 $this->hoy 	     =     date("Y-m-d");    
                 $anio 	     =     date("Y");    
         
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
                 
                 $this->tabla 	  	  = 'presupuesto.pre_tramite_det';
                 

@@ -9,7 +9,7 @@ require '../../kconfig/Set.php';
 $obj   = 	new objects;
 $bd	   =    new Db;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
  
 $accion     = trim($_GET["accion"]);
 $idcodigo   = $_GET["idcodigo"];

@@ -20,7 +20,7 @@
     $obj   = 	new objects;
 	$bd	   =	new Db;
     $sesion 	 = $_SESSION['login'];
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
     
 	 
 	//$myfile = fopen("2006201801099215640600120190030001522250015222511.xml", "r") or die("Unable to open file!");

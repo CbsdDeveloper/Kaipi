@@ -58,7 +58,7 @@
                    
             	$this->bd	   =	new Db;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -94,7 +94,7 @@
                 $this->BarraHerramientas();
                 
                    
-                    $this->obj->text->text('Identificación',"texto",'ruc_registro',20,15,$datos,'required','','div-2-4') ; 
+                    $this->obj->text->text('Identificaciï¿½n',"texto",'ruc_registro',20,15,$datos,'required','','div-2-4') ; 
                     
 		            $this->obj->text->text('Razon Social',"texto",'razon',40,45,$datos,'required','','div-2-4');
          

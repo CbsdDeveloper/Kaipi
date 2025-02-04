@@ -33,7 +33,7 @@
                    
                 $this->bd	   =	new  Db ;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -73,8 +73,8 @@
       
       $MATRIZ = array(
           '-'    => '--- Seleccione Tipo ---',
-          'A'    => 'Año Actual',
-          'B'    => 'Año Anterior',
+          'A'    => 'Aï¿½o Actual',
+          'B'    => 'Aï¿½o Anterior',
       );
       
       $this->obj->list->lista('',$MATRIZ,'ctipo',$datos,'required','','div-0-2');

@@ -7,7 +7,7 @@ require '../../kconfig/Obj.conf.php';
 
 $bd	   = new Db ;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 $id          = $_GET['id'];
 
@@ -45,10 +45,10 @@ if ( $envio == 'S') {
     
   
         
-        // abrimos la sesión cURL
+        // abrimos la sesiï¿½n cURL
         $ch = curl_init();
         
-        // definimos la URL a la que hacemos la petición
+        // definimos la URL a la que hacemos la peticiï¿½n
         $url  = "http://206.189.231.35/factura/autoriza_factura_e.php";
         $ruta = 'http:/206.189.231.35/factura/xml/';
         
@@ -57,9 +57,9 @@ if ( $envio == 'S') {
         curl_setopt($ch, CURLOPT_URL,$url);
         
         
-        // definimos el número de campos o parámetros que enviamos mediante POST
+        // definimos el nï¿½mero de campos o parï¿½metros que enviamos mediante POST
         curl_setopt($ch, CURLOPT_POST, 1);
-        // definimos cada uno de los parámetros
+        // definimos cada uno de los parï¿½metros
         
         $enlace_post = "autretencion1=".$autretencion1."&clave=".$clave."&archivo=".$archivo."&firma=".$firma."&ambiente=".$ambiente ;
         
@@ -74,7 +74,7 @@ if ( $envio == 'S') {
   
      
         
-        // cerramos la sesión cURL
+        // cerramos la sesiï¿½n cURL
         curl_close ($ch);
         
         $valida = substr(trim($data), 0, 2);

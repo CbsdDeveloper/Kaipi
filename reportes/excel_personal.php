@@ -10,7 +10,7 @@ $bd	   =	new Db ;
 
  
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
  
 			$sql ="SELECT programa,regimen,fecha,idprov as identificacion, 
 						  razon as funcionario,cargo,genero,direccion, telefono, fechan as fecha_nacimiento, tsangre as tipo_sangre,

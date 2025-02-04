@@ -10,7 +10,7 @@ $bd	   = 	new Db ;
 
 
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 
 
@@ -25,6 +25,15 @@ $total          = 	$_GET["total"];
 
 $DivProducto = 'Cantidad No valida';
 
+// Validando estado de encabezado
+$sql = "SELECT m.estado FROM inv_movimiento_det d inner join inv_movimiento m on m.id_movimiento=d.id_movimiento WHERE id_movimientod =".$bd->sqlvalue_inyeccion($id, true);
+$resultado = $bd->ejecutar($sql);
+$Avalida = $bd->obtener_array($resultado);
+
+if (trim($Avalida['estado']) <> 'solicitado'){
+    $DivProducto='No se puede modificar la cantidad, la solicitud ya fue enviada al Guarda Almacén'; 
+    $lcantidad = 0;
+}
 
 if ($lcantidad > 0) {
     

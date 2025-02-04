@@ -62,7 +62,7 @@
                    
             	$this->bd	   =	new Db;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -110,7 +110,7 @@
                 $this->set->div_label(12,'<h6>Informacion Principal</h6>');
                 
                    
-                    $this->obj->text->text_blue('Identificación',"texto",'ruc_registro',20,15,$datos,'required','','div-2-10') ; 
+                    $this->obj->text->text_blue('Identificaciï¿½n',"texto",'ruc_registro',20,15,$datos,'required','','div-2-10') ; 
                     
 		            $this->obj->text->text_yellow('Razon Social',"texto",'razon',100,100,$datos,'required','','div-2-10');
  		            

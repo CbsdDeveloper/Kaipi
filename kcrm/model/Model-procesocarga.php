@@ -34,7 +34,7 @@ class proceso{
         
         $this->hoy 	     =  date("Y-m-d");  
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         
         
@@ -136,7 +136,7 @@ class proceso{
     
     function DibujarProceso( $id   ){
         
-        // COLOCA LA INFORMACIÓN PARA CREAR EL PROCESO
+        // COLOCA LA INFORMACIï¿½N PARA CREAR EL PROCESO
         
         $sql = "SELECT grafico, idproceso, sesion,idprocesod,LENGTH(grafico) as longitud
   				    FROM flow.wk_procesotemp

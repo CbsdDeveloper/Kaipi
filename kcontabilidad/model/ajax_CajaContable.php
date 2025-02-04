@@ -12,7 +12,7 @@
  	
 	$anio       =  $_SESSION['anio'];
 	
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	
   
     $sesion 	 =  trim($_SESSION['email']);
@@ -37,7 +37,7 @@
             'del',			// icono de eliminar = 'del'
             'elimina_caja-0' ,        // evento funciones parametro Nombnre funcion - codigo primerio
             "Referencia, Cuenta Contable,Partida,Monto,Estado, Creado",  // nombre de cabecera de grill basica,
-            '12px',      // tamaño de letra
+            '12px',      // tamaï¿½o de letra
             'Caja1'         // id
             );
         
@@ -75,7 +75,7 @@
             '',			// icono de eliminar = 'del'
             '' ,        // evento funciones parametro Nombnre funcion - codigo primerio
             "Referencia, Cuenta Contable,Partida,Monto,Estado, Creado",  // nombre de cabecera de grill basica,
-            '12px',      // tamaño de letra
+            '12px',      // tamaï¿½o de letra
             'Caja1'         // id
             );
         
@@ -98,7 +98,7 @@
             '',			// icono de eliminar = 'del'
             '' ,        // evento funciones parametro Nombnre funcion - codigo primerio
             "Referencia, Cuenta Contable,Partida,Monto,Estado, Creado",  // nombre de cabecera de grill basica,
-            '12px',      // tamaño de letra
+            '12px',      // tamaï¿½o de letra
             'Caja1'         // id
             );
         

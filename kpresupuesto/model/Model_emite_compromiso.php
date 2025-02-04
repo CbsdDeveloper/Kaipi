@@ -8,7 +8,7 @@ require 'Model_saldos.php';
 $bd	   =	new Db;
 $obj     = 	new objects;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 $saldos_p     = 	new saldo_presupuesto(  $obj,  $bd);
 
@@ -26,6 +26,22 @@ $trozos      =      explode("-", $fcertifica,3);
 $anio1  = $trozos[0];
 
 
+$validaTramite = $bd->query_array('presupuesto.pre_tramite',
+                      'idprov,cur', 
+                      'id_tramite='.$bd->sqlvalue_inyeccion($idtramite,true)
+    );
+
+if (!$validaTramite['idprov'] ) {
+    $valor_dato = '2';
+    echo $valor_dato;
+    return;
+}
+if (!$validaTramite['cur'] ) {
+    $valor_dato = '3';
+    echo $valor_dato;
+    return;
+}
+
 $x = $bd->query_array('presupuesto.pre_tramite_temp',
                       'count(*) as nn', 
                       'id_tramite='.$bd->sqlvalue_inyeccion($idtramite,true). ' and 
@@ -42,17 +58,25 @@ $sql1 = "SELECT   id_tramite,  partida, certificado ,coalesce(compromiso,0) as c
     $stmt1_valida = $bd->ejecutar($sql1);
     
     $bandera = 0;
-    
+    $mmonto_compromiso=0;
+    $total_compromiso=0;
  
     
     while ($fila1=$bd->obtener_fila($stmt1_valida)){
         
         $mmonto_compromiso =   $fila1['compromiso'] ;
+        $total_compromiso +=   $fila1['compromiso'] ;
         
         if ( $mmonto_compromiso  < 0){
             $bandera = 1;
         }
         
+    }
+
+    if ( ($total_compromiso <= 0) && ($x['nn'] <= 0) ) {
+        $valor_dato = '4';
+        echo $valor_dato;
+        return;
     }
 
 

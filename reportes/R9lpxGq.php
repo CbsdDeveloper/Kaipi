@@ -3,7 +3,7 @@ session_start( );
 $id 		= $_GET['i'];
 $id_rol 	= $_GET['r'];
 $_SESSION['us']		= $_GET['us'];
-$_SESSION['db'] 	= $_GET['db'];
+'' 	= $_GET['db'];
 $_SESSION['ac']		= $_GET['ac'];
 $_SESSION['ruc_registro'] 	= $_GET['rd'];
 

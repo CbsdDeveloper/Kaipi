@@ -12,7 +12,7 @@ require '../../kconfig/Set.php'; /*Incluimos el fichero de la clase objetos*/
 $bd	   =	new  Db ;
 $obj   = 	new objects;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
  
 $fecha_caja = $_GET["fecha_caja"];

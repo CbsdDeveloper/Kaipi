@@ -30,7 +30,7 @@ class _notificacion{
                    
                 $this->bd     = 	new Db;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                  
                 $this->sesion 	 =  $_SESSION['login'];

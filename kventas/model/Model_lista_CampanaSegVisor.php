@@ -10,7 +10,7 @@
 	
  	
     
-	$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+	$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	
 	$sesion 	 =     $_SESSION['email'];
 	
@@ -27,14 +27,14 @@
 	</div>
 	<div class="media-body">
 	<h4 class="media-heading"><b>'.$Array["nn"].'</b></h4>
-	<p>Contactos definidos en la campaña</p>
+	<p>Contactos definidos en la campaï¿½a</p>
 	</div>
 	</div>
 	<hr>');
 	
  
 	$ContactosCampana .= '<div class="col-md-6"> <div class="panel panel-default">
-	<div class="panel-heading">'.utf8_encode( 'Resumen por estados de Campaña').'</div>
+	<div class="panel-heading">'.utf8_encode( 'Resumen por estados de Campaï¿½a').'</div>
 	<div class="panel-body">';
 	 
 	
@@ -100,7 +100,7 @@
    $stmt = $bd->ejecutar($sql);
    
    
-   $ContactosCampana .=  utf8_encode( ' <h6><b> Resumen por usuarios de Campaña </b></h6><ul class="list-group">');
+   $ContactosCampana .=  utf8_encode( ' <h6><b> Resumen por usuarios de Campaï¿½a </b></h6><ul class="list-group">');
  
    while ($fila1=$bd->obtener_fila($stmt)){
        
@@ -116,7 +116,7 @@
     
    
    $ContactosCampana .= '<div class="col-md-6"> <div class="panel panel-default">
-	<div class="panel-heading">'.utf8_encode( 'Resumen por Ciudades de Campaña').'</div>
+	<div class="panel-heading">'.utf8_encode( 'Resumen por Ciudades de Campaï¿½a').'</div>
 	<div class="panel-body">';
    
    //----------------------------------------

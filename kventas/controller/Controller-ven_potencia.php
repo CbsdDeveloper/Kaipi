@@ -62,7 +62,7 @@
                    
                 $this->bd	   =	     	new Db ;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -161,7 +161,7 @@
                 
                 $evento = '';
                 
-                $this->obj->list->listadbe($resultado,$tipo,utf8_encode ('Campaña'),'id_campana',$datos,'required','',$evento,'div-2-10');
+                $this->obj->list->listadbe($resultado,$tipo,utf8_encode ('Campaï¿½a'),'id_campana',$datos,'required','',$evento,'div-2-10');
                 
                 
                

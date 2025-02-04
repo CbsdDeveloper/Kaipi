@@ -16,7 +16,7 @@ header("Pragma: no-cache");
 	
     <?php  require('Head.php')  ?> 
  
- 	 <script type="text/javascript" src="../js/ac_bienes.js"></script> 
+ 	 
  	 
 	<script src="../js/jquery.PrintArea.js" type="text/JavaScript" language="javascript">
 	
@@ -114,7 +114,7 @@ header("Pragma: no-cache");
 													    
  														    <div id="ViewFiltro"></div> 
 														   
- 															<div class="col-md-3" style="padding-top: 8px">
+ 															<div class="col-md-12" style="padding-top: 8px">
 																
 																<button type="button" class="btn btn-sm btn-primary" id="load">  
 																	<i class="icon-white icon-search"></i> Buscar parámetros</button>	
@@ -352,7 +352,7 @@ header("Pragma: no-cache");
 
 		</div>
 	  </div>
-
+	  <script type="text/javascript" src="../js/ac_bienes.js"></script> 
   </body>
  
 </html>

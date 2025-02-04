@@ -14,7 +14,7 @@ $obj   = 	new objects;
 $set   = 	new ItemsController;
 $bd	   =	Db::getInstance();
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 	$modulo = $_GET["ViewModulo"];
      

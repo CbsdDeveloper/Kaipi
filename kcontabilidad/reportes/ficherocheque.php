@@ -7,7 +7,7 @@ require '../../kconfig/convertir.php'; /*Incluimos el fichero de la clase objeto
 $obj     = 	new objects;
 $bd     = 	new Db;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 $id		= $_GET['a'];
 

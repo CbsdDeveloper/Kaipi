@@ -10,7 +10,7 @@
  	
 	$registro= $_SESSION['ruc_registro'];
 	
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	
       
     $id_concilia	=	$_GET["id_concilia"];
@@ -25,16 +25,21 @@
     
 
     
-    $sql = "SELECT sum(debe) as debe, sum(haber) as haber
-            FROM  view_bancos_concilia
-where 	registro = ".$bd->sqlvalue_inyeccion($registro,true)." and
-        cuenta = ".$bd->sqlvalue_inyeccion(trim($Aconciliacion["cuenta"]),true)." and
-        coalesce(tipo,'-')   <>   'cheque'  and  concilia = 'S' and
-        anio   = ".$bd->sqlvalue_inyeccion($Aconciliacion["anio"],true)."  and
-        mes    = ".$bd->sqlvalue_inyeccion($Aconciliacion["mes"],true) ;
+    $sql = "SELECT sum(a.debe) as debe, sum(a.haber) as haber
+   FROM co_asiento b
+     JOIN co_asientod a ON a.id_asiento = b.id_asiento AND b.estado = 'aprobado'::bpchar AND a.registro = b.registro AND a.anio = b.anio
+     JOIN co_plan_ctas c ON c.cuenta = a.cuenta AND a.registro = c.registro AND c.tipo_cuenta = 'B'::bpchar AND c.anio::text = b.anio::character varying::text
+     LEFT JOIN par_ciu x ON x.idprov = b.idprov
+where 	b.registro = ".$bd->sqlvalue_inyeccion($registro,true)." and
+        a.cuenta = ".$bd->sqlvalue_inyeccion(trim($Aconciliacion["cuenta"]),true)." and
+        coalesce(( SELECT max(j.tipo) AS max
+        FROM co_asiento_aux j
+       WHERE j.id_asiento = a.id_asiento AND j.id_asientod = a.id_asientod),'-')   <>   'cheque'  and  concilia = 'S' and
+        b.anio   = ".$bd->sqlvalue_inyeccion($Aconciliacion["anio"],true)."  and
+        b.mes    = ".$bd->sqlvalue_inyeccion($Aconciliacion["mes"],true) ;
 
  
-  
+        // echo $sql;
        
     $stmt = $bd->ejecutar($sql);
     

@@ -33,7 +33,7 @@ class proceso{
 		$this->sesion 	 =  $_SESSION['email'];
 		$this->hoy 	     =  $this->bd->hoy();
 		
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 		
 	}
    
@@ -102,10 +102,10 @@ class proceso{
 	    
 	    $tipo 		    = $this->bd->retorna_tipo();
 	    
-	    $sql = 'SELECT  id_asiento as "Asiento",
+	    $sql = 'SELECT  id_asiento as "Asiento",id_tramite as "Tramite",
                         fecha as "Fecha", 
                         substring(comprobante,1,10) || '."' '".' as "Comprobante",
-                        substring(detalle,1,150) as "Detalle",  
+                        substring(detalle,1,250) as "Detalle",  
                         debe as "Debe", 
                         haber as "Haber",  
                         debe - haber as "Saldo"
@@ -114,7 +114,7 @@ class proceso{
                        estado = '. $this->bd->sqlvalue_inyeccion('aprobado' , true).' and 
                        anio = '. $this->bd->sqlvalue_inyeccion( $anio , true).' and 
                        registro = '. $this->bd->sqlvalue_inyeccion(trim($this->ruc) , true).' and 
-                      cuenta = '. $this->bd->sqlvalue_inyeccion(trim($cuenta) , true).' order by fecha';
+                      cuenta = '. $this->bd->sqlvalue_inyeccion(trim($cuenta) , true).' order by fecha,id_asiento';
 
 	   
       
@@ -123,7 +123,7 @@ class proceso{
 	    $resultado  = $this->bd->ejecutar($sql);
 	      
 	      
-	      $this->obj->grid->KP_sumatoria(5,"Debe","Haber", 'Saldo','');
+	      $this->obj->grid->KP_sumatoria(6,"Debe","Haber", 'Saldo','');
 	  
  
 	 	    

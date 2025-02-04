@@ -7,7 +7,7 @@ require  '../../facturae/crearXMLComprobanteTributa.php';
 
 $signer=new FirmaElectronica();  
 $bd	   =	new Db;
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 $id          = $_GET['id_asiento'];
 $ruc         = $_SESSION['ruc_registro'];
 //---------------- empresa ruc -------------------

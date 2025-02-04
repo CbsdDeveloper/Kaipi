@@ -40,7 +40,7 @@ class Model_reportes_presupuesto{
         $this->sesion 	 =  $_SESSION['email'];
         $this->hoy 	     =  $this->bd->hoy();
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         $this->anio       =  $_SESSION['anio'];
         
@@ -416,7 +416,7 @@ class Model_reportes_presupuesto{
             	   pagado ,
             	   devengado as ejecutado
             FROM presupuesto.pre_gestion
-            where tipo = '. $this->bd->sqlvalue_inyeccion('G' , true).' and
+            where tipo = '. $this->bd->sqlvalue_inyeccion('G' , true).' and activo='. $this->bd->sqlvalue_inyeccion('S' , true).' and
                   anio = '. $this->bd->sqlvalue_inyeccion($fanio , true) .
                             $programa_where.
                             $fuente_where.
@@ -483,6 +483,7 @@ class Model_reportes_presupuesto{
                 $nsuma3 = 0;
                 $nsuma4 = 0;
                 $nsuma5 = 0;
+                $nsuma6 = 0;
                 $nsuma7 = 0;
                
                 $nsuma8 = 0;
@@ -557,6 +558,7 @@ class Model_reportes_presupuesto{
                      
                     $nsuma1 = $nsuma1 + $row["inicial"];
                     $nsuma2 = $nsuma2 + $row["reformas"];
+                    $nsuma6 = $nsuma6 + $row["certificado"];
                     $nsuma3 = $nsuma3 + $row["codificado"];
                     $nsuma4 = $nsuma4 + $row["compromiso"];
                     $nsuma5 = $nsuma5 + $row["devengado"];
@@ -594,6 +596,7 @@ class Model_reportes_presupuesto{
                      echo '<td align="right"><b>'.number_format($nsuma1,2).'</b></td>';
                      echo '<td align="right"><b>'.number_format($nsuma2,2).'</b></td>';
                      echo '<td align="right"><b>'.number_format($nsuma3,2).'</b></td>';
+                     echo '<td align="right"><b>'.number_format($nsuma6,2).'</b></td>';
                      echo '<td align="right"><b>'.number_format($nsuma4,2).'</b></td>';
                      echo '<td align="right"><b>'.number_format($nsuma5,2).'</b></td>';
                      echo '<td align="right"><b>'.number_format($nsuma7,2).'</b></td>';

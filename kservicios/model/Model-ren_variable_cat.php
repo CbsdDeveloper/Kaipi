@@ -37,7 +37,7 @@ class proceso{
         
         $this->hoy 	     =     date("Y-m-d");
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         $this->ATabla = array(
             array( campo => 'id_matriz_cat',tipo => 'NUMBER',id => '0',add => 'S', edit => 'N', valor => '-', key => 'S'),

@@ -39,7 +39,7 @@ class proceso{
         
         $this->hoy 	     =     date("Y-m-d");    	 
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         $this->ATabla = array(
             array( campo => 'id_acta',   tipo => 'NUMBER',   id => '0',  add => 'N',   edit => 'N',   valor => '-',   filtro => 'N',   key => 'S'),
@@ -433,8 +433,8 @@ class proceso{
         
         $sql_det = "SELECT  id_bien,tipo_bien,cuenta,clase,descripcion,costo_adquisicion,bandera
                 FROM activo.view_bienes
-                where   uso = ".$this->bd->sqlvalue_inyeccion('Asignado',true)." and
-                        tiene_acta = ".$this->bd->sqlvalue_inyeccion('S',true)." and
+                where   --uso = ".$this->bd->sqlvalue_inyeccion('Asignado',true)." and
+                        --tiene_acta = ".$this->bd->sqlvalue_inyeccion('S',true)." and
                         bandera = ".$this->bd->sqlvalue_inyeccion('S',true)." and
                         idprov = ".$this->bd->sqlvalue_inyeccion($idprov,true)." order by descripcion";
         

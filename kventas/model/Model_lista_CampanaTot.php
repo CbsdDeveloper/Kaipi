@@ -10,7 +10,7 @@
 	
  	
     
-	$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+	$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	
 	$sesion 	 =     $_SESSION['email'];
 	
@@ -26,7 +26,7 @@
 	</div>
 	<div class="media-body">
 	<h4 class="media-heading"><b>'.$Array["nn"].'</b></h4>
-	<p>Contactos definidos en la campaña</p>
+	<p>Contactos definidos en la campaï¿½a</p>
 	</div>
 	</div>
 	<hr>');
@@ -42,7 +42,7 @@
 	
 	 	
 	
-	$TotalCampana .=  utf8_encode( ' <h6><b> Resumen por Campañas </b></h6><ul class="list-group">');
+	$TotalCampana .=  utf8_encode( ' <h6><b> Resumen por Campaï¿½as </b></h6><ul class="list-group">');
 	
 	while ($fila1=$bd->obtener_fila($stmt)){
 	    
@@ -78,7 +78,7 @@
    $stmt = $bd->ejecutar($sql);
    
    
-   $TotalCampana .=  utf8_encode( ' <h6><b> Resumen por tipos de Campaña </b></h6><ul class="list-group">');
+   $TotalCampana .=  utf8_encode( ' <h6><b> Resumen por tipos de Campaï¿½a </b></h6><ul class="list-group">');
  
    while ($fila1=$bd->obtener_fila($stmt)){
        

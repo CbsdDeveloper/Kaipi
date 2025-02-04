@@ -598,6 +598,7 @@ function myFunction(codigo,objeto ) {
  	    					'<button class="btn btn-xs btn-warning" title = "Visor de informacion Documento" onClick="goToURLvisor(' +   s[i][0]+',' +i +')"><i class="glyphicon glyphicon-search"></i></button>&nbsp;' +
 	    					'<button class="btn btn-xs btn-info"   title = "Generacion y Emision de Acta" onClick="goToURLdoc(1,' +   s[i][0]   +')"><i class="glyphicon glyphicon-file"></i></button>&nbsp;'  +
 							'<button class="btn btn-xs btn-default"   title = "Generacion y Emision de Acta (Html)" onClick="goToURLdoc(3,' +   s[i][0]   +')"><i class="glyphicon glyphicon-file"></i></button>&nbsp;'  +
+	    					'<button class="btn btn-xs btn-info" title = "Enviar Documento" onClick="EnviaCorreoFuncionario('+ s[i][0]   +')"><i class="glyphicon glyphicon-envelope"></i></button>&nbsp;'+
 	    					'<button class="btn btn-xs btn-danger" title = "Anular Documento" onClick="goToURLdoc(2,' +   s[i][0]   +')"><i class="glyphicon glyphicon-remove"></i></button>&nbsp;'
 					]);										
 				} // End For
@@ -898,6 +899,9 @@ function goToURL_acta(  ) {
 	function EnviaCorreoFuncionario( codigo) {
 
 	var id_acta   = $("#id_acta").val ();
+	if (codigo) {
+		var id_acta   = codigo;
+	}
 
 	var parametros = {
 		'id_acta' : id_acta,
@@ -913,6 +917,7 @@ function goToURL_acta(  ) {
 		success: function(response)
 		{
 			$('#Vid_departamento').html(response);
+			alert("Notificación enviada al funcionario");
 		}
 	});
 

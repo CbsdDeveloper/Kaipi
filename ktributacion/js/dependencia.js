@@ -318,7 +318,7 @@ $('#myModal').modal('show');
 function goToRol(accion, id_rol1)
   {
   	 
-  	 var id =  	$('#idprov').val();
+  	 var id =  	$('#idret').val();
   	 
   	   var url = '../../reportes/view_rol_nomina.php'
 

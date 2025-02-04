@@ -11,13 +11,13 @@ require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
 
 /*Creamos la instancia del objeto. Ya estamos conectados*/
 $_SESSION['us'] = '';
-$_SESSION['db'] = '';
+'' = '';
 $_SESSION['ac'] = '';
 
 $bd	   =	new Db;
 $obj     = 	new objects;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 $validacion = 0;
 

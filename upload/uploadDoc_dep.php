@@ -11,9 +11,21 @@ session_start( );
 	
  	$bd    = new Db ;
  
-	$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+	$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	
  	if  (isset($_GET['status'])) {
+
+		foreach ($_GET as $key => $value) {
+			$contents = $key . " => " . $value . "<br>";
+			echo($contents);
+			file_put_contents("./test.log", $contents, FILE_APPEND);
+		 }
+		
+		 foreach ($_POST as $key => $value) {
+			$contents = $key . " => " . $value . "<br>";
+			echo($contents);
+			file_put_contents("./test.log", $contents, FILE_APPEND);
+		 }
 		
 			 	$carpeta =  $_GET['file'] ;
 		

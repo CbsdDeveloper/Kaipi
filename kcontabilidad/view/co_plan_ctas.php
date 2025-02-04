@@ -180,7 +180,7 @@
 
 										 $obj     = 	new objects;
 	
-										 $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+										 $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	
 										 $url_catalogo  = $bd->_url_externo( 73 );
 		

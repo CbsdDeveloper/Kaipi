@@ -40,7 +40,7 @@
         
                 $this->anio       =  $_SESSION['anio'];
                 
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
                 
                 $this->tabla 	     	 = 'co_anticipo';
                   
@@ -232,7 +232,7 @@
             }
           
 
-            if ( ($sueldo  >  $sueldo_g)  && ( $idprov_ga != '0802225946' || $idprov != '1711022416') ){
+            if ( ($sueldo  >  $sueldo_g)  && ( $idprov != '1711022416') ){
                 $bandera = 1 ;
                 $result = '<img src="../../kimages/kedit.png" align="absmiddle" />&nbsp;<b>VERIFIQUE LA INFORMACION GARANTE  MONTO NO VALIDO ? NO SE OLVIDE QUE SU ANTICIPO VALIDO DICIEMBRE</b>'; 
             }	

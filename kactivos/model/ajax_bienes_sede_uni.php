@@ -9,7 +9,7 @@ require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos
 
 $bd	   =	new Db;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 
 
@@ -20,7 +20,7 @@ $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
     if ( $tipo == '0'){
         
         $sql1 = 'select  id_departamento as codigo,unidad as nombre
-                    FROM activo.view_bienes
+                    FROM activo.view_custodios
                     where idsede= '.$bd->sqlvalue_inyeccion($codigo,true).'
                     group by id_departamento,unidad
                     order by unidad';

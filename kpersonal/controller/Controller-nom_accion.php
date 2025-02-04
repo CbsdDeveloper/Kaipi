@@ -35,7 +35,7 @@
                    
                 $this->bd	   =	     	new Db ;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -62,6 +62,8 @@
             'Acuerdo'    => 'Acuerdo',
             'Resolucion'    => 'Resolucion',
             'Reglamento'    => 'Reglamento',
+            'Memorando'    => 'Memorando',
+            'Informe'    => 'Informe',
             'Otros'    => 'Otros',
         );
 

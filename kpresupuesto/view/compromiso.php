@@ -11,6 +11,7 @@
  
 	
 	<script language="javascript" src="../js/compromiso.js?n=1"></script>
+	<link rel="stylesheet" href="../../app/css/sweetalert2.min.css">
  
     <style type="text/css">
 		
@@ -792,5 +793,7 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 	        
  <div id="FormPie"></div>
 	
+ <script language="javascript" src="../../app/js/sweetalert2@11.js"></script>
+
  </body>
 </html>

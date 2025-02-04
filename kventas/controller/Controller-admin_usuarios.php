@@ -61,7 +61,7 @@
                    
             	$this->bd	   =	new Db;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -119,7 +119,7 @@
                                   
                     $this->obj->text->text('Email',"email",'email',30,45,$datos,'required','','div-2-4');
                     
-                    $this->obj->text->text('Identificación',"texto",'cedula',20,15,$datos,'required','','div-2-4') ; 
+                    $this->obj->text->text('Identificaciï¿½n',"texto",'cedula',20,15,$datos,'required','','div-2-4') ; 
                   
                     $this->obj->text->text('Nombre',"texto",'nombre',40,45,$datos,'required','','div-2-4');
                    
@@ -128,15 +128,15 @@
                     $this->obj->text->text('Domicilio',"texto",'direccion',40,45,$datos,'required','','div-2-10');
                     
                    
-                    $this->obj->text->text('Teléfono',"texto",'telefono',40,45,$datos,'required','','div-2-4');
+                    $this->obj->text->text('Telï¿½fono',"texto",'telefono',40,45,$datos,'required','','div-2-4');
                    
-                    $this->obj->text->text('Móvil',"texto",'movil',40,45,$datos,'required','','div-2-4');
+                    $this->obj->text->text('Mï¿½vil',"texto",'movil',40,45,$datos,'required','','div-2-4');
 
                     $MATRIZ =  $this->obj->array->catalogo_perfil();
                     
                 	$this->obj->list->lista('Perfil',$MATRIZ,'tipo',$datos,'required','','div-2-4');
                     
-                    $this->obj->text->text('Contraseña',"password",'clave',40,45,$datos,'required','','div-2-4');
+                    $this->obj->text->text('Contraseï¿½a',"password",'clave',40,45,$datos,'required','','div-2-4');
                     
                     
                     $MATRIZ =  $this->obj->array->catalogo_sino();

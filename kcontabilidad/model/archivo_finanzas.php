@@ -29,7 +29,7 @@ class archivo_finanzas{
 		$this->obj     = 	new objects;
 		$this->bd	   =	new Db ;
 		
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 		
 		$this->ruc       =  trim($_SESSION['ruc_registro']);
 		

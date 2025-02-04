@@ -38,7 +38,7 @@ class proceso{
 
         $this->hoy 	     =     date("Y-m-d");    
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         $this->anio       =  $_SESSION['anio'];
 
@@ -270,12 +270,12 @@ class proceso{
             $debe   =  '0.00' ;
 
 
-            $haber  = $fila["emision"] -   $descuento ;
+            $haber  = ($fila["emision"] + $fila["iva"] ) -   $descuento ;
 
            $this->agregar_detalle($idasiento,$cuenta_ing,$partida ,$debe,$haber,$id_periodo,$anio,$mes);
 
 
-            $debe   = $fila["emision"] -  $descuento ;
+            $debe   = ($fila["emision"] + $fila["iva"] ) -  $descuento ;
             $haber  = '0.00' ;
              $this->agregar_detalle($idasiento,$cxcobrar,$partida ,$debe,$haber,$id_periodo,$anio,$mes);
 
@@ -322,7 +322,7 @@ class proceso{
         $descuento =  trim($fila["descuento"]);     
      
         $debe   =  '0.00' ;
-        $haber  = $fila["emision"]  -   $descuento;
+        $haber  = ($fila["emision"] + $fila["iva"] )  -   $descuento;
 
         $this->agregar_detalle($idasiento,$cxcobrar,$partida ,$debe,$haber,$id_periodo,$anio,$mes);
 

@@ -11,7 +11,7 @@ session_start( );
 	$registro= $_SESSION['ruc_registro'];
 	
     
-	$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+	$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	
       
 	$query	=	"'".strtoupper ($_GET["query"]) .'%'."'" ;

@@ -33,7 +33,7 @@ class proceso{
         $this->sesion 	 =  $_SESSION['email'];
         $this->hoy 	     =  $this->bd->hoy();
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         $this->tabla 	  	  = 'rentas.ren_rubros_var';
         

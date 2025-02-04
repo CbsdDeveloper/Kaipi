@@ -23,7 +23,7 @@ require '../../kconfig/Db.conf.php';   /*Incluimos el fichero de la clase Conf*/
 $bd	   =	new Db ;
 
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 $ruc_registro =   $_SESSION['ruc_registro'] ;
 $idbodega     =   $_SESSION['idbodega'];
@@ -31,7 +31,7 @@ $idbodega     =   $_SESSION['idbodega'];
 
 if(isset($_POST['submit']))
 {
-    //Aquí es donde seleccionamos nuestro csv
+    //Aquï¿½ es donde seleccionamos nuestro csv
     $fname = $_FILES['sel_file']['name'];
     echo 'Cargando nombre del archivo: '.$fname.' <br>';
     $chk_ext = explode(".",$fname);

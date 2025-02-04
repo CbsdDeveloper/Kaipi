@@ -33,7 +33,7 @@ class proceso{
         $this->sesion 	 =  $_SESSION['email'];
         $this->hoy 	     =  $this->bd->hoy();
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
     }
     
@@ -175,7 +175,7 @@ class proceso{
             FROM presupuesto.view_tramites
             where anio=".$this->bd->sqlvalue_inyeccion($anio ,true). " and
                   partida = ".$this->bd->sqlvalue_inyeccion($partida ,true). "  and
-                 estado = ".$this->bd->sqlvalue_inyeccion($transaccion ,true). " order by fecha desc" ;
+                 estado >= ".$this->bd->sqlvalue_inyeccion($transaccion ,true). " order by fecha desc" ;
         
    
         $resultado  = $this->bd->ejecutar($sql);
@@ -283,13 +283,14 @@ class proceso{
             array( campo => 'monto',valor => '-',filtro => 'N', visor => 'S'),
             array( campo => 'anio',valor => $anio,filtro => 'S', visor => 'N'),
             array( campo => 'partida',valor => trim($partida),filtro => 'S', visor => 'N'),
+            array( campo => 'principal',valor => 'S',filtro => 'S', visor => 'N'),
             array( campo => 'partida_enlace',valor => 'gasto',filtro => 'S', visor => 'N')
         );
         
  
         $this->bd->_order_by('fecha');
         
-        $resultado = $this->bd->JqueryCursorVisor('view_diario_presupuesto',$qquery, 1 );
+        $resultado = $this->bd->JqueryCursorVisor('view_diario_presupuesto',$qquery, 0 );
         
         $total = 0;
         
@@ -364,7 +365,7 @@ class proceso{
         
         $this->bd->_order_by('fecha');
         
-        $resultado = $this->bd->JqueryCursorVisor('view_diario_presupuesto',$qquery,1 );
+        $resultado = $this->bd->JqueryCursorVisor('view_diario_presupuesto',$qquery,0 );
         
         $totald = 0;
         $totalh = 0;

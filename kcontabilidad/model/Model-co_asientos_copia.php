@@ -32,7 +32,7 @@ class proceso{
 		$this->sesion 	 =  trim($_SESSION['email']);
 		$this->hoy 	     =  $this->bd->hoy();
 		
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 		
 		$this->saldos     = 	new saldo_contable(  $this->obj,  $this->bd);
 		

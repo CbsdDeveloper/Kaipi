@@ -6,7 +6,7 @@ require '../kconfig/Obj.conf.php';
 require_once("./RideSRI/XmlDoc.php");
 
 $bd	   =	new Db;
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 $id            = $_GET['id'];
 $ruc           = trim($_SESSION['ruc_registro']);

@@ -18,7 +18,7 @@
             //inicializamos la clase para conectarnos a la bd
       	$this->obj     = 	new objects;
       	$this->bd     = 	new Db;
-      	$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+      	$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
  
 	 }
       ///----------------------------------

@@ -65,7 +65,7 @@ class proceso{
 		
 		$this->login     =  trim($_SESSION['login']);
 		
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 		
 		$this->anio       =  $_SESSION['anio'];
 	}

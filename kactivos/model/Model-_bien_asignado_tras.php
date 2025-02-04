@@ -31,7 +31,7 @@ class proceso{
         $this->sesion 	 =  $_SESSION['login'];
         $this->hoy 	     =  $this->bd->hoy();
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
        
         $this->anio       =  $_SESSION['anio'];
         
@@ -58,10 +58,15 @@ class proceso{
         
         
         
+        // $sql = "SELECT *
+        //         FROM activo.view_bienes
+        //         where   uso = ".$this->bd->sqlvalue_inyeccion('Asignado',true)." and 
+        //                 tiene_acta = ".$this->bd->sqlvalue_inyeccion('S',true)." and 
+        //                 idprov = ".$this->bd->sqlvalue_inyeccion($id,true)." order by descripcion";
+
         $sql = "SELECT *
                 FROM activo.view_bienes
-                where   uso = ".$this->bd->sqlvalue_inyeccion('Asignado',true)." and 
-                        tiene_acta = ".$this->bd->sqlvalue_inyeccion('S',true)." and 
+                where   -- uso = ".$this->bd->sqlvalue_inyeccion('Asignado',true)." and 
                         idprov = ".$this->bd->sqlvalue_inyeccion($id,true)." order by descripcion";
                     
         

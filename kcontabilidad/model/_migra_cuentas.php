@@ -7,7 +7,7 @@
 	
  	$bd	   = new Db ;
  	
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
  
     $sql ="select * from co_plan_ctas b where anio='2020'" ;
  

@@ -28,7 +28,7 @@ class proceso{
 		ini_set("memory_limit", "-1");
 		set_time_limit(0);
 		
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 		
 		$this->ruc       =  $_SESSION['ruc_registro'];
 		

@@ -9,7 +9,7 @@ session_start( );
     $bd	   =	new Db;
     $mail  =	new EmailEnvio;
     
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
     
     $sesion 	   =  trim($_SESSION['email']);
     

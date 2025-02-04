@@ -18,7 +18,7 @@ $bd	   =	new Db;
 'accion'		  : 'visor'
     */
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
         $tipo = $bd->retorna_tipo();
 

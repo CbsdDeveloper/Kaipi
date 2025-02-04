@@ -12,7 +12,7 @@
 	global $formulario;
     $obj   = 	new objects;
 	$bd	   =	Db::getInstance();
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
  	//damos salida a la tabla
 	 $id =	$_SESSION['ruc_registro'];
 	 $sql = "SELECT *

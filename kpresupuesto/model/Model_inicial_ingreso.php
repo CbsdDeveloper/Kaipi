@@ -35,7 +35,7 @@ class proceso{
         $this->sesion 	 =  $_SESSION['email'];
         $this->hoy 	     =  $this->bd->hoy();
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         $this->anio       =  $_SESSION['anio'];
         
@@ -169,7 +169,6 @@ class proceso{
                             $fuente_where.
                             $vgrupo_where.
                             $vactividad_where.
-                            $fuente_where.
                             $item_where.'  order by partida,fuente';
         
         

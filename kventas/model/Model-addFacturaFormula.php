@@ -12,7 +12,7 @@
 	// "id_movimiento" : id_movimiento,
 	// "idcategoria" : idcategoria  
 	
-	$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+	$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	
  	
 	$id_movimiento     = 	$_GET["id_movimiento"];

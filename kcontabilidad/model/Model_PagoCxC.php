@@ -12,7 +12,7 @@
 	$bd	   = new Db ;
 	$registro= $_SESSION['ruc_registro'];
 	
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	
     
     $saldos     = 	new saldo_contable(  $obj,  $bd);

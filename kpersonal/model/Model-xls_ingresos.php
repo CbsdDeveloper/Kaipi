@@ -8,7 +8,7 @@ $bd	     =	new Db ;
 $obj     = 	new objects;
 $ruc     =  $_SESSION['ruc_registro'];
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 $id_rol = $_SESSION['id_rol'] ;
 $tipo   = $bd->retorna_tipo();

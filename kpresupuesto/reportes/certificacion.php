@@ -94,9 +94,9 @@ $gestion->QR_DocumentoDoc($id);
 					<tr>
 					  <td>&nbsp;</td>
 					</tr>
-					<tr>
+					<!-- <tr>
 					  <td align="justify">Adicionalmente, su vigencia para el inicio del o los procesos de contratación serán de 30 dias, a apartir de su fecha de emisión.</td>
-					</tr>
+					</tr> -->
 					<tr>
 					  <td>&nbsp;</td>
 				    </tr>

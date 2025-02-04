@@ -11,7 +11,7 @@ $bd	   =	new Db;
 
 $obj     = 	new objects;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 
 
@@ -41,7 +41,7 @@ $tipo    =    $bd->retorna_tipo();
         '',			// icono de eliminar = 'del'
         '' ,        // evento funciones parametro Nombnre funcion - codigo primerio
         "Cuenta, Cantidad, Costo, saldos" , // nombre de cabecera de grill basica,
-        '12px',      // tamaño de letra
+        '12px',      // tamaï¿½o de letra
         'id'         // id
         );
  

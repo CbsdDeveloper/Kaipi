@@ -35,7 +35,7 @@ session_start( );
                    
                 $this->bd	   =	     	new Db ;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -188,7 +188,14 @@ session_start( );
                             
                             $this->obj->text->text('Carrera',"texto",'carrera',80,80,$datos,'required','','div-2-10');
         
-        
+        $this->set->div_label(12,' Información Económica - Proyección de Gastos Personales');
+            $this->obj->text->text('Vivienda',"number",'vivienda',40,45,$datos,'required','','div-2-4');
+            $this->obj->text->text('Salud',"number",'salud',40,45,$datos,'required','','div-2-4');
+            $this->obj->text->text('Alimentacion',"number",'alimentacion',40,45,$datos,'required','','div-2-4');
+            $this->obj->text->text('Vestimenta',"number",'vestimenta',40,45,$datos,'required','','div-2-4');
+            $this->obj->text->text('Educacion',"number",'educacion',40,45,$datos,'required','','div-2-4');
+            $this->obj->text->text('Turismo',"number",'turismo',40,45,$datos,'required','','div-2-4');
+
         
         $this->set->div_label(12,' Seguridad y Salud Ocupacional');
         

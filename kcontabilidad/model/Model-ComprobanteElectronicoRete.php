@@ -14,7 +14,7 @@ $signer=new FirmaElectronica(); // Instancio la clase
 
 $bd	   =	new Db;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 
 $id          = $_GET['id_asiento'];

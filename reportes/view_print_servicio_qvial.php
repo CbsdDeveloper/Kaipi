@@ -6,7 +6,7 @@ require '../kconfig/Obj.conf.php';
 
 $bd     = 	new Db;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 /*
   $fecha = date("Y/m/d H:i:s"); 

@@ -34,7 +34,7 @@
                    
                 $this->bd	   =	new  Db ;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -57,7 +57,7 @@
               '2016'    => '2016'
           );
           
-          $this->obj->list->lista('Año',$MATRIZ,'canio',$datos,'required','','div-2-10');
+          $this->obj->list->lista('Aï¿½o',$MATRIZ,'canio',$datos,'required','','div-2-10');
           
           
           $MATRIZ =  $this->obj->array->catalogo_mes();

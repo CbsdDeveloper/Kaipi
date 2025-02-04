@@ -2,7 +2,7 @@
 session_start();   
 require '../../kconfig/Db.class.php';   
 $bd	    =	new Db ;
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 // FUNCION PARA CALCULAR PERMISOS DE FUNCIONAMIENTO.
 // ENTRADA:

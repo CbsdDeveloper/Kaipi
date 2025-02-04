@@ -25,7 +25,7 @@ class proceso{
 		$this->sesion 	 =  trim($_SESSION['email']);
 		$this->hoy 	     =  $this->bd->hoy();
 		
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 		
 	}
 	//-----------------------------------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ class proceso{
 	//--------------------------------------------------------------------------------
 	
 	//--------------------------------------------------------------------------------------
-	//aprobación de asientos
+	//aprobaciï¿½n de asientos
 	  
 	//--------------------------------------------------------------------------------
 	//---retorna el valor del campo para impresion de pantalla ?articulo=' + articulo + '&id='+id_asiento,

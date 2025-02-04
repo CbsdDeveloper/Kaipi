@@ -44,7 +44,7 @@
                 
                 $this->hoy 	     =     date("Y-m-d");    
         
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
                 
                 $this->tabla 	  	  = 'presupuesto.pre_tramite';
                 
@@ -135,7 +135,7 @@
           
           while ($x=$this->bd->obtener_fila($stmt)){
               
-              $programa     = trim($x["programa_original"]);
+              $programa     = trim($x["programa"]);
               $clasificador = trim($x["clasificador"]);
               $monto        = $x["monto"];
               
@@ -143,6 +143,7 @@
               
               if ( empty(trim($datos_partida["partida"]))){
                    $bandera = $programa.' '. $clasificador;
+                   echo $bandera.'<br>';
               }else{
                   if ($monto > $datos_partida["disponible"] ){
                       $datos_clasificador = $this->bd->query_array('presupuesto.pre_catalogo', 'detalle', 'codigo='.$this->bd->sqlvalue_inyeccion($clasificador,true));
@@ -275,7 +276,7 @@
           
          while ($x=$this->bd->obtener_fila($stmt)){
              
-             $programa     = trim($x["programa_original"]);
+             $programa     = trim($x["programa"]);
              $clasificador = trim($x["clasificador"]);
              $monto        = $x["monto"];
               
@@ -310,7 +311,7 @@
                                      'partida,clasificador,  coalesce(disponible,0) as disponible', 
                                      'funcion='.$this->bd->sqlvalue_inyeccion($programa,true).' and 
                                       clasificador  ='.$this->bd->sqlvalue_inyeccion($clasificador,true).' and
-                                      anio=  '.$this->bd->sqlvalue_inyeccion($this->anio ,true)
+                                      anio=  '.$this->bd->sqlvalue_inyeccion($this->anio ,true),'0','order by disponible desc'
              );
          
            $partida["partida"]    = trim($z["partida"]) ;

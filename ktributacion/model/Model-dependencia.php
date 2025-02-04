@@ -5,6 +5,9 @@ require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos
 
 require '../../kpersonal/model/Formulas-roles_nomina.php';
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 class proceso{
 
     private $obj;
@@ -36,7 +39,7 @@ class proceso{
         
         $this->hoy 	     =  $this->bd->hoy();
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
         
         $this->formula     = 	new Formula_rol(  $this->obj,  $this->bd);
@@ -89,7 +92,8 @@ class proceso{
             array( campo => 'valret',tipo => 'NUMBER',id => '43',add => 'S', edit => 'S', valor => '-', key => 'N'),
             array( campo => 'rebajagapersona',tipo => 'NUMBER',id => '44',add => 'S', edit => 'S', valor => '-', key => 'N'),
             array( campo => 'imprebajagapersona',tipo => 'NUMBER',id => '45',add => 'S', edit => 'S', valor => '-', key => 'N'),
-            array( campo => 'deduturismo',tipo => 'NUMBER',id => '46',add => 'S', edit => 'S', valor => '-', key => 'N')
+            array( campo => 'deduturismo',tipo => 'NUMBER',id => '46',add => 'S', edit => 'S', valor => '-', key => 'N'),
+            array( campo => 'numcargrebgastpers',tipo => 'NUMBER',id => '47',add => 'S', edit => 'S', valor => '-', key => 'N')
         );
       
 
@@ -314,12 +318,11 @@ echo $result;
         
         $stmt = $this->bd->ejecutar($sql_opcion);
         
-        $i = 1;
+        $i = 0;
  
         while ($x=$this->bd->obtener_fila($stmt)){
  
             $idprov     = $x["idprov"] ;
-            
             $y = $this->bd->query_array('nom_redep',   // TABLA
                 'count(*) as nn',                        // CAMPOS
                 'idret='.$this->bd->sqlvalue_inyeccion(trim($idprov),true). ' and 
@@ -496,7 +499,6 @@ echo $result;
         
         while ($row_p=$this->bd->obtener_fila($stmt11)){
             
-
             if ( trim($row_p['tipoformula']) == 'RS'  ){
                 $salario =  $row_p['ingreso'];
             }
@@ -551,7 +553,7 @@ echo $result;
             coalesce(educacion,0) as educacion,
             coalesce(turismo,0) as turismo,
             coalesce(alimentacion,0) as alimentacion,
-            coalesce(vestimenta,0) as vestimenta,discapacidad',
+            coalesce(vestimenta,0) as vestimenta,discapacidad,coalesce(cargas_familiares,0) as cargas_familiares',
             'idprov='.$this->bd->sqlvalue_inyeccion(trim($idprov),true)
             );
         
@@ -629,23 +631,61 @@ echo $result;
         $base  = $inggravconesteempl - ( $apoperiess) ;
         $this->ATabla[39][valor]        =   $base;
         
-        
+        $imprentcaus = 0;
         $IR =  $this->_monto_impuesto_renta(  $base ,$anio  ) ;
         
         if ( $IR == $valret ){
             
         }else{
-            $valret = $IR;
+            $imprentcaus = $IR;
         }
         
         if (empty($valret)){
             $valret =  '0.00';
         }
         
+        
+        // rebaja por gastos personales
+        $gastos_personales = $deducvivienda+$deducsalud+$deduceducartcult+ $deducaliement+$turismo+$deducvestim;
+        $canasta_basica    =  789.57; 
+        $numero_canastas = 0;
+        if ($y['cargas_familiares'] == 0){
+            $numero_canastas = 7;
+        }
+        if ($y['cargas_familiares'] == 1){
+            $numero_canastas = 9;
+        }
+        if ($y['cargas_familiares'] == 2){
+            $numero_canastas = 11;
+        }
+        if ($y['cargas_familiares'] == 3){
+            $numero_canastas = 14;
+        }
+        if ($y['cargas_familiares'] == 4){
+            $numero_canastas = 17;
+        }
+        if ($y['cargas_familiares'] >= 5){
+            $numero_canastas = 20;
+        }
+        $canasta= round($canasta_basica * $numero_canastas,2);
+
+        $rebaja = round(min($gastos_personales,$canasta ) * 0.18, 2);
          
+        // echo '---------';
+        // echo $canasta_basica;
+        // echo '---------';
+        // echo $y['cargas_familiares'];
+        // echo '---------';
+        // echo $gastos_personales;
+        // echo '---------';
+        // echo $canasta;
+        // echo '---------';
+        // echo $rebaja;
+        // echo '---------';
+        // echo '*********';
         //valret
         
-        $this->ATabla[40][valor]        =   $imprentcaus;
+        $this->ATabla[40][valor]        =   $imprentcaus ? $imprentcaus : 0;
         
         
         
@@ -663,14 +703,17 @@ echo $result;
         $this->ATabla[41][valor]        =   $monto;
         $this->ATabla[42][valor]        =   $monto;
         $this->ATabla[43][valor]        =   $valret;
+        $this->ATabla[44][valor]        =   $rebaja;
+        $this->ATabla[45][valor]        =   $valret;
+        $this->ATabla[47][valor]        =   $y['cargas_familiares'];
     
         
-        
+        print_r($this->ATabla);
          
 //        if ( $salario > 0  ){
            
              
-            $this->bd->_InsertSQL($this->tabla,$this->ATabla,$this->secuencia);
+            $this->bd->_InsertSQL($this->tabla,$this->ATabla,$this->secuencia,1);
             
   //      }
         

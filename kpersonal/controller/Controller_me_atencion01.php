@@ -33,7 +33,7 @@ class Controller_me_atencion01{
         
         $this->bd	   =	new  Db ;
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         $this->ruc       =  $_SESSION['ruc_registro'];
         

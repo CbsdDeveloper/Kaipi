@@ -5,7 +5,7 @@ require '../../kconfig/Db.conf.php';
 require '../../kconfig/Obj.conf.php';
 $obj     = 	new objects;
 $bd	   =	Db::getInstance();
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
   
      if (isset($_GET['anio']))	

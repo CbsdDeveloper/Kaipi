@@ -10,7 +10,7 @@ $bd	   =	new Db;
 $obj   = 	new objects;
 $mail  =	new EmailEnvio;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
  
 $mail->_DBconexion( $obj, $bd );

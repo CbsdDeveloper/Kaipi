@@ -7,7 +7,7 @@
 	
  	$bd	   = new Db ;
  	
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
  
     $sql = "SELECT * FROM co_asiento_aux
             WHERE fecha is null

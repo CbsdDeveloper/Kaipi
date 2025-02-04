@@ -8,7 +8,7 @@
 	$bd	       = new Db ;
     $txtcodigo = $_GET['id_par_ciu'];
 	
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	
        
     

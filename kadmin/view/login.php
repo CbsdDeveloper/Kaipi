@@ -14,7 +14,7 @@ session_start( );
 <style type="text/css">
  body
 {
-    background-image: url(../../kimages/erp.jpg);
+    background-image: url(../../kimages/eps.jpg);
     background-size: cover;
     padding: 0;
     margin: 0;
@@ -249,15 +249,15 @@ form.login a:hover
                 <form class="login" action='../controller/Controller-login' method="post" enctype="application/x-www-form-urlencoded"   accept-charset="UTF-8">
 
 					 	<div class="remember-sup">
-						  <h4 style="color: aliceblue">Bienvenido al portal<br>
+						  <h4 style="color: aliceblue">Bienvenido a la<br>
 				
-               				 <span style="color: aliceblue;font-size:40px;font-weight: 100">Plataforma de Gestión Pública</span>
+               				 <span style="color: aliceblue;font-size:40px;font-weight: bold">Plataforma Administrativa Financiera del Cuerpo de Bomberos de Santo Domingo</span>
 							</h4>
 					
 						</div>
-					
-							<input class="form-control" type="text" placeholder="Username"   name="datoname" />
-							<input class="form-control" type="password" placeholder="Password" name="datolog" />
+                        <h4 style="color: aliceblue">Para ingresar, por favor digite sus credenciales de acceso: </h4> <br>
+							<input class="form-control" type="text" placeholder="Usuario"   name="datoname" />
+							<input class="form-control" type="password" placeholder="Contraseña" name="datolog" />
 							<input name="dato_sx" type="hidden" id="dato_sx" value="register">
                 
 							<input type="submit" value="Iniciar Sesión" class="btn btn-primary btn-lg" />

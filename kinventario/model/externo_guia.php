@@ -7,7 +7,7 @@ require '../../kconfig/Obj.conf.php';
 
 $bd	   = new Db ;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 $id          = $_GET['id'];
 
@@ -69,18 +69,18 @@ if ( $envio == 'autorizado') {
         $enlace_post = "autretencion1=".$autretencion1."&clave=".$clave."&archivo=".$archivo."&firma=".$firma."&ambiente=".$ambiente ;
         
        
-        // abrimos la sesión cURL
+        // abrimos la sesiï¿½n cURL
         $ch = curl_init();
         
         curl_setopt($ch, CURLOPT_URL,$url);
       //  curl_setopt($ch, CURLOPT_PORT, 80);
         curl_setopt($ch, CURLOPT_POST, 1);
-        // definimos cada uno de los parámetros
+        // definimos cada uno de los parï¿½metros
         curl_setopt($ch, CURLOPT_POSTFIELDS, $enlace_post );
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         $data = curl_exec ($ch);
-        // cerramos la sesión cURL
+        // cerramos la sesiï¿½n cURL
         if (curl_errno($ch)) {
             print "Error: " . curl_error($ch);
         } else {

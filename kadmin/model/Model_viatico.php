@@ -35,7 +35,7 @@
                 $this->sesion 	 =  trim($_SESSION['email']);
                 $this->hoy 	     =     date("Y-m-d");    
         
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
                 
                 $this->tabla 	  	  = 'adm.viatico';
                 

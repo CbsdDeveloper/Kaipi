@@ -17,7 +17,7 @@ function resumenIndicadores(){
    
     $datos = array();
  
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
     
       
     $A1 = $bd->query_array('view_proceso','count(*) as nro_indicadores', 'publica='.$bd->sqlvalue_inyeccion('S',true) );

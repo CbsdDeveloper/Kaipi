@@ -39,7 +39,7 @@
                 
                 $this->anio 	     =    $_SESSION['anio'];
         
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
                 
                 $this->tabla 	  	  = 'presupuesto.pre_tramite_det';
                 
@@ -269,7 +269,7 @@
              
              $y = $this->bd->query_array('presupuesto.pre_tramite',
                  'count(*) as nn ',
-                 'id_tramite='.$this->bd->sqlvalue_inyeccion($id_tramite,true)." and estado in ('2','3')"
+                 'id_tramite='.$this->bd->sqlvalue_inyeccion($id_tramite,true)." and estado in ('0','2','3')"
                  );
              
              if ( $y['nn'] > 0  ){

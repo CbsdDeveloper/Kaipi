@@ -7,7 +7,7 @@
 	
  	$bd	   = new Db ;
  	
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
  
     $sql ='SELECT bodegas, "Codigo", "Descripcion", "Unidad_Medida", "Cantidad", "Costo", 
   promedio, cuenta FROM migra.ingresoscorrientes' ;

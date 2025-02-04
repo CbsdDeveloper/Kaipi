@@ -19,7 +19,6 @@ include('Obj.table.php');
 	  public $objects_ajax;
 	  public $objects_list;
 	  public $objects_table;
-	   
  
 	  function __construct(){
 		     //inicializamos la clase para conectarnos a la bd

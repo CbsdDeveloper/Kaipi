@@ -34,7 +34,7 @@
                    
                 $this->bd	   =	new  Db ;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -54,7 +54,7 @@
                            producto,
 	 				       unidad,
                            saldo ,
-                           cantidade as cantidad,
+                           cantidad as cantidad,
 					       costo,
                            total,tipourl,url,tipo, monto_iva,tarifa_cero,baseiva,pdescuento,descuento,idproducto
     			from view_movimiento_det
@@ -165,8 +165,8 @@
               $cadena = '<input '.$idNombre.'
                         type="number"
                         style="text-align:right; border:rgba(193,193,193,1.00)"
-						required step="0.01"
-                        min="0" max="999999999"'.$eventoObje.'
+						required step="1"
+                        min="1" max="999999999"'.$eventoObje.'
 						value="'.$valor.'">';
               
           }elseif($tipo == 'T'){
@@ -229,8 +229,8 @@
               $cadena = '<input '.$idNombre.'
                         type="number"
                         style="text-align:right; border:rgba(193,193,193,1.00)"
-						required step="0.0001"
-                        min="0" max="999999999"'.$eventoObje.'
+						required step="1"
+                        min="1" max="999999999"'.$eventoObje.'
 						value="'.$valor.'">';
               
           }elseif($tipo == 'T'){

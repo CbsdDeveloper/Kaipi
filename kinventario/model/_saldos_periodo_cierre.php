@@ -7,7 +7,7 @@
 	
  	$bd	   = new Db ;
  	
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
  
    
     $cbodega               =     $_GET["idbodega"];
@@ -155,6 +155,16 @@
                     $cantidad_ingreso  = $cantidad_ingreso  + $cantidad ;
                     $total_ingreso     = $total_ingreso + $total;
                         
+                } else {
+                    $total_egreso   = $total_egreso + $total;
+                    $total_cantidad = $total_cantidad - $cantidad;
+                    $total_saldo    = $total_saldo - $total;
+                    if ( $total_cantidad == 0 ){
+                        $tota_promedio = $tota_promedio;
+                    }else{
+                        $tota_promedio  = round($total_saldo / $total_cantidad,6);
+                    }
+                    $cantidad_egreso = $cantidad_egreso + $cantidad;
                 }
              }else{
                 

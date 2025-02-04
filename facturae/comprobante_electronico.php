@@ -5,7 +5,7 @@ require '../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
 
 $bd	   =	new Db;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 /** 
 * Copyright (c)2018 - EN Systems Apps
 * @abstract Envia un mail con un xml y pdf adjunto

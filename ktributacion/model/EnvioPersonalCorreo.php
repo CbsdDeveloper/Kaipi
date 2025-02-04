@@ -9,7 +9,7 @@ $obj   = 	new objects;
 $bd	   =	new Db;
 $mail  =	new EmailEnvio;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 $sesion 	    =  trim($_SESSION['email']);
 $razon_social   =  $_SESSION['razon'] ;
@@ -62,7 +62,7 @@ $content =  str_replace ( 'http://localhost/gkaipi/kadmin/view/logo.png' , trim(
 $content =  str_replace ( 'http://localhost/gkaipi/kadmin/view/promo1.png' , trim($archivo_promo) ,  $content);
 
 
-$url_reporte = 'reportes/informe107e?us='.$_SESSION['us'].'&rd='. $_SESSION['ruc_registro'].'&db='.$_SESSION['db'].'&ac='.$_SESSION['ac'];
+$url_reporte = 'reportes/informe107e?us='.$_SESSION['us'].'&rd='. $_SESSION['ruc_registro'].'&db='.''.'&ac='.$_SESSION['ac'];
 
 $enlace = $pagina_web.$url_reporte.'&i='.$id.'&r='.$canio;
 

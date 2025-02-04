@@ -24,7 +24,7 @@ class ReportePdf{
         $this->obj     = 	new objects;
         $this->bd     = 	new Db;
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         $this->ruc       =  $_SESSION['ruc_registro'];
         
@@ -151,7 +151,7 @@ class ReportePdf{
     }
     //-------------
     function conocerDiaSemanaFecha($fecha) {
-        $dias = array('Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado');
+        $dias = array('Domingo', 'Lunes', 'Martes', 'Miï¿½rcoles', 'Jueves', 'Viernes', 'Sï¿½bado');
         $dia = $dias[date('w', strtotime($fecha))];
         return $dia;
     }

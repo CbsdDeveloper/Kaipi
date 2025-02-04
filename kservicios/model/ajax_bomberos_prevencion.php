@@ -10,7 +10,7 @@ $id_renpago        = $_GET['id'];
 
 
 $bd_local	   =	new Db;
-$bd_local->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd_local->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 
 $servidor ='192.168.1.3';

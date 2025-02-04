@@ -41,7 +41,7 @@ class proceso
 
         $this->hoy          =  $this->bd->hoy();
 
-        $this->bd->conectar($_SESSION['us'], $_SESSION['db'], $_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'], '', $_SESSION['ac']);
     }
 
     //--- busqueda de por codigo para llenar los datos

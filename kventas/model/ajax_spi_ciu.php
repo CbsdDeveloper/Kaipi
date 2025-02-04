@@ -19,7 +19,7 @@ $cta_banco  = $_GET['cta_banco'];
 
  
 
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
  
     
     $x = $bd->query_array('par_catalogo',

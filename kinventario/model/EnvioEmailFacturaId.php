@@ -10,7 +10,7 @@ $obj   = 	new objects;
 $bd	   =	new Db;
 $mail  =	new EmailEnvio;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 $sesion 	   =  trim($_SESSION['email']);
 
@@ -114,8 +114,8 @@ while ($fila=$bd->obtener_fila($stmt)){
      
     $xx = strtoupper(trim($x['razon']));
     
-    $nombre_razon = str_replace ( 'Ñ' , 'N',  $xx);
-    $nombre_razon = str_replace ( 'ñ' , 'n',  $nombre_razon);
+    $nombre_razon = str_replace ( 'ï¿½' , 'N',  $xx);
+    $nombre_razon = str_replace ( 'ï¿½' , 'n',  $nombre_razon);
     
     $mail->_DeCRM( $sesion, $nombre_razon);
     

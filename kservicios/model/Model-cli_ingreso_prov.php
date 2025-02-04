@@ -9,7 +9,7 @@
 	
  	
     
-	$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+	$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	
       
 	$idprov_original =  trim($_GET["idprov"]) ;

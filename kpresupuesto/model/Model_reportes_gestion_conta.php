@@ -37,7 +37,7 @@ class proceso{
         $this->sesion 	 =  $_SESSION['email'];
         $this->hoy 	     =  $this->bd->hoy();
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         $this->anio       =  $_SESSION['anio'];
         
@@ -99,7 +99,7 @@ class proceso{
                     from presupuesto.view_dettramites
                     where partida = ". $this->bd->sqlvalue_inyeccion($partidac , true)." and 
                           anio = ". $this->bd->sqlvalue_inyeccion($this->anio  , true)."  and 
-                          estado = '3' ".$fcertifica ."
+                          estado in ('3','4','5','6')".$fcertifica ."
                     union 
                     select fcompromiso as fecha,detalle_tramite as detalle, 
                            partida, 'presupuesto' as partida_enlace, id_tramite as codigo, 0 as debe ,compromiso as haber, 4 as tipo,
@@ -121,6 +121,7 @@ class proceso{
                            id_asiento as codigo ,debe,haber, 6  as tipo, 'devengado' as modulo 
                     FROM  view_diario_presupuesto 
                     where partida =  ". $this->bd->sqlvalue_inyeccion($partidac , true)." and 
+                          principal = 'S' and
                           anio = ". $this->bd->sqlvalue_inyeccion($this->anio  , true)."  and 
                           partida_enlace = 'gasto' ".$fecha."
                     union

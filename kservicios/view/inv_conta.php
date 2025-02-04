@@ -226,12 +226,12 @@
 												<div class="col-md-12" style="padding-bottom: 10px;padding-top: 10px">
 													
 													
-															<button type="button" onClick="goToURLEspecie(10)"  class="btn btn-success">Diario Especies</button>
+															<button type="button" onClick="goToURLEspecie(10)"  class="btn btn-success">1. Diario Especies</button>
 													
+															<button type="button" onClick="goToURLEspecie(11)"  class="btn btn-danger">2. Contabilizar</button>
 
-															<button type="button"  onClick="goToURLEspecie(12)" class="btn btn-primary">Consultar Informacion</button>
+															<button type="button"  onClick="goToURLEspecie(12)" class="btn btn-primary">3. Consultar Informacion</button>
 													
-															<button type="button" onClick="goToURLEspecie(11)"  class="btn btn-danger">Contabilizar</button>
 													
 													
 															

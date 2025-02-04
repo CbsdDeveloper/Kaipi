@@ -11,7 +11,7 @@
 	$obj   = 	new objects;
 	$bd	   = new Db ;
 	
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	
     
     $saldos     = 	new saldo_contable(  $obj,  $bd);
@@ -204,6 +204,9 @@
                      
                      $item     = substr($partida,3,6);
                      $programa = substr($partida,0,3);
+
+                     $valida_cuenta=substr($cuenta,0,3); // primeros 3 digitos de la cuenta
+                     $fin_cuenta=substr($cuenta,3,10); // demas digitos de la cuenta
                      
                      $total1 = $x['haber'];
                      
@@ -232,6 +235,57 @@
         			  $id_asientod =  $bd->ultima_secuencia('co_asientod');
         								
         			  K_aux($id_asientod,$id,$idprov,$cuenta,$total1,0,$id_periodo,$anio,$mes,$bd,$id_asiento_ref);
+
+                      if ($valida_cuenta == '224'){ //crea enlaces a la cuenta 213 (cuentas complemetarias) - Solicitado por la contadora institucional
+                        //debe
+                        $sql = "INSERT INTO co_asientod(
+                            id_asiento, cuenta, aux,debe, haber, id_periodo, anio, mes,
+                            sesion, creacion, principal,partida,item,programa,registro)
+                            VALUES (".
+                            $bd->sqlvalue_inyeccion($id , true).",".
+                            $bd->sqlvalue_inyeccion( ltrim(rtrim('213'.$fin_cuenta)), true).",".
+                            $bd->sqlvalue_inyeccion( 'N', true).",".
+                            $bd->sqlvalue_inyeccion($total1, true).",".
+                            $bd->sqlvalue_inyeccion(0, true).",".
+                            $bd->sqlvalue_inyeccion( $id_periodo, true).",".
+                            $bd->sqlvalue_inyeccion( $anio, true).",".
+                            $bd->sqlvalue_inyeccion( $mes, true).",".
+                            $bd->sqlvalue_inyeccion($sesion , true).",".
+                            $hoy.",".
+                            $bd->sqlvalue_inyeccion( 'N', true).",".
+                            $bd->sqlvalue_inyeccion( '', true).",".
+                            $bd->sqlvalue_inyeccion( '', true).",".
+                            $bd->sqlvalue_inyeccion( '', true).",".
+                            $bd->sqlvalue_inyeccion( $ruc, true).")";
+                            
+                            $bd->ejecutar($sql);
+        
+                            $id_asientod =  $bd->ultima_secuencia('co_asientod');
+                        //haber
+                        $sql = "INSERT INTO co_asientod(
+                            id_asiento, cuenta, aux,debe, haber, id_periodo, anio, mes,
+                            sesion, creacion, principal,partida,item,programa,registro)
+                            VALUES (".
+                            $bd->sqlvalue_inyeccion($id , true).",".
+                            $bd->sqlvalue_inyeccion( ltrim(rtrim('213'.$fin_cuenta)), true).",".
+                            $bd->sqlvalue_inyeccion( 'N', true).",".
+                            $bd->sqlvalue_inyeccion(0, true).",".
+                            $bd->sqlvalue_inyeccion($total1, true).",".
+                            $bd->sqlvalue_inyeccion( $id_periodo, true).",".
+                            $bd->sqlvalue_inyeccion( $anio, true).",".
+                            $bd->sqlvalue_inyeccion( $mes, true).",".
+                            $bd->sqlvalue_inyeccion($sesion , true).",".
+                            $hoy.",".
+                            $bd->sqlvalue_inyeccion( 'N', true).",".
+                            $bd->sqlvalue_inyeccion( '', true).",".
+                            $bd->sqlvalue_inyeccion( '', true).",".
+                            $bd->sqlvalue_inyeccion( '', true).",".
+                            $bd->sqlvalue_inyeccion( $ruc, true).")";
+                            
+                            $bd->ejecutar($sql);
+        
+                            $id_asientod =  $bd->ultima_secuencia('co_asientod');
+                      }
 			  
 			  
              }

@@ -19,7 +19,7 @@ class ReportePdf{
 		$this->bd        = 	new Db;
 		$this->ruc       =  $_SESSION['ruc_registro'];
 		$this->anio      =  $_SESSION['anio'];
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 		
 	}
 	//------------------------------------

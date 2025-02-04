@@ -11,7 +11,7 @@
  
     $bd	   =	 	new Db ;
    
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
     
     
     $accion = $_POST['accion'];
@@ -49,7 +49,7 @@
         '',			// icono de eliminar = 'del'
         '' ,        // evento funciones parametro Nombnre funcion - codigo primerio
         "Referencia, Tipo, Asunto, Nota, creado" , // nombre de cabecera de grill basica,
-        '11px',      // tamaño de letra
+        '11px',      // tamaï¿½o de letra
         'idArchivo'         // id
         );
      

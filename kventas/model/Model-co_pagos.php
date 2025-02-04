@@ -25,7 +25,7 @@ class proceso{
 		$this->sesion 	 =  $_SESSION['email'];
 		$this->hoy 	     =  $this->bd->hoy();
 		
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 		
 	}
 	//-----------------------------------------------------------------------------------------------------------
@@ -126,6 +126,12 @@ class proceso{
 
 				$comprobante          =  $this->bd->_secuencias($anio, 'CE',8);
 				
+					
+					$sql0 = " UPDATE co_asiento
+								SET 	fecha		 =".$fecha."
+							WHERE id_asiento    =".$this->bd->sqlvalue_inyeccion($id_asiento, true);
+					
+					$this->bd->ejecutar($sql0);
 					
 					$sql1 = " UPDATE co_asiento_aux
 								SET 	pago	     =".$this->bd->sqlvalue_inyeccion('S', true).",

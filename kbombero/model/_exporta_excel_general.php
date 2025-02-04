@@ -11,7 +11,7 @@ $bd	   =	new Db;
 
 $obj     = 	new objects;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 $sql =  'SELECT id, fecha_emergencia, hora_aviso, parroquia, sector, informante, categoria_emergencia, tipo_de_emergencia, nombre_y_contacto_referencia, descripcion_emergencia, ubicacion_emergencia, medidas_adoptadas, personas_heridas, personas_fallecidas, daños_ambientales, daños_bienes, organismos_apoyo, personal_desplazado, arribo_emergencia, hora_desmovilizacion, hora_llegada_base
 FROM ireport.lista_emergencias id';

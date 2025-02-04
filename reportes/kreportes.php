@@ -24,7 +24,7 @@ class ReportePdf{
 		
 		$this->bd     = 	new Db;
 	
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 		$this->ruc       =  trim($_SESSION['ruc_registro']);
 		
@@ -893,7 +893,7 @@ function Distributivo_dddpersonal($id_asigna_dis,$id_departamento,$grupo){
 			 	}
 			 
 			  $datos['nombre_firma']    =   $accion_firma['razon']  ;
- 			  $datos['responsable_firma'] = $accion_firma['unidad'] . $eti;  
+ 			  $datos['responsable_firma'] = $accion_firma['cargo'] . $eti;  
 
 		}
 		   

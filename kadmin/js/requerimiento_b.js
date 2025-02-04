@@ -1,5 +1,5 @@
 var oTable;
-
+let Toast;
 
  
 //-------------------------------------------------------------------------
@@ -17,15 +17,31 @@ $(document).ready(function(){
 		$("#FormPie").load('../view/View-pie.php');
 		
 		modulo();
- 	
-     
-     	FormView();
-     
+		
+		FormView();
+		
 		EstadoProceso();
 		
-		 DetalleMov(0,'add');
- 
- 
+		DetalleMov(0,'add');
+		
+		
+		CargaListadoProductos();
+
+		Toast = Swal.mixin({
+			toast: true,
+			position: "top-end",
+			iconColor: 'white',
+			customClass: {
+				popup: 'colored-toast',
+			},
+			showConfirmButton: false,
+			timer: 3000,
+			timerProgressBar: true,
+			didOpen: (toast) => {
+			  toast.onmouseenter = Swal.stopTimer;
+			  toast.onmouseleave = Swal.resumeTimer;
+			}
+		});
 });
 
 //-------------------------------------------------------------
@@ -52,6 +68,105 @@ function DetalleMov(id_movimiento,accion1)
      
 
 }
+
+//---------------------
+function ListarProductos() {
+	$("#myModalProductos").modal('show'); 
+	var idprov = $('#idprov').val();
+	$('#usr').val(idprov);
+}	
+
+function CargaListadoProductos()
+{
+    var  idbodega     = $("#idbodega").val();
+    var parametros = {
+            'idbodega' : idbodega 
+    };
+	$.ajax({
+	url:   '../../kinventario/model/AutoCompleteProdSolicitudBodegaTabla.php',
+	data:  parametros,
+	type:  'GET' ,
+		beforeSend: function () { 
+				$("#listaProductos").html('Procesando');
+		},
+		success:  function (data) {
+				$("#listaProductos").html(data);  // $("#cuenta").html(response); 
+		} 
+	});
+}
+
+function InsertaProductoTabla(idproducto)
+{
+	var id_movimiento = $('#id_movimiento').val();
+ 	// var idproducto    = $('#idproducto').val();
+ 	var estado  = $.trim( $('#estado').val() );
+ 	var tipo    = $('#tipo').val();
+ 	
+	if (id_movimiento){
+		if (estado == 'solicitado'){ 
+						var parametros = {
+								"idproducto" : idproducto ,
+				                "id_movimiento" : id_movimiento ,
+				                "estado" : estado,
+				                "tipo" : tipo,
+				                "accion" : 'add' 
+						};
+						  $.ajax({
+								data:  parametros,
+								url:   '../model/Model-addproductoe.php',
+								type:  'GET' ,
+								beforeSend: function () { 
+										$("#DivProducto").html('Procesando');
+								},
+								success:  function (data) {
+										Toast.fire({
+											icon: "success",
+											title: "Producto agregado correctamente"
+										});
+										 $("#DivProducto").html(data);  
+										 DetalleMov(id_movimiento,'edit');
+								} 
+						}); 
+				//-----------------
+ 				  $('#idproducto').val('');
+ 				  $('#articulo').val('');
+		}	
+	}else{
+		// alert('Guarde información de la solicitud');
+		Toast.fire({
+			icon: "error",
+			title: "Primero guarde el encabezado de la solicitud"
+		});
+	}
+ 
+}
+
+function filterTable() {
+    // Obtener el valor de búsqueda
+    const input = document.getElementById("searchInput");
+    const filter = input.value.toUpperCase();
+    const table = document.getElementById("tablaInventario");
+    const tr = table.getElementsByTagName("tr");
+
+    // Iterar sobre las filas de la tabla y ocultar las que no coincidan
+    for (let i = 1; i < tr.length; i++) { // Empezar en 1 para saltar el encabezado
+        const td = tr[i].getElementsByTagName("td");
+		console.log(td)
+        let match = false;
+
+        // Verificar cada celda de la fila
+        for (let j = 0; j < td.length; j++) {
+            if (td[j] && td[j].innerText.toUpperCase().indexOf(filter) > -1) {
+                match = true;
+                break;
+            }
+        }
+
+        // Mostrar u ocultar la fila
+        tr[i].style.display = match ? "" : "none";
+    }
+}
+
   
   //----------------------
 function InsertaProducto()
@@ -263,7 +378,11 @@ function EliminarDet(id) {
 						$("#DivProducto").html('Procesando');
 				},
 				success:  function (data) {
-						 $("#DivProducto").html(data);  // $("#cuenta").html(response);
+						Toast.fire({
+							icon: "success",
+							title: data
+						});
+						//  $("#DivProducto").html(data);  // $("#cuenta").html(response);
 						 
 						 DetalleMov(id_movimiento,'edit');
 					     
@@ -314,7 +433,11 @@ function guarda_detalle(baseiva,monto_iva,tarifa_cero,lcantidad,total,estado,ing
 								$("#DivProducto").html('Procesando');
 						},
 					success:  function (data) {
-							 $("#DivProducto").html(data);   
+							Toast.fire({
+								icon: "success",
+								title: data
+							});
+							//  $("#DivProducto").html(data);   
 						     
 						} 
 			});
@@ -341,7 +464,7 @@ function AsignaBodega()
 				},
 			 success:  function (data) {
 					 $("#SaldoBodega").html(data);  // $("#cuenta").html(response);
-				     
+				     CargaListadoProductos();
 				} 
 	});
 	
@@ -508,7 +631,7 @@ function goTocaso(accion,id) {
 	 			 						
 					$("#action").val(accion); 
 				    $("#result").html(resultado);
-	 	 
+					CargaListadoProductos();
 		 
 		});
 	 

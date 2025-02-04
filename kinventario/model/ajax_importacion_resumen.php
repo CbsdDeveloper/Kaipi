@@ -32,7 +32,7 @@ class proceso{
         
         $this->sesion 	 =  $_SESSION['email'];
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
     }
     

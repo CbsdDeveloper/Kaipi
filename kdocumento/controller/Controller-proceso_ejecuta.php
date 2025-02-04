@@ -29,7 +29,7 @@ require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos
 	$obj     = 	new objects;
              
    
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
     
     
     $datos = array();

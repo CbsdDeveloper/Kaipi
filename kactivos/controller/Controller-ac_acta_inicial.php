@@ -68,7 +68,7 @@
                    
                 $this->bd	   =	     	new Db ;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -182,6 +182,7 @@
           'S'    => 'SI',
       );
       $this->obj->list->lista('Autorizado',$MATRIZ,'estado',$datos,'','disabled','div-2-4');
+      $this->obj->text->text_yellow('Correo','texto','emaile',40,40,$datos ,'','readonly','div-2-4') ;
       
       
        
@@ -318,6 +319,7 @@ jQuery(document).ready(function() {
 												var prov = str.trim()
 								
 												 $("#idprov").val(prov);   
+												 $("#emaile").val(response.d.trim());   
  
  
   												

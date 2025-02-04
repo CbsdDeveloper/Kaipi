@@ -12,7 +12,7 @@ $num_carro         = trim($_GET['num_carro']);
 $hora              = trim($_GET['hora']);
  
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
  
  
 

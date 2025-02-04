@@ -59,7 +59,7 @@
                    
                 $this->bd	   =	     	new Db ;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -116,7 +116,7 @@
                 $this->obj->text->textautocomplete('Beneficiario',"texto",'txtidprov',15,15,$datos,'required','','div-1-5');
                 
                     
-                $this->obj->text->text('Identificación',"texto",'idprov',15,15,$datos,'required','readonly','div-1-5');
+                $this->obj->text->text('Identificaciï¿½n',"texto",'idprov',15,15,$datos,'required','readonly','div-1-5');
                 
                 $this->obj->text->text('Monto',"number",'apagar',0,10,$datos,'','','div-1-11') ;
                 

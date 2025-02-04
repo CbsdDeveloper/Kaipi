@@ -30,7 +30,7 @@ class componente{
                    
                 $this->bd	   =	new  Db ;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -105,6 +105,7 @@ class componente{
       	
       	
       	$this->obj->text->text_yellow_filtro('',"texto",'vcodigo',35,35,$datos,'','','div-0-3','BUSCAR CODIGO DEL BIEN');
+      	$this->obj->text->text_yellow_filtro('',"texto",'vid_tramite',35,35,$datos,'','','div-0-3','BUSCAR POR TRAMITE');
       
       }
       //----------------------------------------------

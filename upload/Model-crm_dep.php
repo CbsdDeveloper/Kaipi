@@ -5,6 +5,8 @@ require '../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
 
 require '../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 class proceso{
 	
@@ -33,7 +35,7 @@ class proceso{
 		
 		$this->hoy 	     =  date("Y-m-d"); 
 		
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 		
 	}
    
@@ -50,7 +52,8 @@ class proceso{
 	    $iddepartamento = $array['id_departamento'];
 	    
  		
-		$file =  '../../userfiles/files/' ;
+		// $file =  '../../userfiles/files/' ;
+		$file =  '../archivos/docs_interes/' ;
 		
  		 
 			

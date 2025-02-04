@@ -50,13 +50,13 @@ $(document).ready(function(){
  
 	
 	
-	$("#FormEmpresa").load('../model/Model-modulo.php');
+	// $("#FormEmpresa").load('../model/Model-modulo.php');
 	
 	$("#NavMod").load('../view/View-HeaderInicio.php');
 	 
     $("#ViewGrupo").load('../model/Model-ViewGrupo.php');
     
-    $("#ViewSede").load('../model/Model-ViewSede.php');
+    // $("#ViewSede").load('../model/Model-ViewSede.php');
 	
     
 	

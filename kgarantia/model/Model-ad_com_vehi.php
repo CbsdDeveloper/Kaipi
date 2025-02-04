@@ -22,7 +22,7 @@ $year    = date('Y');
 $mes     = intval(date('m'));
 $mes     = intval(date('m')) - 1; 
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 
 $filtro =  "placa = ".$bd->sqlvalue_inyeccion('-',true);

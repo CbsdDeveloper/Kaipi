@@ -10,7 +10,7 @@ require '../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
 	$obj     = 	new objects;
 	$bd	   =	new Db ;
 	
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 
 	$usuario = 'SELECT id_movimiento, fechaa, detalle, comprobante, estado, tipo, idprov, identificacion, razon, correo, idproducto, cantidad, costo, total, unidad, producto, ingreso, egreso, anio, mes, idcategoria

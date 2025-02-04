@@ -27,7 +27,7 @@ class proceso{
 		$this->obj     = 	new objects;
 		$this->bd	   =	new Db ;
 		
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 		
 		$this->ruc       =  $_SESSION['ruc_registro'];
 		
@@ -107,13 +107,13 @@ class proceso{
 	    $sql = 'SELECT a.clasificador, a.inicial ,b.detalle
 		FROM presupuesto.view_gestion_resumen a,
 			 presupuesto.pre_catalogo b
-		where a.anio =   '.$this->bd->sqlvalue_inyeccion($this->anio ,true).' and 
+		where a.anio =   '.$this->bd->sqlvalue_inyeccion($this->anio ,true).' and categoria='.$this->bd->sqlvalue_inyeccion( 'clasificador' ,true).' and 
 			  a.tipo = '.$this->bd->sqlvalue_inyeccion( $tipo ,true).' and a.clasificador = b.codigo and
 			  a.inicial > 0
 		order by  a.clasificador';
 		
  
- 	    
+ 	    print_r($sql);
 	    
 	    $stmt = $this->bd->ejecutar($sql);
 	    

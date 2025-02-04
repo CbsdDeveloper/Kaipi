@@ -524,12 +524,13 @@ function ActualizaRuc(  ) {
 	  
 	    var id    =   $('#id_compras').val();
 		var razon =   $('#razon').val();
+		var id_tramite =   $('#id_tramite').val();
 		var idprov =  $('#idprov').val();
 		var fecharegistro =  $('#fecharegistro').val();
 
 		$("#estado1").val('X');
 	 
-		  alertify.confirm("<p>ADVERTENCIA DESEA GENERAR UNA SOLA RETENCION DEL PROVEEDOR " +razon + " </p>", function (e) {
+		  alertify.confirm("<p>ADVERTENCIA DESEA GENERAR UNA SOLA RETENCION DEL PROVEEDOR " +razon + " con numero de tramite "+ id_tramite +"</p>", function (e) {
 			  if (e) {
  
 					var parametros = {

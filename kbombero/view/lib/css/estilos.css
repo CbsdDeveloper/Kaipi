@@ -1,0 +1,200 @@
+/* Estilo general */
+
+/* ---------------------------------------------------------------------------------------------------- */
+.content {
+    padding-top: 4%;
+    margin-left: 18.5%;
+    height: auto;
+    min-height: calc(100vh - 60px);
+    position: relative;
+    z-index: 1;
+    padding-right: 2px;
+}
+@media (max-width: 768px) {
+    .content {
+        margin: 10% 5% 10px;
+    }
+}
+@media (min-width: 769px) and (max-width: 992px) {
+    .content {
+        margin-top: 5%;
+        margin-left: 25%;
+        padding: 3%; 
+        }
+}
+@media (min-width: 992px)  and (max-width:1152px) {
+    .content {
+        margin-top: 5%;
+        margin-left: 25%;
+        padding: 3%; 
+        }
+}
+
+.cuadro {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 3%;
+    background-color: #f9f9f9;
+}
+
+/* Inputs y selects */
+input[type="text"],
+input[type="datetime-local"],
+select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Espaciado entre los form-group */
+.form-group:nth-child(odd) {
+    margin-right: 4%;
+}
+
+/* Etiquetas de los campos */
+label {
+    display: block;
+    margin-top: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+}
+
+/* Botones */
+.form-buttons {
+    margin-top: 20px;
+    text-align: right;
+}
+
+/* button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+} */
+
+
+.btn-regresar:hover,
+.btn-guardar:hover {
+    opacity: 0.8;
+}
+.colorB{
+    background: #f4f7f9;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+.container {
+    width: 100%;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.top-bar select {
+    padding: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 13px;
+
+}
+
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+
+table th {
+    background-color: #f2f2f2;
+}
+
+.btn {
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 4px;
+    margin: 0;
+    border: 1px solid #ddd;
+    
+}
+.btn.blue{
+    color: white; 
+    background-color: #3276b1;
+}
+.btn.green{
+    color: white; 
+    background-color: #739e73;
+}
+.btn.blue.cuadrado{
+    border-radius: 0;
+    border: 1px solid white;
+}
+.btn.green.cuadrado{
+    border-radius: 0;
+    border: 1px solid white;
+}
+
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    margin-bottom: 20px;
+}
+
+.buscar-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+
+.k {
+    color: gray;
+}
+
+.btn.descarga {
+    background-color: white;
+}
+
+.btn.icono {
+    background: whitesmoke;
+    border: 1px solid rgb(214, 214, 214);
+    margin-right: 5px;
+}
+
+
+.buscar {
+    flex-grow: 1;
+    padding: 8px;
+    border: 0;
+    border-radius: 4px;
+    width: 100%;
+    outline: none;
+}
+
+.buscar:focus {
+    outline: none;
+    border-color: #ccc;
+}

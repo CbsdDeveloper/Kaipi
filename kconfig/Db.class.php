@@ -919,7 +919,7 @@ class Db {
        
        $AResultado = $this->query_array('view_nomina_rol',
            '*',
-           'correo='.$this->sqlvalue_inyeccion(trim($sesion),true)
+           'emaile='.$this->sqlvalue_inyeccion(trim($sesion),true)
            );
        
        

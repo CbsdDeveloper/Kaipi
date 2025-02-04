@@ -11,7 +11,7 @@
 	
  
 	
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
  
     
     $idcliente          = trim($_GET['idcliente']);

@@ -10,7 +10,7 @@
  	$obj        = 	new objects;
 	
  	
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	
       
     $mes = trim($_GET['mes']);

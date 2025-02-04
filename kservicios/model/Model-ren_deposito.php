@@ -46,7 +46,7 @@ class proceso{
 		
         $this->hoy 	     =  $this->bd->hoy();
 		
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 		
 	 
         $this->saldos     = 	new saldo_contable(  $this->obj,  $this->bd);
@@ -171,7 +171,7 @@ class proceso{
                                         $sql = " UPDATE co_asiento
                                         SET 	estado_pago=".$this->bd->sqlvalue_inyeccion('S', true).", opago = 2
                                         WHERE estado_pago = 'N' and
-                                            tipo = 'X' and
+                                            tipo in ('X','R') and
                                             opago=".$this->bd->sqlvalue_inyeccion('1' , true) ;
                             
                             

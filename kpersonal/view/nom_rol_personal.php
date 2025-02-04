@@ -18,7 +18,7 @@ $bd	   =	new Db;
 
 $set   = 	new ItemsController;
 
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 	$formulario = $obj->var->_formulario(0);
  	$obj->ajax->_inyeccion();	//previene full injection
  	

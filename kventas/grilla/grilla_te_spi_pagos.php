@@ -27,7 +27,7 @@ class grilla_te_spi_pagos{
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 $this->sesion 	 =  trim($_SESSION['email']);
          
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
  
       }
    

@@ -8,7 +8,7 @@ session_start( );
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     
-    <title>Plataforma de Gestión Empresarial</title>
+    <title>Plataforma de Gestiï¿½n Empresarial</title>
 	
     <?php  require('../view/Head.php')  ?> 
 	
@@ -67,7 +67,7 @@ class proceso{
         $this->sesion 	 =  $_SESSION['email'];
         $this->hoy 	     =  $this->bd->hoy();
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         
     }

@@ -13,7 +13,7 @@ require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos
     
     
  
-    // $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    // $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
     $bd->conectar('postgres','db_kaipi','Cbsd2019');
     
     $fecha        = $_GET['fecha'];

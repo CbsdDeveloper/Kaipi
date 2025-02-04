@@ -39,7 +39,7 @@ class proceso{
 		
 		$this->hoy 	     =     date("Y-m-d");    	//$this->hoy 	     =  $this->bd->hoy();
 		
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 		
 	 
 		
@@ -168,7 +168,7 @@ class proceso{
 		        '',			// icono de eliminar = 'del'
 		        '' ,        // evento funciones parametro Nombnre funcion - codigo primerio
 		        "Codigo Bien,Tipo,Forma Ingreso,Clase, Identificador,Descripcion,Marca,Serie,Costo" , // nombre de cabecera de grill basica,
-		        '11px',      // tamaño de letra
+		        '11px',      // tamaï¿½o de letra
 		        'id92'         // id
 		        );
   

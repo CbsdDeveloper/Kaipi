@@ -9,7 +9,7 @@ require '../../kconfig/Db.email.php'; /*Incluimos el fichero de la clase objetos
 $bd	   =	new Db;
 $mail  =	new EmailEnvio;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
  
 

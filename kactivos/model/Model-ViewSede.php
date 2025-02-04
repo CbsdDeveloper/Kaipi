@@ -35,7 +35,7 @@ class proceso{
         $this->sesion 	 =  $_SESSION['email'];
         $this->hoy 	     =  $this->bd->hoy();
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
         
     }
@@ -49,12 +49,12 @@ class proceso{
         
         
         $xx = $this->bd->query_array('activo.view_bienes',
-            'count(*) as nn',
+            'count(id_bien) as nn',
             'uso  <> '.$this->bd->sqlvalue_inyeccion( 'Baja',true)
             );
         
         
-        $sql = "select idsede ,count(*) as bienes,sum(costo_adquisicion) as total
+        $sql = "select idsede ,count(id_bien) as bienes,sum(costo_adquisicion) as total
 			from activo.view_bienes where uso <> 'Baja'
 			group by idsede order by 1 asc"   ;
 

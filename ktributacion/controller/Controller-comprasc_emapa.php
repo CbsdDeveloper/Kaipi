@@ -60,7 +60,7 @@
                    
                 $this->bd	   =	     	new Db ;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -323,7 +323,7 @@
        $this->obj->text->text('Fecha Retencion',"date",'fechaemiret1',15,15,$datos,'','','div-2-4');
        
        
-       $this->obj->text->text('Estab./Emisión',"texto",'serie1',6,6,$datos,'','','div-2-4');
+       $this->obj->text->text('Estab./Emisiï¿½n',"texto",'serie1',6,6,$datos,'','','div-2-4');
        
        $this->obj->text->text('Comprobante',"texto",'secretencion1',41,41,$datos,'','','div-2-4');
        
@@ -363,7 +363,7 @@
            '126'    => 'VENEZUELA',
            '106'    => 'COSTA RICA'
        );
-       $this->obj->list->listae('País al que efectua el pago',$MATRIZ,'paisefecpago',$datos,'required','',$evento,'div-3-3');
+       $this->obj->list->listae('Paï¿½s al que efectua el pago',$MATRIZ,'paisefecpago',$datos,'required','',$evento,'div-3-3');
        
        $MATRIZ = array(
            'NA'    => 'NO APLICA',
@@ -375,7 +375,7 @@
            'NA'    => 'NO APLICA',
            'SI'    => 'SI'
        );
-       $this->obj->list->listae('Pago sujeto a retención en aplicación de la norma legal?',$MATRIZ,'fpagextsujretnorLeg',$datos,'required','',$evento,'div-3-3');
+       $this->obj->list->listae('Pago sujeto a retenciï¿½n en aplicaciï¿½n de la norma legal?',$MATRIZ,'fpagextsujretnorLeg',$datos,'required','',$evento,'div-3-3');
        
          
         

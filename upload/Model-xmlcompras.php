@@ -61,7 +61,8 @@ class proceso{
             $linea = fgets($myfile);
 			
  	         //  if ( $i <= 300 ){
- 	 	
+			$linea = str_replace('&amp;','',$linea);
+			$linea = str_replace('&','',$linea);
 		    $linea = htmlspecialchars_decode($linea);
 		    $cadena_xml.=$linea;
 		 
@@ -92,6 +93,8 @@ class proceso{
 		$impuesto_base15 = 0;
 
 		// print_r(str_replace('&','',$cadena_xml));
+		$cadena_xml = str_replace('&amp;','',$cadena_xml);
+		$cadena_xml = str_replace('&','',$cadena_xml);
 		$xml_compra = new SimpleXMLElement(str_replace('&','',$cadena_xml));
 
 		$datos_compra = new SimpleXMLElement($xml_compra->comprobante[0]);

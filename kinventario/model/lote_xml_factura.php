@@ -12,7 +12,7 @@
  
  $bd	   =	new Db;
  
- $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+ $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
  //-------------------------------------------------
  // verifica sumatoria de facturas
@@ -126,14 +126,14 @@
         
     $ch = curl_init();
     
-    // definimos la URL a la que hacemos la petición
+    // definimos la URL a la que hacemos la peticiï¿½n
     
     curl_setopt($ch, CURLOPT_URL,"https://g-kaipi.com/kaipi/facturae/autoriza_factura_firma_lote.php");
     
     //   curl_setopt($ch, CURLOPT_URL,"https://liderdoc.com/factura/autoriza_comprobante_externo.php");
-    // definimos el número de campos o parámetros que enviamos mediante POST
+    // definimos el nï¿½mero de campos o parï¿½metros que enviamos mediante POST
     curl_setopt($ch, CURLOPT_POST, 1);
-    // definimos cada uno de los parámetros
+    // definimos cada uno de los parï¿½metros
     curl_setopt($ch, CURLOPT_POSTFIELDS, "id=".$id );
     
     // recibimos la respuesta y la guardamos en una variable
@@ -142,7 +142,7 @@
     
     $data = curl_exec ($ch);
     
-    // cerramos la sesión cURL
+    // cerramos la sesiï¿½n cURL
     curl_close ($ch);
  
     $contador ++ ;

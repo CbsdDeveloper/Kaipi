@@ -37,7 +37,7 @@ class proceso{
         
         $this->hoy 	     =  $this->bd->hoy();
         
-        $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+        $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
         
 
 
@@ -296,7 +296,8 @@ class proceso{
          'idprov='.$this->bd->sqlvalue_inyeccion(trim($idprov),true) .' and '.
          'anio='.$this->bd->sqlvalue_inyeccion(  $anio_periodo,true)  .' and '.
          'mes='.$this->bd->sqlvalue_inyeccion(   $mes ,true)  .' and '.
-         'grupo='.$this->bd->sqlvalue_inyeccion( 'N',true)  
+         'grupo='.$this->bd->sqlvalue_inyeccion( 'N',true) . ' and '.
+         'id_tramite='.$this->bd->sqlvalue_inyeccion( $datos['id_tramite'],true) 
         );
 
         $totales = $this->bd->query_array('view_anexos_compras',
@@ -312,7 +313,8 @@ class proceso{
          'idprov='.$this->bd->sqlvalue_inyeccion(trim($idprov),true) .' and '.
          'anio='.$this->bd->sqlvalue_inyeccion(  $anio_periodo,true)  .' and '.
          'mes='.$this->bd->sqlvalue_inyeccion(   $mes ,true)  .' and '.
-         'grupo='.$this->bd->sqlvalue_inyeccion( 'N',true)  
+         'grupo='.$this->bd->sqlvalue_inyeccion( 'N',true)  . ' and '.
+         'id_tramite='.$this->bd->sqlvalue_inyeccion( $datos['id_tramite'],true) 
         );
 
 

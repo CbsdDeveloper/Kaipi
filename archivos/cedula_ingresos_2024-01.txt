@@ -1,0 +1,8 @@
+000000211301081	01	Prestación de Servicios	100000.00	0.00	100000.00	0.00	0.00	0.00
+000000211301121	01	Permisos, Licencias y Patentes	40000.00	0.00	40000.00	0.00	5013.00	0.00
+000000211301311	01	Contribución Predial a favor de los Cuerpos de Bomberos	800000.00	0.00	800000.00	0.00	0.00	0.00
+000000211304141	01	Contribución Adicional para los Cuerpos de Bomberos proveniente de los Servicios de Alumbrado Eléctrico	5500000.00	0.00	5500000.00	0.00	825183.28	0.00
+000000211904991	01	Otros No Especificados	30000.00	0.00	30000.00	0.00	0.00	0.00
+000000213701991	01	Otros Saldos	6630000.00	0.00	6630000.00	0.00	0.00	0.00
+000000213801011	01	De cuentas por Cobrar	1650000.00	0.00	1650000.00	0.00	0.00	0.00
+000000213801051	01	De Anticipos por Devengar de Ejercicios Anteriores - Compra de Bienes y/o Servicios	250000.00	0.00	250000.00	0.00	0.00	0.00

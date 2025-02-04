@@ -61,7 +61,7 @@
                    
                 $this->bd	   = 	new Db ;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -105,7 +105,7 @@
                 $this->obj->text->text('Nombre',"texto",'modulo',50,50,$datos,'required','','div-2-10') ;
                 
                 $MATRIZ =  $this->obj->array->catalogo_modulo();
-                $this->obj->list->lista('Tipo de Módulo',$MATRIZ,'tipo',$datos,'required','','div-2-10');
+                $this->obj->list->lista('Tipo de Mï¿½dulo',$MATRIZ,'tipo',$datos,'required','','div-2-10');
                  
                 $MATRIZ =  $this->obj->array->catalogo_sino();
                 $this->obj->list->lista('Publicacion',$MATRIZ,'publica',$datos,'required','','div-2-10');
@@ -116,7 +116,7 @@
                 $MATRIZ =  $this->obj->array->catalogo_ambito();
                 $this->obj->list->lista('Ambito',$MATRIZ,'accion',$datos,'required','','div-2-10');
                 
-                $this->obj->text->editor('Detalle Módulo','detalle',3,45,350,$datos,'required','','div-2-10') ;
+                $this->obj->text->editor('Detalle Mï¿½dulo','detalle',3,45,350,$datos,'required','','div-2-10') ;
                 
             
                 $cadena = 'javascript:open_precio('."'".'inv_precios'."','".''."',".'740,470)';

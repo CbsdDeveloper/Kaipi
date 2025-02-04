@@ -12,7 +12,7 @@ $obj   = 	new objects;
 $bd	   =	new Db;
  
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
          
          
@@ -341,7 +341,7 @@ function K_consulta($bd,$obj,$id_rol,$datos_arreglo,$idprov,$tipo,$numero_campos
 
             $sesion =   trim($_SESSION['email']);
 
-            $usuarios = $bd->__user($sesion);
+            $usuarios = $bd->__user(str_replace('@cbsd.gob.ec', '', $sesion));
 
             $datos['elaborado'] =   ($usuarios['completo']);  
      

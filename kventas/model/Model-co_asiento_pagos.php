@@ -30,7 +30,7 @@ class proceso{
 		$this->sesion 	 =  $_SESSION['email'];
 		$this->hoy 	     =  $this->bd->hoy();
 		
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 		
 		$this->anio       =  $_SESSION['anio'];
 		
@@ -226,7 +226,7 @@ class proceso{
 	    echo  $result_pago;
 	}
 	//--------------------------------------------------------------------------------------
-	//aprobación de asientos
+	//aprobaciï¿½n de asientos
 	function aprobacion($action,$id  ,$idasiento){
 	    
   

@@ -10,7 +10,7 @@ require '../../kconfig/Obj.conf.php';
     
     $sesion 	 =  trim($_SESSION['email']);
    
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
      
     $accion = $_GET['accion'];
     

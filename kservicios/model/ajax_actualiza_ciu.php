@@ -14,7 +14,7 @@ $correo        = $_GET['correo'];
   
 
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
  
 $sql1 = " UPDATE par_ciu
 			 SET  razon       =".$bd->sqlvalue_inyeccion(trim($razon), true).",

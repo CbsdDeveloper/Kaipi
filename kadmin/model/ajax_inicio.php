@@ -1,5 +1,5 @@
 <?php
-session_start( );
+// session_start( );
 
 require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
 
@@ -9,7 +9,7 @@ require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos
 
 $bd	     =	new Db;
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar('','','');
 
 $sesion 	=  trim($_SESSION['email']);
 

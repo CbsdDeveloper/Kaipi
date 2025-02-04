@@ -9,7 +9,7 @@ $bd	   = 	new Db ;
 
 
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 
 
@@ -84,8 +84,6 @@ function nuevo($id_movimiento,$idproducto, $bd ,$estado,$tipo ){
     $baseiva = 0;
     $total = $tarifa_cero;
     
-    echo $AProducto['costo'];
-    
     
     $ATabla = array(
         array( campo => 'idproducto',   tipo => 'VARCHAR2',   id => '0',  add => 'S',   edit => 'S',   valor => $idproducto,   filtro => 'N',   key => 'N'),
@@ -135,6 +133,10 @@ function nuevo($id_movimiento,$idproducto, $bd ,$estado,$tipo ){
 //--- funciones grud
 
 function elimina_dato($id, $bd ,$estado ){
+
+    if (trim($estado) <> 'solicitado'){
+        $DivProducto='No se puede eliminar el artículo, la solicitud ya fue enviada al Guarda Almacén'; 
+    }
     
     $tabla = 'inv_movimiento_det';
     
@@ -143,10 +145,10 @@ function elimina_dato($id, $bd ,$estado ){
     if ( $estado == 'solicitado'){
         
         $bd->JqueryDeleteSQL($tabla,$where);
-        
+        $DivProducto='Artículo eliminado!'; 
     }
     
-    
+    echo $DivProducto;
 }
 
 

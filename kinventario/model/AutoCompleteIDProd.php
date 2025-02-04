@@ -1,43 +1,55 @@
-<?php 
-session_start( );   
-  
-    require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
-    
-    require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
-	
-     
-	$bd	   = new Db ;
-	
-	$registro = $_SESSION['ruc_registro'];
-	
-	$idbodega = $_SESSION['idbodega']  ;
-	
-	
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
-	
-      
-    $detalle = trim($_GET['itemVariable']);
- 
-    $idproducto = 0;
-    
-    if ( !empty($detalle)) {
-     
-            $sql = "SELECT   idproducto
+<?php
+session_start();
+
+require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
+
+require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
+
+
+$bd       = new Db;
+
+$registro = $_SESSION['ruc_registro'];
+
+$idbodega = $_SESSION['idbodega'];
+
+
+$bd->conectar($_SESSION['us'], '', $_SESSION['ac']);
+
+
+$detalle = trim($_GET['itemVariable']);
+$modulo = trim($_GET['modulo']);
+
+$idproducto = 0;
+
+if (!empty($detalle)) {
+
+    if ($modulo == 'I') {
+        $sql = "SELECT   idproducto
         				  FROM web_producto
-        				  where producto  = ".$bd->sqlvalue_inyeccion(trim($detalle), true) ." AND
-                                registro = ".$bd->sqlvalue_inyeccion($registro,true)." AND
-                                idbodega = ".$bd->sqlvalue_inyeccion($idbodega,true)." AND saldo > 0";
-            
-            
-            $resultado1 = $bd->ejecutar($sql);
-            
-            $datos_sql  = $bd->obtener_array( $resultado1);
-            
-            $idproducto=   $datos_sql['idproducto'];
-    
+        				  where producto  = " . $bd->sqlvalue_inyeccion(trim($detalle), true) . " AND
+                                registro = " . $bd->sqlvalue_inyeccion($registro, true) . " AND
+                                idbodega = " . $bd->sqlvalue_inyeccion($idbodega, true);
+    } else {
+        $sql = "SELECT   idproducto
+        				  FROM web_producto
+        				  where producto  = " . $bd->sqlvalue_inyeccion(trim($detalle), true) . " AND
+                                registro = " . $bd->sqlvalue_inyeccion($registro, true) . " AND
+                                idbodega = " . $bd->sqlvalue_inyeccion($idbodega, true) . " AND saldo > 0";
     }
-    
-    echo trim($idproducto);
-     
-    
-?>
+
+
+    // $sql = "SELECT   idproducto
+    // 			  FROM web_producto
+    // 			  where producto  = ".$bd->sqlvalue_inyeccion(trim($detalle), true) ." AND
+    //                     registro = ".$bd->sqlvalue_inyeccion($registro,true)." AND
+    //                     idbodega = ".$bd->sqlvalue_inyeccion($idbodega,true);
+
+
+    $resultado1 = $bd->ejecutar($sql);
+
+    $datos_sql  = $bd->obtener_array($resultado1);
+
+    $idproducto =   $datos_sql['idproducto'];
+}
+
+echo trim($idproducto);

@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+
 require '../../kconfig/Db.class.php';   /*Incluimos el fichero de la clase Db*/
 
 require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos*/
@@ -8,7 +11,7 @@ require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos
  
     $bd	   =	new Db ;
     
-      $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+      $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
     
     
     $contenido           = trim($_POST['editor1']);
@@ -26,7 +29,7 @@ require '../../kconfig/Obj.conf.php'; /*Incluimos el fichero de la clase objetos
         array( campo => 'archivo',valor => '-',filtro => 'N', visor => 'S')
     );
     
-    $resultado_doc = $bd->JqueryCursorVisor('flow.proceso_doc',$qquery,   );
+    $resultado_doc = $bd->JqueryCursorVisor('flow.proceso_doc',$qquery,  0 );
     
     $anexo_doc = '';
     $k         = 1;

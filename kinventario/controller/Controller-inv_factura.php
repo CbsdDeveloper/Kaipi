@@ -54,7 +54,7 @@
                 $this->obj     = 	new objects;
                 $this->set     = 	new ItemsController;
              	$this->bd	   =	new Db;
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 $this->sesion 	 =  $_SESSION['email'];
                 $this->hoy 	     =  $this->bd->hoy();
@@ -223,7 +223,7 @@
                  array( boton => 'Clientes', evento =>$eventoc,  grafico => 'glyphicon glyphicon-user' ,  type=>"button_default") ,
                  array( boton => 'Guardar Registros', evento =>'', grafico => 'glyphicon glyphicon-floppy-saved' ,  type=>"submit") ,
                  array( boton => 'Aprobar Movimientos',  evento =>$evento,  grafico => 'glyphicon glyphicon-ok' ,  type=>"button"),
-                 array( boton => 'Impresión Factura', evento =>$eventop,  grafico => 'glyphicon glyphicon-print' ,  type=>"button") 
+                 array( boton => 'Impresiï¿½n Factura', evento =>$eventop,  grafico => 'glyphicon glyphicon-print' ,  type=>"button") 
                  
              );
              

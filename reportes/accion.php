@@ -72,7 +72,7 @@ $pdf->SetHeaderData($PDF_HEADER_LOGO, $PDF_HEADER_LOGO_WIDTH, $PDF_HEADER_TITLE,
   */
 
 	// set margins
-	$pdf->SetMargins(30, 15, 30, true);
+	$pdf->SetMargins(30, 15, 15, true);
 
 
 	// set auto page breaks
@@ -101,6 +101,8 @@ $pdf->SetHeaderData($PDF_HEADER_LOGO, $PDF_HEADER_LOGO_WIDTH, $PDF_HEADER_TITLE,
 		.eti_header1 {
 			font-family: 'Helvetica Neue', Helvetica, Arial, 'sans-serif';
 			font-size: 10px;
+			font-weight: bold;
+			color: #345dc8;
 		}
 
 		.opensans {
@@ -151,14 +153,14 @@ $pdf->SetHeaderData($PDF_HEADER_LOGO, $PDF_HEADER_LOGO_WIDTH, $PDF_HEADER_TITLE,
 				<td width="40%" class="eti_header1"><br>
 					DIRECCION DE TALENTO HUMANO <br>
 					ACCION DE PERSONAL<br>
-					Fecha:<?php echo $datos['fecha'] ?> <br>
+					Fecha: <span style="color:#000000"> <?php echo $datos['fecha'] ?> </span> <br>
 				</td>
 				<td width="35%" style="padding: 5px">
-					<?php // echo $gestion->Empresa(); 
+					<?php  // echo $gestion->Empresa(); 
 					?><br>
 				</td>
 				<td width="25%">
-					<img align="absmiddle" src="logo.png">
+					<img align="absmiddle" src="logo_bom.png">
 				</td>
 			</tr>
 		</tbody>
@@ -193,7 +195,7 @@ $pdf->SetHeaderData($PDF_HEADER_LOGO, $PDF_HEADER_LOGO_WIDTH, $PDF_HEADER_TITLE,
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tbody>
 						<tr>
-							<td class="celda21"><br><b>EXPLICACIÓN:</br><br><?php echo $datos['novedad'] ?><br></td>
+							<td class="celda21"><br><b>EXPLICACIÓN:</br><br><?php echo $datos['novedad'] ?></td>
 						</tr>
 					</tbody>
 				</table>
@@ -209,7 +211,7 @@ $pdf->SetHeaderData($PDF_HEADER_LOGO, $PDF_HEADER_LOGO_WIDTH, $PDF_HEADER_TITLE,
 
 								echo $pie_contenido;
 
-								?><br>
+								?>
 							</td>
 						</tr>
 					</tbody>
@@ -218,7 +220,7 @@ $pdf->SetHeaderData($PDF_HEADER_LOGO, $PDF_HEADER_LOGO_WIDTH, $PDF_HEADER_TITLE,
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tbody>
 						<tr>
-							<td class="celda21"><br> <b>REFERENCIA </b> <br><?php echo $datos['referencia'] ?><br></td>
+							<td class="celda21"><br> <b>REFERENCIA </b> <br><?php echo $datos['referencia'] ?></td>
 						</tr>
 					</tbody>
 				</table>
@@ -226,13 +228,12 @@ $pdf->SetHeaderData($PDF_HEADER_LOGO, $PDF_HEADER_LOGO_WIDTH, $PDF_HEADER_TITLE,
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tbody>
 						<tr>
-							<td class="celda21"><br>&nbsp;&nbsp;<b>MOTIVO DE LA ACCION DE PERSONAL </b><br>&nbsp;&nbsp;<?php echo $datos['motivo'] ?><br>
+							<td class="celda21"><br>&nbsp;&nbsp;<b>MOTIVO DE LA ACCION DE PERSONAL </b><br>&nbsp;&nbsp;<?php echo $datos['motivo'] ?>
 								<?php
 								if (trim($datos['finalizado']) == 'S') {
-									echo 'ACCION DE PERSONAL FINALIZADA - ' . $datos['ffinalizacion'];
+									echo '<br> ACCION DE PERSONAL FINALIZADA - ' . $datos['ffinalizacion'];
 								}
 								?>
-								<br>
 							</td>
 						</tr>
 					</tbody>

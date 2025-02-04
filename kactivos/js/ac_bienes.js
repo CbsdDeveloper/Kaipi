@@ -699,6 +699,7 @@ function goToURL(accion,id) {
 				_asigna('proveedor',respuesta.proveedor);
 				
 				_asigna('factura',respuesta.factura);
+				_asigna('id_tramite',respuesta.id_tramite);
  				
 				$("#action").val(accion); 
 			 	$("#result").html(resultado);
@@ -1165,6 +1166,7 @@ function PoneDoc(file)
 	var vactivo				= $("#vactivo").val();
 	
 	var vcodigo				= $("#vcodigo").val();
+	var vid_tramite			= $("#vid_tramite").val();
 	
 	
 	   
@@ -1176,7 +1178,8 @@ function PoneDoc(file)
 				'vtiene_acta' : vtiene_acta ,
 				'vidsede': vidsede,
 				'vactivo' :vactivo,
-				'vcodigo' :vcodigo
+				'vcodigo' :vcodigo,
+				'vid_tramite' :vid_tramite
 				};
   
 	  

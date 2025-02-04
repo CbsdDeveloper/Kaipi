@@ -59,7 +59,7 @@ class saldo_presupuesto{
                            sum(certificado) as c1
                     FROM presupuesto.view_tramites
                    WHERE anio ='.$this->bd->sqlvalue_inyeccion($anio, true).'  and 
-                         estado = '.$this->bd->sqlvalue_inyeccion('3', true).' 
+                         estado >= '.$this->bd->sqlvalue_inyeccion('3', true).' 
                 group by  partida 
                 order by partida';
         

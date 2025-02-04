@@ -10,7 +10,7 @@ $bd	   = new Db ;
 
 
 
-$bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+$bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 
 //--------------------------------------------------------------
 
@@ -62,10 +62,10 @@ if ( $envio == 1) {
     $data = 'Comprobante electronico por autorizado';
     
     
-    // abrimos la sesión cURL
+    // abrimos la sesiï¿½n cURL
     $ch = curl_init();
     
-    // definimos la URL a la que hacemos la petición
+    // definimos la URL a la que hacemos la peticiï¿½n
  
     
     $url  = "http://159.69.66.94/~grupoinv/factura/autoriza_comprobante_externo5.php";
@@ -75,7 +75,7 @@ if ( $envio == 1) {
     
     curl_setopt($ch, CURLOPT_URL,$url);
     
-     // definimos el número de campos o parámetros que enviamos mediante POST
+     // definimos el nï¿½mero de campos o parï¿½metros que enviamos mediante POST
     curl_setopt($ch, CURLOPT_POST, 1);
     
     
@@ -83,7 +83,7 @@ if ( $envio == 1) {
     
     curl_setopt($ch, CURLOPT_POSTFIELDS, $enlace_post );
     
-    // definimos cada uno de los parámetros
+    // definimos cada uno de los parï¿½metros
     
     // recibimos la respuesta y la guardamos en una variable
     
@@ -91,7 +91,7 @@ if ( $envio == 1) {
     
     $data = curl_exec ($ch);
     
-    // cerramos la sesión cURL
+    // cerramos la sesiï¿½n cURL
     curl_close ($ch);
     
     $valida = substr(trim($data), 0,2);

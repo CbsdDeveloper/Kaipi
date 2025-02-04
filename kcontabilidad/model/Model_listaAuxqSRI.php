@@ -33,7 +33,7 @@ class Model_listaAuxqSRI{
 		$this->sesion 	 =  $_SESSION['email'];
 		$this->hoy 	     =  $this->bd->hoy();
 		
-		$this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+		$this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
 		
 	}
    
@@ -81,7 +81,7 @@ class Model_listaAuxqSRI{
 	    
 	    
 	  
- 
+//  echo $sql;
       
 	    $stmt = $this->bd->ejecutar($sql);
 	    
@@ -144,7 +144,7 @@ class Model_listaAuxqSRI{
                         partida,bandera,id_asientod';
 
  
-    
+    //  echo $sql;
             
             $resultado  = $this->bd->ejecutar($sql);
 	     

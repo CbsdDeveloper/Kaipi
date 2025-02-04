@@ -7,7 +7,7 @@
 	
  	$bd	   = new Db ;
  	
-    $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+    $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
  
     $sql = " SELECT * from co_asiento WHERE estado ='aprobado' and idprov is not null and apagar is null order by id_asiento ";
 

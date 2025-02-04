@@ -58,7 +58,7 @@
                    
                 $this->bd	   =	     	new Db ;
              
-                $this->bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+                $this->bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
       
                 $this->ruc       =  $_SESSION['ruc_registro'];
                 
@@ -82,7 +82,7 @@
      		$this->obj->text->text('Periodo',"number" ,'idperiodo' ,80,80, $datos ,'','readonly','div-2-10') ;
      		
      	 
-     		//---------- catalogo de años matriz
+     		//---------- catalogo de aï¿½os matriz
      		$MATRIZ = $this->obj->array->catalogo_anio();
      		
      		$this->obj->list->listae('Anio ',$MATRIZ,'anio',$datos,'required','',$evento,'div-2-4');

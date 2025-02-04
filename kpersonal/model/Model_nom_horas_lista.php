@@ -8,7 +8,7 @@ session_start( );
      $obj   = 	new objects;
      $bd	   =	new Db;
      
-     $bd->conectar($_SESSION['us'],$_SESSION['db'],$_SESSION['ac']);
+     $bd->conectar($_SESSION['us'],'',$_SESSION['ac']);
      
  
      $ruc = $_SESSION['ruc_registro'];

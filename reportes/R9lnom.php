@@ -1,7 +1,7 @@
 <?php 
 session_start( );  
 $_SESSION['us']		= $_GET['us'];
-$_SESSION['db'] 	= $_GET['db'];
+'' 	= $_GET['db'];
 $_SESSION['ac']		= $_GET['ac'];
 require('kreportes.php'); 
 $gestion   		= 	new ReportePdf; 

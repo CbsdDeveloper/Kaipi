@@ -1163,6 +1163,12 @@ function _monto_Aporte_IESS( $monto_iess  ){
         if ($idprov == '1712087665'){ // ESCUDERO, TODO: ELIMINAR MAS ADELANTE
             $meses_trabajados = 4;
         }
+        if ($idprov == '1723775712'){ // CHAVEZ, TODO: ELIMINAR MAS ADELANTE
+            $meses_trabajados = 3;
+        }
+        if ($idprov == '1716324015'){ // COQUE, TODO: ELIMINAR MAS ADELANTE
+            $meses_trabajados = 2;
+        }
         // if ($idprov == '2300069032'){
         //     $meses_trabajados = 11;
         // }
